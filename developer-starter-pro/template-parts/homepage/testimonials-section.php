@@ -32,10 +32,14 @@ if ( empty( $testimonials ) ) {
 				$patient_name = get_post_meta( $testimonial->ID, '_developer_starter_pro_testimonial_patient_name', true );
 				$rating       = get_post_meta( $testimonial->ID, '_developer_starter_pro_testimonial_rating', true );
 				$treatment    = get_post_meta( $testimonial->ID, '_developer_starter_pro_testimonial_treatment', true );
+				$video_url    = get_post_meta( $testimonial->ID, '_developer_starter_pro_testimonial_video_url', true ) ?: 'https://www.youtube.com/embed/dQw4w9WgXcQ';
 			?>
 				<div class="developer-starter-pro-testimonial-card">
-					<div class="developer-starter-pro-testimonial-rating">
+					<div class="developer-starter-pro-testimonial-rating" style="display:flex; justify-content:space-between; align-items:center;">
 						<?php echo developer_starter_pro_get_star_rating( intval( $rating ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						<?php if ( $video_url ) : ?>
+							<button type="button" class="testimonial-video-play-btn" data-video="<?php echo esc_url( $video_url ); ?>" title="<?php esc_attr_e( 'Watch Video Testimonial', 'developer-starter-pro' ); ?>">▶</button>
+						<?php endif; ?>
 					</div>
 					<div class="developer-starter-pro-testimonial-text">
 						<?php echo wp_kses_post( $testimonial->post_content ); ?>
@@ -57,6 +61,14 @@ if ( empty( $testimonials ) ) {
 					</div>
 				</div>
 			<?php endforeach; ?>
+		</div>
+
+		<!-- Testimonials Video Modal -->
+		<div class="dentalpro-video-modal" id="testimonials-video-modal">
+			<div class="dentalpro-video-modal-content">
+				<button type="button" class="dentalpro-video-modal-close" id="close-video-modal">×</button>
+				<iframe id="video-iframe" src="" style="width:100%; height:100%; border:none;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+			</div>
 		</div>
 	</div>
 </section>

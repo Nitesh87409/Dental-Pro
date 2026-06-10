@@ -33,6 +33,13 @@ class Developer_Starter_Pro_Portal {
 
 		// Process profile and medical updates
 		add_action( 'admin_post_dentalpro_patient_update_profile', array( $this, 'handle_profile_update' ) );
+
+		// Process forgot password post
+		add_action( 'admin_post_nopriv_dentalpro_patient_forgot_password', array( $this, 'handle_forgot_password' ) );
+		add_action( 'admin_post_dentalpro_patient_forgot_password', array( $this, 'handle_forgot_password' ) );
+
+		// Process AJAX cancel appointment
+		add_action( 'wp_ajax_dentalpro_cancel_appointment', array( $this, 'ajax_cancel_appointment' ) );
 	}
 
 	/**
@@ -72,6 +79,17 @@ class Developer_Starter_Pro_Portal {
 			'meta_value' => 'page-templates/template-patient-login.php'
 		) );
 		return ! empty( $pages ) ? get_permalink( $pages[0]->ID ) : wp_login_url();
+	}
+
+	/**
+	 * Helper: Get Portal Forgot Password Page URL.
+	 */
+	public static function get_forgot_url() {
+		$pages = get_pages( array(
+			'meta_key'   => '_wp_page_template',
+			'meta_value' => 'page-templates/template-patient-forgot.php'
+		) );
+		return ! empty( $pages ) ? get_permalink( $pages[0]->ID ) : home_url( '/forgot-password/' );
 	}
 
 	/**
@@ -207,4 +225,102 @@ class Developer_Starter_Pro_Portal {
 		wp_safe_redirect( add_query_arg( 'updated', 'true', wp_get_referer() ) );
 		exit;
 	}
+
+	/**
+	 * AJAX cancel appointment handler.
+	 */
+	public function ajax_cancel_appointment() {
+		// Verify nonce
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'developer_starter_pro_portal_nonce' ) ) {
+			wp_send_json_error( array( 'message' => esc_html__( 'Security check failed.', 'developer-starter-pro' ) ) );
+		}
+
+		// Ensure user is logged in
+		if ( ! is_user_logged_in() ) {
+			wp_send_json_error( array( 'message' => esc_html__( 'You must be logged in.', 'developer-starter-pro' ) ) );
+		}
+
+		$user = wp_get_current_user();
+		$appointment_id = absint( $_POST['id'] ?? 0 );
+
+		if ( ! $appointment_id ) {
+			wp_send_json_error( array( 'message' => esc_html__( 'Invalid appointment ID.', 'developer-starter-pro' ) ) );
+		}
+
+		global $wpdb;
+		$table_name = Developer_Starter_Pro_Booking::get_table_name();
+
+		// Fetch the appointment to ensure it belongs to this patient
+		$appointment = $wpdb->get_row( $wpdb->prepare(
+			"SELECT * FROM $table_name WHERE id = %d",
+			$appointment_id
+		) );
+
+		if ( ! $appointment ) {
+			wp_send_json_error( array( 'message' => esc_html__( 'Appointment not found.', 'developer-starter-pro' ) ) );
+		}
+
+		if ( $appointment->patient_email !== $user->user_email ) {
+			wp_send_json_error( array( 'message' => esc_html__( 'Permission denied. You do not own this booking.', 'developer-starter-pro' ) ) );
+		}
+
+		// Update appointment status to 'cancelled'
+		$updated = $wpdb->update(
+			$table_name,
+			array( 'status' => 'cancelled' ),
+			array( 'id' => $appointment_id ),
+			array( '%s' ),
+			array( '%d' )
+		);
+
+		if ( false !== $updated ) {
+			// Trigger notification email (cancellation)
+			if ( class_exists( 'Developer_Starter_Pro_Notifications' ) ) {
+				$notifications = new Developer_Starter_Pro_Notifications();
+				$notifications->send_cancellation_emails( $appointment_id );
+			}
+			wp_send_json_success( array( 'message' => esc_html__( 'Appointment cancelled successfully.', 'developer-starter-pro' ) ) );
+		} else {
+			wp_send_json_error( array( 'message' => esc_html__( 'Failed to update database.', 'developer-starter-pro' ) ) );
+		}
+	}
+
+	/**
+	 * Handle Forgot Password Form POST.
+	 */
+	public function handle_forgot_password() {
+		check_admin_referer( 'dentalpro_forgot_action', 'forgot_nonce' );
+
+		$email = sanitize_email( $_POST['patient_email'] ?? '' );
+		$forgot_url = wp_get_referer();
+
+		if ( empty( $email ) ) {
+			wp_safe_redirect( add_query_arg( 'err', 'missing_fields', $forgot_url ) );
+			exit;
+		}
+
+		if ( ! is_email( $email ) ) {
+			wp_safe_redirect( add_query_arg( 'err', 'invalid_email', $forgot_url ) );
+			exit;
+		}
+
+		$user = get_user_by( 'email', $email );
+
+		if ( ! $user ) {
+			wp_safe_redirect( add_query_arg( 'err', 'user_not_found', $forgot_url ) );
+			exit;
+		}
+
+		// Retrieve password reset link (built-in WP secure function)
+		$retrieve = retrieve_password( $user->user_login );
+
+		if ( true === $retrieve ) {
+			wp_safe_redirect( add_query_arg( array( 'status' => 'success' ), $forgot_url ) );
+		} else {
+			wp_safe_redirect( add_query_arg( 'err', 'send_failed', $forgot_url ) );
+		}
+		exit;
+	}
 }
+
+

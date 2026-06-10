@@ -66,7 +66,7 @@ if ( 'missing_fields' === $err ) {
 								<input type="checkbox" name="patient_remember" style="width:16px; height:16px; accent-color:var(--developer-starter-pro-primary);">
 								<?php esc_html_e( 'Remember Me', 'developer-starter-pro' ); ?>
 							</label>
-							<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>" style="color:var(--developer-starter-pro-gray-500); text-decoration:none;">
+							<a href="<?php echo esc_url( Developer_Starter_Pro_Portal::get_forgot_url() ); ?>" style="color:var(--developer-starter-pro-gray-500); text-decoration:none;">
 								<?php esc_html_e( 'Forgot Password?', 'developer-starter-pro' ); ?>
 							</a>
 						</div>

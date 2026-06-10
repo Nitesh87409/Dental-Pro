@@ -75,6 +75,24 @@ $days_labels = array(
 						</div>
 					<?php endif; ?>
 
+					<?php
+					$comments = get_comments( array(
+						'post_id' => get_the_ID(),
+						'status'  => 'approve',
+					) );
+
+					$ratings_sum = 0;
+					$ratings_count = 0;
+					foreach ( $comments as $comment ) {
+						$rating = get_comment_meta( $comment->comment_ID, 'rating', true );
+						if ( $rating ) {
+							$ratings_sum += intval( $rating );
+							$ratings_count++;
+						}
+					}
+
+					$average_rating = $ratings_count > 0 ? round( $ratings_sum / $ratings_count, 1 ) : 5.0;
+					?>
 					<div class="developer-starter-pro-doctor-profile-highlights">
 						<?php if ( $experience ) : ?>
 							<div class="highlight-item">
@@ -83,13 +101,13 @@ $days_labels = array(
 							</div>
 						<?php endif; ?>
 						<div class="highlight-item">
-							<span class="highlight-number">★ 4.9</span>
-							<span class="highlight-label"><?php esc_html_e( 'Rating', 'developer-starter-pro' ); ?></span>
+							<span class="highlight-number">★ <?php echo number_format( $average_rating, 1 ); ?></span>
+							<span class="highlight-label"><?php printf( esc_html( _n( '%s Review', '%s Reviews', $ratings_count, 'developer-starter-pro' ) ), number_format_i18n( $ratings_count ) ); ?></span>
 						</div>
 					</div>
 
 					<div class="developer-starter-pro-doctor-profile-actions">
-						<a href="<?php echo esc_url( developer_starter_pro_get_booking_url() ); ?>" class="developer-starter-pro-btn developer-starter-pro-btn--primary">
+						<a href="<?php echo esc_url( add_query_arg( 'doctor_id', get_the_ID(), developer_starter_pro_get_booking_url() ) ); ?>" class="developer-starter-pro-btn developer-starter-pro-btn--primary">
 							<?php esc_html_e( 'Book Appointment', 'developer-starter-pro' ); ?>
 						</a>
 						<?php if ( $phone ) : ?>
@@ -163,6 +181,104 @@ $days_labels = array(
 						</ul>
 					</div>
 					<?php endif; ?>
+
+					<!-- Patient Reviews Section -->
+					<div class="developer-starter-pro-card doctor-reviews-card" id="reviews-section">
+						<h2 class="developer-starter-pro-card-title"><?php esc_html_e( 'Patient Reviews', 'developer-starter-pro' ); ?></h2>
+						
+						<!-- List of Reviews -->
+						<div class="doctor-reviews-list" style="margin-bottom: 40px; display:flex; flex-direction:column; gap:20px;">
+							<?php if ( ! empty( $comments ) ) : ?>
+								<?php foreach ( $comments as $comment ) :
+									$comment_rating = get_comment_meta( $comment->comment_ID, 'rating', true );
+									$stars = $comment_rating ? intval( $comment_rating ) : 5;
+								?>
+									<div class="review-item" style="border-bottom: 1px solid var(--developer-starter-pro-gray-100); padding-bottom: 20px;">
+										<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+											<strong style="color:var(--developer-starter-pro-secondary);"><?php echo esc_html( $comment->comment_author ); ?></strong>
+											<span style="color:#f59e0b; font-size:0.9rem;"><?php echo str_repeat( '★', $stars ) . str_repeat( '☆', 5 - $stars ); ?></span>
+										</div>
+										<p style="margin: 0; font-size:0.9375rem; color:var(--developer-starter-pro-gray-500); line-height:1.6;"><?php echo esc_html( $comment->comment_content ); ?></p>
+										<span style="font-size: 0.75rem; color: var(--developer-starter-pro-gray-400); margin-top: 6px; display:block;"><?php echo get_comment_date( '', $comment ); ?></span>
+									</div>
+								<?php endforeach; ?>
+							<?php else : ?>
+								<p style="color:var(--developer-starter-pro-gray-400); font-style:italic;"><?php esc_html_e( 'No reviews submitted yet. Be the first to review!', 'developer-starter-pro' ); ?></p>
+							<?php endif; ?>
+						</div>
+
+						<!-- Review Form -->
+						<div class="doctor-review-form-wrapper" style="background:var(--developer-starter-pro-gray-50); border: 1px solid var(--developer-starter-pro-gray-200); border-radius: 8px; padding: 30px;">
+							<h3 style="margin-top:0; margin-bottom:20px; font-size:1.125rem; color:var(--developer-starter-pro-secondary);"><?php esc_html_e( 'Write a Review', 'developer-starter-pro' ); ?></h3>
+							
+							<form action="<?php echo esc_url( site_url( '/wp-comments-post.php' ) ); ?>" method="post" id="commentform">
+								<input type="hidden" name="comment_post_ID" value="<?php echo get_the_ID(); ?>" id="comment_post_ID">
+								<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+								
+								<div style="display:flex; flex-direction:column; gap:16px;">
+									<!-- Star Rating Selection -->
+									<div>
+										<label style="display:block; font-weight:600; margin-bottom:8px;"><?php esc_html_e( 'Your Rating:', 'developer-starter-pro' ); ?> <span style="color:var(--developer-starter-pro-danger);">*</span></label>
+										<div class="star-rating-select" id="star-selector" style="display:flex; gap:8px; font-size:1.5rem; color:#f59e0b; cursor:pointer;">
+											<span class="star-btn" data-val="1">★</span>
+											<span class="star-btn" data-val="2">★</span>
+											<span class="star-btn" data-val="3">★</span>
+											<span class="star-btn" data-val="4">★</span>
+											<span class="star-btn" data-val="5">★</span>
+										</div>
+										<input type="hidden" name="rating" id="selected-star-rating" value="5" required>
+									</div>
+
+									<?php if ( ! is_user_logged_in() ) : ?>
+										<div class="form-row" style="display:flex; gap:16px;">
+											<div style="flex:1;">
+												<label style="display:block; font-weight:500; margin-bottom:6px;"><?php esc_html_e( 'Name', 'developer-starter-pro' ); ?> <span style="color:var(--developer-starter-pro-danger);">*</span></label>
+												<input type="text" name="author" required style="width:100%; padding:10px; border:2px solid var(--developer-starter-pro-gray-200); border-radius:6px; background:#fff;">
+											</div>
+											<div style="flex:1;">
+												<label style="display:block; font-weight:500; margin-bottom:6px;"><?php esc_html_e( 'Email', 'developer-starter-pro' ); ?> <span style="color:var(--developer-starter-pro-danger);">*</span></label>
+												<input type="email" name="email" required style="width:100%; padding:10px; border:2px solid var(--developer-starter-pro-gray-200); border-radius:6px; background:#fff;">
+											</div>
+										</div>
+									<?php endif; ?>
+
+									<div>
+										<label style="display:block; font-weight:500; margin-bottom:6px;"><?php esc_html_e( 'Your Review Comment', 'developer-starter-pro' ); ?> <span style="color:var(--developer-starter-pro-danger);">*</span></label>
+										<textarea name="comment" rows="4" required style="width:100%; padding:12px; border:2px solid var(--developer-starter-pro-gray-200); border-radius:6px; resize:vertical; background:#fff;"></textarea>
+									</div>
+
+									<div style="margin-top:10px;">
+										<button type="submit" class="developer-starter-pro-btn developer-starter-pro-btn--primary" style="padding:12px 28px; font-weight:700;">
+											<?php esc_html_e( 'Submit Review', 'developer-starter-pro' ); ?>
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<script>
+					document.addEventListener('DOMContentLoaded', function() {
+						var stars = document.querySelectorAll('#star-selector .star-btn');
+						var ratingInput = document.getElementById('selected-star-rating');
+						
+						stars.forEach(function(star) {
+							star.addEventListener('click', function() {
+								var val = parseInt(this.getAttribute('data-val'), 10);
+								ratingInput.value = val;
+								
+								stars.forEach(function(s) {
+									var sVal = parseInt(s.getAttribute('data-val'), 10);
+									if (sVal <= val) {
+										s.style.color = '#f59e0b';
+									} else {
+										s.style.color = '#cbd5e1';
+									}
+								});
+							});
+						});
+					});
+					</script>
 				</div>
 
 				<!-- Sidebar -->

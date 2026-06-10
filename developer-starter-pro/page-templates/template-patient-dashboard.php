@@ -84,150 +84,168 @@ $updated = isset( $_GET['updated'] );
 				</div>
 			<?php endif; ?>
 
-			<div class="portal-dashboard-grid" style="display:grid; grid-template-columns: 1.2fr 2fr; gap:40px; align-items: flex-start;">
+			<div class="portal-dashboard-grid" style="display:grid; grid-template-columns: 280px 1fr; gap:40px; align-items: flex-start;">
 				
-				<!-- Left Column: Patient Profile & Medical History Form -->
-				<div class="portal-card" style="background:#fff; border:1px solid var(--developer-starter-pro-gray-200); border-radius:12px; padding:30px; box-shadow: var(--developer-starter-pro-shadow-sm);">
-					<h3 style="margin-top:0; margin-bottom:20px; font-size:1.25rem; border-bottom:2px solid var(--developer-starter-pro-gray-100); padding-bottom:12px;">🛡️ <?php esc_html_e( 'Medical & Contact Profile', 'developer-starter-pro' ); ?></h3>
-					
-					<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post">
-						<input type="hidden" name="action" value="dentalpro_patient_update_profile">
-						<?php wp_nonce_field( 'dentalpro_update_profile_action', 'profile_nonce' ); ?>
-
-						<div style="display:flex; flex-direction:column; gap:16px;">
-							<div>
-								<label style="display:block; font-weight:600; margin-bottom:4px; font-size:0.875rem;"><?php esc_html_e( 'Email Address (Account)', 'developer-starter-pro' ); ?></label>
-								<input type="email" value="<?php echo esc_attr( $user->user_email ); ?>" disabled style="width:100%; padding:10px; border:1px solid var(--developer-starter-pro-gray-200); border-radius:6px; background:#f8fafc; cursor:not-allowed;">
-							</div>
-
-							<?php if ( $dob ) : ?>
-								<div>
-									<label style="display:block; font-weight:600; margin-bottom:4px; font-size:0.875rem;"><?php esc_html_e( 'Date of Birth', 'developer-starter-pro' ); ?></label>
-									<input type="text" value="<?php echo esc_attr( date_i18n( get_option( 'date_format' ), strtotime( $dob ) ) ); ?>" disabled style="width:100%; padding:10px; border:1px solid var(--developer-starter-pro-gray-200); border-radius:6px; background:#f8fafc; cursor:not-allowed;">
-								</div>
-							<?php endif; ?>
-
-							<div>
-								<label style="display:block; font-weight:600; margin-bottom:4px; font-size:0.875rem;"><?php esc_html_e( 'Contact Phone Number', 'developer-starter-pro' ); ?> <span style="color:var(--developer-starter-pro-danger);">*</span></label>
-								<input type="tel" name="patient_phone" value="<?php echo esc_attr( $phone ); ?>" required style="width:100%; padding:10px; border:1px solid var(--developer-starter-pro-gray-200); border-radius:6px;">
-							</div>
-
-							<div style="margin-top:10px; border-top:1px solid var(--developer-starter-pro-gray-100); padding-top:16px;">
-								<h4 style="margin:0 0 12px 0; font-size:1rem; color:var(--developer-starter-pro-secondary);"><?php esc_html_e( 'Secure Medical History', 'developer-starter-pro' ); ?></h4>
-								<span style="font-size:0.75rem; color:var(--developer-starter-pro-gray-400); display:block; margin-bottom:12px;"><?php esc_html_e( 'This clinical data is encrypted and visible only to your treating doctor.', 'developer-starter-pro' ); ?></span>
-								
-								<div style="margin-bottom:12px;">
-									<label style="display:block; font-weight:600; margin-bottom:4px; font-size:0.875rem;"><?php esc_html_e( 'Known Allergies', 'developer-starter-pro' ); ?></label>
-									<textarea name="medical_allergies" rows="2" style="width:100%; padding:10px; border:1px solid var(--developer-starter-pro-gray-200); border-radius:6px;" placeholder="e.g. Penicillin, Latex, None"><?php echo esc_textarea( $allergies ); ?></textarea>
-								</div>
-
-								<div style="margin-bottom:12px;">
-									<label style="display:block; font-weight:600; margin-bottom:4px; font-size:0.875rem;"><?php esc_html_e( 'Current Medications', 'developer-starter-pro' ); ?></label>
-									<textarea name="medical_medications" rows="2" style="width:100%; padding:10px; border:1px solid var(--developer-starter-pro-gray-200); border-radius:6px;" placeholder="e.g. Blood pressure pills, None"><?php echo esc_textarea( $medications ); ?></textarea>
-								</div>
-
-								<div>
-									<label style="display:block; font-weight:600; margin-bottom:4px; font-size:0.875rem;"><?php esc_html_e( 'Pre-existing Medical Conditions', 'developer-starter-pro' ); ?></label>
-									<textarea name="medical_conditions" rows="2" style="width:100%; padding:10px; border:1px solid var(--developer-starter-pro-gray-200); border-radius:6px;" placeholder="e.g. Diabetes, Pregnancy, None"><?php echo esc_textarea( $conditions ); ?></textarea>
-								</div>
-							</div>
-
-							<div style="margin-top:10px;">
-								<button type="submit" class="developer-starter-pro-btn developer-starter-pro-btn--primary" style="width:100%; padding:10px;">
-									<?php esc_html_e( 'Update Patient File', 'developer-starter-pro' ); ?>
-								</button>
-							</div>
-						</div>
-					</form>
+				<!-- Left Column: Navigation Tabs -->
+				<div class="portal-nav-card" style="background:#fff; border:1px solid var(--developer-starter-pro-gray-200); border-radius:12px; padding:20px; box-shadow: var(--developer-starter-pro-shadow-sm); display:flex; flex-direction:column; gap:8px;">
+					<button class="portal-tab-btn active" data-target="panel-upcoming" style="width:100%; border:none; background:none; text-align:left; padding:12px 16px; font-weight:600; font-size:1rem; cursor:pointer; border-radius:8px; transition: var(--developer-starter-pro-transition-fast); display:flex; align-items:center; gap:10px;">
+						📅 <?php esc_html_e( 'Upcoming Booking', 'developer-starter-pro' ); ?>
+					</button>
+					<button class="portal-tab-btn" data-target="panel-history" style="width:100%; border:none; background:none; text-align:left; padding:12px 16px; font-weight:600; font-size:1rem; cursor:pointer; border-radius:8px; transition: var(--developer-starter-pro-transition-fast); display:flex; align-items:center; gap:10px;">
+						📜 <?php esc_html_e( 'Past & Cancelled', 'developer-starter-pro' ); ?>
+					</button>
+					<button class="portal-tab-btn" data-target="panel-profile" style="width:100%; border:none; background:none; text-align:left; padding:12px 16px; font-weight:600; font-size:1rem; cursor:pointer; border-radius:8px; transition: var(--developer-starter-pro-transition-fast); display:flex; align-items:center; gap:10px;">
+						🛡️ <?php esc_html_e( 'Medical & Profile', 'developer-starter-pro' ); ?>
+					</button>
 				</div>
 
-				<!-- Right Column: Patient Appointments Schedules -->
-				<div class="portal-appointments-area">
+				<!-- Right Column: Panels -->
+				<div class="portal-panels-area">
 					
-					<!-- Upcoming appointments -->
-					<div class="portal-card" style="background:#fff; border:1px solid var(--developer-starter-pro-gray-200); border-radius:12px; padding:30px; box-shadow: var(--developer-starter-pro-shadow-sm); margin-bottom:30px;">
-						<h3 style="margin-top:0; margin-bottom:20px; font-size:1.25rem; border-bottom:2px solid var(--developer-starter-pro-gray-100); padding-bottom:12px;">📅 <?php esc_html_e( 'Upcoming Appointments', 'developer-starter-pro' ); ?></h3>
+					<!-- Panel 1: Upcoming Appointments -->
+					<div class="portal-tab-panel active" id="panel-upcoming">
+						<div class="portal-card" style="background:#fff; border:1px solid var(--developer-starter-pro-gray-200); border-radius:12px; padding:30px; box-shadow: var(--developer-starter-pro-shadow-sm);">
+							<h3 style="margin-top:0; margin-bottom:20px; font-size:1.25rem; border-bottom:2px solid var(--developer-starter-pro-gray-100); padding-bottom:12px;">📅 <?php esc_html_e( 'Upcoming Appointments', 'developer-starter-pro' ); ?></h3>
 
-						<?php if ( ! empty( $upcoming ) ) : ?>
-							<div style="display:flex; flex-direction:column; gap:16px;">
-								<?php foreach ( $upcoming as $apt ) : 
-									$doc_name = get_the_title( $apt->doctor_id );
-									$srv_name = get_the_title( $apt->service_id );
-									$status_class = esc_attr( $apt->status );
-									?>
-									<div class="patient-appointment-card" style="border:1px solid var(--developer-starter-pro-gray-200); border-left:4px solid var(--developer-starter-pro-primary); padding:20px; border-radius:8px; display:flex; justify-content:space-between; align-items:center;">
-										<div>
-											<strong style="font-size:1.0625rem; display:block; color:var(--developer-starter-pro-secondary);"><?php echo esc_html( $srv_name ); ?></strong>
-											<span style="font-size:0.875rem; color:var(--developer-starter-pro-gray-500); display:block; margin-top:2px;">👨‍⚕️ <?php echo esc_html( $doc_name ); ?></span>
-											<span style="font-size:0.8125rem; color:var(--developer-starter-pro-gray-400); display:block; margin-top:4px;">
-												🗓️ <?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $apt->booking_date ) ) ); ?> at <?php echo esc_html( date( 'g:i A', strtotime( $apt->time_slot ) ) ); ?>
-											</span>
-										</div>
-										<div style="text-align:right;">
-											<span class="patient-status-badge <?php echo $status_class; ?>" style="display:inline-block; padding: 4px 12px; border-radius:12px; font-size:0.75rem; font-weight:700; text-transform:uppercase;">
-												<?php echo esc_html( $apt->status ); ?>
-											</span>
-										</div>
-									</div>
-								<?php endforeach; ?>
-							</div>
-						<?php else : ?>
-							<p style="color:var(--developer-starter-pro-gray-400); font-style:italic;"><?php esc_html_e( 'You have no active upcoming appointments.', 'developer-starter-pro' ); ?></p>
-							<div style="margin-top:16px;">
-								<a href="<?php 
-									// Find booking page URL
-									$booking_pages = get_pages( array(
-										'meta_key'   => '_wp_page_template',
-										'meta_value' => 'page-templates/template-booking.php'
-									) );
-									echo ! empty( $booking_pages ) ? esc_url( get_permalink( $booking_pages[0]->ID ) ) : esc_url( home_url( '/booking/' ) );
-								?>" class="developer-starter-pro-btn developer-starter-pro-btn--primary">
-									<?php esc_html_e( 'Schedule Appointment Now', 'developer-starter-pro' ); ?>
-								</a>
-							</div>
-						<?php endif; ?>
-					</div>
-
-					<!-- History / Past appointments -->
-					<div class="portal-card" style="background:#fff; border:1px solid var(--developer-starter-pro-gray-200); border-radius:12px; padding:30px; box-shadow: var(--developer-starter-pro-shadow-sm);">
-						<h3 style="margin-top:0; margin-bottom:20px; font-size:1.25rem; border-bottom:2px solid var(--developer-starter-pro-gray-100); padding-bottom:12px;">📜 <?php esc_html_e( 'Past & Cancelled Appointments', 'developer-starter-pro' ); ?></h3>
-
-						<?php if ( ! empty( $past ) ) : ?>
-							<table class="portal-history-table" style="width:100%; border-collapse: collapse; font-size:0.875rem;">
-								<thead>
-									<tr style="border-bottom: 2px solid var(--developer-starter-pro-gray-100); text-align: left;">
-										<th style="padding:10px 0; font-weight:600; color:var(--developer-starter-pro-gray-500);"><?php esc_html_e( 'Service / Doctor', 'developer-starter-pro' ); ?></th>
-										<th style="padding:10px 0; font-weight:600; color:var(--developer-starter-pro-gray-500);"><?php esc_html_e( 'Date & Time', 'developer-starter-pro' ); ?></th>
-										<th style="padding:10px 0; font-weight:600; color:var(--developer-starter-pro-gray-500); text-align:right;"><?php esc_html_e( 'Status', 'developer-starter-pro' ); ?></th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php foreach ( $past as $apt ) : 
+							<?php if ( ! empty( $upcoming ) ) : ?>
+								<div class="upcoming-appointments-list" style="display:flex; flex-direction:column; gap:16px;">
+									<?php foreach ( $upcoming as $apt ) : 
 										$doc_name = get_the_title( $apt->doctor_id );
 										$srv_name = get_the_title( $apt->service_id );
 										$status_class = esc_attr( $apt->status );
 										?>
-										<tr style="border-bottom:1px solid var(--developer-starter-pro-gray-100);">
-											<td style="padding:12px 0;">
-												<strong><?php echo esc_html( $srv_name ); ?></strong>
-												<span style="display:block; font-size:0.75rem; color:var(--developer-starter-pro-gray-400); margin-top:2px;">👨‍⚕️ <?php echo esc_html( $doc_name ); ?></span>
-											</td>
-											<td style="padding:12px 0; color:var(--developer-starter-pro-gray-600);">
-												<?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $apt->booking_date ) ) ); ?>
-												<span style="display:block; font-size:0.75rem; color:var(--developer-starter-pro-gray-400);"><?php echo esc_html( date( 'g:i A', strtotime( $apt->time_slot ) ) ); ?></span>
-											</td>
-											<td style="padding:12px 0; text-align:right;">
-												<span class="patient-status-badge <?php echo $status_class; ?>" style="display:inline-block; padding: 2px 8px; border-radius:10px; font-size:0.6875rem; font-weight:700; text-transform:uppercase;">
+										<div class="patient-appointment-card" data-id="<?php echo intval( $apt->id ); ?>" data-doctor="<?php echo esc_attr( $doc_name ); ?>" data-service="<?php echo esc_attr( $srv_name ); ?>" data-date="<?php echo esc_attr( date_i18n( get_option( 'date_format' ), strtotime( $apt->booking_date ) ) ); ?>" data-time="<?php echo esc_attr( date( 'g:i A', strtotime( $apt->time_slot ) ) ); ?>" data-status="<?php echo esc_attr( ucfirst( $apt->status ) ); ?>" style="border:1px solid var(--developer-starter-pro-gray-200); border-left:4px solid var(--developer-starter-pro-primary); padding:20px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+											<div>
+												<strong style="font-size:1.0625rem; display:block; color:var(--developer-starter-pro-secondary);"><?php echo esc_html( $srv_name ); ?></strong>
+												<span style="font-size:0.875rem; color:var(--developer-starter-pro-gray-500); display:block; margin-top:2px;">👨‍⚕️ <?php echo esc_html( $doc_name ); ?></span>
+												<span style="font-size:0.8125rem; color:var(--developer-starter-pro-gray-400); display:block; margin-top:4px;">
+													🗓️ <?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $apt->booking_date ) ) ); ?> at <?php echo esc_html( date( 'g:i A', strtotime( $apt->time_slot ) ) ); ?>
+												</span>
+											</div>
+											<div style="display:flex; align-items:center; gap:12px;">
+												<span class="patient-status-badge <?php echo $status_class; ?>" style="display:inline-block; padding: 4px 12px; border-radius:12px; font-size:0.75rem; font-weight:700; text-transform:uppercase;">
 													<?php echo esc_html( $apt->status ); ?>
 												</span>
-											</td>
-										</tr>
+												<button type="button" class="print-appointment-btn developer-starter-pro-btn developer-starter-pro-btn--outline" style="padding:6px 14px; font-size:0.75rem;">
+													🖨️ <?php esc_html_e( 'Print', 'developer-starter-pro' ); ?>
+												</button>
+												<button type="button" class="cancel-appointment-btn developer-starter-pro-btn" data-id="<?php echo intval( $apt->id ); ?>" style="padding:6px 14px; font-size:0.75rem; background:#fee2e2; border-color:#fca5a5; color:#b91c1c;">
+													❌ <?php esc_html_e( 'Cancel', 'developer-starter-pro' ); ?>
+												</button>
+											</div>
+										</div>
 									<?php endforeach; ?>
-								</tbody>
-							</table>
-						<?php else : ?>
-							<p style="color:var(--developer-starter-pro-gray-400); font-style:italic; margin-bottom:0;"><?php esc_html_e( 'No past appointments on record.', 'developer-starter-pro' ); ?></p>
-						<?php endif; ?>
+								</div>
+							<?php else : ?>
+								<p style="color:var(--developer-starter-pro-gray-400); font-style:italic;"><?php esc_html_e( 'You have no active upcoming appointments.', 'developer-starter-pro' ); ?></p>
+								<div style="margin-top:16px;">
+									<a href="<?php echo esc_url( developer_starter_pro_get_booking_url() ); ?>" class="developer-starter-pro-btn developer-starter-pro-btn--primary">
+										<?php esc_html_e( 'Schedule Appointment Now', 'developer-starter-pro' ); ?>
+									</a>
+								</div>
+							<?php endif; ?>
+						</div>
+					</div>
+
+					<!-- Panel 2: Past Appointments -->
+					<div class="portal-tab-panel" id="panel-history">
+						<div class="portal-card" style="background:#fff; border:1px solid var(--developer-starter-pro-gray-200); border-radius:12px; padding:30px; box-shadow: var(--developer-starter-pro-shadow-sm);">
+							<h3 style="margin-top:0; margin-bottom:20px; font-size:1.25rem; border-bottom:2px solid var(--developer-starter-pro-gray-100); padding-bottom:12px;">📜 <?php esc_html_e( 'Past & Cancelled Appointments', 'developer-starter-pro' ); ?></h3>
+
+							<?php if ( ! empty( $past ) ) : ?>
+								<table class="portal-history-table" style="width:100%; border-collapse: collapse; font-size:0.875rem;">
+									<thead>
+										<tr style="border-bottom: 2px solid var(--developer-starter-pro-gray-100); text-align: left;">
+											<th style="padding:10px 0; font-weight:600; color:var(--developer-starter-pro-gray-500);"><?php esc_html_e( 'Service / Doctor', 'developer-starter-pro' ); ?></th>
+											<th style="padding:10px 0; font-weight:600; color:var(--developer-starter-pro-gray-500);"><?php esc_html_e( 'Date & Time', 'developer-starter-pro' ); ?></th>
+											<th style="padding:10px 0; font-weight:600; color:var(--developer-starter-pro-gray-500); text-align:right;"><?php esc_html_e( 'Status', 'developer-starter-pro' ); ?></th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach ( $past as $apt ) : 
+											$doc_name = get_the_title( $apt->doctor_id );
+											$srv_name = get_the_title( $apt->service_id );
+											$status_class = esc_attr( $apt->status );
+											?>
+											<tr style="border-bottom:1px solid var(--developer-starter-pro-gray-100);">
+												<td style="padding:12px 0;">
+													<strong><?php echo esc_html( $srv_name ); ?></strong>
+													<span style="display:block; font-size:0.75rem; color:var(--developer-starter-pro-gray-400); margin-top:2px;">👨‍⚕️ <?php echo esc_html( $doc_name ); ?></span>
+												</td>
+												<td style="padding:12px 0; color:var(--developer-starter-pro-gray-600);">
+													<?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $apt->booking_date ) ) ); ?>
+													<span style="display:block; font-size:0.75rem; color:var(--developer-starter-pro-gray-400);"><?php echo esc_html( date( 'g:i A', strtotime( $apt->time_slot ) ) ); ?></span>
+												</td>
+												<td style="padding:12px 0; text-align:right;">
+													<span class="patient-status-badge <?php echo $status_class; ?>" style="display:inline-block; padding: 2px 8px; border-radius:10px; font-size:0.6875rem; font-weight:700; text-transform:uppercase;">
+														<?php echo esc_html( $apt->status ); ?>
+													</span>
+												</td>
+											</tr>
+										<?php endforeach; ?>
+									</tbody>
+								</table>
+							<?php else : ?>
+								<p style="color:var(--developer-starter-pro-gray-400); font-style:italic; margin-bottom:0;"><?php esc_html_e( 'No past appointments on record.', 'developer-starter-pro' ); ?></p>
+							<?php endif; ?>
+						</div>
+					</div>
+
+					<!-- Panel 3: Patient Profile & Medical History -->
+					<div class="portal-tab-panel" id="panel-profile">
+						<div class="portal-card" style="background:#fff; border:1px solid var(--developer-starter-pro-gray-200); border-radius:12px; padding:30px; box-shadow: var(--developer-starter-pro-shadow-sm);">
+							<h3 style="margin-top:0; margin-bottom:20px; font-size:1.25rem; border-bottom:2px solid var(--developer-starter-pro-gray-100); padding-bottom:12px;">🛡️ <?php esc_html_e( 'Medical & Contact Profile', 'developer-starter-pro' ); ?></h3>
+							
+							<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post">
+								<input type="hidden" name="action" value="dentalpro_patient_update_profile">
+								<?php wp_nonce_field( 'dentalpro_update_profile_action', 'profile_nonce' ); ?>
+
+								<div style="display:flex; flex-direction:column; gap:16px;">
+									<div>
+										<label style="display:block; font-weight:600; margin-bottom:4px; font-size:0.875rem;"><?php esc_html_e( 'Email Address (Account)', 'developer-starter-pro' ); ?></label>
+										<input type="email" value="<?php echo esc_attr( $user->user_email ); ?>" disabled style="width:100%; padding:10px; border:1px solid var(--developer-starter-pro-gray-200); border-radius:6px; background:#f8fafc; cursor:not-allowed;">
+									</div>
+
+									<?php if ( $dob ) : ?>
+										<div>
+											<label style="display:block; font-weight:600; margin-bottom:4px; font-size:0.875rem;"><?php esc_html_e( 'Date of Birth', 'developer-starter-pro' ); ?></label>
+											<input type="text" value="<?php echo esc_attr( date_i18n( get_option( 'date_format' ), strtotime( $dob ) ) ); ?>" disabled style="width:100%; padding:10px; border:1px solid var(--developer-starter-pro-gray-200); border-radius:6px; background:#f8fafc; cursor:not-allowed;">
+										</div>
+									<?php endif; ?>
+
+									<div>
+										<label style="display:block; font-weight:600; margin-bottom:4px; font-size:0.875rem;"><?php esc_html_e( 'Contact Phone Number', 'developer-starter-pro' ); ?> <span style="color:var(--developer-starter-pro-danger);">*</span></label>
+										<input type="tel" name="patient_phone" value="<?php echo esc_attr( $phone ); ?>" required style="width:100%; padding:10px; border:1px solid var(--developer-starter-pro-gray-200); border-radius:6px;">
+									</div>
+
+									<div style="margin-top:10px; border-top:1px solid var(--developer-starter-pro-gray-100); padding-top:16px;">
+										<h4 style="margin:0 0 12px 0; font-size:1rem; color:var(--developer-starter-pro-secondary);"><?php esc_html_e( 'Secure Medical History', 'developer-starter-pro' ); ?></h4>
+										<span style="font-size:0.75rem; color:var(--developer-starter-pro-gray-400); display:block; margin-bottom:12px;"><?php esc_html_e( 'This clinical data is encrypted and visible only to your treating doctor.', 'developer-starter-pro' ); ?></span>
+										
+										<div style="margin-bottom:12px;">
+											<label style="display:block; font-weight:600; margin-bottom:4px; font-size:0.875rem;"><?php esc_html_e( 'Known Allergies', 'developer-starter-pro' ); ?></label>
+											<textarea name="medical_allergies" rows="2" style="width:100%; padding:10px; border:1px solid var(--developer-starter-pro-gray-200); border-radius:6px;" placeholder="e.g. Penicillin, Latex, None"><?php echo esc_textarea( $allergies ); ?></textarea>
+										</div>
+
+										<div style="margin-bottom:12px;">
+											<label style="display:block; font-weight:600; margin-bottom:4px; font-size:0.875rem;"><?php esc_html_e( 'Current Medications', 'developer-starter-pro' ); ?></label>
+											<textarea name="medical_medications" rows="2" style="width:100%; padding:10px; border:1px solid var(--developer-starter-pro-gray-200); border-radius:6px;" placeholder="e.g. Blood pressure pills, None"><?php echo esc_textarea( $medications ); ?></textarea>
+										</div>
+
+										<div>
+											<label style="display:block; font-weight:600; margin-bottom:4px; font-size:0.875rem;"><?php esc_html_e( 'Pre-existing Medical Conditions', 'developer-starter-pro' ); ?></label>
+											<textarea name="medical_conditions" rows="2" style="width:100%; padding:10px; border:1px solid var(--developer-starter-pro-gray-200); border-radius:6px;" placeholder="e.g. Diabetes, Pregnancy, None"><?php echo esc_textarea( $conditions ); ?></textarea>
+										</div>
+									</div>
+
+									<div style="margin-top:10px;">
+										<button type="submit" class="developer-starter-pro-btn developer-starter-pro-btn--primary" style="width:100%; padding:10px; justify-content:center;">
+											<?php esc_html_e( 'Update Patient File', 'developer-starter-pro' ); ?>
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
 					</div>
 
 				</div>

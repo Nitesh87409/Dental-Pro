@@ -82,6 +82,15 @@ $related = get_posts( array(
 					<div class="developer-starter-pro-card">
 						<div class="developer-starter-pro-card-content developer-starter-pro-post-content">
 							<?php the_content(); ?>
+
+							<?php 
+							// Social Share buttons
+							if ( function_exists( 'developer_starter_pro_social_share' ) ) {
+								echo '<div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--developer-starter-pro-gray-200);">';
+								developer_starter_pro_social_share();
+								echo '</div>';
+							}
+							?>
 						</div>
 					</div>
 				</div>

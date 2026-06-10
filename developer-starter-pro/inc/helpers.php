@@ -234,3 +234,99 @@ function developer_starter_pro_get_booking_url() {
 	return home_url( '/booking/' );
 }
 
+/**
+ * Register Before/After Image Comparison Slider shortcode.
+ *
+ * @param array $atts Shortcode attributes.
+ * @return string Shortcode HTML.
+ */
+function developer_starter_pro_before_after_shortcode( $atts ) {
+	$atts = shortcode_atts( array(
+		'before_url'   => '',
+		'after_url'    => '',
+		'before_label' => esc_html__( 'Before', 'developer-starter-pro' ),
+		'after_label'  => esc_html__( 'After', 'developer-starter-pro' ),
+		'title'        => '',
+	), $atts, 'dental_before_after' );
+
+	if ( empty( $atts['before_url'] ) || empty( $atts['after_url'] ) ) {
+		return '<p>' . esc_html__( 'Please provide both before_url and after_url attributes for the comparison slider.', 'developer-starter-pro' ) . '</p>';
+	}
+
+	ob_start();
+	?>
+	<div class="developer-starter-pro-ba-container">
+		<?php if ( ! empty( $atts['title'] ) ) : ?>
+			<h4 class="developer-starter-pro-ba-title"><?php echo esc_html( $atts['title'] ); ?></h4>
+		<?php endif; ?>
+		<div class="developer-starter-pro-ba-wrapper">
+			<!-- After Image (Background/Left) -->
+			<div class="developer-starter-pro-ba-after">
+				<img src="<?php echo esc_url( $atts['after_url'] ); ?>" alt="<?php echo esc_attr( $atts['after_label'] ); ?>" />
+				<span class="developer-starter-pro-ba-badge after-badge"><?php echo esc_html( $atts['after_label'] ); ?></span>
+			</div>
+			<!-- Before Image (Overlay/Right) -->
+			<div class="developer-starter-pro-ba-before">
+				<img src="<?php echo esc_url( $atts['before_url'] ); ?>" alt="<?php echo esc_attr( $atts['before_label'] ); ?>" />
+				<span class="developer-starter-pro-ba-badge before-badge"><?php echo esc_html( $atts['before_label'] ); ?></span>
+			</div>
+			<!-- Resizable Slider Handle -->
+			<input type="range" min="0" max="100" value="50" class="developer-starter-pro-ba-slider" aria-label="<?php esc_attr_e( 'Before and after comparison slider', 'developer-starter-pro' ); ?>" />
+			<div class="developer-starter-pro-ba-handle"></div>
+		</div>
+	</div>
+	<?php
+	return ob_get_clean();
+}
+add_shortcode( 'dental_before_after', 'developer_starter_pro_before_after_shortcode' );
+
+/**
+ * Output social share buttons for posts & services.
+ */
+function developer_starter_pro_social_share() {
+	$url   = urlencode( get_permalink() );
+	$title = urlencode( get_the_title() );
+
+	$share_links = array(
+		'facebook' => array(
+			'url'  => 'https://www.facebook.com/sharer/sharer.php?u=' . $url,
+			'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>',
+			'name' => esc_html__( 'Facebook', 'developer-starter-pro' ),
+		),
+		'twitter' => array(
+			'url'  => 'https://twitter.com/intent/tweet?url=' . $url . '&text=' . $title,
+			'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
+			'name' => esc_html__( 'X / Twitter', 'developer-starter-pro' ),
+		),
+		'linkedin' => array(
+			'url'  => 'https://www.linkedin.com/shareArticle?mini=true&url=' . $url . '&title=' . $title,
+			'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>',
+			'name' => esc_html__( 'LinkedIn', 'developer-starter-pro' ),
+		),
+		'whatsapp' => array(
+			'url'  => 'https://api.whatsapp.com/send?text=' . $title . '%20' . $url,
+			'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.248 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.42 9.863-9.864.001-2.636-1.023-5.11-2.884-6.974C16.59 1.897 14.1 1.87 11.465 1.87 6.03 1.87 1.606 6.291 1.603 11.737c-.001 1.638.5 3.226 1.458 4.825L2.046 22l5.602-1.468zM17.65 14.49c-.3-.15-1.782-.88-2.057-.98-.275-.1-.475-.15-.675.15-.2.3-.775.98-.95 1.18-.175.2-.35.225-.65.075-.3-.15-1.265-.467-2.41-1.485-.89-.794-1.49-1.775-1.665-2.075-.175-.3-.019-.462.13-.61.135-.133.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.588-.491-.508-.675-.518-.174-.01-.374-.012-.574-.012-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5s1.075 2.9 1.225 3.1c.15.2 2.11 3.22 5.11 4.52.714.31 1.27.496 1.703.635.717.228 1.37.195 1.886.118.574-.085 1.782-.73 2.032-1.435.25-.705.25-1.31.175-1.435-.075-.125-.275-.2-.575-.35z"/></svg>',
+			'name' => esc_html__( 'WhatsApp', 'developer-starter-pro' ),
+		),
+	);
+	?>
+	<div class="developer-starter-pro-share-box">
+		<span class="share-box-label"><?php esc_html_e( 'Share this:', 'developer-starter-pro' ); ?></span>
+		<div class="share-buttons">
+			<?php foreach ( $share_links as $key => $link ) : ?>
+				<a href="<?php echo esc_url( $link['url'] ); ?>" 
+				   class="share-btn share-btn--<?php echo esc_attr( $key ); ?>" 
+				   target="_blank" 
+				   rel="noopener noreferrer" 
+				   title="<?php echo esc_attr( sprintf( __( 'Share on %s', 'developer-starter-pro' ), $link['name'] ) ); ?>">
+					<?php echo $link['icon']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<span><?php echo esc_html( $link['name'] ); ?></span>
+				</a>
+			<?php endforeach; ?>
+		</div>
+	</div>
+	<?php
+}
+
+
+

@@ -258,5 +258,16 @@ document.addEventListener('DOMContentLoaded', function() {
 			goToStep(2);
 		}
 	}
+
+	// URL query params or PHP pre-selected inputs auto-advance
+	var initialServiceChecked = form.querySelector('input[name="service_id"]:checked');
+	if (initialServiceChecked) {
+		goToStep(2);
+		var initialDoctorChecked = form.querySelector('input[name="doctor_id"]:checked');
+		if (initialDoctorChecked) {
+			goToStep(3);
+			fetchTimeSlots();
+		}
+	}
 });
 

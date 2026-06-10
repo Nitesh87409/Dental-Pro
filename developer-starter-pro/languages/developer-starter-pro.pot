@@ -1,0 +1,2459 @@
+# Copyright (C) 2026 DentalPro Elite
+# This file is distributed under the same license as the DentalPro Elite theme.
+msgid ""
+msgstr ""
+"Project-Id-Version: DentalPro Elite 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-10 16:05+0530\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"X-Generator: Custom Python POT Parser\n"
+
+#: inc/helpers.php:191
+msgid "%d out of 5 stars"
+msgstr ""
+
+#: archive-doctors.php:84
+#: page-templates/template-about.php:132
+#: template-parts/homepage/doctors-section.php:66
+msgid "%s+ Years Experience"
+msgstr ""
+
+#: inc/class-dental-calculator.php:120
+msgid "*Calculated price is a clinical estimate only."
+msgstr ""
+
+#: inc/class-dental-chatbot.php:226
+msgid "+ Add New Q&A Pair"
+msgstr ""
+
+#: inc/class-dental-calculator.php:54
+msgid "1. Select Dental Treatments"
+msgstr ""
+
+#: inc/class-dental-calculator.php:83
+msgid "2. Insurance Coverage Level"
+msgstr ""
+
+#: inc/class-dental-admin.php:415
+msgid "3 Columns — With newsletter signup"
+msgstr ""
+
+#: inc/class-dental-admin.php:414
+msgid "4 Columns — Full featured footer"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:155
+msgid "AI Chatbot FAQ Manager"
+msgstr ""
+
+#: single-doctors.php:125
+msgid "About"
+msgstr ""
+
+#: footer.php:69
+msgid "About Us"
+msgstr ""
+
+#: inc/class-dental-admin.php:338
+msgid "Accent"
+msgstr ""
+
+#: inc/class-dental-admin.php:320
+msgid "Accent Color"
+msgstr ""
+
+#: page-templates/template-patient-login.php:34
+msgid "Access your upcoming appointments, medical history, and clinical summaries."
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:109
+msgid "Actions"
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:354
+#: inc/class-dental-hero-slider.php:366
+msgid "Active"
+msgstr ""
+
+#: inc/class-dental-cpt.php:56
+#: inc/class-dental-cpt.php:112
+#: inc/class-dental-cpt.php:166
+#: inc/class-dental-cpt.php:212
+msgid "Add New"
+msgstr ""
+
+#: inc/class-dental-cpt.php:211
+msgid "Add New Appointment"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:39
+msgid "Add New Department"
+msgstr ""
+
+#: inc/class-dental-cpt.php:55
+msgid "Add New Doctor"
+msgstr ""
+
+#: inc/class-dental-cpt.php:111
+msgid "Add New Service"
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:154
+msgid "Add New Slide"
+msgstr ""
+
+#: inc/class-dental-cpt.php:165
+msgid "Add New Testimonial"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:86
+msgid "Add New Treatment Type"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:44
+msgid "Add or remove departments"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:91
+msgid "Add or remove treatment types"
+msgstr ""
+
+#: inc/class-dental-admin.php:444
+msgid "Add your social media profile URLs. Leave empty to hide."
+msgstr ""
+
+#: inc/class-dental-admin.php:283
+msgid "Address"
+msgstr ""
+
+#: inc/class-dental-notifications.php:155
+msgid "Administrator New Booking Alert"
+msgstr ""
+
+#: page-templates/template-gallery.php:35
+msgid "Advanced 3D X-Ray Scanner"
+msgstr ""
+
+#: page-templates/template-about.php:67
+msgid "Advanced Technology"
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:92
+msgid "All"
+msgstr ""
+
+#: inc/class-dental-cpt.php:210
+msgid "All Appointments"
+msgstr ""
+
+#: archive-doctors.php:39
+#: inc/class-dental-taxonomies.php:35
+msgid "All Departments"
+msgstr ""
+
+#: inc/class-dental-cpt.php:54
+msgid "All Doctors"
+msgstr ""
+
+#: archive-services.php:39
+#: inc/class-dental-cpt.php:110
+msgid "All Services"
+msgstr ""
+
+#: inc/class-dental-cpt.php:164
+msgid "All Testimonials"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:82
+msgid "All Treatment Types"
+msgstr ""
+
+#: footer.php:166
+#: inc/class-dental-notifications.php:334
+msgid "All rights reserved."
+msgstr ""
+
+#: page-templates/template-patient-register.php:93
+msgid "Already have an account?"
+msgstr ""
+
+#: page-templates/template-patient-register.php:27
+msgid "An error occurred during registration. Please try again."
+msgstr ""
+
+#: inc/class-dental-cpt.php:221
+#: inc/class-dental-cpt.php:389
+msgid "Appointment"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:562
+msgid "Appointment Date"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:95
+msgid "Appointment Details"
+msgstr ""
+
+#: page-templates/template-booking.php:205
+msgid "Appointment Scheduled!"
+msgstr ""
+
+#: inc/class-dental-notifications.php:59
+msgid "Appointment Scheduled: {service_name}"
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:83
+msgid "Appointment Scheduling Manager"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:566
+msgid "Appointment Time"
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:37
+#: inc/class-dental-admin-booking.php:38
+#: inc/class-dental-cpt.php:209
+msgid "Appointments"
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:147
+msgid "Approve"
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:94
+msgid "Approved"
+msgstr ""
+
+#: page-templates/template-faq.php:94
+msgid "Are dental X-rays safe?"
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:203
+msgid "Are you sure you want to cancel this appointment?"
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:284
+msgid "Are you sure you want to remove this slide?"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:193
+#: inc/class-dental-meta-boxes.php:208
+msgid "Available"
+msgstr ""
+
+#: page-templates/template-booking.php:153
+msgid "Available Slots:"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:342
+msgid "Average treatment duration in minutes"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:140
+msgid "BDS, MDS, FICOI (one per line)"
+msgstr ""
+
+#: page-templates/template-booking.php:193
+msgid "Back"
+msgstr ""
+
+#: 404.php:24
+#: page-templates/template-booking.php:208
+msgid "Back to Home"
+msgstr ""
+
+#: footer.php:184
+msgid "Back to top"
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:384
+msgid "Background Image"
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:401
+msgid "Background Video URL"
+msgstr ""
+
+#: inc/class-dental-admin.php:242
+msgid "Basic information about your dental clinic."
+msgstr ""
+
+#: inc/class-dental-setup.php:207
+msgid "Blog Sidebar"
+msgstr ""
+
+#: single-doctors.php:93
+#: single-services.php:95
+#: inc/class-dental-chatbot.php:402
+#: inc/class-dental-enqueue.php:182
+msgid "Book Appointment"
+msgstr ""
+
+#: header.php:115
+#: page-templates/template-pricing.php:93
+msgid "Book Now"
+msgstr ""
+
+#: inc/class-dental-calculator.php:118
+msgid "Book Treatments"
+msgstr ""
+
+#: single-services.php:93
+msgid "Book your appointment today and take the first step towards a healthier smile."
+msgstr ""
+
+#: page-templates/template-booking.php:33
+msgid "Book your dental appointment in four simple steps."
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:106
+msgid "Booking Date"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:216
+msgid "Bot Answer:"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:198
+msgid "Bot Q&A FAQ Database"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:212
+msgid "Bot Question / Option Label:"
+msgstr ""
+
+#: inc/class-dental-admin.php:538
+msgid "Bottom Left"
+msgstr ""
+
+#: inc/class-dental-admin.php:537
+msgid "Bottom Right"
+msgstr ""
+
+#: single-doctors.php:35
+#: single-services.php:33
+msgid "Breadcrumb"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:355
+msgid "Brief description for service cards (max 150 characters)"
+msgstr ""
+
+#: page-templates/template-booking.php:182
+msgid "Briefly explain your reasons for booking (optional)..."
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:419
+msgid "Button 1 Text"
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:421
+msgid "Button 1 URL"
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:425
+msgid "Button 2 Text"
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:427
+msgid "Button 2 URL"
+msgstr ""
+
+#: inc/class-dental-admin.php:534
+msgid "Button Position"
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:416
+msgid "CTA Buttons"
+msgstr ""
+
+#: single-doctors.php:98
+msgid "Call Doctor"
+msgstr ""
+
+#: header.php:165
+msgid "Call Now"
+msgstr ""
+
+#: single-services.php:100
+msgid "Call Us"
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:157
+msgid "Cancel"
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:96
+#: inc/class-dental-cpt.php:443
+#: inc/class-dental-meta-boxes.php:575
+msgid "Cancelled"
+msgstr ""
+
+#: inc/class-dental-admin.php:365
+msgid "Centered — Logo center, menu below"
+msgstr ""
+
+#: footer.php:209
+msgid "Chat with us!"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:46
+#: inc/class-dental-chatbot.php:47
+msgid "Chatbot FAQs"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:176
+msgid "Chatbot Name"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:144
+msgid "Chatbot Settings and FAQs updated successfully."
+msgstr ""
+
+#: inc/class-dental-chatbot.php:188
+msgid "Chatbot Theme Color"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:172
+msgid "Check to render the floating chatbot in the bottom right corner of the website."
+msgstr ""
+
+#: page-templates/template-booking.php:149
+msgid "Choose Date:"
+msgstr ""
+
+#: page-templates/template-patient-register.php:69
+msgid "Choose Password"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:45
+#: inc/class-dental-taxonomies.php:92
+msgid "Choose from the most used"
+msgstr ""
+
+#: inc/class-dental-admin.php:364
+msgid "Classic — Logo left, menu right"
+msgstr ""
+
+#: inc/class-dental-admin.php:241
+msgid "Clinic Information"
+msgstr ""
+
+#: inc/class-dental-admin.php:246
+msgid "Clinic Logo"
+msgstr ""
+
+#: inc/class-dental-admin.php:265
+msgid "Clinic Name"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:382
+msgid "Close Chat"
+msgstr ""
+
+#: header.php:140
+msgid "Close Menu"
+msgstr ""
+
+#: footer.php:128
+#: inc/class-dental-admin.php:572
+#: inc/helpers.php:179
+#: page-templates/template-contact.php:104
+msgid "Closed"
+msgstr ""
+
+#: inc/class-dental-admin.php:552
+msgid "Closed?"
+msgstr ""
+
+#: inc/class-dental-admin.php:551
+msgid "Closing Time"
+msgstr ""
+
+#: inc/class-dental-admin.php:301
+msgid "Color Scheme"
+msgstr ""
+
+#: inc/class-dental-admin.php:164
+msgid "Colors"
+msgstr ""
+
+#: page-templates/template-gallery.php:36
+msgid "Comfortable Lobby Area"
+msgstr ""
+
+#: comments.php:46
+msgid "Comments are closed."
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:95
+#: inc/class-dental-cpt.php:444
+#: inc/class-dental-meta-boxes.php:576
+msgid "Completed"
+msgstr ""
+
+#: template-parts/homepage/services-section.php:26
+msgid "Comprehensive Dental Care"
+msgstr ""
+
+#: inc/class-dental-admin.php:405
+msgid "Configure the footer layout."
+msgstr ""
+
+#: inc/class-dental-admin.php:355
+msgid "Configure the header layout and behavior."
+msgstr ""
+
+#: inc/class-dental-cpt.php:442
+#: inc/class-dental-meta-boxes.php:574
+msgid "Confirmed"
+msgstr ""
+
+#: page-templates/template-booking.php:99
+msgid "Consultation"
+msgstr ""
+
+#: footer.php:70
+#: single-doctors.php:200
+#: inc/class-dental-admin.php:180
+msgid "Contact"
+msgstr ""
+
+#: inc/class-dental-admin.php:492
+msgid "Contact & Maps"
+msgstr ""
+
+#: page-templates/template-contact.php:50
+msgid "Contact Channels"
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:104
+msgid "Contact Info"
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:111
+msgid "Contact Phone Number"
+msgstr ""
+
+#: 404.php:27
+#: footer.php:79
+msgid "Contact Us"
+msgstr ""
+
+#: footer.php:207
+msgid "Contact us on WhatsApp"
+msgstr ""
+
+#: inc/class-dental-enqueue.php:183
+#: page-templates/template-booking.php:196
+msgid "Continue"
+msgstr ""
+
+#: page-templates/template-pricing.php:18
+msgid "Cost Transparency"
+msgstr ""
+
+#: page-templates/template-patient-register.php:86
+msgid "Create Account"
+msgstr ""
+
+#: page-templates/template-patient-register.php:38
+msgid "Create your secure account to manage clinical appointments and medical profiles."
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:125
+msgid "Current Medications"
+msgstr ""
+
+#: inc/class-dental-admin.php:302
+msgid "Customize the color scheme of your theme."
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:349
+msgid "Dashicon class name for the service icon"
+msgstr ""
+
+#: inc/class-dental-booking.php:235
+msgid "Database insertion error. Please try again."
+msgstr ""
+
+#: inc/class-dental-cpt.php:393
+#: page-templates/template-patient-dashboard.php:200
+msgid "Date & Time"
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:105
+#: page-templates/template-patient-register.php:79
+msgid "Date of Birth"
+msgstr ""
+
+#: inc/class-dental-admin.php:549
+#: inc/class-dental-meta-boxes.php:190
+msgid "Day"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:199
+msgid "Define queries the bot can resolve automatically. Add keywords separated by commas to match user entries dynamically."
+msgstr ""
+
+#: inc/class-dental-chatbot.php:206
+#: inc/class-dental-hero-slider.php:358
+msgid "Delete"
+msgstr ""
+
+#: inc/class-dental-portal.php:45
+msgid "Dental Patient"
+msgstr ""
+
+#: archive-services.php:19
+msgid "Dental Services & Treatments"
+msgstr ""
+
+#: inc/class-dental-cpt.php:73
+msgid "Dental clinic doctors and specialists"
+msgstr ""
+
+#: inc/class-dental-cpt.php:129
+msgid "Dental services and treatments"
+msgstr ""
+
+#: inc/class-dental-admin.php:48
+msgid "DentalPro"
+msgstr ""
+
+#: inc/class-dental-admin.php:150
+msgid "DentalPro Elite Settings"
+msgstr ""
+
+#: inc/class-dental-admin.php:47
+msgid "DentalPro Settings"
+msgstr ""
+
+#: inc/class-dental-seo.php:158
+msgid "Dentist Specialist"
+msgstr ""
+
+#: inc/class-dental-cpt.php:258
+msgid "Department"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:34
+msgid "Departments"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:50
+msgid "Departments list"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:51
+msgid "Departments list navigation"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:151
+msgid "Direct Phone"
+msgstr ""
+
+#: inc/class-dental-admin.php:506
+msgid "Displayed in the floating emergency call button."
+msgstr ""
+
+#: page-templates/template-faq.php:121
+msgid "Do you accept dental insurance?"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:93
+msgid "Do you accept insurance or how much do treatments cost?"
+msgstr ""
+
+#: inc/class-dental-cpt.php:50
+#: inc/class-dental-cpt.php:72
+#: inc/class-dental-cpt.php:392
+#: inc/class-dental-meta-boxes.php:540
+#: page-templates/template-booking.php:57
+msgid "Doctor"
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:105
+msgid "Doctor / Service"
+msgstr ""
+
+#: inc/class-dental-cpt.php:51
+msgid "Doctor Archives"
+msgstr ""
+
+#: inc/class-dental-cpt.php:52
+msgid "Doctor Attributes"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:47
+msgid "Doctor Details"
+msgstr ""
+
+#: inc/class-dental-cpt.php:254
+msgid "Doctor Name"
+msgstr ""
+
+#: inc/class-dental-cpt.php:65
+msgid "Doctor Photo"
+msgstr ""
+
+#: inc/class-dental-booking.php:142
+msgid "Doctor is off duty on this day."
+msgstr ""
+
+#: single-doctors.php:38
+#: inc/class-dental-cpt.php:49
+msgid "Doctors"
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:152
+#: inc/class-dental-admin-booking.php:227
+msgid "Done"
+msgstr ""
+
+#: inc/class-dental-cpt.php:304
+msgid "Duration"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:339
+msgid "Duration (minutes)"
+msgstr ""
+
+#: inc/class-dental-cpt.php:213
+msgid "Edit Appointment"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:40
+msgid "Edit Department"
+msgstr ""
+
+#: inc/class-dental-cpt.php:58
+msgid "Edit Doctor"
+msgstr ""
+
+#: inc/class-dental-cpt.php:114
+msgid "Edit Service"
+msgstr ""
+
+#: inc/class-dental-cpt.php:167
+msgid "Edit Testimonial"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:87
+msgid "Edit Treatment Type"
+msgstr ""
+
+#: single-doctors.php:152
+#: inc/class-dental-meta-boxes.php:145
+msgid "Education"
+msgstr ""
+
+#: inc/class-dental-cpt.php:391
+#: inc/class-dental-meta-boxes.php:157
+msgid "Email"
+msgstr ""
+
+#: inc/class-dental-admin.php:277
+#: page-templates/template-booking.php:172
+#: page-templates/template-patient-login.php:55
+#: page-templates/template-patient-register.php:64
+msgid "Email Address"
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:99
+msgid "Email Address (Account)"
+msgstr ""
+
+#: inc/class-dental-notifications.php:145
+#: inc/class-dental-notifications.php:170
+#: inc/class-dental-notifications.php:195
+msgid "Email Body (HTML allowed)"
+msgstr ""
+
+#: page-templates/template-contact.php:74
+msgid "Email Inbox"
+msgstr ""
+
+#: inc/class-dental-notifications.php:114
+msgid "Email Notification Editor"
+msgstr ""
+
+#: inc/class-dental-notifications.php:104
+msgid "Email Notification templates saved successfully."
+msgstr ""
+
+#: inc/class-dental-notifications.php:44
+#: inc/class-dental-notifications.php:45
+msgid "Email Templates"
+msgstr ""
+
+#: single-doctors.php:202
+msgid "Email:"
+msgstr ""
+
+#: header.php:176
+msgid "Emergency"
+msgstr ""
+
+#: header.php:174
+#: header.php:174
+msgid "Emergency Call"
+msgstr ""
+
+#: page-templates/template-contact.php:83
+msgid "Emergency Line (24/7)"
+msgstr ""
+
+#: inc/class-dental-admin.php:503
+msgid "Emergency Phone"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:169
+msgid "Enable Chatbot Widget"
+msgstr ""
+
+#: inc/class-dental-notifications.php:133
+#: inc/class-dental-notifications.php:158
+#: inc/class-dental-notifications.php:183
+msgid "Enable Notification"
+msgstr ""
+
+#: inc/class-dental-admin.php:515
+msgid "Enable floating WhatsApp button"
+msgstr ""
+
+#: inc/class-dental-admin.php:387
+msgid "Enable sticky header on scroll"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:192
+msgid "End Time"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:141
+msgid "Enter qualifications, one per line"
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:334
+msgid "Error updating record in database."
+msgstr ""
+
+#: inc/class-dental-calculator.php:112
+msgid "Estimated Out-of-Pocket:"
+msgstr ""
+
+#: inc/class-dental-cpt.php:257
+msgid "Experience"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:131
+msgid "Experience (Years)"
+msgstr ""
+
+#: template-parts/homepage/hero-slider.php:145
+msgid "Expert Doctors"
+msgstr ""
+
+#: page-templates/template-about.php:72
+msgid "Expert Professionals"
+msgstr ""
+
+#: page-templates/template-about.php:83
+msgid "Experts"
+msgstr ""
+
+#: page-templates/template-faq.php:20
+msgid "Find quick answers to common queries regarding treatments, billing, scheduling, and general policies."
+msgstr ""
+
+#: inc/class-dental-setup.php:157
+msgid "First footer widget area."
+msgstr ""
+
+#: inc/class-dental-admin.php:172
+msgid "Footer"
+msgstr ""
+
+#: inc/class-dental-setup.php:155
+msgid "Footer Column 1"
+msgstr ""
+
+#: inc/class-dental-setup.php:168
+msgid "Footer Column 2"
+msgstr ""
+
+#: inc/class-dental-setup.php:181
+msgid "Footer Column 3"
+msgstr ""
+
+#: inc/class-dental-setup.php:194
+msgid "Footer Column 4"
+msgstr ""
+
+#: inc/class-dental-setup.php:128
+msgid "Footer Menu"
+msgstr ""
+
+#: inc/class-dental-admin.php:404
+msgid "Footer Settings"
+msgstr ""
+
+#: inc/class-dental-admin.php:409
+msgid "Footer Style"
+msgstr ""
+
+#: page-templates/template-patient-login.php:70
+msgid "Forgot Password?"
+msgstr ""
+
+#: inc/class-dental-setup.php:196
+msgid "Fourth footer widget area."
+msgstr ""
+
+#: page-templates/template-pricing.php:85
+msgid "Free Consultation"
+msgstr ""
+
+#: footer.php:114
+msgid "Fri"
+msgstr ""
+
+#: single-doctors.php:25
+#: inc/class-dental-admin.php:486
+#: inc/class-dental-meta-boxes.php:181
+#: page-templates/template-contact.php:23
+msgid "Friday"
+msgstr ""
+
+#: single-services.php:60
+msgid "From"
+msgstr ""
+
+#: inc/class-dental-calculator.php:93
+msgid "Full Coverage"
+msgstr ""
+
+#: page-templates/template-booking.php:167
+#: page-templates/template-patient-register.php:59
+msgid "Full Name"
+msgstr ""
+
+#: inc/class-dental-admin.php:366
+msgid "Full Width — Top bar + main header"
+msgstr ""
+
+#: inc/class-dental-admin.php:160
+msgid "General"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:166
+msgid "General Chatbot Settings"
+msgstr ""
+
+#: page-templates/template-faq.php:31
+msgid "General Info"
+msgstr ""
+
+#: page-templates/template-contact.php:35
+msgid "Get in Touch"
+msgstr ""
+
+#: inc/class-dental-admin.php:496
+msgid "Google Maps API Key"
+msgstr ""
+
+#: template-parts/homepage/hero-slider.php:140
+msgid "Happy Patients"
+msgstr ""
+
+#: page-templates/template-contact.php:37
+msgid "Have a question or want to schedule a visit? Reach out to our friendly clinic staff."
+msgstr ""
+
+#: inc/class-dental-admin.php:168
+msgid "Header"
+msgstr ""
+
+#: inc/class-dental-admin.php:354
+msgid "Header Settings"
+msgstr ""
+
+#: inc/class-dental-admin.php:359
+msgid "Header Style"
+msgstr ""
+
+#: inc/class-dental-admin.php:316
+msgid "Headings, dark backgrounds."
+msgstr ""
+
+#: inc/class-dental-chatbot.php:69
+msgid "Hello! How can I help you improve your smile today?"
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:42
+#: inc/class-dental-hero-slider.php:43
+msgid "Hero Slider"
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:136
+msgid "Hero Slider Management"
+msgstr ""
+
+#: inc/class-dental-admin.php:323
+msgid "Highlights, badges, CTAs."
+msgstr ""
+
+#: footer.php:66
+#: single-doctors.php:36
+#: single-services.php:34
+#: inc/class-dental-seo.php:258
+msgid "Home"
+msgstr ""
+
+#: page-templates/template-faq.php:43
+msgid "How do I schedule my first appointment?"
+msgstr ""
+
+#: page-templates/template-faq.php:145
+msgid "How much do standard implants cost?"
+msgstr ""
+
+#: page-templates/template-faq.php:82
+msgid "How often should I visit the dentist?"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:333
+msgid "I am not sure I understand that query completely. But you can easily book an appointment online or contact our clinical desk directly!"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:346
+msgid "Icon Class"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:99
+msgid "If you are experiencing severe pain or a dental emergency, call our Emergency Hotline immediately at our helpline listed in the contact section. We support walk-ins."
+msgstr ""
+
+#: page-templates/template-faq.php:150
+msgid "Implants vary depending on requirements (bone grafting, materials). We provide structured, upfront prices on our Services and Pricing pages, and detail customized plans during consultation."
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:354
+msgid "Inactive"
+msgstr ""
+
+#: inc/class-dental-admin.php:523
+msgid "Include country code without spaces, + or leading zeros (e.g. 15551234567 or 919876543210)."
+msgstr ""
+
+#: inc/class-dental-calculator.php:86
+msgid "Insurance Co-Pay Contribution:"
+msgstr ""
+
+#: inc/class-dental-calculator.php:108
+msgid "Insurance Savings:"
+msgstr ""
+
+#: inc/class-dental-booking.php:120
+msgid "Invalid date format."
+msgstr ""
+
+#: page-templates/template-patient-login.php:23
+msgid "Invalid email or password. Please try again."
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:319
+msgid "Invalid status value."
+msgstr ""
+
+#: template-parts/content/content-none.php:20
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr ""
+
+#: inc/class-dental-chatbot.php:208
+msgid "Keywords (comma separated):"
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:120
+msgid "Known Allergies"
+msgstr ""
+
+#: page-templates/template-gallery.php:34
+msgid "Laser Treatment Suite"
+msgstr ""
+
+#: archive-services.php:76
+#: single-services.php:131
+#: template-parts/homepage/services-section.php:61
+msgid "Learn More"
+msgstr ""
+
+#: page-templates/template-about.php:20
+msgid "Learn more about our mission, core values, and dedicated team of dental experts."
+msgstr ""
+
+#: inc/class-dental-enqueue.php:175
+msgid "Loading available slots..."
+msgstr ""
+
+#: page-templates/template-contact.php:56
+msgid "Location Address"
+msgstr ""
+
+#: page-templates/template-patient-register.php:95
+msgid "Log In Here"
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:72
+msgid "Log Out"
+msgstr ""
+
+#: inc/class-dental-setup.php:142
+msgid "Main Sidebar"
+msgstr ""
+
+#: inc/class-dental-admin.php:309
+msgid "Main theme color — buttons, links, accents."
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:68
+msgid "Manage your clinical relationship with our dental experts."
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:91
+msgid "Medical & Contact Profile"
+msgstr ""
+
+#: page-templates/template-about.php:84
+msgid "Meet Our Dedicated Doctors"
+msgstr ""
+
+#: archive-doctors.php:19
+#: template-parts/homepage/doctors-section.php:26
+msgid "Meet Our Expert Doctors"
+msgstr ""
+
+#: inc/class-dental-admin.php:416
+msgid "Minimal — 2 columns, clean design"
+msgstr ""
+
+#: inc/class-dental-booking.php:114
+msgid "Missing required parameters."
+msgstr ""
+
+#: inc/class-dental-setup.php:129
+msgid "Mobile Menu"
+msgstr ""
+
+#: page-templates/template-gallery.php:33
+msgid "Modern Patient Room"
+msgstr ""
+
+#: footer.php:110
+msgid "Mon"
+msgstr ""
+
+#: single-doctors.php:23
+#: inc/class-dental-admin.php:482
+#: inc/class-dental-meta-boxes.php:177
+#: page-templates/template-contact.php:19
+msgid "Monday"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:38
+msgid "New Department Name"
+msgstr ""
+
+#: inc/class-dental-cpt.php:57
+msgid "New Doctor"
+msgstr ""
+
+#: inc/class-dental-cpt.php:113
+msgid "New Service"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:85
+msgid "New Treatment Type Name"
+msgstr ""
+
+#: page-templates/template-patient-login.php:83
+msgid "New patient?"
+msgstr ""
+
+#: footer.php:143
+msgid "Newsletter"
+msgstr ""
+
+#: index.php:35
+msgid "Next"
+msgstr ""
+
+#: single.php:25
+msgid "Next:"
+msgstr ""
+
+#: inc/class-dental-cpt.php:216
+msgid "No appointments found"
+msgstr ""
+
+#: inc/class-dental-cpt.php:217
+msgid "No appointments found in Trash"
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:166
+msgid "No appointments scheduled matching filters."
+msgstr ""
+
+#: inc/class-dental-admin.php:602
+msgid "No data received."
+msgstr ""
+
+#: inc/class-dental-calculator.php:40
+msgid "No dental services available for calculation."
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:49
+msgid "No departments"
+msgstr ""
+
+#: page-templates/template-about.php:143
+msgid "No doctor profiles created yet."
+msgstr ""
+
+#: page-templates/template-booking.php:138
+msgid "No doctors available."
+msgstr ""
+
+#: inc/class-dental-cpt.php:63
+msgid "No doctors found"
+msgstr ""
+
+#: inc/class-dental-cpt.php:64
+msgid "No doctors found in Trash"
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:229
+msgid "No past appointments on record."
+msgstr ""
+
+#: page-templates/template-booking.php:108
+msgid "No services available to book."
+msgstr ""
+
+#: inc/class-dental-cpt.php:119
+msgid "No services found"
+msgstr ""
+
+#: inc/class-dental-cpt.php:120
+msgid "No services found in Trash"
+msgstr ""
+
+#: page-templates/template-pricing.php:103
+msgid "No services or treatments configured yet."
+msgstr ""
+
+#: inc/class-dental-enqueue.php:176
+msgid "No slot intervals generated."
+msgstr ""
+
+#: inc/class-dental-cpt.php:170
+msgid "No testimonials found"
+msgstr ""
+
+#: inc/class-dental-cpt.php:171
+msgid "No testimonials found in Trash"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:96
+msgid "No treatment types"
+msgstr ""
+
+#: inc/class-dental-notifications.php:278
+msgid "None"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:209
+msgid "Not Available"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:48
+#: inc/class-dental-taxonomies.php:95
+msgid "Not Found"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:581
+msgid "Notes"
+msgstr ""
+
+#: search.php:41
+#: template-parts/content/content-none.php:12
+msgid "Nothing Found"
+msgstr ""
+
+#: single-doctors.php:188
+msgid "Off"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:379
+msgid "Online | Clinician Bot"
+msgstr ""
+
+#: 404.php:20
+msgid "Oops! The page you are looking for seems to have gone missing. It might have been moved, deleted, or maybe the URL is incorrect."
+msgstr ""
+
+#: inc/class-dental-chatbot.php:365
+msgid "Open Chatbot"
+msgstr ""
+
+#: inc/class-dental-admin.php:550
+msgid "Opening Time"
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:404
+msgid "Optional. MP4 video URL for video background. Overrides image."
+msgstr ""
+
+#: page-templates/template-about.php:55
+msgid "Our Core Values"
+msgstr ""
+
+#: footer.php:68
+msgid "Our Doctors"
+msgstr ""
+
+#: archive-services.php:18
+#: template-parts/homepage/services-section.php:25
+msgid "Our Services"
+msgstr ""
+
+#: page-templates/template-gallery.php:18
+msgid "Our Showcase"
+msgstr ""
+
+#: page-templates/template-about.php:18
+msgid "Our Story"
+msgstr ""
+
+#: archive-doctors.php:18
+#: template-parts/homepage/doctors-section.php:25
+msgid "Our Team"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:89
+msgid "Our clinic is located in the health center district at 123 Dental Plaza, Suite 100. Valet parking is available for all patients."
+msgstr ""
+
+#: page-templates/template-about.php:85
+msgid "Our specialists work together to deliver comprehensive care across all dental disciplines."
+msgstr ""
+
+#: page-templates/template-about.php:73
+msgid "Our staff consists of board-certified dentists and trained clinical assistants with years of specialized experience."
+msgstr ""
+
+#: archive-doctors.php:20
+msgid "Our team of experienced dental professionals is dedicated to providing you with the highest quality care."
+msgstr ""
+
+#: template-parts/homepage/doctors-section.php:27
+msgid "Our team of experienced dental professionals is dedicated to your oral health."
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:408
+msgid "Overlay Opacity"
+msgstr ""
+
+#: 404.php:18
+msgid "Page Not Found"
+msgstr ""
+
+#: page.php:28
+#: template-parts/content/content-single.php:44
+msgid "Pages:"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:36
+msgid "Parent Department"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:37
+msgid "Parent Department:"
+msgstr ""
+
+#: inc/class-dental-cpt.php:53
+msgid "Parent Doctor:"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:83
+msgid "Parent Treatment Type"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:84
+msgid "Parent Treatment Type:"
+msgstr ""
+
+#: page-templates/template-patient-login.php:60
+msgid "Password"
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:193
+msgid "Past & Cancelled Appointments"
+msgstr ""
+
+#: inc/class-dental-cpt.php:342
+#: inc/class-dental-cpt.php:390
+msgid "Patient"
+msgstr ""
+
+#: inc/class-dental-notifications.php:180
+msgid "Patient 24-Hour Reminder Email"
+msgstr ""
+
+#: inc/class-dental-notifications.php:130
+msgid "Patient Booking Confirmation Email"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:532
+msgid "Patient Email"
+msgstr ""
+
+#: page-templates/template-booking.php:67
+msgid "Patient Info"
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:103
+#: inc/class-dental-meta-boxes.php:420
+#: inc/class-dental-meta-boxes.php:528
+msgid "Patient Name"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:536
+msgid "Patient Phone"
+msgstr ""
+
+#: page-templates/template-patient-login.php:32
+#: page-templates/template-patient-register.php:36
+msgid "Patient Portal"
+msgstr ""
+
+#: page-templates/template-patient-register.php:37
+msgid "Patient Registration"
+msgstr ""
+
+#: template-parts/homepage/hero-slider.php:150
+msgid "Patient Satisfaction"
+msgstr ""
+
+#: page-templates/template-patient-login.php:33
+msgid "Patient Sign In"
+msgstr ""
+
+#: inc/class-dental-cpt.php:222
+msgid "Patient appointment bookings"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:422
+msgid "Patient display name"
+msgstr ""
+
+#: inc/class-dental-cpt.php:176
+msgid "Patient testimonials and reviews"
+msgstr ""
+
+#: page-templates/template-about.php:62
+msgid "Patient-First Focus"
+msgstr ""
+
+#: page-templates/template-gallery.php:38
+msgid "Pediatric Dentistry Room"
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:93
+#: inc/class-dental-cpt.php:441
+#: inc/class-dental-meta-boxes.php:573
+msgid "Pending"
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:309
+#: inc/class-dental-admin.php:590
+msgid "Permission denied."
+msgstr ""
+
+#: page-templates/template-contact.php:65
+msgid "Phone Line"
+msgstr ""
+
+#: inc/class-dental-admin.php:271
+#: page-templates/template-booking.php:176
+#: page-templates/template-contact.php:131
+#: page-templates/template-patient-register.php:75
+msgid "Phone Number"
+msgstr ""
+
+#: single-doctors.php:205
+msgid "Phone:"
+msgstr ""
+
+#: inc/class-dental-cpt.php:255
+msgid "Photo"
+msgstr ""
+
+#: page-templates/template-faq.php:60
+msgid "Please bring a valid photo identification card, any current dental insurance documentation, and your medical history records (including current medication listings)."
+msgstr ""
+
+#: inc/class-dental-chatbot.php:304
+msgid "Please enter a message."
+msgstr ""
+
+#: inc/class-dental-booking.php:201
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: inc/class-dental-booking.php:197
+#: page-templates/template-patient-register.php:21
+msgid "Please fill in all required fields."
+msgstr ""
+
+#: page-templates/template-patient-login.php:21
+msgid "Please fill in both fields."
+msgstr ""
+
+#: inc/class-dental-enqueue.php:180
+msgid "Please pick a booking date."
+msgstr ""
+
+#: page-templates/template-patient-register.php:23
+msgid "Please provide a valid email address."
+msgstr ""
+
+#: page-templates/template-booking.php:155
+msgid "Please select a date first."
+msgstr ""
+
+#: inc/class-dental-enqueue.php:178
+msgid "Please select a dental service to continue."
+msgstr ""
+
+#: inc/class-dental-enqueue.php:179
+msgid "Please select a doctor to continue."
+msgstr ""
+
+#: inc/class-dental-enqueue.php:181
+msgid "Please select a time slot."
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:46
+msgid "Popular Departments"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:93
+msgid "Popular Treatment Types"
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:130
+msgid "Pre-existing Medical Conditions"
+msgstr ""
+
+#: inc/class-dental-admin.php:530
+msgid "Pre-filled message when patient starts a chat."
+msgstr ""
+
+#: inc/class-dental-admin.php:329
+msgid "Preview"
+msgstr ""
+
+#: index.php:34
+msgid "Previous"
+msgstr ""
+
+#: single.php:24
+msgid "Previous:"
+msgstr ""
+
+#: inc/class-dental-cpt.php:303
+msgid "Price"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:332
+msgid "Price ($)"
+msgstr ""
+
+#: page-templates/template-faq.php:33
+msgid "Pricing & Insurance"
+msgstr ""
+
+#: inc/class-dental-admin.php:332
+msgid "Primary"
+msgstr ""
+
+#: inc/class-dental-admin.php:306
+msgid "Primary Color"
+msgstr ""
+
+#: header.php:95
+#: inc/class-dental-setup.php:127
+msgid "Primary Menu"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:68
+msgid "ProDent Assistant"
+msgstr ""
+
+#: inc/class-dental-enqueue.php:184
+msgid "Processing..."
+msgstr ""
+
+#: page-templates/template-booking.php:163
+msgid "Provide Contact Information"
+msgstr ""
+
+#: page-templates/template-about.php:30
+msgid "Providing Quality Dental Care Since 2012"
+msgstr ""
+
+#: single-doctors.php:134
+#: inc/class-dental-meta-boxes.php:138
+msgid "Qualifications"
+msgstr ""
+
+#: page-templates/template-faq.php:18
+msgid "Questions & Answers"
+msgstr ""
+
+#: footer.php:52
+msgid "Quick Links"
+msgstr ""
+
+#: single-doctors.php:87
+#: inc/class-dental-cpt.php:343
+#: inc/class-dental-meta-boxes.php:426
+msgid "Rating"
+msgstr ""
+
+#: template-parts/content/content-archive.php:35
+msgid "Read More"
+msgstr ""
+
+#: template-parts/homepage/testimonials-section.php:27
+msgid "Read reviews from our happy patients about their dental care experience."
+msgstr ""
+
+#: single-services.php:92
+msgid "Ready to Get Started?"
+msgstr ""
+
+#: page-templates/template-patient-login.php:85
+msgid "Register Account Here"
+msgstr ""
+
+#: single-services.php:110
+msgid "Related Services"
+msgstr ""
+
+#: page-templates/template-patient-login.php:67
+msgid "Remember Me"
+msgstr ""
+
+#: inc/class-dental-notifications.php:69
+msgid "Reminder: Appointment tomorrow with {doctor_name}"
+msgstr ""
+
+#: inc/class-dental-admin.php:259
+#: inc/class-dental-hero-slider.php:396
+msgid "Remove"
+msgstr ""
+
+#: inc/class-dental-cpt.php:67
+msgid "Remove doctor photo"
+msgstr ""
+
+#: inc/class-dental-cpt.php:123
+msgid "Remove service image"
+msgstr ""
+
+#: inc/class-dental-admin.php:499
+msgid "Required for Google Maps on the contact page."
+msgstr ""
+
+#: inc/class-dental-admin.php:224
+msgid "Reset Tab"
+msgstr ""
+
+#: page-templates/template-pricing.php:20
+msgid "Review clear, competitive treatment package costs. No hidden fees, clear consultations."
+msgstr ""
+
+#: footer.php:115
+msgid "Sat"
+msgstr ""
+
+#: single-doctors.php:25
+#: inc/class-dental-admin.php:487
+#: inc/class-dental-meta-boxes.php:182
+#: page-templates/template-contact.php:24
+msgid "Saturday"
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:159
+msgid "Save All Slides"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:231
+msgid "Save Chatbot Settings"
+msgstr ""
+
+#: inc/class-dental-notifications.php:204
+msgid "Save Email Templates"
+msgstr ""
+
+#: inc/class-dental-admin.php:222
+msgid "Save Settings"
+msgstr ""
+
+#: page-templates/template-booking.php:62
+msgid "Schedule"
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:185
+msgid "Schedule Appointment Now"
+msgstr ""
+
+#: page-templates/template-booking.php:31
+msgid "Scheduler"
+msgstr ""
+
+#: template-parts/homepage/hero-slider.php:158
+msgid "Scroll Down"
+msgstr ""
+
+#: inc/class-dental-cpt.php:215
+msgid "Search Appointments"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:47
+msgid "Search Departments"
+msgstr ""
+
+#: inc/class-dental-cpt.php:62
+msgid "Search Doctor"
+msgstr ""
+
+#: search.php:20
+msgid "Search Results for: %s"
+msgstr ""
+
+#: inc/class-dental-cpt.php:118
+msgid "Search Service"
+msgstr ""
+
+#: inc/class-dental-cpt.php:169
+msgid "Search Testimonials"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:94
+msgid "Search Treatment Types"
+msgstr ""
+
+#: inc/class-dental-setup.php:170
+msgid "Second footer widget area."
+msgstr ""
+
+#: inc/class-dental-admin.php:335
+msgid "Secondary"
+msgstr ""
+
+#: inc/class-dental-admin.php:313
+msgid "Secondary Color"
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:116
+msgid "Secure Medical History"
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:66
+msgid "Secure Portal"
+msgstr ""
+
+#: page-templates/template-booking.php:145
+msgid "Select Appointment Date & Time"
+msgstr ""
+
+#: page-templates/template-booking.php:76
+msgid "Select Your Dental Treatment"
+msgstr ""
+
+#: page-templates/template-booking.php:115
+msgid "Select Your Doctor"
+msgstr ""
+
+#: inc/class-dental-enqueue.php:306
+msgid "Select or Upload Image"
+msgstr ""
+
+#: inc/class-dental-calculator.php:91
+msgid "Self-Funded"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:416
+#: page-templates/template-contact.php:144
+msgid "Send Message"
+msgstr ""
+
+#: page-templates/template-contact.php:118
+msgid "Send Us a Message"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:43
+msgid "Separate departments with commas"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:90
+msgid "Separate treatment types with commas"
+msgstr ""
+
+#: inc/class-dental-enqueue.php:185
+msgid "Server communication error. Please try again."
+msgstr ""
+
+#: inc/class-dental-enqueue.php:177
+msgid "Server request failed."
+msgstr ""
+
+#: inc/class-dental-cpt.php:108
+#: inc/class-dental-cpt.php:128
+#: inc/class-dental-meta-boxes.php:551
+#: page-templates/template-booking.php:52
+msgid "Service"
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:199
+msgid "Service / Doctor"
+msgstr ""
+
+#: inc/class-dental-cpt.php:109
+msgid "Service Archives"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:75
+msgid "Service Details"
+msgstr ""
+
+#: inc/class-dental-cpt.php:121
+msgid "Service Image"
+msgstr ""
+
+#: inc/class-dental-cpt.php:302
+msgid "Service Name"
+msgstr ""
+
+#: footer.php:67
+#: single-services.php:36
+#: inc/class-dental-cpt.php:107
+msgid "Services"
+msgstr ""
+
+#: inc/class-dental-cpt.php:66
+msgid "Set doctor photo"
+msgstr ""
+
+#: inc/class-dental-cpt.php:122
+msgid "Set service image"
+msgstr ""
+
+#: inc/class-dental-admin.php:599
+msgid "Settings saved successfully!"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:353
+msgid "Short Description"
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:368
+msgid "Show this slide"
+msgstr ""
+
+#: page-templates/template-patient-login.php:76
+msgid "Sign In"
+msgstr ""
+
+#: header.php:32
+msgid "Skip to content"
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:351
+msgid "Slide"
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:380
+msgid "Slide description text"
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:374
+msgid "Slide heading — use <span class=&quot;highlight&quot;>text</span> for colored text"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:65
+msgid "Social Links"
+msgstr ""
+
+#: inc/class-dental-admin.php:176
+msgid "Social Media"
+msgstr ""
+
+#: inc/class-dental-admin.php:443
+msgid "Social Media Links"
+msgstr ""
+
+#: template-parts/content/content-none.php:17
+msgid "Sorry, but nothing matched your search terms. Please try again with different keywords."
+msgstr ""
+
+#: search.php:42
+msgid "Sorry, no results matched your search. Please try different keywords."
+msgstr ""
+
+#: inc/class-dental-cpt.php:256
+#: inc/class-dental-meta-boxes.php:125
+msgid "Speciality"
+msgstr ""
+
+#: inc/class-dental-calculator.php:92
+msgid "Standard Co-Pay"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:191
+msgid "Start Time"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:335
+msgid "Starting price for this service. Enter 0 for \"Contact for Price\"."
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:108
+#: inc/class-dental-cpt.php:394
+#: inc/class-dental-meta-boxes.php:570
+#: page-templates/template-patient-dashboard.php:201
+msgid "Status"
+msgstr ""
+
+#: page-templates/template-gallery.php:37
+msgid "Sterilization Laboratory"
+msgstr ""
+
+#: inc/class-dental-admin.php:382
+msgid "Sticky Header"
+msgstr ""
+
+#: inc/class-dental-admin.php:373
+#: inc/class-dental-admin.php:422
+msgid "Style %s"
+msgstr ""
+
+#: inc/class-dental-notifications.php:139
+#: inc/class-dental-notifications.php:164
+#: inc/class-dental-notifications.php:189
+#: page-templates/template-contact.php:135
+msgid "Subject"
+msgstr ""
+
+#: footer.php:149
+msgid "Subscribe"
+msgstr ""
+
+#: footer.php:144
+msgid "Subscribe to get dental tips and special offers."
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:378
+msgid "Subtitle"
+msgstr ""
+
+#: inc/class-dental-calculator.php:104
+msgid "Subtotal Treatments:"
+msgstr ""
+
+#: footer.php:116
+msgid "Sun"
+msgstr ""
+
+#: single-doctors.php:26
+#: inc/class-dental-admin.php:488
+#: inc/class-dental-meta-boxes.php:183
+#: page-templates/template-contact.php:25
+msgid "Sunday"
+msgstr ""
+
+#: inc/class-dental-notifications.php:120
+msgid "Supported Merge Tags:"
+msgstr ""
+
+#: page-templates/template-booking.php:181
+msgid "Symptom Details / Medical Notes"
+msgstr ""
+
+#: template-parts/content/content-single.php:54
+msgid "Tags:"
+msgstr ""
+
+#: page-templates/template-gallery.php:20
+msgid "Take a virtual tour of our modern facilities, state-of-the-art diagnostic dental equipment, and clinic environment."
+msgstr ""
+
+#: inc/class-dental-cpt.php:175
+msgid "Testimonial"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:85
+msgid "Testimonial Details"
+msgstr ""
+
+#: inc/class-dental-cpt.php:163
+#: template-parts/homepage/testimonials-section.php:25
+msgid "Testimonials"
+msgstr ""
+
+#: inc/class-dental-admin.php:58
+#: inc/class-dental-admin.php:59
+msgid "Theme Settings"
+msgstr ""
+
+#: footer.php:172
+msgid "Theme: %s"
+msgstr ""
+
+#: inc/class-dental-setup.php:183
+msgid "Third footer widget area."
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:117
+msgid "This clinical data is encrypted and visible only to your treating doctor."
+msgstr ""
+
+#: page-templates/template-patient-register.php:25
+msgid "This email address is already registered. Please log in."
+msgstr ""
+
+#: inc/class-dental-booking.php:214
+msgid "This slot has already been reserved. Please select another time."
+msgstr ""
+
+#: footer.php:113
+msgid "Thu"
+msgstr ""
+
+#: single-doctors.php:24
+#: inc/class-dental-admin.php:485
+#: inc/class-dental-meta-boxes.php:180
+#: page-templates/template-contact.php:22
+msgid "Thursday"
+msgstr ""
+
+#: inc/class-dental-admin-booking.php:107
+msgid "Time Slot"
+msgstr ""
+
+#: inc/class-dental-cpt.php:341
+#: inc/class-dental-hero-slider.php:372
+msgid "Title"
+msgstr ""
+
+#: header.php:120
+msgid "Toggle Menu"
+msgstr ""
+
+#: inc/class-dental-setup.php:130
+msgid "Top Bar Menu"
+msgstr ""
+
+#: inc/class-dental-admin.php:367
+msgid "Transparent — Overlay on hero"
+msgstr ""
+
+#: inc/class-dental-cpt.php:344
+msgid "Treatment"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:438
+msgid "Treatment Received"
+msgstr ""
+
+#: inc/class-dental-calculator.php:100
+msgid "Treatment Summary"
+msgstr ""
+
+#: inc/class-dental-cpt.php:305
+msgid "Treatment Type"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:81
+msgid "Treatment Types"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:97
+msgid "Treatment Types list"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:98
+msgid "Treatment Types list navigation"
+msgstr ""
+
+#: page-templates/template-faq.php:32
+msgid "Treatments"
+msgstr ""
+
+#: footer.php:111
+msgid "Tue"
+msgstr ""
+
+#: single-doctors.php:23
+#: inc/class-dental-admin.php:483
+#: inc/class-dental-meta-boxes.php:178
+#: page-templates/template-contact.php:20
+msgid "Tuesday"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:415
+msgid "Type your question..."
+msgstr ""
+
+#: inc/class-dental-portal.php:194
+msgid "Unauthorized access."
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:147
+msgid "University Name - Degree (one per line)"
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:149
+msgid "Upcoming Appointments"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:41
+msgid "Update Department"
+msgstr ""
+
+#: inc/class-dental-cpt.php:59
+msgid "Update Doctor"
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:137
+msgid "Update Patient File"
+msgstr ""
+
+#: inc/class-dental-cpt.php:115
+msgid "Update Service"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:88
+msgid "Update Treatment Type"
+msgstr ""
+
+#: inc/class-dental-hero-slider.php:393
+msgid "Upload Image"
+msgstr ""
+
+#: inc/class-dental-admin.php:256
+msgid "Upload Logo"
+msgstr ""
+
+#: inc/class-dental-cpt.php:68
+msgid "Use as doctor photo"
+msgstr ""
+
+#: inc/class-dental-cpt.php:124
+msgid "Use as service image"
+msgstr ""
+
+#: inc/class-dental-enqueue.php:307
+msgid "Use this image"
+msgstr ""
+
+#: template-parts/homepage/doctors-section.php:79
+msgid "View All Doctors"
+msgstr ""
+
+#: template-parts/homepage/services-section.php:71
+msgid "View All Services"
+msgstr ""
+
+#: inc/class-dental-cpt.php:214
+msgid "View Appointment"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:42
+msgid "View Department"
+msgstr ""
+
+#: inc/class-dental-cpt.php:60
+msgid "View Doctor"
+msgstr ""
+
+#: inc/class-dental-cpt.php:61
+msgid "View Doctors"
+msgstr ""
+
+#: archive-doctors.php:88
+#: page-templates/template-about.php:136
+#: template-parts/homepage/doctors-section.php:70
+msgid "View Profile"
+msgstr ""
+
+#: inc/class-dental-cpt.php:116
+msgid "View Service"
+msgstr ""
+
+#: inc/class-dental-cpt.php:117
+msgid "View Services"
+msgstr ""
+
+#: inc/class-dental-cpt.php:168
+msgid "View Testimonial"
+msgstr ""
+
+#: inc/class-dental-taxonomies.php:89
+msgid "View Treatment Type"
+msgstr ""
+
+#: page-templates/template-faq.php:138
+msgid "We accept cash payments, credit cards (Visa, MasterCard, Amex), and offer interest-free flexible payment plans for extensive restorative procedures."
+msgstr ""
+
+#: inc/class-dental-chatbot.php:84
+msgid "We are open Monday to Friday from 9:00 AM to 6:00 PM, and Saturdays from 9:00 AM to 2:00 PM. We are closed on Sundays."
+msgstr ""
+
+#: page-templates/template-about.php:56
+msgid "We build our practice around standards that put our patients first."
+msgstr ""
+
+#: archive-services.php:20
+msgid "We offer a comprehensive range of dental services to meet all your oral health needs."
+msgstr ""
+
+#: template-parts/homepage/services-section.php:27
+msgid "We offer a full range of dental services to keep your smile healthy and beautiful."
+msgstr ""
+
+#: page-templates/template-faq.php:111
+msgid "We provide both in-office laser teeth whitening (completed in a single 60-minute session) and custom home whitening trays with medical-grade bleaching gels."
+msgstr ""
+
+#: page-templates/template-faq.php:87
+msgid "We recommend visiting us for a standard professional cleaning and dental examination every six months to identify potential issues early and maintain healthy gums."
+msgstr ""
+
+#: page-templates/template-faq.php:72
+msgid "We require at least 24 hours advance notification for cancellation or rescheduling to avoid a cancellation fee. This allows other patients to utilize the time slot."
+msgstr ""
+
+#: page-templates/template-about.php:68
+msgid "We utilize state-of-the-art diagnostic and surgical equipment to guarantee precision, safety, and comfort."
+msgstr ""
+
+#: footer.php:112
+msgid "Wed"
+msgstr ""
+
+#: single-doctors.php:24
+#: inc/class-dental-admin.php:484
+#: inc/class-dental-meta-boxes.php:179
+#: page-templates/template-contact.php:21
+msgid "Wednesday"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:182
+msgid "Welcome Message"
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:67
+msgid "Welcome, %s"
+msgstr ""
+
+#: template-parts/homepage/testimonials-section.php:26
+msgid "What Our Patients Say"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:83
+msgid "What are your clinic hours?"
+msgstr ""
+
+#: page-templates/template-faq.php:67
+msgid "What is your cancellation policy?"
+msgstr ""
+
+#: page-templates/template-faq.php:106
+msgid "What options do you offer for teeth whitening?"
+msgstr ""
+
+#: page-templates/template-faq.php:133
+msgid "What payment options do you support?"
+msgstr ""
+
+#: page-templates/template-faq.php:55
+msgid "What should I bring on my first visit?"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:98
+msgid "What should I do in case of a dental emergency?"
+msgstr ""
+
+#: inc/class-dental-admin.php:527
+msgid "WhatsApp Default Message"
+msgstr ""
+
+#: inc/class-dental-admin.php:510
+msgid "WhatsApp Floating Button"
+msgstr ""
+
+#: inc/class-dental-admin.php:520
+msgid "WhatsApp Number"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:88
+msgid "Where is the clinic located?"
+msgstr ""
+
+#: page-templates/template-about.php:54
+msgid "Why Choose Us"
+msgstr ""
+
+#: inc/class-dental-setup.php:209
+msgid "Widgets for the blog sidebar."
+msgstr ""
+
+#: inc/class-dental-setup.php:144
+msgid "Widgets for the main sidebar area."
+msgstr ""
+
+#: footer.php:105
+#: inc/class-dental-admin.php:544
+#: page-templates/template-contact.php:92
+msgid "Working Hours"
+msgstr ""
+
+#: single-doctors.php:174
+#: inc/class-dental-meta-boxes.php:56
+msgid "Working Schedule"
+msgstr ""
+
+#: inc/class-dental-cpt.php:288
+msgid "Years"
+msgstr ""
+
+#: single-doctors.php:82
+msgid "Years Exp."
+msgstr ""
+
+#: template-parts/homepage/hero-slider.php:135
+msgid "Years Experience"
+msgstr ""
+
+#: page-templates/template-about.php:43
+msgid "Years of Trust & Caring"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:134
+msgid "Years of experience"
+msgstr ""
+
+#: inc/class-dental-chatbot.php:94
+msgid "Yes! We accept most major dental insurance plans. You can use our online Cost Calculator tool to estimate prices and coverage bounds."
+msgstr ""
+
+#: page-templates/template-faq.php:99
+msgid "Yes, our clinic uses state-of-the-art digital radiography machines which emit up to 90% less radiation than classic film X-rays, making them extremely safe for children and adults."
+msgstr ""
+
+#: page-templates/template-faq.php:126
+msgid "Yes, we accept major private dental insurance plans. We also assist in submitting claims directly to your provider to maximize your plan coverage advantages."
+msgstr ""
+
+#: page-templates/template-faq.php:48
+msgid "You can schedule an appointment by calling our clinic directly or by using our online booking form. Our coordinator will follow up to verify your details."
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:175
+msgid "You have no active upcoming appointments."
+msgstr ""
+
+#: page-templates/template-contact.php:126
+msgid "Your Email"
+msgstr ""
+
+#: page-templates/template-contact.php:139
+msgid "Your Message"
+msgstr ""
+
+#: page-templates/template-contact.php:122
+msgid "Your Name"
+msgstr ""
+
+#: inc/class-dental-booking.php:246
+msgid "Your appointment booking has been received successfully!"
+msgstr ""
+
+#: page-templates/template-about.php:63
+msgid "Your comfort and dental health are our top priorities. We customize treatments to suit your specific health needs."
+msgstr ""
+
+#: footer.php:147
+msgid "Your email address"
+msgstr ""
+
+#: page-templates/template-patient-dashboard.php:83
+msgid "Your patient profile & medical records updated successfully."
+msgstr ""
+
+#: footer.php:34
+msgid "Your trusted partner in dental care. We provide comprehensive dental services with state-of-the-art technology and compassionate care."
+msgstr ""
+
+#: inc/class-dental-notifications.php:64
+msgid "[New Booking] {patient_name} - {service_name}"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:127
+msgid "e.g., Orthodontist, Oral Surgeon"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:440
+msgid "e.g., Teeth Whitening, Root Canal"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:348
+msgid "e.g., dashicons-heart"
+msgstr ""
+
+#: inc/class-dental-cpt.php:327
+msgid "min"
+msgstr ""
+
+#: page-templates/template-booking.php:102
+#: page-templates/template-pricing.php:89
+msgid "mins"
+msgstr ""
+
+#: single-services.php:67
+msgid "minutes"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:543
+msgid "— Select Doctor —"
+msgstr ""
+
+#: inc/class-dental-meta-boxes.php:554
+msgid "— Select Service —"
+msgstr ""
+
+#: template-parts/homepage/hero-slider.php:65
+msgid "🦷 Premium Dental Care"
+msgstr ""
+

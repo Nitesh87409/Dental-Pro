@@ -17,6 +17,7 @@
 		initBackToTop();
 		initSmoothScroll();
 		initScrollAnimations();
+		initVideoModal();
 	});
 
 	// =========================================================================
@@ -108,6 +109,46 @@
 			// Stagger animation delay.
 			el.style.transitionDelay = (index % 4) * 0.1 + 's';
 			observer.observe(el);
+		});
+	}
+
+	// =========================================================================
+	// Video Testimonials Modal
+	// =========================================================================
+	function initVideoModal() {
+		const playButtons = document.querySelectorAll('.testimonial-video-play-btn');
+		const modal = document.getElementById('testimonials-video-modal');
+		const closeBtn = document.getElementById('close-video-modal');
+		const iframe = document.getElementById('video-iframe');
+
+		if (!modal || !closeBtn || !iframe) return;
+
+		playButtons.forEach(function (btn) {
+			btn.addEventListener('click', function () {
+				const videoUrl = this.getAttribute('data-video');
+				if (videoUrl) {
+					iframe.src = videoUrl + (videoUrl.indexOf('?') !== -1 ? '&' : '?') + 'autoplay=1';
+					modal.classList.add('active');
+				}
+			});
+		});
+
+		function closeModal() {
+			modal.classList.remove('active');
+			iframe.src = '';
+		}
+
+		closeBtn.addEventListener('click', closeModal);
+		modal.addEventListener('click', function (e) {
+			if (e.target === modal) {
+				closeModal();
+			}
+		});
+
+		document.addEventListener('keydown', function (e) {
+			if (e.key === 'Escape') {
+				closeModal();
+			}
 		});
 	}
 })();

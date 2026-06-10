@@ -213,6 +213,50 @@ $clinic_address = developer_starter_pro_get_option( 'clinic_address', '' );
 		</a>
 	<?php endif; ?>
 
+	<!-- GDPR Cookie Consent Banner -->
+	<div class="dentalpro-cookie-notice" id="cookie-notice">
+		<div class="cookie-notice-container" style="display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+			<div class="cookie-notice-text" style="flex: 1; min-width: 280px; text-align: left;">
+				<p style="margin: 0; font-size: 0.9rem; line-height: 1.5; color: #cbd5e1;">
+					🍪 <strong><?php esc_html_e( 'Cookie Consent notice:', 'developer-starter-pro' ); ?></strong> 
+					<?php esc_html_e( 'We use cookies to optimize patient portal logins, automate booking schedules, and review diagnostic feedback. By continuing to browse, you agree to our standard medical privacy policies.', 'developer-starter-pro' ); ?>
+				</p>
+			</div>
+			<div class="cookie-notice-actions" style="display: flex; gap: 10px; align-items: center;">
+				<a href="<?php echo esc_url( home_url( '/privacy-policy/' ) ); ?>" style="font-size: 0.8125rem; color: #94a3b8; text-decoration: underline; margin-right: 10px; font-weight: 500;"><?php esc_html_e( 'Details', 'developer-starter-pro' ); ?></a>
+				<button class="developer-starter-pro-btn developer-starter-pro-btn--primary" id="cookie-accept-btn" style="padding: 10px 24px; font-size: 0.875rem; font-weight: 700; border-radius: 6px; border: none; cursor: pointer; background: var(--developer-starter-pro-primary); color: #fff;">
+					<?php esc_html_e( 'Accept All', 'developer-starter-pro' ); ?>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			var banner = document.getElementById('cookie-notice');
+			var acceptBtn = document.getElementById('cookie-accept-btn');
+			
+			if (banner && acceptBtn) {
+				// If not accepted yet, show banner with a small delay
+				if (!localStorage.getItem('dentalpro_cookies_accepted')) {
+					setTimeout(function() {
+						banner.classList.add('visible');
+					}, 1000);
+				}
+				
+				// Accept event listener
+				acceptBtn.addEventListener('click', function() {
+					localStorage.setItem('dentalpro_cookies_accepted', 'true');
+					banner.classList.remove('visible');
+					banner.classList.add('fade-out');
+					setTimeout(function() {
+						banner.style.display = 'none';
+					}, 500);
+				});
+			}
+		});
+	</script>
+
 </div><!-- #page -->
 
 <?php wp_footer(); ?>

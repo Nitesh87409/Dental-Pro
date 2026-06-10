@@ -20,6 +20,9 @@ $doctors = get_posts( array(
 	'posts_per_page' => -1,
 	'post_status'    => 'publish',
 ) );
+
+$selected_doctor  = isset( $_GET['doctor_id'] ) ? absint( $_GET['doctor_id'] ) : 0;
+$selected_service = isset( $_GET['service_id'] ) ? absint( $_GET['service_id'] ) : 0;
 ?>
 
 <main id="primary" class="developer-starter-pro-main" role="main">
@@ -84,7 +87,7 @@ $doctors = get_posts( array(
 									?>
 									<label class="wizard-selection-card" style="display:flex; justify-content:space-between; align-items:center; border:2px solid var(--developer-starter-pro-gray-200); border-radius:12px; padding: 20px; cursor:pointer; transition:all 0.2s ease;">
 										<div style="display:flex; align-items:center; gap:16px;">
-											<input type="radio" name="service_id" value="<?php echo intval( $srv->ID ); ?>" required style="width:20px; height:20px; accent-color: var(--developer-starter-pro-primary);">
+											<input type="radio" name="service_id" value="<?php echo intval( $srv->ID ); ?>" <?php checked( $srv->ID, $selected_service ); ?> required style="width:20px; height:20px; accent-color: var(--developer-starter-pro-primary);">
 											<div>
 												<strong style="font-size:1.0625rem; display:block; color:var(--developer-starter-pro-secondary);"><?php echo esc_html( $srv->post_title ); ?></strong>
 												<?php if ( $short_desc ) : ?>
@@ -120,7 +123,7 @@ $doctors = get_posts( array(
 									$spec = get_post_meta( $doc->ID, '_developer_starter_pro_doctor_speciality', true );
 									?>
 									<label class="wizard-selection-card flex-column" style="display:flex; flex-direction:column; align-items:center; border:2px solid var(--developer-starter-pro-gray-200); border-radius:12px; padding: 24px; cursor:pointer; text-align:center; transition:all 0.2s ease;">
-										<input type="radio" name="doctor_id" value="<?php echo intval( $doc->ID ); ?>" required style="margin-bottom:16px; width:20px; height:20px; accent-color: var(--developer-starter-pro-primary);">
+										<input type="radio" name="doctor_id" value="<?php echo intval( $doc->ID ); ?>" <?php checked( $doc->ID, $selected_doctor ); ?> required style="margin-bottom:16px; width:20px; height:20px; accent-color: var(--developer-starter-pro-primary);">
 										<div class="doctor-avatar" style="width:90px; height:90px; border-radius:50%; background:var(--developer-starter-pro-gray-100); display:flex; align-items:center; justify-content:center; font-size:2rem; margin-bottom:12px; overflow:hidden;">
 											<?php if ( has_post_thumbnail( $doc->ID ) ) : ?>
 												<?php echo get_the_post_thumbnail( $doc->ID, 'thumbnail', array( 'style' => 'width:100%; height:100%; object-fit:cover;' ) ); ?>

@@ -68,6 +68,90 @@
 }
 
 /* --------------------------------------------------------------------------
+   Dark Mode Styles
+   -------------------------------------------------------------------------- */
+.developer-starter-pro-dark-mode-btn {
+	background: transparent;
+	border: 2px solid var(--developer-starter-pro-gray-200);
+	color: var(--developer-starter-pro-gray-600);
+	border-radius: var(--developer-starter-pro-radius-full);
+	width: 40px;
+	height: 40px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	padding: 0;
+	transition: var(--developer-starter-pro-transition-fast);
+	margin-right: 10px;
+}
+
+.developer-starter-pro-dark-mode-btn:hover {
+	border-color: var(--developer-starter-pro-primary);
+	color: var(--developer-starter-pro-primary);
+	transform: scale(1.05);
+}
+
+.developer-starter-pro-dark-mode-btn .sun-icon {
+	display: none;
+}
+.developer-starter-pro-dark-mode-btn .moon-icon {
+	display: block;
+}
+
+body.dark-mode .developer-starter-pro-dark-mode-btn .sun-icon {
+	display: block;
+}
+body.dark-mode .developer-starter-pro-dark-mode-btn .moon-icon {
+	display: none;
+}
+
+body.dark-mode {
+	--developer-starter-pro-white: #1E293B;
+	--developer-starter-pro-gray-50: #0F172A;
+	--developer-starter-pro-gray-100: #0F172A;
+	--developer-starter-pro-gray-200: #334155;
+	--developer-starter-pro-gray-300: #475569;
+	--developer-starter-pro-gray-400: #64748B;
+	--developer-starter-pro-gray-500: #94A3B8;
+	--developer-starter-pro-gray-600: #CBD5E1;
+	--developer-starter-pro-gray-700: #E2E8F0;
+	--developer-starter-pro-gray-800: #F1F5F9;
+	--developer-starter-pro-gray-900: #F8FAFC;
+	--developer-starter-pro-secondary: #F8FAFC;
+	--developer-starter-pro-secondary-light: #CBD5E1;
+}
+
+body.dark-mode .developer-starter-pro-service-card,
+body.dark-mode .developer-starter-pro-doctor-card,
+body.dark-mode .developer-starter-pro-testimonial-card,
+body.dark-mode .developer-starter-pro-post-card {
+	background-color: #1E293B;
+	border: 1px solid #334155;
+}
+
+body.dark-mode input[type="text"],
+body.dark-mode input[type="email"],
+body.dark-mode input[type="tel"],
+body.dark-mode input[type="password"],
+body.dark-mode select,
+body.dark-mode textarea {
+	background-color: #0F172A;
+	border-color: #334155;
+	color: #F8FAFC;
+}
+
+body.dark-mode input:focus,
+body.dark-mode select:focus,
+body.dark-mode textarea:focus {
+	border-color: var(--developer-starter-pro-primary);
+}
+
+body.dark-mode .developer-starter-pro-mobile-menu {
+	background-color: #0F172A;
+}
+
+/* --------------------------------------------------------------------------
    Reset & Base Styles
    -------------------------------------------------------------------------- */
 *,
@@ -1690,6 +1774,327 @@ p {
 		gap: 32px;
 	}
 }
+
+/* ==========================================================================
+   WooCommerce Custom Styles & Integration
+   ========================================================================== */
+.woocommerce ul.products {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+	gap: 30px;
+	margin: 40px 0 !important;
+	padding: 0;
+	list-style: none;
+}
+.woocommerce ul.products::before,
+.woocommerce ul.products::after {
+	display: none !important;
+}
+.woocommerce ul.products li.product {
+	background: var(--developer-starter-pro-white);
+	border: 1px solid var(--developer-starter-pro-gray-200);
+	border-radius: var(--developer-starter-pro-radius-lg);
+	padding: 20px;
+	margin: 0 !important;
+	text-align: center;
+	box-shadow: var(--developer-starter-pro-shadow-sm);
+	transition: var(--developer-starter-pro-transition);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 100% !important;
+}
+.woocommerce ul.products li.product:hover {
+	transform: translateY(-4px);
+	box-shadow: var(--developer-starter-pro-shadow-md);
+	border-color: var(--developer-starter-pro-primary);
+}
+.woocommerce ul.products li.product img {
+	border-radius: 8px;
+	margin-bottom: 15px;
+	width: 100%;
+	height: auto;
+}
+.woocommerce ul.products li.product .woocommerce-loop-product__title {
+	font-family: var(--developer-starter-pro-font-heading);
+	font-size: 1.125rem;
+	color: var(--developer-starter-pro-secondary);
+	margin-bottom: 10px;
+	padding: 0;
+}
+.woocommerce ul.products li.product .price {
+	font-family: var(--developer-starter-pro-font-heading);
+	color: var(--developer-starter-pro-primary);
+	font-weight: 700;
+	font-size: 1.25rem;
+	margin-bottom: 15px;
+}
+.woocommerce ul.products li.product .button {
+	background: var(--developer-starter-pro-primary);
+	color: #fff;
+	border-radius: var(--developer-starter-pro-radius-full);
+	padding: 10px 20px;
+	font-weight: 600;
+	font-size: 0.875rem;
+	border: none;
+	cursor: pointer;
+	transition: var(--developer-starter-pro-transition);
+}
+.woocommerce ul.products li.product .button:hover {
+	background: var(--developer-starter-pro-primary-dark);
+}
+
+/* WooCommerce Tables & Forms */
+.woocommerce-cart table.cart,
+.woocommerce-checkout #order_review,
+.woocommerce-checkout form.checkout_coupon,
+.woocommerce-checkout form.login {
+	border: 1px solid var(--developer-starter-pro-gray-200);
+	border-radius: 12px;
+	overflow: hidden;
+}
+.woocommerce-cart table.cart th {
+	background: var(--developer-starter-pro-gray-50);
+	color: var(--developer-starter-pro-secondary);
+	font-weight: 700;
+	padding: 15px;
+}
+.woocommerce-cart table.cart td {
+	padding: 15px;
+	border-top: 1px solid var(--developer-starter-pro-gray-200);
+}
+.woocommerce-checkout .col2-set {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 40px;
+	margin-bottom: 40px;
+}
+.woocommerce-checkout form .form-row input.input-text,
+.woocommerce-checkout form .form-row select,
+.woocommerce-checkout form .form-row textarea {
+	width: 100%;
+	padding: 12px;
+	border: 2px solid var(--developer-starter-pro-gray-200);
+	border-radius: 8px;
+	background: #fff;
+}
+body.dark-mode .woocommerce ul.products li.product {
+	background: #1E293B;
+	border-color: #334155;
+}
+body.dark-mode .woocommerce ul.products li.product .woocommerce-loop-product__title {
+	color: #F8FAFC;
+}
+body.dark-mode .woocommerce-cart table.cart th {
+	background: #0F172A;
+}
+body.dark-mode .woocommerce-checkout form .form-row input.input-text,
+body.dark-mode .woocommerce-checkout form .form-row select,
+body.dark-mode .woocommerce-checkout form .form-row textarea {
+	background: #0F172A;
+	border-color: #334155;
+	color: #F8FAFC;
+}
+
+/* ==========================================================================
+   Video Testimonials Modal Overlay
+   ========================================================================== */
+.testimonial-video-play-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background: var(--developer-starter-pro-primary);
+	color: #fff;
+	font-size: 1.25rem;
+	cursor: pointer;
+	border: none;
+	box-shadow: 0 4px 10px rgba(13, 148, 136, 0.3);
+	transition: all 0.3s ease;
+}
+.testimonial-video-play-btn:hover {
+	transform: scale(1.1);
+	background: var(--developer-starter-pro-primary-dark);
+}
+.dentalpro-video-modal {
+	position: fixed;
+	inset: 0;
+	background: rgba(15, 23, 42, 0.85);
+	z-index: 9999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.3s ease;
+}
+.dentalpro-video-modal.active {
+	opacity: 1;
+	pointer-events: auto;
+}
+.dentalpro-video-modal-content {
+	background: #000;
+	width: 90%;
+	max-width: 800px;
+	aspect-ratio: 16/9;
+	border-radius: 12px;
+	overflow: hidden;
+	position: relative;
+	box-shadow: var(--developer-starter-pro-shadow-xl);
+}
+.dentalpro-video-modal-close {
+	position: absolute;
+	top: -45px;
+	right: 0;
+	background: none;
+	border: none;
+	color: #fff;
+	font-size: 2rem;
+	cursor: pointer;
+	outline: none;
+}
+.dentalpro-video-modal-close:hover {
+	color: var(--developer-starter-pro-primary);
+}
+
+/* ==========================================================================
+   GDPR Cookie Consent Banner
+   ========================================================================== */
+.dentalpro-cookie-notice {
+	position: fixed;
+	bottom: 24px;
+	left: 24px;
+	right: 24px;
+	max-width: 960px;
+	margin: 0 auto;
+	background: rgba(30, 41, 59, 0.85);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	backdrop-filter: blur(12px);
+	border-radius: 12px;
+	padding: 18px 28px;
+	box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+	z-index: 99999;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(40px);
+	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dentalpro-cookie-notice.visible {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
+
+.dentalpro-cookie-notice.fade-out {
+	opacity: 0;
+	transform: translateY(20px);
+}
+
+@media (max-width: 768px) {
+	.dentalpro-cookie-notice {
+		bottom: 12px;
+		left: 12px;
+		right: 12px;
+		padding: 16px 20px;
+	}
+}
+
+/* ==========================================================================
+   Social Share Buttons Layout
+   ========================================================================== */
+.developer-starter-pro-share-box {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	margin-top: 32px;
+	margin-bottom: 24px;
+	flex-wrap: wrap;
+}
+
+.share-box-label {
+	font-weight: 700;
+	color: var(--developer-starter-pro-secondary);
+	font-size: 0.875rem;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.share-buttons {
+	display: flex;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.share-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 16px;
+	border-radius: var(--developer-starter-pro-radius-full);
+	font-size: 0.8125rem;
+	font-weight: 700;
+	color: #fff !important;
+	text-decoration: none;
+	transition: all 0.2s ease;
+	box-shadow: var(--developer-starter-pro-shadow-sm);
+}
+
+.share-btn svg {
+	fill: currentColor;
+	transition: transform 0.2s ease;
+}
+
+.share-btn:hover {
+	transform: translateY(-2px);
+	box-shadow: var(--developer-starter-pro-shadow-md);
+}
+
+.share-btn:hover svg {
+	transform: scale(1.1);
+}
+
+.share-btn--facebook { background-color: #1877f2; }
+.share-btn--facebook:hover { background-color: #1565c0; }
+
+.share-btn--twitter { background-color: #1da1f2; }
+.share-btn--twitter:hover { background-color: #1a8cd8; }
+
+.share-btn--linkedin { background-color: #0a66c2; }
+.share-btn--linkedin:hover { background-color: #084d91; }
+
+.share-btn--whatsapp { background-color: #25d366; }
+.share-btn--whatsapp:hover { background-color: #128c7e; }
+
+body.dark-mode .share-box-label {
+	color: #F8FAFC;
+}
+
+body.dark-mode .developer-starter-pro-share-box {
+	border-color: #334155 !important;
+}
+
+/* ==========================================================================
+   HTML Sitemap Layout Styles
+   ========================================================================== */
+.sitemap-list li {
+	position: relative;
+	padding-left: 16px;
+}
+
+.sitemap-list li::before {
+	content: "•";
+	position: absolute;
+	left: 0;
+	color: var(--developer-starter-pro-primary);
+	font-size: 1.25rem;
+	line-height: 1;
+	top: -2px;
+}
+
+
 
 
 

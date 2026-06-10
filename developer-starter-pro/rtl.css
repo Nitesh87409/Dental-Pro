@@ -1,0 +1,95 @@
+/**
+ * RTL Stylesheet
+ *
+ * Automatically loaded by WordPress when Right-to-Left (RTL) languages are active.
+ *
+ * @package developer-starter-pro
+ * @since   1.0.0
+ */
+
+body {
+	direction: rtl;
+	unicode-bidi: embed;
+	text-align: right;
+}
+
+/* Float mirroring */
+.alignleft {
+	float: right;
+	margin-left: 1.5em;
+	margin-right: 0;
+}
+.alignright {
+	float: left;
+	margin-right: 1.5em;
+	margin-left: 0;
+}
+
+/* Table columns */
+th, td {
+	text-align: right;
+}
+
+/* Header & Menu Swapping */
+.developer-starter-pro-top-bar-inner {
+	flex-direction: row-reverse;
+}
+.developer-starter-pro-header-inner {
+	flex-direction: row-reverse;
+}
+.developer-starter-pro-navigation ul {
+	margin: 0;
+	padding: 0;
+}
+.developer-starter-pro-navigation li {
+	float: right;
+}
+.developer-starter-pro-navigation ul ul {
+	right: 0;
+	left: auto;
+}
+.developer-starter-pro-navigation ul ul ul {
+	right: 100%;
+	left: auto;
+}
+
+/* Services card read more icon mirror */
+.developer-starter-pro-read-more svg {
+	transform: scaleX(-1);
+}
+.developer-starter-pro-read-more:hover svg {
+	transform: scaleX(-1) translateX(4px);
+}
+
+/* Patient Portal Dashboard Swapping */
+.portal-tab-btn {
+	text-align: right !important;
+}
+.portal-tab-btn span {
+	margin-left: 10px;
+	margin-right: 0;
+}
+
+/* Footer columns */
+.developer-starter-pro-footer-grid {
+	direction: rtl;
+}
+
+/* Form layouts */
+label {
+	text-align: right;
+}
+input, select, textarea {
+	text-align: right;
+}
+
+/* WooCommerce grids */
+.woocommerce ul.products li.product {
+	text-align: right;
+}
+
+/* Back to Top button position */
+#back-to-top {
+	left: 30px;
+	right: auto;
+}

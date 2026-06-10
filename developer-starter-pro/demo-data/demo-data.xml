@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0"
+	xmlns:excerpt="http://wordpress.org/export/1.2/excerpt/"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/commentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:wp="http://wordpress.org/export/1.2/"
+>
+<channel>
+	<title>DentalPro Elite</title>
+	<link>http://dental-pro.local</link>
+	<description>Premium WordPress Dental Theme</description>
+	<pubDate>Wed, 10 Jun 2026 16:10:00 +0000</pubDate>
+	<language>en-US</language>
+	<wp:wxr_version>1.2</wp:wxr_version>
+	<wp:base_site_url>http://dental-pro.local</wp:base_site_url>
+	<wp:base_blog_url>http://dental-pro.local</wp:base_blog_url>
+
+	<!-- Page: About Us -->
+	<item>
+		<title>About Us</title>
+		<link>http://dental-pro.local/about-us/</link>
+		<pubDate>Wed, 10 Jun 2026 16:10:00 +0000</pubDate>
+		<dc:creator><![CDATA[admin]]></dc:creator>
+		<guid isPermaLink="false">http://dental-pro.local/?page_id=2</guid>
+		<description></description>
+		<content:encoded><![CDATA[At DentalPro Elite, we are committed to providing premium, comprehensive dental care services. Our clinic incorporates cutting-edge technology to ensure painless treatments and stellar results.]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>2</wp:post_id>
+		<wp:post_date><![CDATA[2026-06-10 16:10:00]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-06-10 16:10:00]]></wp:post_date_gmt>
+		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
+		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
+		<wp:post_name><![CDATA[about-us]]></wp:post_name>
+		<wp:status><![CDATA[publish]]></wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>1</wp:menu_order>
+		<wp:post_type><![CDATA[page]]></wp:post_type>
+		<wp:post_password><![CDATA[]]></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<wp:postmeta>
+			<wp:meta_key><![CDATA[_wp_page_template]]></wp:meta_key>
+			<wp:meta_value><![CDATA[page-templates/template-about.php]]></wp:meta_value>
+		</wp:postmeta>
+	</item>
+
+	<!-- Page: FAQs -->
+	<item>
+		<title>Frequently Asked Questions</title>
+		<link>http://dental-pro.local/faqs/</link>
+		<pubDate>Wed, 10 Jun 2026 16:10:00 +0000</pubDate>
+		<dc:creator><![CDATA[admin]]></dc:creator>
+		<guid isPermaLink="false">http://dental-pro.local/?page_id=3</guid>
+		<description></description>
+		<content:encoded><![CDATA[Find clear answers regarding our clinical procedures, doctor appointments, insurance, and billing policies.]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>3</wp:post_id>
+		<wp:post_date><![CDATA[2026-06-10 16:10:00]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-06-10 16:10:00]]></wp:post_date_gmt>
+		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
+		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
+		<wp:post_name><![CDATA[faqs]]></wp:post_name>
+		<wp:status><![CDATA[publish]]></wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>2</wp:menu_order>
+		<wp:post_type><![CDATA[page]]></wp:post_type>
+		<wp:post_password><![CDATA[]]></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<wp:postmeta>
+			<wp:meta_key><![CDATA[_wp_page_template]]></wp:meta_key>
+			<wp:meta_value><![CDATA[page-templates/template-faq.php]]></wp:meta_value>
+		</wp:postmeta>
+	</item>
+
+	<!-- Page: Pricing & Calculator -->
+	<item>
+		<title>Pricing Plans &amp; Cost Calculator</title>
+		<link>http://dental-pro.local/pricing/</link>
+		<pubDate>Wed, 10 Jun 2026 16:10:00 +0000</pubDate>
+		<dc:creator><![CDATA[admin]]></dc:creator>
+		<guid isPermaLink="false">http://dental-pro.local/?page_id=4</guid>
+		<description></description>
+		<content:encoded><![CDATA[Check our standard package prices and use our interactive dental cost calculator to estimate insurance coverage.]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>4</wp:post_id>
+		<wp:post_date><![CDATA[2026-06-10 16:10:00]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-06-10 16:10:00]]></wp:post_date_gmt>
+		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
+		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
+		<wp:post_name><![CDATA[pricing]]></wp:post_name>
+		<wp:status><![CDATA[publish]]></wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>3</wp:menu_order>
+		<wp:post_type><![CDATA[page]]></wp:post_type>
+		<wp:post_password><![CDATA[]]></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<wp:postmeta>
+			<wp:meta_key><![CDATA[_wp_page_template]]></wp:meta_key>
+			<wp:meta_value><![CDATA[page-templates/template-pricing.php]]></wp:meta_value>
+		</wp:postmeta>
+	</item>
+
+	<!-- Page: Before & After -->
+	<item>
+		<title>Before &amp; After Smile Transformations</title>
+		<link>http://dental-pro.local/before-after/</link>
+		<pubDate>Wed, 10 Jun 2026 16:10:00 +0000</pubDate>
+		<dc:creator><![CDATA[admin]]></dc:creator>
+		<guid isPermaLink="false">http://dental-pro.local/?page_id=5</guid>
+		<description></description>
+		<content:encoded><![CDATA[View the outstanding results of our treatments with our interactive before/after image comparison slider.]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>5</wp:post_id>
+		<wp:post_date><![CDATA[2026-06-10 16:10:00]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-06-10 16:10:00]]></wp:post_date_gmt>
+		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
+		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
+		<wp:post_name><![CDATA[before-after]]></wp:post_name>
+		<wp:status><![CDATA[publish]]></wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>4</wp:menu_order>
+		<wp:post_type><![CDATA[page]]></wp:post_type>
+		<wp:post_password><![CDATA[]]></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<wp:postmeta>
+			<wp:meta_key><![CDATA[_wp_page_template]]></wp:meta_key>
+			<wp:meta_value><![CDATA[page-templates/template-before-after.php]]></wp:meta_value>
+		</wp:postmeta>
+	</item>
+
+	<!-- Page: Insurance Checker -->
+	<item>
+		<title>Insurance Coverage Checker</title>
+		<link>http://dental-pro.local/insurance-checker/</link>
+		<pubDate>Wed, 10 Jun 2026 16:10:00 +0000</pubDate>
+		<dc:creator><![CDATA[admin]]></dc:creator>
+		<guid isPermaLink="false">http://dental-pro.local/?page_id=6</guid>
+		<description></description>
+		<content:encoded><![CDATA[Verify if your insurance provider is accepted by using our real-time search checker.]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>6</wp:post_id>
+		<wp:post_date><![CDATA[2026-06-10 16:10:00]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-06-10 16:10:00]]></wp:post_date_gmt>
+		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
+		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
+		<wp:post_name><![CDATA[insurance-checker]]></wp:post_name>
+		<wp:status><![CDATA[publish]]></wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>5</wp:menu_order>
+		<wp:post_type><![CDATA[page]]></wp:post_type>
+		<wp:post_password><![CDATA[]]></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<wp:postmeta>
+			<wp:meta_key><![CDATA[_wp_page_template]]></wp:meta_key>
+			<wp:meta_value><![CDATA[page-templates/template-insurance-checker.php]]></wp:meta_value>
+		</wp:postmeta>
+	</item>
+
+	<!-- Page: Booking Wizard -->
+	<item>
+		<title>Schedule an Appointment</title>
+		<link>http://dental-pro.local/booking/</link>
+		<pubDate>Wed, 10 Jun 2026 16:10:00 +0000</pubDate>
+		<dc:creator><![CDATA[admin]]></dc:creator>
+		<guid isPermaLink="false">http://dental-pro.local/?page_id=7</guid>
+		<description></description>
+		<content:encoded><![CDATA[Book your appointment in 4 quick, easy steps using our secure scheduler.]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>7</wp:post_id>
+		<wp:post_date><![CDATA[2026-06-10 16:10:00]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-06-10 16:10:00]]></wp:post_date_gmt>
+		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
+		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
+		<wp:post_name><![CDATA[booking]]></wp:post_name>
+		<wp:status><![CDATA[publish]]></wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>6</wp:menu_order>
+		<wp:post_type><![CDATA[page]]></wp:post_type>
+		<wp:post_password><![CDATA[]]></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<wp:postmeta>
+			<wp:meta_key><![CDATA[_wp_page_template]]></wp:meta_key>
+			<wp:meta_value><![CDATA[page-templates/template-booking.php]]></wp:meta_value>
+		</wp:postmeta>
+	</item>
+
+	<!-- Doctor Post: Dr. Alex Mercer -->
+	<item>
+		<title>Dr. Alex Mercer</title>
+		<link>http://dental-pro.local/doctors/dr-alex-mercer/</link>
+		<pubDate>Wed, 10 Jun 2026 16:10:00 +0000</pubDate>
+		<dc:creator><![CDATA[admin]]></dc:creator>
+		<guid isPermaLink="false">http://dental-pro.local/?post_type=doctors&amp;p=101</guid>
+		<wp:post_id>101</wp:post_id>
+		<wp:post_date><![CDATA[2026-06-10 16:10:00]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-06-10 16:10:00]]></wp:post_date_gmt>
+		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
+		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
+		<wp:post_name><![CDATA[dr-alex-mercer]]></wp:post_name>
+		<wp:status><![CDATA[publish]]></wp:status>
+		<wp:post_type><![CDATA[doctors]]></wp:post_type>
+		<wp:postmeta>
+			<wp:meta_key><![CDATA[doctor_speciality]]></wp:meta_key>
+			<wp:meta_value><![CDATA[Orthodontist]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key><![CDATA[doctor_qualifications]]></wp:meta_key>
+			<wp:meta_value><![CDATA[DDS, MS]]></wp:meta_value>
+		</wp:postmeta>
+	</item>
+
+	<!-- Service Post: Teeth Whitening -->
+	<item>
+		<title>Teeth Whitening</title>
+		<link>http://dental-pro.local/services/teeth-whitening/</link>
+		<pubDate>Wed, 10 Jun 2026 16:10:00 +0000</pubDate>
+		<dc:creator><![CDATA[admin]]></dc:creator>
+		<guid isPermaLink="false">http://dental-pro.local/?post_type=services&amp;p=201</guid>
+		<wp:post_id>201</wp:post_id>
+		<wp:post_date><![CDATA[2026-06-10 16:10:00]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-06-10 16:10:00]]></wp:post_date_gmt>
+		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
+		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
+		<wp:post_name><![CDATA[teeth-whitening]]></wp:post_name>
+		<wp:status><![CDATA[publish]]></wp:status>
+		<wp:post_type><![CDATA[services]]></wp:post_type>
+		<wp:postmeta>
+			<wp:meta_key><![CDATA[service_price]]></wp:meta_key>
+			<wp:meta_value><![CDATA[199]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key><![CDATA[service_duration]]></wp:meta_key>
+			<wp:meta_value><![CDATA[60]]></wp:meta_value>
+		</wp:postmeta>
+	</item>
+</channel>
+</rss>

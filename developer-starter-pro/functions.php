@@ -143,6 +143,42 @@ function developer_starter_pro_create_pages() {
 			'title'    => 'Gallery',
 			'template' => 'page-templates/template-gallery.php',
 		),
+		'services' => array(
+			'title'    => 'Services Directory',
+			'template' => 'page-templates/template-services.php',
+		),
+		'doctors' => array(
+			'title'    => 'Doctors Directory',
+			'template' => 'page-templates/template-doctors.php',
+		),
+		'video-consult' => array(
+			'title'    => 'Video Consultation',
+			'template' => 'page-templates/template-video-consult.php',
+		),
+		'emergency' => array(
+			'title'    => 'Emergency Care',
+			'template' => 'page-templates/template-emergency.php',
+		),
+		'blog' => array(
+			'title'    => 'Blog Catalog',
+			'template' => 'page-templates/template-blog.php',
+		),
+		'insurance' => array(
+			'title'    => 'Insurance Details',
+			'template' => 'page-templates/template-insurance.php',
+		),
+		'coming-soon' => array(
+			'title'    => 'Coming Soon',
+			'template' => 'page-templates/template-coming-soon.php',
+		),
+		'careers' => array(
+			'title'    => 'Careers Directory',
+			'template' => 'page-templates/template-careers.php',
+		),
+		'sitemap' => array(
+			'title'    => 'Sitemap',
+			'template' => 'page-templates/template-sitemap.php',
+		),
 	);
 
 	foreach ( $pages_to_create as $slug => $page_data ) {
@@ -169,4 +205,15 @@ function developer_starter_pro_create_pages() {
 	}
 }
 add_action( 'init', 'developer_starter_pro_create_pages' );
+
+/**
+ * Save rating comment meta for Doctor reviews.
+ */
+function developer_starter_pro_save_comment_rating( $comment_id ) {
+	if ( isset( $_POST['rating'] ) ) {
+		$rating = absint( $_POST['rating'] );
+		update_comment_meta( $comment_id, 'rating', $rating );
+	}
+}
+add_action( 'comment_post', 'developer_starter_pro_save_comment_rating' );
 

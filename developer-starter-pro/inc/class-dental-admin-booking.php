@@ -26,6 +26,7 @@ class Developer_Starter_Pro_Admin_Booking {
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'add_appointments_submenu' ) );
 		add_action( 'wp_ajax_developer_starter_pro_update_appointment_status', array( $this, 'ajax_update_status' ) );
+		add_action( 'admin_post_developer_starter_pro_export_appointments_csv', array( $this, 'export_appointments_csv' ) );
 	}
 
 	/**
@@ -77,11 +78,14 @@ class Developer_Starter_Pro_Admin_Booking {
 		?>
 		<div class="wrap developer-starter-pro-admin-wrap">
 			<div class="developer-starter-pro-admin-header">
-				<div class="developer-starter-pro-admin-header-inner">
+				<div class="developer-starter-pro-admin-header-inner" style="display:flex; justify-content:space-between; align-items:center; width:100%; padding-right:20px;">
 					<h1>
 						<span class="developer-starter-pro-logo-icon">📅</span>
 						<?php esc_html_e( 'Appointment Scheduling Manager', 'developer-starter-pro' ); ?>
 					</h1>
+					<a href="<?php echo esc_url( admin_url( 'admin-post.php?action=developer_starter_pro_export_appointments_csv' ) ); ?>" class="button button-secondary" style="font-weight:600; padding:5px 12px; height:auto; line-height:20px;">
+						📥 <?php esc_html_e( 'Export to CSV', 'developer-starter-pro' ); ?>
+					</a>
 				</div>
 			</div>
 
@@ -332,5 +336,73 @@ class Developer_Starter_Pro_Admin_Booking {
 		}
 
 		wp_send_json_error( array( 'message' => esc_html__( 'Error updating record in database.', 'developer-starter-pro' ) ) );
+	}
+
+	/**
+	 * Export appointments to CSV.
+	 */
+	public function export_appointments_csv() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'developer-starter-pro' ) );
+		}
+
+		global $wpdb;
+		$table_name = Developer_Starter_Pro_Booking::get_table_name();
+
+		// Clean output buffer to prevent stray characters
+		if ( ob_get_length() ) {
+			ob_end_clean();
+		}
+
+		// Set response headers for download
+		header( 'Content-Type: text/csv; charset=utf-8' );
+		header( 'Content-Disposition: attachment; filename=appointments-export-' . date( 'Y-m-d' ) . '.csv' );
+		header( 'Pragma: no-cache' );
+		header( 'Expires: 0' );
+
+		// Open output stream
+		$output = fopen( 'php://output', 'w' );
+
+		// CSV Columns Header
+		fputcsv( $output, array(
+			__( 'ID', 'developer-starter-pro' ),
+			__( 'Patient Name', 'developer-starter-pro' ),
+			__( 'Patient Phone', 'developer-starter-pro' ),
+			__( 'Patient Email', 'developer-starter-pro' ),
+			__( 'Doctor Name', 'developer-starter-pro' ),
+			__( 'Service Name', 'developer-starter-pro' ),
+			__( 'Booking Date', 'developer-starter-pro' ),
+			__( 'Time Slot', 'developer-starter-pro' ),
+			__( 'Status', 'developer-starter-pro' ),
+			__( 'Notes', 'developer-starter-pro' ),
+			__( 'Created At', 'developer-starter-pro' )
+		) );
+
+		// Query all appointments from database
+		$appointments = $wpdb->get_results( "SELECT * FROM $table_name ORDER BY booking_date DESC, time_slot ASC" );
+
+		if ( ! empty( $appointments ) ) {
+			foreach ( $appointments as $apt ) {
+				$doc_name = get_the_title( $apt->doctor_id );
+				$srv_name = get_the_title( $apt->service_id );
+				
+				fputcsv( $output, array(
+					$apt->id,
+					$apt->patient_name,
+					$apt->patient_phone,
+					$apt->patient_email,
+					$doc_name,
+					$srv_name,
+					$apt->booking_date,
+					$apt->time_slot,
+					ucfirst( $apt->status ),
+					$apt->notes,
+					$apt->created_at
+				) );
+			}
+		}
+
+		fclose( $output );
+		exit;
 	}
 }

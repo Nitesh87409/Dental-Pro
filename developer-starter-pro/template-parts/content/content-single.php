@@ -49,6 +49,13 @@
 	</div>
 
 	<footer class="developer-starter-pro-post-footer">
+		<?php 
+		// Social Share buttons
+		if ( function_exists( 'developer_starter_pro_social_share' ) ) {
+			developer_starter_pro_social_share();
+		}
+		?>
+
 		<?php if ( has_tag() ) : ?>
 			<div class="developer-starter-pro-post-tags">
 				<?php the_tags( '<span class="tags-label">' . esc_html__( 'Tags:', 'developer-starter-pro' ) . '</span> ', ', ' ); ?>

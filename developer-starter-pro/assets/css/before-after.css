@@ -1,0 +1,129 @@
+/* Before/After Comparison Slider Styles */
+.developer-starter-pro-ba-container {
+	margin: 2rem auto;
+	max-width: 600px;
+	width: 100%;
+}
+
+.developer-starter-pro-ba-title {
+	text-align: center;
+	margin-bottom: 1rem;
+	font-family: var(--developer-starter-pro-font-heading);
+	color: var(--developer-starter-pro-secondary);
+}
+
+.developer-starter-pro-ba-wrapper {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 4 / 3;
+	overflow: hidden;
+	border-radius: var(--developer-starter-pro-radius-lg);
+	box-shadow: var(--developer-starter-pro-shadow-lg);
+	border: 1px solid var(--developer-starter-pro-gray-200);
+}
+
+.developer-starter-pro-ba-before,
+.developer-starter-pro-ba-after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	user-select: none;
+}
+
+.developer-starter-pro-ba-before img,
+.developer-starter-pro-ba-after img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	pointer-events: none;
+}
+
+/* Before sits on top of after, and is clipped using clip-path */
+.developer-starter-pro-ba-before {
+	z-index: 2;
+	clip-path: inset(0 50% 0 0); /* Initial 50% clip from right */
+}
+
+.developer-starter-pro-ba-after {
+	z-index: 1;
+}
+
+/* The badges */
+.developer-starter-pro-ba-badge {
+	position: absolute;
+	top: 15px;
+	padding: 6px 12px;
+	background: rgba(15, 23, 42, 0.75);
+	color: #fff;
+	font-size: 0.75rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+	border-radius: var(--developer-starter-pro-radius-sm);
+	z-index: 3;
+	pointer-events: none;
+}
+
+.before-badge {
+	left: 15px;
+}
+
+.after-badge {
+	right: 15px;
+}
+
+/* Invisible range input spanning the entire container */
+.developer-starter-pro-ba-slider {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	z-index: 5;
+	cursor: ew-resize;
+	margin: 0;
+	padding: 0;
+}
+
+/* Centered divider line */
+.developer-starter-pro-ba-handle {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 50%;
+	width: 4px;
+	background: #ffffff;
+	z-index: 4;
+	pointer-events: none;
+	transform: translateX(-50%);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Drag handle button icon */
+.developer-starter-pro-ba-handle::after {
+	content: '↔';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 44px;
+	height: 44px;
+	background: #ffffff;
+	border: 3px solid var(--developer-starter-pro-primary);
+	color: var(--developer-starter-pro-primary);
+	font-weight: 800;
+	font-size: 1.25rem;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transform: translate(-50%, -50%);
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .developer-starter-pro-ba-wrapper {
+	border-color: #334155;
+}

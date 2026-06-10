@@ -101,7 +101,7 @@ class Developer_Starter_Pro_Enqueue {
 		}
 
 		// Patient Portal CSS
-		if ( is_page_template( 'page-templates/template-patient-dashboard.php' ) || is_page_template( 'page-templates/template-patient-login.php' ) || is_page_template( 'page-templates/template-patient-register.php' ) ) {
+		if ( is_page_template( 'page-templates/template-patient-dashboard.php' ) || is_page_template( 'page-templates/template-patient-login.php' ) || is_page_template( 'page-templates/template-patient-register.php' ) || is_page_template( 'page-templates/template-patient-forgot.php' ) ) {
 			wp_enqueue_style(
 				'developer-starter-pro-portal',
 				developer_starter_pro_CSS . '/portal.css',
@@ -116,6 +116,16 @@ class Developer_Starter_Pro_Enqueue {
 			wp_enqueue_style(
 				'developer-starter-pro-calculator',
 				developer_starter_pro_CSS . '/calculator.css',
+				array( 'developer-starter-pro-main' ),
+				developer_starter_pro_VERSION
+			);
+		}
+
+		// Before/After CSS
+		if ( ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'dental_before_after' ) ) || is_page_template( 'page-templates/template-before-after.php' ) ) {
+			wp_enqueue_style(
+				'developer-starter-pro-before-after',
+				developer_starter_pro_CSS . '/before-after.css',
 				array( 'developer-starter-pro-main' ),
 				developer_starter_pro_VERSION
 			);
@@ -209,7 +219,7 @@ class Developer_Starter_Pro_Enqueue {
 		}
 
 		// Patient Portal JS
-		if ( is_page_template( 'page-templates/template-patient-dashboard.php' ) || is_page_template( 'page-templates/template-patient-login.php' ) || is_page_template( 'page-templates/template-patient-register.php' ) ) {
+		if ( is_page_template( 'page-templates/template-patient-dashboard.php' ) || is_page_template( 'page-templates/template-patient-login.php' ) || is_page_template( 'page-templates/template-patient-register.php' ) || is_page_template( 'page-templates/template-patient-forgot.php' ) ) {
 			wp_enqueue_script(
 				'developer-starter-pro-portal',
 				developer_starter_pro_JS . '/portal.js',
@@ -245,6 +255,17 @@ class Developer_Starter_Pro_Enqueue {
 				array(
 					'bookingUrl' => developer_starter_pro_get_booking_url(), // fallback booking url
 				)
+			);
+		}
+
+		// Before/After JS
+		if ( ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'dental_before_after' ) ) || is_page_template( 'page-templates/template-before-after.php' ) ) {
+			wp_enqueue_script(
+				'developer-starter-pro-before-after',
+				developer_starter_pro_JS . '/before-after.js',
+				array( 'developer-starter-pro-main' ),
+				developer_starter_pro_VERSION,
+				true
 			);
 		}
 
