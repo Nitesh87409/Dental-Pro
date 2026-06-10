@@ -1,0 +1,136 @@
+/* ==========================================================================
+   DentalPro Elite — Responsive Styles
+   ========================================================================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+	.developer-starter-pro-footer-grid--1,
+	.developer-starter-pro-footer-grid--2 {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.developer-starter-pro-hero-stats {
+		gap: var(--developer-starter-pro-space-xl);
+	}
+
+	.developer-starter-pro-services-grid,
+	.developer-starter-pro-testimonials-grid {
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	}
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+	/* Header */
+	.developer-starter-pro-nav {
+		display: none;
+	}
+
+	.developer-starter-pro-mobile-toggle {
+		display: flex;
+	}
+
+	.developer-starter-pro-mobile-menu {
+		display: block;
+	}
+
+	.developer-starter-pro-header-cta {
+		display: none;
+	}
+
+	.developer-starter-pro-top-bar-left {
+		display: none;
+	}
+
+	.developer-starter-pro-top-bar-inner {
+		justify-content: center;
+	}
+
+	/* Hero */
+	.developer-starter-pro-hero {
+		min-height: 80vh;
+	}
+
+	.developer-starter-pro-hero-stats {
+		flex-direction: row;
+		gap: var(--developer-starter-pro-space-lg);
+	}
+
+	.developer-starter-pro-hero-stat .stat-number {
+		font-size: 1.5rem;
+	}
+
+	.developer-starter-pro-hero-actions {
+		flex-direction: column;
+	}
+
+	.developer-starter-pro-hero-actions .developer-starter-pro-btn {
+		width: 100%;
+		justify-content: center;
+	}
+
+	/* Grids */
+	.developer-starter-pro-services-grid,
+	.developer-starter-pro-doctors-grid,
+	.developer-starter-pro-testimonials-grid,
+	.developer-starter-pro-posts-grid {
+		grid-template-columns: 1fr;
+	}
+
+	/* Footer */
+	.developer-starter-pro-footer-grid--1,
+	.developer-starter-pro-footer-grid--2,
+	.developer-starter-pro-footer-grid--3 {
+		grid-template-columns: 1fr;
+	}
+
+	.developer-starter-pro-footer-bottom-inner {
+		flex-direction: column;
+		gap: var(--developer-starter-pro-space-sm);
+		text-align: center;
+	}
+
+	/* Sections */
+	.developer-starter-pro-section {
+		padding: var(--developer-starter-pro-space-2xl) 0;
+	}
+
+	/* Emergency Button */
+	.developer-starter-pro-emergency-text {
+		display: none;
+	}
+
+	.developer-starter-pro-emergency-btn {
+		padding: 14px;
+		border-radius: 50%;
+	}
+
+	/* 404 */
+	.developer-starter-pro-404-title {
+		font-size: 5rem;
+	}
+
+	.developer-starter-pro-404-actions {
+		flex-direction: column;
+		align-items: center;
+	}
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+	.developer-starter-pro-container {
+		padding: 0 var(--developer-starter-pro-space-md);
+	}
+
+	.developer-starter-pro-hero-stats {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--developer-starter-pro-space-md);
+	}
+
+	.developer-starter-pro-hero-stat {
+		display: flex;
+		align-items: center;
+		gap: var(--developer-starter-pro-space-sm);
+	}
+}

@@ -1,0 +1,139 @@
+/**
+ * DentalPro Elite — Header JavaScript
+ *
+ * Handles: sticky header, mobile menu, hamburger toggle.
+ *
+ * @package developer-starter-pro
+ * @since   1.0.0
+ */
+
+(function () {
+	'use strict';
+
+	document.addEventListener('DOMContentLoaded', function () {
+		initStickyHeader();
+		initMobileMenu();
+	});
+
+	// =========================================================================
+	// Sticky Header
+	// =========================================================================
+	function initStickyHeader() {
+		const header = document.querySelector('.developer-starter-pro-header--sticky-enabled');
+		if (!header) return;
+
+		let lastScroll = 0;
+		const headerHeight = header.offsetHeight;
+
+		// Create a placeholder to prevent content jump.
+		const placeholder = document.createElement('div');
+		placeholder.style.height = headerHeight + 'px';
+		placeholder.style.display = 'none';
+		placeholder.className = 'developer-starter-pro-header-placeholder';
+		header.parentNode.insertBefore(placeholder, header.nextSibling);
+
+		window.addEventListener('scroll', function () {
+			const currentScroll = window.scrollY;
+
+			if (currentScroll > headerHeight + 100) {
+				if (!header.classList.contains('is-sticky')) {
+					header.classList.add('is-sticky');
+					placeholder.style.display = 'block';
+				}
+			} else {
+				header.classList.remove('is-sticky');
+				placeholder.style.display = 'none';
+			}
+
+			lastScroll = currentScroll;
+		}, { passive: true });
+	}
+
+	// =========================================================================
+	// Mobile Menu
+	// =========================================================================
+	function initMobileMenu() {
+		const toggle = document.getElementById('mobile-menu-toggle');
+		const close = document.getElementById('mobile-menu-close');
+		const menu = document.getElementById('mobile-menu');
+		const hamburger = toggle?.querySelector('.developer-starter-pro-hamburger');
+
+		if (!toggle || !menu) return;
+
+		// Create backdrop.
+		const backdrop = document.createElement('div');
+		backdrop.className = 'developer-starter-pro-mobile-backdrop';
+		document.body.appendChild(backdrop);
+
+		function openMenu() {
+			menu.classList.add('is-open');
+			menu.setAttribute('aria-hidden', 'false');
+			backdrop.classList.add('is-visible');
+			document.body.style.overflow = 'hidden';
+			if (hamburger) hamburger.classList.add('active');
+			toggle.setAttribute('aria-expanded', 'true');
+		}
+
+		function closeMenu() {
+			menu.classList.remove('is-open');
+			menu.setAttribute('aria-hidden', 'true');
+			backdrop.classList.remove('is-visible');
+			document.body.style.overflow = '';
+			if (hamburger) hamburger.classList.remove('active');
+			toggle.setAttribute('aria-expanded', 'false');
+		}
+
+		toggle.addEventListener('click', function () {
+			if (menu.classList.contains('is-open')) {
+				closeMenu();
+			} else {
+				openMenu();
+			}
+		});
+
+		if (close) {
+			close.addEventListener('click', closeMenu);
+		}
+
+		backdrop.addEventListener('click', closeMenu);
+
+		// Close on Escape key.
+		document.addEventListener('keydown', function (e) {
+			if (e.key === 'Escape' && menu.classList.contains('is-open')) {
+				closeMenu();
+			}
+		});
+
+		// Close menu on window resize (if opened on mobile then resized to desktop).
+		window.addEventListener('resize', function () {
+			if (window.innerWidth > 768 && menu.classList.contains('is-open')) {
+				closeMenu();
+			}
+		});
+
+		// Handle submenu toggles in mobile.
+		const subMenuParents = menu.querySelectorAll('.menu-item-has-children');
+		subMenuParents.forEach(function (parent) {
+			const link = parent.querySelector(':scope > a');
+			const subMenu = parent.querySelector(':scope > .sub-menu');
+
+			if (link && subMenu) {
+				// Create toggle button.
+				const toggleBtn = document.createElement('button');
+				toggleBtn.className = 'developer-starter-pro-submenu-toggle';
+				toggleBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>';
+				toggleBtn.setAttribute('aria-label', 'Toggle submenu');
+				toggleBtn.style.cssText = 'background:none;border:none;cursor:pointer;padding:8px;position:absolute;right:8px;top:8px;color:#64748b;';
+				parent.style.position = 'relative';
+				parent.appendChild(toggleBtn);
+
+				toggleBtn.addEventListener('click', function (e) {
+					e.preventDefault();
+					e.stopPropagation();
+					subMenu.style.display = subMenu.style.display === 'block' ? 'none' : 'block';
+					this.classList.toggle('active');
+				});
+			}
+		});
+	}
+})();

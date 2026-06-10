@@ -1,0 +1,226 @@
+/* ==========================================================================
+   DentalPro Elite — Footer Styles
+   ========================================================================== */
+
+.developer-starter-pro-footer {
+	background: var(--developer-starter-pro-secondary);
+	color: var(--developer-starter-pro-gray-300);
+}
+
+.developer-starter-pro-footer-main {
+	padding: var(--developer-starter-pro-space-3xl) 0;
+}
+
+/* Footer Grid */
+.developer-starter-pro-footer-grid {
+	display: grid;
+	gap: var(--developer-starter-pro-space-2xl);
+}
+
+.developer-starter-pro-footer-grid--1 { grid-template-columns: 1.5fr 1fr 1fr 1fr; }
+.developer-starter-pro-footer-grid--2 { grid-template-columns: 1.5fr 1fr 1fr 1.2fr; }
+.developer-starter-pro-footer-grid--3 { grid-template-columns: 1fr 1fr; }
+
+/* Footer Logo */
+.developer-starter-pro-footer-logo {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-family: var(--developer-starter-pro-font-heading);
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: var(--developer-starter-pro-white);
+	margin-bottom: var(--developer-starter-pro-space-md);
+}
+
+.developer-starter-pro-footer-about {
+	color: var(--developer-starter-pro-gray-400);
+	font-size: 0.9375rem;
+	line-height: 1.7;
+	margin-bottom: var(--developer-starter-pro-space-lg);
+}
+
+/* Footer Social */
+.developer-starter-pro-footer-social {
+	display: flex;
+	gap: var(--developer-starter-pro-space-sm);
+}
+
+.developer-starter-pro-footer-social .developer-starter-pro-social-icon {
+	width: 38px;
+	height: 38px;
+	background: rgba(255, 255, 255, 0.08);
+	border-radius: 50%;
+	color: var(--developer-starter-pro-gray-400);
+}
+
+.developer-starter-pro-footer-social .developer-starter-pro-social-icon:hover {
+	background: var(--developer-starter-pro-primary);
+	color: var(--developer-starter-pro-white);
+	transform: translateY(-3px);
+}
+
+/* Footer Titles */
+.developer-starter-pro-footer-title {
+	color: var(--developer-starter-pro-white);
+	font-size: 1.125rem;
+	margin-bottom: var(--developer-starter-pro-space-lg);
+	position: relative;
+	padding-bottom: var(--developer-starter-pro-space-md);
+}
+
+.developer-starter-pro-footer-title::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 40px;
+	height: 3px;
+	background: var(--developer-starter-pro-primary);
+	border-radius: 2px;
+}
+
+/* Footer Menu */
+.developer-starter-pro-footer-menu {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.developer-starter-pro-footer-menu li {
+	margin-bottom: 8px;
+}
+
+.developer-starter-pro-footer-menu li a {
+	color: var(--developer-starter-pro-gray-400);
+	font-size: 0.9375rem;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	transition: var(--developer-starter-pro-transition-fast);
+}
+
+.developer-starter-pro-footer-menu li a::before {
+	content: '›';
+	font-size: 1.2em;
+	opacity: 0;
+	transition: var(--developer-starter-pro-transition-fast);
+}
+
+.developer-starter-pro-footer-menu li a:hover {
+	color: var(--developer-starter-pro-primary);
+	padding-left: 4px;
+}
+
+.developer-starter-pro-footer-menu li a:hover::before {
+	opacity: 1;
+}
+
+/* Footer Contact */
+.developer-starter-pro-footer-contact {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.developer-starter-pro-footer-contact li {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	margin-bottom: var(--developer-starter-pro-space-md);
+	color: var(--developer-starter-pro-gray-400);
+	font-size: 0.9375rem;
+	line-height: 1.6;
+}
+
+.developer-starter-pro-footer-contact li svg {
+	flex-shrink: 0;
+	margin-top: 3px;
+	color: var(--developer-starter-pro-primary);
+}
+
+.developer-starter-pro-footer-contact li a {
+	color: var(--developer-starter-pro-gray-400);
+}
+
+.developer-starter-pro-footer-contact li a:hover {
+	color: var(--developer-starter-pro-primary);
+}
+
+/* Footer Working Hours */
+.developer-starter-pro-footer-hours {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.developer-starter-pro-footer-hours li {
+	display: flex;
+	justify-content: space-between;
+	padding: 8px 0;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+	font-size: 0.875rem;
+	color: var(--developer-starter-pro-gray-400);
+}
+
+.developer-starter-pro-footer-hours li .day {
+	font-weight: 500;
+}
+
+.developer-starter-pro-footer-hours li.today {
+	color: var(--developer-starter-pro-primary);
+	font-weight: 600;
+}
+
+/* Newsletter Form */
+.developer-starter-pro-newsletter-form p {
+	color: var(--developer-starter-pro-gray-400);
+	font-size: 0.9375rem;
+	margin-bottom: var(--developer-starter-pro-space-md);
+}
+
+.developer-starter-pro-newsletter-input-group {
+	display: flex;
+	gap: 0;
+	border-radius: var(--developer-starter-pro-radius-full);
+	overflow: hidden;
+	background: rgba(255, 255, 255, 0.08);
+}
+
+.developer-starter-pro-newsletter-input-group input {
+	flex: 1;
+	padding: 12px 20px;
+	background: transparent;
+	border: none;
+	color: var(--developer-starter-pro-white);
+	font-size: 0.875rem;
+	outline: none;
+}
+
+.developer-starter-pro-newsletter-input-group input::placeholder {
+	color: var(--developer-starter-pro-gray-500);
+}
+
+.developer-starter-pro-newsletter-input-group .developer-starter-pro-btn {
+	border-radius: 0 var(--developer-starter-pro-radius-full) var(--developer-starter-pro-radius-full) 0;
+	padding: 12px 24px;
+}
+
+/* Footer Bottom */
+.developer-starter-pro-footer-bottom {
+	border-top: 1px solid rgba(255, 255, 255, 0.08);
+	padding: var(--developer-starter-pro-space-lg) 0;
+}
+
+.developer-starter-pro-footer-bottom-inner {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.developer-starter-pro-copyright,
+.developer-starter-pro-credits {
+	font-size: 0.8125rem;
+	color: var(--developer-starter-pro-gray-500);
+	margin: 0;
+}

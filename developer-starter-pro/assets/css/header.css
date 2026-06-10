@@ -1,0 +1,404 @@
+/* ==========================================================================
+   DentalPro Elite — Header Styles
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Top Bar
+   -------------------------------------------------------------------------- */
+.developer-starter-pro-top-bar {
+	background: var(--developer-starter-pro-secondary);
+	color: var(--developer-starter-pro-gray-300);
+	font-size: 0.8125rem;
+	padding: 8px 0;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.developer-starter-pro-top-bar-inner {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.developer-starter-pro-top-bar-left,
+.developer-starter-pro-top-bar-right {
+	display: flex;
+	align-items: center;
+	gap: var(--developer-starter-pro-space-lg);
+}
+
+.developer-starter-pro-top-bar-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	color: var(--developer-starter-pro-gray-300);
+	font-size: 0.8125rem;
+}
+
+.developer-starter-pro-top-bar-item:hover {
+	color: var(--developer-starter-pro-white);
+}
+
+.developer-starter-pro-top-bar-hours {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.developer-starter-pro-social-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	color: var(--developer-starter-pro-gray-400);
+	transition: var(--developer-starter-pro-transition-fast);
+}
+
+.developer-starter-pro-social-icon:hover {
+	color: var(--developer-starter-pro-primary);
+	background: rgba(255, 255, 255, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   Main Header
+   -------------------------------------------------------------------------- */
+.developer-starter-pro-header {
+	background: var(--developer-starter-pro-white);
+	position: relative;
+	z-index: 100;
+	box-shadow: var(--developer-starter-pro-shadow-sm);
+}
+
+.developer-starter-pro-header-inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 16px 0;
+	gap: var(--developer-starter-pro-space-xl);
+}
+
+/* Logo */
+.developer-starter-pro-logo a {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-family: var(--developer-starter-pro-font-heading);
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: var(--developer-starter-pro-secondary);
+	text-decoration: none;
+}
+
+.developer-starter-pro-logo-icon {
+	font-size: 1.75rem;
+}
+
+.developer-starter-pro-logo .custom-logo {
+	max-height: 50px;
+	width: auto;
+}
+
+/* Navigation */
+.developer-starter-pro-nav {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+}
+
+.developer-starter-pro-menu {
+	list-style: none;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	margin: 0;
+	padding: 0;
+}
+
+.developer-starter-pro-menu li {
+	position: relative;
+}
+
+.developer-starter-pro-menu > li > a {
+	display: block;
+	padding: 10px 16px;
+	color: var(--developer-starter-pro-gray-700);
+	font-size: 0.9375rem;
+	font-weight: 500;
+	border-radius: var(--developer-starter-pro-radius-sm);
+	transition: var(--developer-starter-pro-transition-fast);
+}
+
+.developer-starter-pro-menu > li > a:hover,
+.developer-starter-pro-menu > li.current-menu-item > a,
+.developer-starter-pro-menu > li.current-menu-parent > a {
+	color: var(--developer-starter-pro-primary);
+	background: var(--developer-starter-pro-primary-light);
+}
+
+/* Dropdown menu */
+.developer-starter-pro-menu .sub-menu {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	min-width: 220px;
+	background: var(--developer-starter-pro-white);
+	border-radius: var(--developer-starter-pro-radius-md);
+	box-shadow: var(--developer-starter-pro-shadow-xl);
+	padding: 8px 0;
+	list-style: none;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(10px);
+	transition: var(--developer-starter-pro-transition);
+	z-index: 100;
+	border: 1px solid var(--developer-starter-pro-gray-100);
+}
+
+.developer-starter-pro-menu li:hover > .sub-menu {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
+
+.developer-starter-pro-menu .sub-menu li a {
+	display: block;
+	padding: 10px 20px;
+	color: var(--developer-starter-pro-gray-600);
+	font-size: 0.875rem;
+	transition: var(--developer-starter-pro-transition-fast);
+}
+
+.developer-starter-pro-menu .sub-menu li a:hover {
+	color: var(--developer-starter-pro-primary);
+	background: var(--developer-starter-pro-primary-light);
+	padding-left: 24px;
+}
+
+/* Nested dropdown */
+.developer-starter-pro-menu .sub-menu .sub-menu {
+	top: 0;
+	left: 100%;
+}
+
+/* Header Actions */
+.developer-starter-pro-header-actions {
+	display: flex;
+	align-items: center;
+	gap: var(--developer-starter-pro-space-md);
+}
+
+.developer-starter-pro-header-cta {
+	padding: 10px 24px;
+	font-size: 0.875rem;
+}
+
+/* --------------------------------------------------------------------------
+   Header Style 2 — Centered
+   -------------------------------------------------------------------------- */
+.developer-starter-pro-header--style-2 .developer-starter-pro-header-inner {
+	flex-wrap: wrap;
+	justify-content: center;
+	text-align: center;
+}
+
+.developer-starter-pro-header--style-2 .developer-starter-pro-logo {
+	width: 100%;
+	text-align: center;
+	margin-bottom: var(--developer-starter-pro-space-sm);
+}
+
+.developer-starter-pro-header--style-2 .developer-starter-pro-logo a {
+	justify-content: center;
+}
+
+.developer-starter-pro-header--style-2 .developer-starter-pro-nav {
+	width: 100%;
+	justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   Header Style 4 — Transparent
+   -------------------------------------------------------------------------- */
+.developer-starter-pro-header--style-4 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: transparent;
+	box-shadow: none;
+}
+
+.developer-starter-pro-header--style-4 .developer-starter-pro-logo a,
+.developer-starter-pro-header--style-4 .developer-starter-pro-menu > li > a {
+	color: var(--developer-starter-pro-white);
+}
+
+.developer-starter-pro-header--style-4 .developer-starter-pro-menu > li > a:hover {
+	background: rgba(255, 255, 255, 0.1);
+	color: var(--developer-starter-pro-white);
+}
+
+/* --------------------------------------------------------------------------
+   Sticky Header
+   -------------------------------------------------------------------------- */
+.developer-starter-pro-header--sticky-enabled.is-sticky {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: var(--developer-starter-pro-white);
+	box-shadow: var(--developer-starter-pro-shadow-lg);
+	animation: slideDown 0.3s ease-out;
+	z-index: 1000;
+}
+
+.developer-starter-pro-header--style-4.is-sticky .developer-starter-pro-logo a,
+.developer-starter-pro-header--style-4.is-sticky .developer-starter-pro-menu > li > a {
+	color: var(--developer-starter-pro-gray-700);
+}
+
+.developer-starter-pro-header--style-4.is-sticky .developer-starter-pro-menu > li > a:hover {
+	color: var(--developer-starter-pro-primary);
+	background: var(--developer-starter-pro-primary-light);
+}
+
+@keyframes slideDown {
+	from { transform: translateY(-100%); }
+	to { transform: translateY(0); }
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Menu Toggle
+   -------------------------------------------------------------------------- */
+.developer-starter-pro-mobile-toggle {
+	display: none;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	background: none;
+	border: none;
+	cursor: pointer;
+	z-index: 1001;
+}
+
+.developer-starter-pro-hamburger {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	width: 24px;
+}
+
+.developer-starter-pro-hamburger span {
+	display: block;
+	height: 2px;
+	background: var(--developer-starter-pro-secondary);
+	border-radius: 2px;
+	transition: var(--developer-starter-pro-transition);
+}
+
+.developer-starter-pro-hamburger.active span:nth-child(1) {
+	transform: rotate(45deg) translate(5px, 5px);
+}
+
+.developer-starter-pro-hamburger.active span:nth-child(2) {
+	opacity: 0;
+}
+
+.developer-starter-pro-hamburger.active span:nth-child(3) {
+	transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Menu Overlay
+   -------------------------------------------------------------------------- */
+.developer-starter-pro-mobile-menu {
+	display: none;
+	position: fixed;
+	top: 0;
+	right: -100%;
+	width: 320px;
+	height: 100vh;
+	background: var(--developer-starter-pro-white);
+	z-index: 9999;
+	overflow-y: auto;
+	transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	box-shadow: -5px 0 30px rgba(0, 0, 0, 0.15);
+}
+
+.developer-starter-pro-mobile-menu.is-open {
+	right: 0;
+}
+
+.developer-starter-pro-mobile-menu-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: var(--developer-starter-pro-space-lg);
+	border-bottom: 1px solid var(--developer-starter-pro-gray-100);
+}
+
+.developer-starter-pro-mobile-close {
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 8px;
+	color: var(--developer-starter-pro-gray-600);
+	border-radius: var(--developer-starter-pro-radius-sm);
+	transition: var(--developer-starter-pro-transition-fast);
+}
+
+.developer-starter-pro-mobile-close:hover {
+	background: var(--developer-starter-pro-gray-100);
+	color: var(--developer-starter-pro-secondary);
+}
+
+.developer-starter-pro-mobile-menu-list {
+	list-style: none;
+	padding: var(--developer-starter-pro-space-md);
+	margin: 0;
+}
+
+.developer-starter-pro-mobile-menu-list li {
+	border-bottom: 1px solid var(--developer-starter-pro-gray-100);
+}
+
+.developer-starter-pro-mobile-menu-list li a {
+	display: block;
+	padding: 14px 16px;
+	color: var(--developer-starter-pro-gray-700);
+	font-weight: 500;
+	font-size: 0.9375rem;
+	transition: var(--developer-starter-pro-transition-fast);
+}
+
+.developer-starter-pro-mobile-menu-list li a:hover {
+	color: var(--developer-starter-pro-primary);
+	padding-left: 24px;
+}
+
+.developer-starter-pro-mobile-menu-list .sub-menu {
+	list-style: none;
+	padding: 0 0 0 var(--developer-starter-pro-space-lg);
+}
+
+.developer-starter-pro-mobile-menu-footer {
+	padding: var(--developer-starter-pro-space-lg);
+}
+
+/* Mobile Menu Backdrop */
+.developer-starter-pro-mobile-backdrop {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 9998;
+	opacity: 0;
+	visibility: hidden;
+	transition: var(--developer-starter-pro-transition);
+}
+
+.developer-starter-pro-mobile-backdrop.is-visible {
+	opacity: 1;
+	visibility: visible;
+}

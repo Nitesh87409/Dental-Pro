@@ -1,0 +1,39 @@
+/**
+ * Patient Portal Stylesheet
+ *
+ * @package developer-starter-pro
+ */
+
+.portal-card {
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.portal-card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* History table rules */
+.portal-history-table th {
+	border-bottom: 2px solid var(--developer-starter-pro-gray-200);
+}
+.portal-history-table td {
+	border-bottom: 1px solid var(--developer-starter-pro-gray-100);
+}
+.portal-history-table tbody tr:hover {
+	background: #f8fafc;
+}
+
+/* Form details adjustments */
+.developer-starter-pro-portal-card form input:focus,
+.developer-starter-pro-portal-card form textarea:focus {
+	border-color: var(--developer-starter-pro-primary) !important;
+	outline: none;
+}
+.portal-error-banner, .portal-success-banner {
+	animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+	from { opacity: 0; transform: translateY(-5px); }
+	to { opacity: 1; transform: translateY(0); }
+}
