@@ -1,100 +1,62 @@
 <?php
 /**
  * Template Name: Emergency Care
- *
  * @package developer-starter-pro
- * @since   1.0.0
  */
-
-get_header();
-?>
-
-<main id="primary" class="developer-starter-pro-main" role="main">
-
-	<!-- Page Header -->
-	<div class="developer-starter-pro-page-banner" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(30, 41, 59, 0.05) 100%); border-bottom: 1px solid var(--developer-starter-pro-gray-200);">
-		<div class="developer-starter-pro-container">
-			<div class="developer-starter-pro-section-header" style="margin-bottom: 0; padding: 64px 0; text-align: center;">
-				<span class="developer-starter-pro-section-badge" style="background: rgba(239, 68, 68, 0.1); color: #EF4444;"><?php esc_html_e( 'Urgent Attention', 'developer-starter-pro' ); ?></span>
-				<h1 class="developer-starter-pro-section-title" style="font-size: 2.75rem; font-weight: 800; color: var(--developer-starter-pro-secondary);"><?php the_title(); ?></h1>
-				<p class="developer-starter-pro-section-subtitle" style="max-width: 650px; margin-inline: auto;"><?php esc_html_e( 'Have a dental emergency? Read our immediate advice tips below and call our 24/7 emergency hotline for priority assistance.', 'developer-starter-pro' ); ?></p>
-			</div>
-		</div>
-	</div>
-
-	<!-- Emergency Contact Hotline -->
-	<section class="developer-starter-pro-section" style="background: var(--developer-starter-pro-white);">
-		<div class="developer-starter-pro-container" style="max-width: 800px; text-align: center;">
-			<div class="emergency-hotline-card" style="background: #FEF2F2; border: 2px solid #FCA5A5; border-radius: 16px; padding: 48px; box-shadow: var(--developer-starter-pro-shadow-lg);">
-				<span style="font-size: 3.5rem; display: block; margin-bottom: 12px; animation: pulse 2s infinite;">☎️</span>
-				<h2 style="font-family: var(--developer-starter-pro-font-heading); font-size: 2rem; color: #991B1B; margin: 0 0 10px 0;"><?php esc_html_e( '24/7 Dental Emergency Hotline', 'developer-starter-pro' ); ?></h2>
-				<p style="color: #7F1D1D; font-size: 1.125rem; margin: 0 0 28px 0; font-weight: 500;"><?php esc_html_e( 'Call us now to reserve a priority surgical slot.', 'developer-starter-pro' ); ?></p>
-				
-				<?php $emergency_phone = developer_starter_pro_get_option( 'clinic_phone', '1-800-DENTAL' ); ?>
-				<a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $emergency_phone ) ); ?>" class="developer-starter-pro-btn" style="background: #EF4444; color: #fff; padding: 18px 40px; font-size: 1.25rem; font-weight: 800; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; border: none; box-shadow: 0 10px 15px -3px rgba(239,68,68,0.3); transition: all 0.2s ease;">
-					<span><?php echo esc_html( $emergency_phone ); ?></span>
-				</a>
-			</div>
-		</div>
-	</section>
-
-	<!-- Immediate Help Instructions -->
-	<section class="developer-starter-pro-section" style="background: var(--developer-starter-pro-gray-50); border-top: 1px solid var(--developer-starter-pro-gray-200); border-bottom: 1px solid var(--developer-starter-pro-gray-200);">
-		<div class="developer-starter-pro-container">
-			
-			<div class="developer-starter-pro-section-header">
-				<span class="developer-starter-pro-section-badge"><?php esc_html_e( 'Clinical Tips', 'developer-starter-pro' ); ?></span>
-				<h2 class="developer-starter-pro-section-title"><?php esc_html_e( 'Immediate Steps for Common Emergencies', 'developer-starter-pro' ); ?></h2>
-			</div>
-
-			<div class="emergency-advice-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-top: 40px;">
-				
-				<!-- Emergency Case 1 -->
-				<div class="advice-card" style="background: var(--developer-starter-pro-white); border: 1px solid var(--developer-starter-pro-gray-200); border-radius: var(--developer-starter-pro-radius-lg); padding: 35px; box-shadow: var(--developer-starter-pro-shadow-sm);">
-					<h3 style="font-size: 1.25rem; color: #991B1B; margin: 0 0 12px 0; font-weight: 700;"><?php esc_html_e( 'Knocked-Out Tooth', 'developer-starter-pro' ); ?></h3>
-					<p style="margin: 0; font-size: 0.9375rem; color: var(--developer-starter-pro-gray-500); line-height: 1.6;"><?php esc_html_e( 'Keep the tooth moist. Avoid touching the root. Gently try placing it back in the socket, or store it in a container of milk or saline solution. Contact us within 60 minutes.', 'developer-starter-pro' ); ?></p>
-				</div>
-
-				<!-- Emergency Case 2 -->
-				<div class="advice-card" style="background: var(--developer-starter-pro-white); border: 1px solid var(--developer-starter-pro-gray-200); border-radius: var(--developer-starter-pro-radius-lg); padding: 35px; box-shadow: var(--developer-starter-pro-shadow-sm);">
-					<h3 style="font-size: 1.25rem; color: #991B1B; margin: 0 0 12px 0; font-weight: 700;"><?php esc_html_e( 'Severe Toothache', 'developer-starter-pro' ); ?></h3>
-					<p style="margin: 0; font-size: 0.9375rem; color: var(--developer-starter-pro-gray-500); line-height: 1.6;"><?php esc_html_e( 'Rinse your mouth with warm saline. Gently floss around the sore tooth to remove food particles. Apply a cold compress to your cheek to reduce swelling. Do not place aspirin directly on the gums.', 'developer-starter-pro' ); ?></p>
-				</div>
-
-				<!-- Emergency Case 3 -->
-				<div class="advice-card" style="background: var(--developer-starter-pro-white); border: 1px solid var(--developer-starter-pro-gray-200); border-radius: var(--developer-starter-pro-radius-lg); padding: 35px; box-shadow: var(--developer-starter-pro-shadow-sm);">
-					<h3 style="font-size: 1.25rem; color: #991B1B; margin: 0 0 12px 0; font-weight: 700;"><?php esc_html_e( 'Lost Filling or Crown', 'developer-starter-pro' ); ?></h3>
-					<p style="margin: 0; font-size: 0.9375rem; color: var(--developer-starter-pro-gray-500); line-height: 1.6;"><?php esc_html_e( 'Protect the sensitive cavity. Apply temporary dental cement or sugarless gum. Keep the lost crown safe and bring it to our emergency room so we can attempt to re-cement it.', 'developer-starter-pro' ); ?></p>
-				</div>
-
-			</div>
-
-		</div>
-	</section>
-
-</main>
-
-<style>
-@keyframes pulse {
-	0% { transform: scale(1); }
-	50% { transform: scale(1.05); }
-	100% { transform: scale(1); }
-}
-body.dark-mode .advice-card,
-body.dark-mode .developer-starter-pro-section[style*="white"] {
-	background: #1E293B !important;
-	border-color: #334155 !important;
-}
-body.dark-mode .emergency-hotline-card {
-	background: #3B0712 !important;
-	border-color: #991B1B !important;
-	color: #FECDD3 !important;
-}
-body.dark-mode .emergency-hotline-card h2,
-body.dark-mode .emergency-hotline-card p {
-	color: #FFE4E6 !important;
-}
-</style>
-
+$options = get_option('developer_starter_pro_options', []);
+$emergency_phone = !empty($options['emergency_phone']) ? $options['emergency_phone'] : '+1 (800) 000-0000';
+get_header(); ?>
+<main id="primary" class="developer-starter-pro-main">
+<div style="background:#DC2626;color:#fff;padding:20px 0;text-align:center;">
+<div class="developer-starter-pro-container">
+<h2 style="margin:0;font-size:1.25rem;">🚨 <?php esc_html_e('DENTAL EMERGENCY? Call Now:', 'developer-starter-pro'); ?>
+<a href="tel:<?php echo esc_attr($emergency_phone); ?>" style="color:#fff;font-size:1.5rem;font-weight:900;margin-left:12px;"><?php echo esc_html($emergency_phone); ?></a></h2>
+</div>
+</div>
+<div class="developer-starter-pro-container" style="padding:60px 0;">
+<div style="text-align:center;margin-bottom:48px;">
+<h1><?php esc_html_e('Emergency Dental Care', 'developer-starter-pro'); ?></h1>
+<p><?php esc_html_e('We are available 24/7 for dental emergencies. Do not wait — call us immediately.', 'developer-starter-pro'); ?></p>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:48px;">
+<div>
+<h2><?php esc_html_e('Common Dental Emergencies', 'developer-starter-pro'); ?></h2>
 <?php
-get_footer();
+$emergencies = [
+    '🦷 Severe toothache or tooth pain',
+    '💔 Cracked or broken tooth',
+    '🩸 Knocked out tooth',
+    '🔴 Dental abscess or swelling',
+    '🩹 Lost filling or crown',
+    '😬 Broken braces or wires',
+    '🤕 Jaw injury or trauma',
+    '🔥 Soft tissue injury or bleeding',
+];
+foreach($emergencies as $e): ?>
+<div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #e2e8f0;">
+<span style="font-size:1.1rem;"><?php echo $e; ?></span>
+</div>
+<?php endforeach; ?>
+</div>
+<div>
+<div style="background:#FEE2E2;border:2px solid #DC2626;border-radius:16px;padding:32px;text-align:center;margin-bottom:24px;">
+<div style="font-size:3rem;margin-bottom:12px;">📞</div>
+<h3 style="color:#DC2626;margin:0 0 8px;font-size:1.25rem;"><?php esc_html_e('Emergency Hotline', 'developer-starter-pro'); ?></h3>
+<a href="tel:<?php echo esc_attr($emergency_phone); ?>" style="display:block;font-size:2rem;font-weight:900;color:#DC2626;text-decoration:none;"><?php echo esc_html($emergency_phone); ?></a>
+<p style="margin:8px 0 0;color:#64748b;"><?php esc_html_e('Available 24 hours, 7 days a week', 'developer-starter-pro'); ?></p>
+</div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:24px;">
+<h3 style="margin:0 0 16px;"><?php esc_html_e('What To Do While You Wait', 'developer-starter-pro'); ?></h3>
+<ol style="margin:0;padding-left:20px;color:#475569;line-height:2;">
+<li><?php esc_html_e('Call our emergency number immediately', 'developer-starter-pro'); ?></li>
+<li><?php esc_html_e('Do not take aspirin for toothache', 'developer-starter-pro'); ?></li>
+<li><?php esc_html_e('Apply cold compress for swelling', 'developer-starter-pro'); ?></li>
+<li><?php esc_html_e('Keep knocked-out tooth moist', 'developer-starter-pro'); ?></li>
+<li><?php esc_html_e('Avoid hot or cold foods/drinks', 'developer-starter-pro'); ?></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</main>
+<?php get_footer(); ?>
