@@ -1,0 +1,150 @@
+/* ==========================================================================
+   DentalPro Elite — WooCommerce Styles
+   ========================================================================== */
+
+/* Shop Grid */
+.developer-starter-pro-woo-main .products {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 24px;
+	list-style: none;
+	padding: 0;
+	margin: 0 0 40px;
+}
+
+.developer-starter-pro-woo-main .products li.product {
+	background: #fff;
+	border: 1px solid var(--developer-starter-pro-gray-200);
+	border-radius: 12px;
+	overflow: hidden;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	padding: 0;
+}
+
+.developer-starter-pro-woo-main .products li.product:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.developer-starter-pro-woo-main .products li.product img {
+	width: 100%;
+	height: 220px;
+	object-fit: cover;
+}
+
+.developer-starter-pro-woo-main .products li.product .woocommerce-loop-product__title {
+	font-size: 1rem;
+	font-weight: 600;
+	color: var(--developer-starter-pro-secondary);
+	padding: 16px 16px 4px;
+	margin: 0;
+}
+
+.developer-starter-pro-woo-main .products li.product .price {
+	padding: 0 16px 8px;
+	font-weight: 700;
+	color: var(--developer-starter-pro-primary);
+	font-size: 1.1rem;
+}
+
+.developer-starter-pro-woo-main .products li.product .button,
+.developer-starter-pro-woo-main .products li.product .add_to_cart_button {
+	display: block;
+	margin: 0 16px 16px;
+	padding: 10px 20px;
+	background: var(--developer-starter-pro-primary);
+	color: #fff;
+	border: none;
+	border-radius: 6px;
+	font-weight: 600;
+	font-size: 0.875rem;
+	text-align: center;
+	cursor: pointer;
+	transition: background 0.2s ease;
+	text-decoration: none;
+}
+
+.developer-starter-pro-woo-main .products li.product .button:hover {
+	background: var(--developer-starter-pro-primary-dark);
+}
+
+/* Single Product */
+.developer-starter-pro-woo-main .single-product .product {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 40px;
+	padding: 40px 0;
+}
+
+.developer-starter-pro-woo-main .single-product .summary .price {
+	font-size: 1.75rem;
+	font-weight: 700;
+	color: var(--developer-starter-pro-primary);
+	margin-bottom: 16px;
+}
+
+.developer-starter-pro-woo-main .single-product .summary h1 {
+	font-size: 1.75rem;
+	color: var(--developer-starter-pro-secondary);
+}
+
+/* Cart */
+.developer-starter-pro-woo-main .woocommerce-cart-form table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.developer-starter-pro-woo-main .woocommerce-cart-form table th,
+.developer-starter-pro-woo-main .woocommerce-cart-form table td {
+	padding: 16px;
+	border-bottom: 1px solid var(--developer-starter-pro-gray-200);
+	text-align: left;
+}
+
+/* Checkout */
+.developer-starter-pro-woo-main .woocommerce-checkout .col2-set {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 40px;
+}
+
+.developer-starter-pro-woo-main .woocommerce-checkout .form-row input,
+.developer-starter-pro-woo-main .woocommerce-checkout .form-row select,
+.developer-starter-pro-woo-main .woocommerce-checkout .form-row textarea {
+	width: 100%;
+	padding: 10px 14px;
+	border: 1px solid var(--developer-starter-pro-gray-200);
+	border-radius: 6px;
+	font-size: 0.9rem;
+}
+
+.developer-starter-pro-woo-main #place_order {
+	background: var(--developer-starter-pro-primary);
+	color: #fff;
+	padding: 14px 32px;
+	border: none;
+	border-radius: 8px;
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.developer-starter-pro-woo-main .products {
+		grid-template-columns: 1fr 1fr;
+	}
+	.developer-starter-pro-woo-main .single-product .product {
+		grid-template-columns: 1fr;
+	}
+	.developer-starter-pro-woo-main .woocommerce-checkout .col2-set {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 480px) {
+	.developer-starter-pro-woo-main .products {
+		grid-template-columns: 1fr;
+	}
+}
