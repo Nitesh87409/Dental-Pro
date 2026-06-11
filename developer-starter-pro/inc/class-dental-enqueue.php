@@ -33,7 +33,7 @@ class Developer_Starter_Pro_Enqueue {
 	public function google_fonts() {
 		$font_url = add_query_arg(
 			array(
-				'family'  => 'Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap',
+				'family'  => 'Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap',
 			),
 			'https://fonts.googleapis.com/css2'
 		);

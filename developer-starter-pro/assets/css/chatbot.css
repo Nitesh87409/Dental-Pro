@@ -308,3 +308,8 @@
 	.dental-chatbot-container { bottom: 15px; right: 15px; }
 	.dental-chatbot-drawer { width: 310px; height: 430px; }
 }
+
+/* Stack WhatsApp float button above the Chatbot bubble if both are active on the right */
+.developer-starter-pro-whatsapp-float.has-chatbot-active {
+	bottom: 105px !important;
+}

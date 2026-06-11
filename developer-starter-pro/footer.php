@@ -13,171 +13,155 @@ $clinic_name   = developer_starter_pro_get_option( 'clinic_name', 'DentalPro Eli
 $clinic_phone  = developer_starter_pro_get_option( 'clinic_phone', '' );
 $clinic_email  = developer_starter_pro_get_option( 'clinic_email', '' );
 $clinic_address = developer_starter_pro_get_option( 'clinic_address', '' );
+$map_embed_code = developer_starter_pro_get_option( 'map_embed_code', '' );
 ?>
 
 	</div><!-- #content -->
 
-	<footer id="colophon" class="developer-starter-pro-footer developer-starter-pro-footer--style-<?php echo esc_attr( $footer_style ); ?>" role="contentinfo">
+	<footer id="colophon" class="dp-footer" role="contentinfo">
+		<div class="dp-footer__container">
+			<div class="dp-footer__grid">
 
-		<!-- Main Footer -->
-		<div class="developer-starter-pro-footer-main">
-			<div class="developer-starter-pro-container">
-				<div class="developer-starter-pro-footer-grid developer-starter-pro-footer-grid--<?php echo esc_attr( $footer_style ); ?>">
-
-					<!-- Column 1: About -->
-					<div class="developer-starter-pro-footer-col">
-						<div class="developer-starter-pro-footer-logo">
-							<span class="developer-starter-pro-logo-icon">🦷</span>
-							<?php echo esc_html( $clinic_name ); ?>
-						</div>
-						<p class="developer-starter-pro-footer-about">
-							<?php esc_html_e( 'Your trusted partner in dental care. We provide comprehensive dental services with state-of-the-art technology and compassionate care.', 'developer-starter-pro' ); ?>
-						</p>
-						<div class="developer-starter-pro-footer-social">
-							<?php
-							$social_platforms = array( 'facebook', 'instagram', 'twitter', 'youtube', 'linkedin' );
-							foreach ( $social_platforms as $platform ) :
-								$url = developer_starter_pro_get_option( 'social_' . $platform, '' );
-								if ( $url ) : ?>
-									<a href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener noreferrer" class="developer-starter-pro-social-icon" aria-label="<?php echo esc_attr( ucfirst( $platform ) ); ?>">
-										<?php echo developer_starter_pro_get_social_icon( $platform ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-									</a>
-								<?php endif;
-							endforeach; ?>
-						</div>
-					</div>
-
-					<!-- Column 2: Quick Links -->
-					<div class="developer-starter-pro-footer-col">
-						<h4 class="developer-starter-pro-footer-title"><?php esc_html_e( 'Quick Links', 'developer-starter-pro' ); ?></h4>
-						<?php
-						if ( has_nav_menu( 'footer' ) ) {
-							wp_nav_menu(
-								array(
-									'theme_location' => 'footer',
-									'menu_class'     => 'developer-starter-pro-footer-menu',
-									'container'      => false,
-									'depth'          => 1,
-								)
-							);
-						} else {
-							?>
-							<ul class="developer-starter-pro-footer-menu">
-								<li><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'developer-starter-pro' ); ?></a></li>
-								<li><a href="<?php echo esc_url( home_url( '/services/' ) ); ?>"><?php esc_html_e( 'Services', 'developer-starter-pro' ); ?></a></li>
-								<li><a href="<?php echo esc_url( home_url( '/doctors/' ) ); ?>"><?php esc_html_e( 'Our Doctors', 'developer-starter-pro' ); ?></a></li>
-								<li><a href="<?php echo esc_url( home_url( '/about/' ) ); ?>"><?php esc_html_e( 'About Us', 'developer-starter-pro' ); ?></a></li>
-								<li><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Contact', 'developer-starter-pro' ); ?></a></li>
-							</ul>
-							<?php
-						}
-						?>
-					</div>
-
-					<!-- Column 3: Contact Info -->
-					<div class="developer-starter-pro-footer-col">
-						<h4 class="developer-starter-pro-footer-title"><?php esc_html_e( 'Contact Us', 'developer-starter-pro' ); ?></h4>
-						<ul class="developer-starter-pro-footer-contact">
-							<?php if ( $clinic_address ) : ?>
-								<li>
-									<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-									<?php echo esc_html( $clinic_address ); ?>
-								</li>
-							<?php endif; ?>
-							<?php if ( $clinic_phone ) : ?>
-								<li>
-									<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-									<a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $clinic_phone ) ); ?>"><?php echo esc_html( $clinic_phone ); ?></a>
-								</li>
-							<?php endif; ?>
-							<?php if ( $clinic_email ) : ?>
-								<li>
-									<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-									<a href="mailto:<?php echo esc_attr( $clinic_email ); ?>"><?php echo esc_html( $clinic_email ); ?></a>
-								</li>
-							<?php endif; ?>
-						</ul>
-					</div>
-
-					<?php if ( '1' === $footer_style ) : ?>
-					<!-- Column 4: Working Hours (Style 1 only) -->
-					<div class="developer-starter-pro-footer-col">
-						<h4 class="developer-starter-pro-footer-title"><?php esc_html_e( 'Working Hours', 'developer-starter-pro' ); ?></h4>
-						<ul class="developer-starter-pro-footer-hours">
-							<?php
-							$working_hours = developer_starter_pro_get_working_hours();
-							$days_short = array(
-								'monday'    => esc_html__( 'Mon', 'developer-starter-pro' ),
-								'tuesday'   => esc_html__( 'Tue', 'developer-starter-pro' ),
-								'wednesday' => esc_html__( 'Wed', 'developer-starter-pro' ),
-								'thursday'  => esc_html__( 'Thu', 'developer-starter-pro' ),
-								'friday'    => esc_html__( 'Fri', 'developer-starter-pro' ),
-								'saturday'  => esc_html__( 'Sat', 'developer-starter-pro' ),
-								'sunday'    => esc_html__( 'Sun', 'developer-starter-pro' ),
-							);
-							foreach ( $days_short as $day_key => $day_label ) :
-								$is_closed = isset( $working_hours[ $day_key ]['closed'] ) && $working_hours[ $day_key ]['closed'];
-								$today = strtolower( current_time( 'l' ) );
-								$is_today = ( $today === $day_key );
-								?>
-								<li class="<?php echo $is_today ? 'today' : ''; ?>">
-									<span class="day"><?php echo esc_html( $day_label ); ?></span>
-									<span class="hours">
-										<?php
-										if ( $is_closed ) {
-											esc_html_e( 'Closed', 'developer-starter-pro' );
-										} else {
-											echo esc_html( $working_hours[ $day_key ]['open'] . ' - ' . $working_hours[ $day_key ]['close'] );
-										}
-										?>
-									</span>
-								</li>
-							<?php endforeach; ?>
-						</ul>
-					</div>
-					<?php endif; ?>
-
-					<?php if ( '2' === $footer_style ) : ?>
-					<!-- Newsletter (Style 2 only) -->
-					<div class="developer-starter-pro-footer-col">
-						<h4 class="developer-starter-pro-footer-title"><?php esc_html_e( 'Newsletter', 'developer-starter-pro' ); ?></h4>
-						<p><?php esc_html_e( 'Subscribe to get dental tips and special offers.', 'developer-starter-pro' ); ?></p>
-						<form class="developer-starter-pro-newsletter-form" action="#" method="post">
-							<div class="developer-starter-pro-newsletter-input-group">
-								<input type="email" placeholder="<?php esc_attr_e( 'Your email address', 'developer-starter-pro' ); ?>" required>
-								<button type="submit" class="developer-starter-pro-btn developer-starter-pro-btn--primary">
-									<?php esc_html_e( 'Subscribe', 'developer-starter-pro' ); ?>
-								</button>
+				<!-- Column 1: Map Location -->
+				<div class="dp-footer__col dp-footer__col--map">
+					<div class="dp-footer__map-wrapper <?php echo ( ! empty( $map_embed_code ) || ! empty( $clinic_address ) ) ? 'has-real-map' : 'has-vector-map'; ?>">
+						<?php if ( ! empty( $map_embed_code ) ) : ?>
+							<?php echo wp_kses( $map_embed_code, array(
+								'iframe' => array(
+									'src'             => true,
+									'width'           => true,
+									'height'          => true,
+									'style'           => true,
+									'frameborder'     => true,
+									'allowfullscreen' => true,
+									'loading'         => true,
+									'referrerpolicy'  => true,
+									'class'           => true,
+									'id'              => true,
+								),
+							) ); ?>
+							<div class="dp-footer__map-overlay">
+								<span class="dp-footer__map-badge"><?php esc_html_e( 'Interact with Map', 'developer-starter-pro' ); ?></span>
 							</div>
-						</form>
+						<?php elseif ( ! empty( $clinic_address ) ) : ?>
+							<iframe 
+								width="100%" 
+								height="192" 
+								style="border:0;" 
+								loading="lazy" 
+								allowfullscreen 
+								referrerpolicy="no-referrer-when-downgrade"
+								src="https://maps.google.com/maps?q=<?php echo urlencode( $clinic_address ); ?>&t=&z=14&ie=UTF8&iwloc=&output=embed">
+							</iframe>
+							<div class="dp-footer__map-overlay">
+								<span class="dp-footer__map-badge"><?php esc_html_e( 'Interact with Map', 'developer-starter-pro' ); ?></span>
+							</div>
+						<?php else : ?>
+							<svg class="dp-footer-map-svg" viewBox="0 0 320 130" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="<?php esc_attr_e( 'Map of clinic location', 'developer-starter-pro' ); ?>">
+								<!-- Map Background -->
+								<rect width="320" height="130" rx="8" fill="#F4EFEB"/>
+								
+								<!-- Parks (Green Blocks) -->
+								<path d="M10 100 C20 95 40 105 50 120 L40 130 L0 130 Z" fill="#D3DEC6"/>
+								<path d="M250 12 C260 10 270 20 280 30 L290 0 L240 0 Z" fill="#D3DEC6"/>
+								
+								<!-- Water / River -->
+								<path d="M290 0 C280 40 250 80 255 130" stroke="#A7D2EB" stroke-width="26" stroke-linecap="square" fill="none"/>
+								
+								<!-- Road Grid -->
+								<path d="M0 25 L320 25" stroke="#FFFFFF" stroke-width="4"/>
+								<path d="M0 65 C100 70 200 60 320 75" stroke="#FFFFFF" stroke-width="4"/>
+								<path d="M0 110 L320 110" stroke="#FFFFFF" stroke-width="3"/>
+								<path d="M50 0 L50 130" stroke="#FFFFFF" stroke-width="4"/>
+								<path d="M130 0 L90 130" stroke="#FFFFFF" stroke-width="4.5"/>
+								<path d="M210 0 C200 40 205 90 180 130" stroke="#FFFFFF" stroke-width="4"/>
+								<path d="M80 0 L250 130" stroke="#FFFFFF" stroke-width="3"/>
+								
+								<!-- Pin shadow -->
+								<ellipse cx="140" cy="85" rx="6" ry="3" fill="rgba(0,0,0,0.15)"/>
+								
+								<!-- Map Pin -->
+								<g transform="translate(128, 52)">
+									<path d="M12 0C5.37 0 0 5.37 0 12C0 19.5 9.6 27.6 11.15 28.87C11.65 29.28 12.35 29.28 12.85 28.87C14.4 27.6 24 19.5 24 12C24 5.37 18.63 0 12 0Z" fill="#657F60"/>
+									<circle cx="12" cy="12" r="4.5" fill="#FFFFFF"/>
+								</g>
+							</svg>
+						<?php endif; ?>
 					</div>
-					<?php endif; ?>
-
 				</div>
-			</div>
-		</div>
 
-		<!-- Copyright Bar -->
-		<div class="developer-starter-pro-footer-bottom">
-			<div class="developer-starter-pro-container">
-				<div class="developer-starter-pro-footer-bottom-inner">
-					<p class="developer-starter-pro-copyright">
-						&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php echo esc_html( $clinic_name ); ?>.
-						<?php esc_html_e( 'All rights reserved.', 'developer-starter-pro' ); ?>
-					</p>
-					<p class="developer-starter-pro-credits">
-						<?php
-						printf(
-							/* translators: %s: Theme name */
-							esc_html__( 'Theme: %s', 'developer-starter-pro' ),
-							'DentalPro Elite'
-						);
-						?>
-					</p>
+				<!-- Column 2: Contact -->
+				<div class="dp-footer__col dp-footer__col--contact">
+					<h3 class="dp-footer__title"><?php esc_html_e( 'Contact', 'developer-starter-pro' ); ?></h3>
+					<ul class="dp-footer__list">
+						<li>
+							<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+								<circle cx="12" cy="10" r="3"/>
+							</svg>
+							<span><?php echo esc_html( ! empty( $clinic_address ) ? $clinic_address : __( 'Apex Dental Care, Central Avenue, City', 'developer-starter-pro' ) ); ?></span>
+						</li>
+						<li>
+							<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+								<polyline points="22,6 12,13 2,6"/>
+							</svg>
+							<?php 
+							$display_email = ! empty( $clinic_email ) ? $clinic_email : 'info@apexdentalcare.com';
+							?>
+							<a href="mailto:<?php echo esc_attr( $display_email ); ?>"><?php echo esc_html( $display_email ); ?></a>
+						</li>
+						<li>
+							<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+							</svg>
+							<?php 
+							$display_phone = ! empty( $clinic_phone ) ? $clinic_phone : '+1 800 123 4567';
+							$clean_phone = preg_replace( '/[^0-9+]/', '', $display_phone );
+							?>
+							<a href="tel:<?php echo esc_attr( $clean_phone ); ?>"><?php echo esc_html( $display_phone ); ?></a>
+						</li>
+					</ul>
 				</div>
-			</div>
-		</div>
 
+				<!-- Column 3: Social Us -->
+				<div class="dp-footer__col dp-footer__col--social">
+					<h3 class="dp-footer__title"><?php esc_html_e( 'Social Us', 'developer-starter-pro' ); ?></h3>
+					<ul class="dp-footer__list">
+						<li>
+							<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+							</svg>
+							<a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Apex Dental Care', 'developer-starter-pro' ); ?></a>
+						</li>
+						<li>
+							<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+								<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+								<line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+							</svg>
+							<a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Apex Media', 'developer-starter-pro' ); ?></a>
+						</li>
+						<li>
+							<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+							</svg>
+							<a href="#booking"><?php esc_html_e( 'Contact', 'developer-starter-pro' ); ?></a>
+						</li>
+					</ul>
+				</div>
+
+			</div><!-- .dp-footer__grid -->
+
+			<hr class="dp-footer__sep">
+
+			<div class="dp-footer__bottom">
+				<p class="dp-footer__copyright">
+					&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php esc_html_e( 'Apex Dental Care. All rights reserved.', 'developer-starter-pro' ); ?>
+				</p>
+			</div>
+
+		</div><!-- .dp-footer__container -->
 	</footer>
 
 	<!-- Back to Top Button -->
@@ -199,9 +183,17 @@ $clinic_address = developer_starter_pro_get_option( 'clinic_address', '' );
 		if ( ! empty( $wa_message ) ) {
 			$wa_link .= '?text=' . rawurlencode( $wa_message );
 		}
+
+		// Detect if chatbot is active and position is right to avoid overlap
+		$chatbot_settings = get_option( 'developer_starter_pro_chatbot_settings', array() );
+		$chatbot_active   = isset( $chatbot_settings['enabled'] ) ? $chatbot_settings['enabled'] : '1';
+		$wa_classes       = array( 'developer-starter-pro-whatsapp-float', 'pos-' . $wa_position );
+		if ( '1' === $chatbot_active && 'right' === $wa_position ) {
+			$wa_classes[] = 'has-chatbot-active';
+		}
 		?>
 		<a href="<?php echo esc_url( $wa_link ); ?>" 
-		   class="developer-starter-pro-whatsapp-float pos-<?php echo esc_attr( $wa_position ); ?>" 
+		   class="<?php echo esc_attr( implode( ' ', $wa_classes ) ); ?>" 
 		   target="_blank" 
 		   rel="noopener noreferrer" 
 		   aria-label="<?php esc_attr_e( 'Contact us on WhatsApp', 'developer-starter-pro' ); ?>">

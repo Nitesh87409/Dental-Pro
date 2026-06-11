@@ -89,11 +89,13 @@ class Developer_Starter_Pro_Admin {
 		$sanitized['clinic_email']   = isset( $input['clinic_email'] ) ? sanitize_email( $input['clinic_email'] ) : '';
 		$sanitized['clinic_address'] = isset( $input['clinic_address'] ) ? sanitize_textarea_field( $input['clinic_address'] ) : '';
 		$sanitized['clinic_logo']    = isset( $input['clinic_logo'] ) ? esc_url_raw( $input['clinic_logo'] ) : '';
+		$sanitized['hero_image']     = isset( $input['hero_image'] ) ? esc_url_raw( $input['hero_image'] ) : '';
 
 		// Colors.
-		$sanitized['color_primary']   = isset( $input['color_primary'] ) ? developer_starter_pro_sanitize_hex_color( $input['color_primary'] ) : '#0D9488';
-		$sanitized['color_secondary'] = isset( $input['color_secondary'] ) ? developer_starter_pro_sanitize_hex_color( $input['color_secondary'] ) : '#1E293B';
-		$sanitized['color_accent']    = isset( $input['color_accent'] ) ? developer_starter_pro_sanitize_hex_color( $input['color_accent'] ) : '#F59E0B';
+		$sanitized['color_primary']     = isset( $input['color_primary'] ) ? developer_starter_pro_sanitize_hex_color( $input['color_primary'] ) : '#0D9488';
+		$sanitized['color_secondary']   = isset( $input['color_secondary'] ) ? developer_starter_pro_sanitize_hex_color( $input['color_secondary'] ) : '#1E293B';
+		$sanitized['color_accent']      = isset( $input['color_accent'] ) ? developer_starter_pro_sanitize_hex_color( $input['color_accent'] ) : '#F59E0B';
+		$sanitized['dark_mode_enabled'] = isset( $input['dark_mode_enabled'] ) ? '1' : '0';
 
 		// Header.
 		$sanitized['header_style']  = isset( $input['header_style'] ) ? sanitize_text_field( $input['header_style'] ) : '1';
@@ -110,6 +112,23 @@ class Developer_Starter_Pro_Admin {
 
 		// Contact.
 		$sanitized['google_maps_key'] = isset( $input['google_maps_key'] ) ? sanitize_text_field( $input['google_maps_key'] ) : '';
+		
+		// Sanitize map embed code allowing iframe tags
+		$allowed_iframe = array(
+			'iframe' => array(
+				'src'             => true,
+				'width'           => true,
+				'height'          => true,
+				'style'           => true,
+				'frameborder'     => true,
+				'allowfullscreen' => true,
+				'loading'         => true,
+				'referrerpolicy'  => true,
+				'class'           => true,
+				'id'              => true,
+			),
+		);
+		$sanitized['map_embed_code'] = isset( $input['map_embed_code'] ) ? wp_kses( $input['map_embed_code'], $allowed_iframe ) : '';
 		$sanitized['emergency_phone'] = isset( $input['emergency_phone'] ) ? sanitize_text_field( $input['emergency_phone'] ) : '';
 		$sanitized['whatsapp_enabled']  = isset( $input['whatsapp_enabled'] ) ? '1' : '0';
 		$sanitized['whatsapp_number']   = isset( $input['whatsapp_number'] ) ? sanitize_text_field( $input['whatsapp_number'] ) : '';
@@ -262,6 +281,26 @@ class Developer_Starter_Pro_Admin {
 					</td>
 				</tr>
 				<tr>
+					<th><label for="hero_image"><?php esc_html_e( 'Hero Background Image', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<div class="developer-starter-pro-media-upload">
+							<input type="hidden" id="hero_image" name="<?php echo esc_attr( $this->option_name ); ?>[hero_image]" value="<?php echo esc_url( isset( $options['hero_image'] ) ? $options['hero_image'] : '' ); ?>">
+							<div class="developer-starter-pro-logo-preview" id="hero-image-preview" style="max-width: 200px; max-height: 200px; margin-bottom: 10px;">
+								<?php if ( ! empty( $options['hero_image'] ) ) : ?>
+									<img src="<?php echo esc_url( $options['hero_image'] ); ?>" alt="Hero Image" style="max-width: 100%; height: auto; display: block; border-radius: 4px; border: 1px solid #ddd;">
+								<?php endif; ?>
+							</div>
+							<button type="button" class="button developer-starter-pro-upload-btn" data-target="hero_image" data-preview="hero-image-preview">
+								<?php esc_html_e( 'Upload Background', 'developer-starter-pro' ); ?>
+							</button>
+							<button type="button" class="button developer-starter-pro-remove-btn" data-target="hero_image" data-preview="hero-image-preview" <?php echo empty( $options['hero_image'] ) ? 'style="display:none"' : ''; ?>>
+								<?php esc_html_e( 'Remove', 'developer-starter-pro' ); ?>
+							</button>
+						</div>
+						<p class="description"><?php esc_html_e( 'Upload a full background image for the hero banner (recommended dimensions: 1920x800px). If empty, the default multi-layered layout will be used.', 'developer-starter-pro' ); ?></p>
+					</td>
+				</tr>
+				<tr>
 					<th><label for="clinic_name"><?php esc_html_e( 'Clinic Name', 'developer-starter-pro' ); ?></label></th>
 					<td>
 						<input type="text" id="clinic_name" name="<?php echo esc_attr( $this->option_name ); ?>[clinic_name]" value="<?php echo esc_attr( $options['clinic_name'] ); ?>" class="regular-text">
@@ -321,6 +360,17 @@ class Developer_Starter_Pro_Admin {
 					<td>
 						<input type="text" id="color_accent" name="<?php echo esc_attr( $this->option_name ); ?>[color_accent]" value="<?php echo esc_attr( $options['color_accent'] ); ?>" class="developer-starter-pro-color-picker" data-default-color="#F59E0B">
 						<p class="description"><?php esc_html_e( 'Highlights, badges, CTAs.', 'developer-starter-pro' ); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th><?php esc_html_e( 'Dark Mode Options', 'developer-starter-pro' ); ?></th>
+					<td>
+						<label class="developer-starter-pro-toggle">
+							<input type="checkbox" name="<?php echo esc_attr( $this->option_name ); ?>[dark_mode_enabled]" value="1" <?php checked( '1', $options['dark_mode_enabled'] ); ?>>
+							<span class="developer-starter-pro-toggle-slider"></span>
+							<span class="developer-starter-pro-toggle-label"><?php esc_html_e( 'Enable Dark Mode toggle button in header', 'developer-starter-pro' ); ?></span>
+						</label>
+						<p class="description"><?php esc_html_e( 'Show/hide the dark mode switch button in the main navigation menu header.', 'developer-starter-pro' ); ?></p>
 					</td>
 				</tr>
 			</table>
@@ -497,6 +547,13 @@ class Developer_Starter_Pro_Admin {
 					<td>
 						<input type="text" id="google_maps_key" name="<?php echo esc_attr( $this->option_name ); ?>[google_maps_key]" value="<?php echo esc_attr( $options['google_maps_key'] ); ?>" class="regular-text">
 						<p class="description"><?php esc_html_e( 'Required for Google Maps on the contact page.', 'developer-starter-pro' ); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="map_embed_code"><?php esc_html_e( 'Google Maps Embed Code / Iframe', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<textarea id="map_embed_code" name="<?php echo esc_attr( $this->option_name ); ?>[map_embed_code]" rows="4" class="large-text" placeholder="<?php echo esc_attr( '<iframe src="https://www.google.com/maps/embed?..." width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>' ); ?>"><?php echo esc_textarea( isset( $options['map_embed_code'] ) ? $options['map_embed_code'] : '' ); ?></textarea>
+						<p class="description"><?php esc_html_e( 'Paste the full Google Maps iframe embed code here (from Google Maps: Share -> Embed a map -> Copy HTML). If empty, the theme will automatically load a map based on your clinic address, or fall back to the vector map if no address is set.', 'developer-starter-pro' ); ?></p>
 					</td>
 				</tr>
 				<tr>

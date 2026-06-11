@@ -52,14 +52,16 @@ function developer_starter_pro_get_default_options() {
 		// General.
 		'clinic_name'      => 'DentalPro Elite',
 		'clinic_phone'     => '+1 (555) 123-4567',
-		'clinic_email'     => 'info@developer-starter-pro.developer-starter-pro',
+		'clinic_email'     => 'info@dentalpro-elite.com',
 		'clinic_address'   => '123 Dental Street, Medical District, City',
 		'clinic_logo'      => '',
+		'hero_image'       => '',
 
 		// Colors.
 		'color_primary'    => '#0D9488',
 		'color_secondary'  => '#1E293B',
 		'color_accent'     => '#F59E0B',
+		'dark_mode_enabled' => '1',
 
 		// Header.
 		'header_style'     => '1',
@@ -77,6 +79,7 @@ function developer_starter_pro_get_default_options() {
 
 		// Contact.
 		'google_maps_key'   => '',
+		'map_embed_code'    => '',
 		'emergency_phone'   => '',
 		'whatsapp_enabled'  => '0',
 		'whatsapp_number'   => '',
@@ -326,6 +329,27 @@ function developer_starter_pro_social_share() {
 		</div>
 	</div>
 	<?php
+}
+
+/**
+ * Get dynamic page URL by page template name.
+ *
+ * @param string $template_name Template name e.g., 'page-templates/template-pricing.php'.
+ * @param string $fallback_hash Fallback relative anchor hash e.g., '#pricing'.
+ * @return string Page URL.
+ */
+function developer_starter_pro_get_template_page_url( $template_name, $fallback_hash = '#' ) {
+	$pages = get_pages( array(
+		'meta_key'   => '_wp_page_template',
+		'meta_value' => $template_name,
+		'number'     => 1,
+	) );
+
+	if ( ! empty( $pages ) ) {
+		return get_permalink( $pages[0]->ID );
+	}
+
+	return home_url( '/' . $fallback_hash );
 }
 
 

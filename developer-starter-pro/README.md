@@ -1,79 +1,138 @@
 # DentalPro Elite — WordPress Theme
 
-🦷 A premium, professional WordPress theme designed specifically for dental clinics, dentists, and healthcare professionals. Built completely dependency-free from scratch following professional coding standards.
+**Version:** 1.0.0  
+**Author:** NiteshCodes  
+**License:** GPL v2 or later  
+**Requires WordPress:** 6.0+  
+**Requires PHP:** 7.4+  
+**Tested up to:** 6.7
 
 ---
 
-## 🚀 Complete Development Roadmap
+## Description
 
-- **Week 1: Foundation** ✅ COMPLETE — Theme structure, Custom Post Types, custom taxonomies, meta boxes, and native 6-tab Theme Options Panel.
-- **Week 2: Design** ✅ COMPLETE — 4 Header styles, 3 Footer styles, WhatsApp floating bubble, and Swiper.js slider with dynamic admin slide uploads.
-- **Week 3: Inner Templates** ✅ COMPLETE — Gallery lightboxes, FAQ accordions, contact maps, about pages, and service pricing package grids.
-- **Week 4: Booking System** ✅ COMPLETE — Custom database table installation, time slot calculation algorithms, scheduler admin managers, and REST APIs.
-- **Week 5: Advanced Features** ✅ COMPLETE — AI rule-based Chatbot FAQ widget, custom patient portal, and treatment cost calculators.
-- **Week 6: Polish & Schema** ✅ COMPLETE — Custom email templates, automated daily WP-Cron reminders, and structured JSON-LD schemas.
+**DentalPro Elite** is a premium WordPress theme built specifically for dental clinics, dentists, orthodontists, and oral healthcare professionals. It combines a modern dark glassmorphic design with powerful built-in functionality — no page builder required.
 
 ---
 
-## 🛠️ Key Feature Guides
+## Features
 
-### 1. Swiper.js Hero Slider
-Admins can upload hero slide assets under **DentalPro → Hero Slider** in the WordPress dashboard. Supports video background check toggles, animated parallax headings, highlight brackets keywords rotation, and clinical badge counters.
+### Core Theme
+- Premium dark glassmorphic UI design
+- 4 pre-built Header styles (solid, transparent, sticky, centred)
+- 3 Footer layout options
+- Swiper.js Hero Slider with video background support
+- Fully responsive — mobile, tablet, desktop
+- Dark Mode toggle (admin panel + frontend)
+- Translation ready (`.pot` file included)
+- RTL stylesheet support
 
-### 2. Multi-Step Appointment Scheduler
-A frontend multi-step booking wizard rendered via [template-booking.php](file:///D:/Dental%20Pro/developer-starter-pro/page-templates/template-booking.php). 
-- Automatically generates daily 30-minute intervals according to doctor availability settings.
-- Filters out already reserved slots dynamically via REST API.
-- Submits form payloads to REST endpoint `/wp-json/dentalpro/v1/book`.
-- Status logs and actions (Approve, Complete, Cancel) are managed under **DentalPro → Appointments**.
+### Custom Post Types
+- **Doctors** — profiles with specialisation, experience, ratings
+- **Services** — dental treatments with pricing and duration
+- **Testimonials** — patient reviews with star ratings
+- **Appointments** — full booking records management
 
-### 3. AI Chatbot FAQ Widget
-Floating chat bubble enqueued globally. Uses rule-based search matching matching queries against admin-configured Q&A pairs.
-- Configure settings and answers under **DentalPro Settings → Chatbot FAQs**.
-- Matches keywords via `/wp-json/dentalpro/v1/chatbot/query`.
-- Automatically responds with typing animations. Fallback states render booking links and WhatsApp triggers when matches aren't resolved.
+### Appointment Booking System
+- Multi-step frontend booking wizard
+- Auto-generated 30-minute time slots per doctor
+- REST API slot availability checker
+- Admin booking manager (Approve / Complete / Cancel)
+- WP-Cron automated daily appointment reminder emails
+- Custom branded HTML email templates
 
-### 4. Patient Portal Dashboard
-Leverages custom user role `'dental_patient'` restricting portal files to medical accounts.
-- **Pages**: Templates for Login, Registration, and Dashboard.
-- **Sync**: Queries `wp_dental_appointments` matching the patient account email to display past and upcoming clinical logs.
-- **Secure metadata**: Allows patients to edit allergies, active medications, and conditions stored securely to user meta tables.
+### Patient Portal
+- Secure login / registration for `dental_patient` role
+- Dashboard showing upcoming and past appointments
+- Patient profile: allergies, medications, medical notes (stored to user meta)
 
-### 5. Cost Treatment Calculator
-Interactive sliding widget matching the shortcode `[dental_calculator]`.
-- Pulls base clinical prices dynamically from the Services CPT.
-- Uses range inputs to calculate insurance savings and net out-of-pocket values.
-- Stores selection indices to sessionStorage, pre-filling Step 1 of the Scheduler upon redirection.
+### AI Chatbot
+- Floating chat bubble with typing animations
+- Rule-based keyword matching against admin-configured Q&A pairs
+- REST API endpoint: `/wp-json/dentalpro/v1/chatbot/query`
+- Fallback states with booking links and WhatsApp triggers
 
-### 6. Email Customizations & WP-Cron
-- Configure Subjects and HTML email body layouts under **DentalPro Settings → Email Templates**.
-- Uses replacement codes (e.g. `{patient_name}`, `{doctor_name}`, `{date}`, `{time}`) for instant bookings alerts.
-- Schedules daily checks via task `dentalpro_daily_reminder_cron` to alert tomorrow's patients.
+### Treatment Cost Calculator
+- Shortcode `[dental_calculator]`
+- Pulls base prices from Services CPT dynamically
+- Range sliders for insurance savings calculation
+- Pre-fills booking step 1 via sessionStorage
 
-### 7. Structured JSON-LD Markups
-Automatically injects Schema.org compliant structured scripts into `wp_head` for search engine optimization (SEO):
-- **Front page**: outputs `Dentist` business schema (logo, phone, address, coordinates, hours).
-- **Doctors singular profiles**: outputs `Physician` specialized data.
-- **Services singular pages**: outputs `Service` pricing tables.
-- **FAQ pages**: outputs `FAQPage` index maps.
-- **Inner pages**: outputs `BreadcrumbList` navigation paths.
+### SEO & Schema
+- JSON-LD structured data: `Dentist`, `Physician`, `Service`, `FAQPage`, `BreadcrumbList`
+- Auto-injected via `wp_head` with clinic address, phone, coordinates, hours
+
+### WooCommerce Ready
+- Shop, cart, checkout, and account templates included
+- Single product pages styled to match theme design
+
+### Child Theme Support
+- `dentalpro-elite-child` starter kit bundled in `/child-theme/` folder
 
 ---
 
-## ⚙️ Installation
+## Installation
 
 1. Upload the `developer-starter-pro` folder to `/wp-content/themes/`
-2. Go to **Appearance → Themes** and activate "DentalPro Elite"
-3. Go to **DentalPro Settings → Theme Settings** to configure logo and clinic information.
+2. Go to **Appearance → Themes** and activate **DentalPro Elite**
+3. Navigate to **DentalPro Settings** to configure logo, clinic info, colors, and booking options
+4. Import demo data via **DentalPro Settings → Demo Import**
 
 ---
 
-## 📋 Security & WPCS Compliance
-- **Database queries**: Prepared with `$wpdb->prepare` including strict types placeholders (`%d` cast pagination limits and offsets).
-- **Forms**: Fully protected using `check_admin_referer()` nonces and `current_user_can('manage_options')` capability validation.
-- **Escape**: All HTML output templates processed via safe functions (`esc_html`, `esc_attr`, `esc_url`, `esc_textarea`).
+## Demo Data
+
+A sample `demo-data.xml` is included in `/demo-data/`. Import via **Tools → Import → WordPress** to populate dummy doctors, services, testimonials, and appointments.
+
+---
+
+## Customisation
+
+All theme settings are managed from the native **DentalPro Settings** panel:
+- **General** — clinic name, phone, email, address, Google Maps embed
+- **Colors** — primary, secondary, accent (CSS custom properties)
+- **Header** — style, sticky behaviour, transparent mode
+- **Footer** — layout, newsletter form toggle
+- **Booking** — doctor availability, slot duration, reminder email toggle
+- **Email Templates** — custom subject lines and HTML body templates
+- **Hero Slider** — add/edit/delete slides with image or video backgrounds
+- **Chatbot FAQs** — configure Q&A pairs
+
+---
+
+## Security
+
+- All database queries use `$wpdb->prepare()` with typed placeholders
+- All output escaped via `esc_html()`, `esc_attr()`, `esc_url()`, `esc_textarea()`
+- Admin forms protected by `check_admin_referer()` nonces
+- Capability checks via `current_user_can('manage_options')`
+
+---
+
+## Third-Party Libraries
+
+| Library | Version | License |
+|---|---|---|
+| Swiper.js | 11.x | MIT |
+| Font Awesome | 6.x (SVG icons inline) | MIT / CC BY 4.0 |
+| Google Fonts — Outfit, Inter | via @import | Open Font License |
+
+---
+
+## Changelog
+
+### 1.0.0 — Initial Release
+- Full theme launch with all features listed above
+
+---
+
+## Support
+
+For support, customisation requests, or bug reports, please use the **ThemeForest comments section** on the item page.
 
 ---
 
 ## License
-GPL v2 or later
+
+This theme is licensed under the GNU General Public License v2 or later.  
+Full license text: http://www.gnu.org/licenses/gpl-2.0.html

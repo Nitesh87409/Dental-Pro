@@ -217,3 +217,4 @@ function developer_starter_pro_save_comment_rating( $comment_id ) {
 }
 add_action( 'comment_post', 'developer_starter_pro_save_comment_rating' );
 
+

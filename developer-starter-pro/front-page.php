@@ -17,9 +17,6 @@ get_header();
 	// 1. Hero Slider Section
 	get_template_part( 'template-parts/homepage/hero', 'slider' );
 
-	// 2. Stats / Counter Section
-	get_template_part( 'template-parts/homepage/stats', 'section' );
-
 	// 3. Services Grid Section
 	get_template_part( 'template-parts/homepage/services', 'section' );
 
@@ -29,20 +26,21 @@ get_header();
 	// 5. Doctors List Section
 	get_template_part( 'template-parts/homepage/doctors', 'section' );
 
+	// 8. Testimonials Section
+	get_template_part( 'template-parts/homepage/testimonials', 'section' );
+
+	// 7. CTA Banner Booking Section (Appointment Booking)
+	get_template_part( 'template-parts/homepage/cta', 'banner' );
+
+	/* Comment out non-essential sections to match the clean reference layout
 	// 6. Before/After Comparison Slider Section
 	get_template_part( 'template-parts/homepage/before-after', 'section' );
 
 	// 6.5. Gallery Showcase Section
 	get_template_part( 'template-parts/homepage/gallery', 'section' );
 
-	// 7. CTA Banner Booking Section
-	get_template_part( 'template-parts/homepage/cta', 'banner' );
-
 	// 7.5. Clinic 360-Degree Virtual Tour Section
 	get_template_part( 'template-parts/homepage/tour', 'section' );
-
-	// 8. Testimonials Section
-	get_template_part( 'template-parts/homepage/testimonials', 'section' );
 
 	// 9. Google Reviews Section
 	get_template_part( 'template-parts/homepage/google', 'reviews' );
@@ -52,6 +50,7 @@ get_header();
 
 	// 11. Latest Blog Posts Section
 	get_template_part( 'template-parts/homepage/blog', 'section' );
+	*/
 	?>
 
 </main>

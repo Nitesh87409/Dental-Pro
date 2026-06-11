@@ -24,6 +24,12 @@ class Developer_Starter_Pro_Setup {
 		add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
 		add_action( 'after_setup_theme', array( $this, 'content_width' ), 0 );
 		add_action( 'after_setup_theme', array( $this, 'custom_image_sizes' ) );
+
+		// WooCommerce wrapper overrides.
+		remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10 );
+		remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10 );
+		add_action( 'woocommerce_before_main_content', array( $this, 'woocommerce_wrapper_start' ), 10 );
+		add_action( 'woocommerce_after_main_content', array( $this, 'woocommerce_wrapper_end' ), 10 );
 	}
 
 	/**
@@ -246,5 +252,23 @@ class Developer_Starter_Pro_Setup {
 		// Blog.
 		add_image_size( 'developer-starter-pro-blog-thumb', 600, 400, true );
 		add_image_size( 'developer-starter-pro-blog-large', 1200, 600, true );
+	}
+
+	/**
+	 * WooCommerce wrapper start.
+	 */
+	public function woocommerce_wrapper_start() {
+		echo '<main id="primary" class="developer-starter-pro-main" role="main">';
+		echo '<div class="developer-starter-pro-container" style="padding: 48px 0;">';
+		echo '<div class="developer-starter-pro-woocommerce-content">';
+	}
+
+	/**
+	 * WooCommerce wrapper end.
+	 */
+	public function woocommerce_wrapper_end() {
+		echo '</div>';
+		echo '</div>';
+		echo '</main>';
 	}
 }

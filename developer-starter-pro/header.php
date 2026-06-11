@@ -32,94 +32,70 @@ $emergency_phone = developer_starter_pro_get_option( 'emergency_phone', '' );
 		<?php esc_html_e( 'Skip to content', 'developer-starter-pro' ); ?>
 	</a>
 
-	<?php if ( '3' === $header_style || '1' === $header_style ) : ?>
-	<!-- Top Bar -->
-	<div class="developer-starter-pro-top-bar">
-		<div class="developer-starter-pro-container">
-			<div class="developer-starter-pro-top-bar-inner">
-				<div class="developer-starter-pro-top-bar-left">
-					<?php if ( $clinic_phone ) : ?>
-						<a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $clinic_phone ) ); ?>" class="developer-starter-pro-top-bar-item">
-							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-							<?php echo esc_html( $clinic_phone ); ?>
-						</a>
-					<?php endif; ?>
-					<?php if ( $clinic_email ) : ?>
-						<a href="mailto:<?php echo esc_attr( $clinic_email ); ?>" class="developer-starter-pro-top-bar-item">
-							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-							<?php echo esc_html( $clinic_email ); ?>
-						</a>
-					<?php endif; ?>
-				</div>
-				<div class="developer-starter-pro-top-bar-right">
-					<?php
-					// Social icons.
-					$social_platforms = array( 'facebook', 'instagram', 'twitter', 'youtube', 'linkedin' );
-					foreach ( $social_platforms as $platform ) :
-						$url = developer_starter_pro_get_option( 'social_' . $platform, '' );
-						if ( $url ) : ?>
-							<a href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener noreferrer" class="developer-starter-pro-social-icon" aria-label="<?php echo esc_attr( ucfirst( $platform ) ); ?>">
-								<?php echo developer_starter_pro_get_social_icon( $platform ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-							</a>
-						<?php endif;
-					endforeach; ?>
-
-					<span class="developer-starter-pro-top-bar-hours">
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-						<?php echo esc_html( developer_starter_pro_get_today_hours() ); ?>
-					</span>
-				</div>
-			</div>
-		</div>
-	</div>
-	<?php endif; ?>
-
 	<!-- Main Header -->
-	<header id="masthead" class="developer-starter-pro-header developer-starter-pro-header--style-<?php echo esc_attr( $header_style ); ?> <?php echo '1' === $header_sticky ? 'developer-starter-pro-header--sticky-enabled' : ''; ?>" role="banner">
+	<header id="masthead" class="developer-starter-pro-header developer-starter-pro-header--style-1 <?php echo '1' === $header_sticky ? 'developer-starter-pro-header--sticky-enabled' : ''; ?>" role="banner">
 		<div class="developer-starter-pro-container">
 			<div class="developer-starter-pro-header-inner">
 
 				<!-- Logo -->
 				<div class="developer-starter-pro-logo">
-					<?php if ( has_custom_logo() ) : ?>
-						<?php the_custom_logo(); ?>
-					<?php else : ?>
-						<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="developer-starter-pro-site-title" rel="home">
-							<span class="developer-starter-pro-logo-icon">🦷</span>
-							<?php echo esc_html( $clinic_name ); ?>
-						</a>
-					<?php endif; ?>
+					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="dp-logo-link" rel="home">
+						<svg class="dp-logo-svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#657F60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M12 5c-1.5-2.5-4.5-2.5-6.5-1C3.5 5.5 3.5 8.5 4 11.5c.8 4.5 4 8 7 9.5v1.5"/>
+							<path d="M12 5c1.5-2.5 4.5-2.5 6.5-1 2 1.5 2 4.5 1.5 7.5-.8 4.5-4 8-7 9.5v1.5"/>
+							<path d="M9.5 11c1 1 2.5 1 3.5 0" stroke-width="1.3"/>
+						</svg>
+						<div class="dp-logo-text">
+							<span class="brand-apex">Apex</span>
+							<span class="brand-sub">Dental Care</span>
+						</div>
+					</a>
 				</div>
 
 				<!-- Navigation -->
 				<nav id="site-navigation" class="developer-starter-pro-nav" role="navigation" aria-label="<?php esc_attr_e( 'Primary Menu', 'developer-starter-pro' ); ?>">
 					<?php
-					wp_nav_menu(
-						array(
-							'theme_location' => 'primary',
-							'menu_id'        => 'primary-menu',
-							'menu_class'     => 'developer-starter-pro-menu',
-							'container'      => false,
-							'fallback_cb'    => false,
-							'depth'          => 3,
-						)
-					);
+					if ( has_nav_menu( 'primary' ) ) {
+						wp_nav_menu(
+							array(
+								'theme_location' => 'primary',
+								'menu_id'        => 'primary-menu',
+								'menu_class'     => 'developer-starter-pro-menu',
+								'container'      => false,
+								'depth'          => 3,
+							)
+						);
+					} else {
+						$services_url    = developer_starter_pro_get_template_page_url( 'page-templates/template-services.php', '#services' );
+						$doctors_url     = developer_starter_pro_get_template_page_url( 'page-templates/template-doctors.php', '#doctors' );
+						$beforeafter_url = developer_starter_pro_get_template_page_url( 'page-templates/template-before-after.php', '#before-after' );
+						$pricing_url     = developer_starter_pro_get_template_page_url( 'page-templates/template-pricing.php', '#pricing' );
+						$portal_url      = developer_starter_pro_get_template_page_url( 'page-templates/template-patient-login.php', '#portal' );
+						$video_url       = developer_starter_pro_get_template_page_url( 'page-templates/template-video-consult.php', '#video' );
+
+						echo '<ul id="primary-menu" class="developer-starter-pro-menu">';
+						echo '<li><a href="' . esc_url( $services_url ) . '">' . esc_html__( 'Our Services', 'developer-starter-pro' ) . '</a></li>';
+						echo '<li><a href="' . esc_url( $doctors_url ) . '">' . esc_html__( 'Meet the Team', 'developer-starter-pro' ) . '</a></li>';
+						echo '<li><a href="' . esc_url( $beforeafter_url ) . '">' . esc_html__( 'Before & After', 'developer-starter-pro' ) . '</a></li>';
+						echo '<li><a href="' . esc_url( $pricing_url ) . '">' . esc_html__( 'Cost Calculator', 'developer-starter-pro' ) . '</a></li>';
+						echo '<li><a href="' . esc_url( $portal_url ) . '">' . esc_html__( 'Patient Portal', 'developer-starter-pro' ) . '</a></li>';
+						echo '<li><a href="' . esc_url( $video_url ) . '">' . esc_html__( 'Video Consult', 'developer-starter-pro' ) . '</a></li>';
+						echo '</ul>';
+					}
 					?>
 				</nav>
 
 				<!-- Header Actions -->
 				<div class="developer-starter-pro-header-actions">
-					<button id="dark-mode-toggle" class="developer-starter-pro-dark-mode-btn" aria-label="<?php esc_attr_e( 'Toggle Dark Mode', 'developer-starter-pro' ); ?>">
-						<svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-						<svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-					</button>
-
-					<?php if ( $clinic_phone ) : ?>
-						<a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $clinic_phone ) ); ?>" class="developer-starter-pro-btn developer-starter-pro-btn--primary developer-starter-pro-header-cta">
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-							<?php esc_html_e( 'Book Now', 'developer-starter-pro' ); ?>
-						</a>
-					<?php endif; ?>
+					<a href="tel:+18001234567" class="dp-header-call-btn">
+						<svg class="dp-header-call-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+						</svg>
+						<div class="dp-header-call-text">
+							<span class="dp-header-call-label"><?php esc_html_e( 'Call Now', 'developer-starter-pro' ); ?></span>
+							<span class="dp-header-call-num"><?php esc_html_e( '+1 800 123 4567', 'developer-starter-pro' ); ?></span>
+						</div>
+					</a>
 
 					<!-- Mobile Menu Toggle -->
 					<button class="developer-starter-pro-mobile-toggle" id="mobile-menu-toggle" aria-controls="site-navigation" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle Menu', 'developer-starter-pro' ); ?>">
@@ -139,30 +115,60 @@ $emergency_phone = developer_starter_pro_get_option( 'emergency_phone', '' );
 		<div class="developer-starter-pro-mobile-menu-inner">
 			<div class="developer-starter-pro-mobile-menu-header">
 				<div class="developer-starter-pro-logo">
-					<span class="developer-starter-pro-logo-icon">🦷</span>
-					<?php echo esc_html( $clinic_name ); ?>
+					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="dp-logo-link" rel="home">
+						<svg class="dp-logo-svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#657F60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M12 5c-1.5-2.5-4.5-2.5-6.5-1C3.5 5.5 3.5 8.5 4 11.5c.8 4.5 4 8 7 9.5v1.5"/>
+							<path d="M12 5c1.5-2.5 4.5-2.5 6.5-1 2 1.5 2 4.5 1.5 7.5-.8 4.5-4 8-7 9.5v1.5"/>
+							<path d="M9.5 11c1 1 2.5 1 3.5 0" stroke-width="1.3"/>
+						</svg>
+						<div class="dp-logo-text">
+							<span class="brand-apex" style="font-size: 1.1rem; font-weight: 700; color: #1A2E1A;">Apex</span>
+							<span class="brand-sub" style="font-size: 0.7rem; color: #7D7468; display: block; line-height: 1.1;">Dental Care</span>
+						</div>
+					</a>
 				</div>
 				<button class="developer-starter-pro-mobile-close" id="mobile-menu-close" aria-label="<?php esc_attr_e( 'Close Menu', 'developer-starter-pro' ); ?>">
 					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
 				</button>
 			</div>
 			<?php
-			wp_nav_menu(
-				array(
-					'theme_location' => 'mobile',
-					'menu_id'        => 'mobile-menu-nav',
-					'menu_class'     => 'developer-starter-pro-mobile-menu-list',
-					'container'      => false,
-					'fallback_cb'    => function() {
-						wp_nav_menu( array(
-							'theme_location' => 'primary',
-							'menu_class'     => 'developer-starter-pro-mobile-menu-list',
-							'container'      => false,
-						) );
-					},
-					'depth'          => 2,
-				)
-			);
+			if ( has_nav_menu( 'mobile' ) ) {
+				wp_nav_menu(
+					array(
+						'theme_location' => 'mobile',
+						'menu_id'        => 'mobile-menu-nav',
+						'menu_class'     => 'developer-starter-pro-mobile-menu-list',
+						'container'      => false,
+						'depth'          => 2,
+					)
+				);
+			} elseif ( has_nav_menu( 'primary' ) ) {
+				wp_nav_menu(
+					array(
+						'theme_location' => 'primary',
+						'menu_id'        => 'mobile-menu-nav',
+						'menu_class'     => 'developer-starter-pro-mobile-menu-list',
+						'container'      => false,
+						'depth'          => 2,
+					)
+				);
+			} else {
+				$services_url    = developer_starter_pro_get_template_page_url( 'page-templates/template-services.php', '#services' );
+				$doctors_url     = developer_starter_pro_get_template_page_url( 'page-templates/template-doctors.php', '#doctors' );
+				$beforeafter_url = developer_starter_pro_get_template_page_url( 'page-templates/template-before-after.php', '#before-after' );
+				$pricing_url     = developer_starter_pro_get_template_page_url( 'page-templates/template-pricing.php', '#pricing' );
+				$portal_url      = developer_starter_pro_get_template_page_url( 'page-templates/template-patient-login.php', '#portal' );
+				$video_url       = developer_starter_pro_get_template_page_url( 'page-templates/template-video-consult.php', '#video' );
+
+				echo '<ul id="mobile-menu-nav" class="developer-starter-pro-mobile-menu-list">';
+				echo '<li><a href="' . esc_url( $services_url ) . '">' . esc_html__( 'Our Services', 'developer-starter-pro' ) . '</a></li>';
+				echo '<li><a href="' . esc_url( $doctors_url ) . '">' . esc_html__( 'Meet the Team', 'developer-starter-pro' ) . '</a></li>';
+				echo '<li><a href="' . esc_url( $beforeafter_url ) . '">' . esc_html__( 'Before & After', 'developer-starter-pro' ) . '</a></li>';
+				echo '<li><a href="' . esc_url( $pricing_url ) . '">' . esc_html__( 'Cost Calculator', 'developer-starter-pro' ) . '</a></li>';
+				echo '<li><a href="' . esc_url( $portal_url ) . '">' . esc_html__( 'Patient Portal', 'developer-starter-pro' ) . '</a></li>';
+				echo '<li><a href="' . esc_url( $video_url ) . '">' . esc_html__( 'Video Consult', 'developer-starter-pro' ) . '</a></li>';
+				echo '</ul>';
+			}
 			?>
 			<div class="developer-starter-pro-mobile-menu-footer">
 				<?php if ( $clinic_phone ) : ?>
