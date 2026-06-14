@@ -4,7 +4,7 @@
  * Handles: color picker, media uploader, tab interactions, radio card selection.
  *
  * @package developer-starter-pro
- * @since   1.0.0
+ * @since   1.0.1
  */
 
 (function ($) {
@@ -13,6 +13,7 @@
 	$(document).ready(function () {
 		initColorPickers();
 		initMediaUploader();
+		initRemoveButtons();
 		initRadioCards();
 	});
 
@@ -20,6 +21,9 @@
 	// Color Pickers
 	// =========================================================================
 	function initColorPickers() {
+		if (typeof $.fn.wpColorPicker !== 'function') {
+			return;
+		}
 		$('.developer-starter-pro-color-picker').each(function () {
 			var $this = $(this);
 			var target = $this.attr('id');
@@ -41,9 +45,12 @@
 	}
 
 	// =========================================================================
-	// Media Uploader
+	// Media Uploader (requires wp.media)
 	// =========================================================================
 	function initMediaUploader() {
+		if (typeof wp === 'undefined' || typeof wp.media === 'undefined') {
+			return;
+		}
 		var mediaFrame;
 
 		$(document).on('click', '.developer-starter-pro-upload-btn', function (e) {
@@ -68,7 +75,12 @@
 
 			mediaFrame.open();
 		});
+	}
 
+	// =========================================================================
+	// Remove Buttons (NO wp.media dependency — always works)
+	// =========================================================================
+	function initRemoveButtons() {
 		$(document).on('click', '.developer-starter-pro-remove-btn', function (e) {
 			e.preventDefault();
 

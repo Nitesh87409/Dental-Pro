@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Theme Constants
  */
-define( 'developer_starter_pro_VERSION', '1.0.0' );
+define( 'developer_starter_pro_VERSION', '1.0.5' );
 define( 'developer_starter_pro_DIR', get_template_directory() );
 define( 'developer_starter_pro_URI', get_template_directory_uri() );
 define( 'developer_starter_pro_INC', developer_starter_pro_DIR . '/inc' );
@@ -216,5 +216,7 @@ function developer_starter_pro_save_comment_rating( $comment_id ) {
 	}
 }
 add_action( 'comment_post', 'developer_starter_pro_save_comment_rating' );
+
+
 
 

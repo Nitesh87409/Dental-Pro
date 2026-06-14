@@ -25,6 +25,7 @@ class Developer_Starter_Pro_Enqueue {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 		add_action( 'wp_head', array( $this, 'dynamic_css' ), 100 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'google_fonts' ), 5 );
+		add_action( 'admin_print_footer_scripts', array( $this, 'admin_delete_button_fix' ) );
 	}
 
 	/**
@@ -313,7 +314,7 @@ class Developer_Starter_Pro_Enqueue {
 			wp_enqueue_script(
 				'developer-starter-pro-admin',
 				developer_starter_pro_JS . '/admin.js',
-				array( 'jquery', 'wp-color-picker', 'media-upload' ),
+				array( 'jquery', 'wp-color-picker' ),
 				developer_starter_pro_VERSION,
 				true
 			);
@@ -354,4 +355,110 @@ class Developer_Starter_Pro_Enqueue {
 
 		echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
+
+	/**
+	 * Fix Delete Permanently button globally in WordPress admin list views and media modals
+	 */
+	public function admin_delete_button_fix() {
+		?>
+		<script type="text/javascript">
+		(function() {
+			// Helper to create and show the beautiful custom delete modal
+			function showCustomDeleteModal(viewContext, directUrl) {
+				var existing = document.getElementById('custom-delete-confirm-modal');
+				if (existing) {
+					existing.remove();
+				}
+
+				var modal = document.createElement('div');
+				modal.id = 'custom-delete-confirm-modal';
+				modal.style.position = 'fixed';
+				modal.style.top = '0';
+				modal.style.left = '0';
+				modal.style.width = '100%';
+				modal.style.height = '100%';
+				modal.style.background = 'rgba(15, 23, 42, 0.6)';
+				modal.style.backdropFilter = 'blur(4px)';
+				modal.style.webkitBackdropFilter = 'blur(4px)';
+				modal.style.zIndex = '999999';
+				modal.style.display = 'flex';
+				modal.style.alignItems = 'center';
+				modal.style.justifyContent = 'center';
+				modal.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+
+				modal.innerHTML = 
+					'<div style="background: #ffffff; padding: 24px; border-radius: 12px; max-width: 400px; width: 90%; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); text-align: center; border: 1px solid #e2e8f0;">' +
+						'<div style="font-size: 40px; margin-bottom: 12px;">⚠️</div>' +
+						'<h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600; color: #0f172a;">Permanently Delete?</h3>' +
+						'<p style="margin: 0 0 24px 0; font-size: 14px; color: #64748b; line-height: 1.5;">Are you sure you want to permanently delete this item? This action cannot be undone.</p>' +
+						'<div style="display: flex; justify-content: center; gap: 12px;">' +
+							'<button id="custom-delete-cancel" style="padding: 10px 18px; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s;">Cancel</button>' +
+							'<button id="custom-delete-confirm" style="padding: 10px 18px; border-radius: 6px; border: none; background: #ef4444; color: #ffffff; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s;">Delete</button>' +
+						'</div>' +
+					'</div>';
+
+				document.body.appendChild(modal);
+
+				document.getElementById('custom-delete-cancel').addEventListener('click', function() {
+					modal.remove();
+				});
+
+				document.getElementById('custom-delete-confirm').addEventListener('click', function() {
+					modal.remove();
+					if (viewContext && viewContext.model) {
+						viewContext.model.destroy();
+					} else if (directUrl) {
+						window.location.href = directUrl;
+					}
+				});
+			}
+
+			// 1. List views: Capturing phase click listener
+			document.addEventListener('click', function(e) {
+				var deleteLink = e.target.closest('a.submitdelete');
+				if (deleteLink) {
+					var href = deleteLink.getAttribute('href');
+					if (href) {
+						e.preventDefault();
+						e.stopPropagation();
+						e.stopImmediatePropagation();
+						showCustomDeleteModal(null, href);
+					}
+				}
+			}, true);
+
+			// 2. Media Upload Modal: Override Backbone prototype functions when loaded
+			function applyMediaDeleteOverride() {
+				if (typeof wp !== 'undefined' && wp.media && wp.media.view) {
+					// View type 1
+					if (wp.media.view.Attachment && wp.media.view.Attachment.Details && !wp.media.view.Attachment.Details.prototype.customDeletePatched) {
+						wp.media.view.Attachment.Details.prototype.customDeletePatched = true;
+						wp.media.view.Attachment.Details.prototype.deleteAttachment = function(event) {
+							event.preventDefault();
+							showCustomDeleteModal(this);
+						};
+					}
+					// View type 2
+					if (wp.media.view.AttachmentDetails && !wp.media.view.AttachmentDetails.prototype.customDeletePatched) {
+						wp.media.view.AttachmentDetails.prototype.customDeletePatched = true;
+						wp.media.view.AttachmentDetails.prototype.deleteAttachment = function(event) {
+							event.preventDefault();
+							showCustomDeleteModal(this);
+						};
+					}
+				}
+			}
+
+			var mediaPollInterval = setInterval(applyMediaDeleteOverride, 100);
+			setTimeout(function() {
+				clearInterval(mediaPollInterval);
+			}, 15000); // Poll for 15s max
+		})();
+		</script>
+		<?php
+	}
 }
+
+
+
+

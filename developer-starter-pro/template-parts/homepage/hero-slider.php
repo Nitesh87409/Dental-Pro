@@ -26,7 +26,7 @@ $booking_url = developer_starter_pro_get_booking_url();
 // Setup dynamic background style if custom background image is saved
 $hero_style = '';
 if ( ! empty( $saved_hero_image ) ) {
-	$hero_style = 'background-image: url(' . esc_url( $saved_hero_image ) . '); background-size: 100% 100%; background-position: center; background-repeat: no-repeat;';
+	$hero_style = 'background-image: url(' . esc_url( $saved_hero_image ) . '); background-size: cover; background-position: center; background-repeat: no-repeat;';
 }
 ?>
 

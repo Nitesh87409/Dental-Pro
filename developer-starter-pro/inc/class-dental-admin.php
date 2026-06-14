@@ -81,71 +81,88 @@ class Developer_Starter_Pro_Admin {
 	 * @return array Sanitized values.
 	 */
 	public function sanitize_options( $input ) {
-		$sanitized = array();
+		$existing = get_option( $this->option_name, array() );
+		$sanitized = is_array( $existing ) ? $existing : array();
 
-		// General.
-		$sanitized['clinic_name']    = isset( $input['clinic_name'] ) ? sanitize_text_field( $input['clinic_name'] ) : '';
-		$sanitized['clinic_phone']   = isset( $input['clinic_phone'] ) ? sanitize_text_field( $input['clinic_phone'] ) : '';
-		$sanitized['clinic_email']   = isset( $input['clinic_email'] ) ? sanitize_email( $input['clinic_email'] ) : '';
-		$sanitized['clinic_address'] = isset( $input['clinic_address'] ) ? sanitize_textarea_field( $input['clinic_address'] ) : '';
-		$sanitized['clinic_logo']    = isset( $input['clinic_logo'] ) ? esc_url_raw( $input['clinic_logo'] ) : '';
-		$sanitized['hero_image']     = isset( $input['hero_image'] ) ? esc_url_raw( $input['hero_image'] ) : '';
+		$active_tab = isset( $input['active_tab'] ) ? sanitize_key( $input['active_tab'] ) : '';
 
-		// Colors.
-		$sanitized['color_primary']     = isset( $input['color_primary'] ) ? developer_starter_pro_sanitize_hex_color( $input['color_primary'] ) : '#0D9488';
-		$sanitized['color_secondary']   = isset( $input['color_secondary'] ) ? developer_starter_pro_sanitize_hex_color( $input['color_secondary'] ) : '#1E293B';
-		$sanitized['color_accent']      = isset( $input['color_accent'] ) ? developer_starter_pro_sanitize_hex_color( $input['color_accent'] ) : '#F59E0B';
-		$sanitized['dark_mode_enabled'] = isset( $input['dark_mode_enabled'] ) ? '1' : '0';
-
-		// Header.
-		$sanitized['header_style']  = isset( $input['header_style'] ) ? sanitize_text_field( $input['header_style'] ) : '1';
-		$sanitized['header_sticky'] = isset( $input['header_sticky'] ) ? '1' : '0';
-
-		// Footer.
-		$sanitized['footer_style'] = isset( $input['footer_style'] ) ? sanitize_text_field( $input['footer_style'] ) : '1';
-
-		// Social Media.
-		$social_fields = array( 'social_facebook', 'social_instagram', 'social_twitter', 'social_youtube', 'social_linkedin' );
-		foreach ( $social_fields as $field ) {
-			$sanitized[ $field ] = isset( $input[ $field ] ) ? esc_url_raw( $input[ $field ] ) : '';
+		if ( empty( $active_tab ) || 'general' === $active_tab ) {
+			// General.
+			$sanitized['clinic_name']    = isset( $input['clinic_name'] ) ? sanitize_text_field( $input['clinic_name'] ) : '';
+			$sanitized['clinic_phone']   = isset( $input['clinic_phone'] ) ? sanitize_text_field( $input['clinic_phone'] ) : '';
+			$sanitized['clinic_email']   = isset( $input['clinic_email'] ) ? sanitize_email( $input['clinic_email'] ) : '';
+			$sanitized['clinic_address'] = isset( $input['clinic_address'] ) ? sanitize_textarea_field( $input['clinic_address'] ) : '';
+			$sanitized['clinic_logo']    = isset( $input['clinic_logo'] ) ? esc_url_raw( $input['clinic_logo'] ) : '';
+			$sanitized['hero_image']     = isset( $input['hero_image'] ) ? esc_url_raw( $input['hero_image'] ) : '';
 		}
 
-		// Contact.
-		$sanitized['google_maps_key'] = isset( $input['google_maps_key'] ) ? sanitize_text_field( $input['google_maps_key'] ) : '';
-		
-		// Sanitize map embed code allowing iframe tags
-		$allowed_iframe = array(
-			'iframe' => array(
-				'src'             => true,
-				'width'           => true,
-				'height'          => true,
-				'style'           => true,
-				'frameborder'     => true,
-				'allowfullscreen' => true,
-				'loading'         => true,
-				'referrerpolicy'  => true,
-				'class'           => true,
-				'id'              => true,
-			),
-		);
-		$sanitized['map_embed_code'] = isset( $input['map_embed_code'] ) ? wp_kses( $input['map_embed_code'], $allowed_iframe ) : '';
-		$sanitized['emergency_phone'] = isset( $input['emergency_phone'] ) ? sanitize_text_field( $input['emergency_phone'] ) : '';
-		$sanitized['whatsapp_enabled']  = isset( $input['whatsapp_enabled'] ) ? '1' : '0';
-		$sanitized['whatsapp_number']   = isset( $input['whatsapp_number'] ) ? sanitize_text_field( $input['whatsapp_number'] ) : '';
-		$sanitized['whatsapp_message']  = isset( $input['whatsapp_message'] ) ? sanitize_text_field( $input['whatsapp_message'] ) : '';
-		$sanitized['whatsapp_position'] = isset( $input['whatsapp_position'] ) ? sanitize_text_field( $input['whatsapp_position'] ) : 'right';
+		if ( empty( $active_tab ) || 'colors' === $active_tab ) {
+			// Colors.
+			$sanitized['color_primary']     = isset( $input['color_primary'] ) ? developer_starter_pro_sanitize_hex_color( $input['color_primary'] ) : '#0D9488';
+			$sanitized['color_secondary']   = isset( $input['color_secondary'] ) ? developer_starter_pro_sanitize_hex_color( $input['color_secondary'] ) : '#1E293B';
+			$sanitized['color_accent']      = isset( $input['color_accent'] ) ? developer_starter_pro_sanitize_hex_color( $input['color_accent'] ) : '#F59E0B';
+			$sanitized['dark_mode_enabled'] = isset( $input['dark_mode_enabled'] ) ? '1' : '0';
+		}
 
-		// Working Hours.
-		if ( isset( $input['working_hours'] ) && is_array( $input['working_hours'] ) ) {
-			$sanitized['working_hours'] = array();
-			foreach ( $input['working_hours'] as $day => $hours ) {
-				$sanitized['working_hours'][ sanitize_key( $day ) ] = array(
-					'open'   => sanitize_text_field( $hours['open'] ),
-					'close'  => sanitize_text_field( $hours['close'] ),
-					'closed' => isset( $hours['closed'] ) ? true : false,
-				);
+		if ( empty( $active_tab ) || 'header' === $active_tab ) {
+			// Header.
+			$sanitized['header_style']  = isset( $input['header_style'] ) ? sanitize_text_field( $input['header_style'] ) : '1';
+			$sanitized['header_sticky'] = isset( $input['header_sticky'] ) ? '1' : '0';
+		}
+
+		if ( empty( $active_tab ) || 'footer' === $active_tab ) {
+			// Footer.
+			$sanitized['footer_style'] = isset( $input['footer_style'] ) ? sanitize_text_field( $input['footer_style'] ) : '1';
+		}
+
+		if ( empty( $active_tab ) || 'social' === $active_tab ) {
+			// Social Media.
+			$social_fields = array( 'social_facebook', 'social_instagram', 'social_twitter', 'social_youtube', 'social_linkedin' );
+			foreach ( $social_fields as $field ) {
+				$sanitized[ $field ] = isset( $input[ $field ] ) ? esc_url_raw( $input[ $field ] ) : '';
 			}
 		}
+
+		if ( empty( $active_tab ) || 'contact' === $active_tab ) {
+			// Contact.
+			$sanitized['google_maps_key'] = isset( $input['google_maps_key'] ) ? sanitize_text_field( $input['google_maps_key'] ) : '';
+			
+			// Sanitize map embed code allowing iframe tags
+			$allowed_iframe = array(
+				'iframe' => array(
+					'src'             => true,
+					'width'           => true,
+					'height'          => true,
+					'style'           => true,
+					'frameborder'     => true,
+					'allowfullscreen' => true,
+					'loading'         => true,
+					'referrerpolicy'  => true,
+					'class'           => true,
+					'id'              => true,
+				),
+			);
+			$sanitized['map_embed_code'] = isset( $input['map_embed_code'] ) ? wp_kses( $input['map_embed_code'], $allowed_iframe ) : '';
+			$sanitized['emergency_phone'] = isset( $input['emergency_phone'] ) ? sanitize_text_field( $input['emergency_phone'] ) : '';
+			$sanitized['whatsapp_enabled']  = isset( $input['whatsapp_enabled'] ) ? '1' : '0';
+			$sanitized['whatsapp_number']   = isset( $input['whatsapp_number'] ) ? sanitize_text_field( $input['whatsapp_number'] ) : '';
+			$sanitized['whatsapp_message']  = isset( $input['whatsapp_message'] ) ? sanitize_text_field( $input['whatsapp_message'] ) : '';
+			$sanitized['whatsapp_position'] = isset( $input['whatsapp_position'] ) ? sanitize_text_field( $input['whatsapp_position'] ) : 'right';
+
+			// Working Hours.
+			if ( isset( $input['working_hours'] ) && is_array( $input['working_hours'] ) ) {
+				$sanitized['working_hours'] = array();
+				foreach ( $input['working_hours'] as $day => $hours ) {
+					$sanitized['working_hours'][ sanitize_key( $day ) ] = array(
+						'open'   => sanitize_text_field( $hours['open'] ),
+						'close'  => sanitize_text_field( $hours['close'] ),
+						'closed' => isset( $hours['closed'] ) ? true : false,
+					);
+				}
+			}
+		}
+
+		unset( $sanitized['active_tab'] );
 
 		return $sanitized;
 	}
@@ -214,6 +231,9 @@ class Developer_Starter_Pro_Admin {
 				<form method="post" action="options.php" id="developer-starter-pro-settings-form">
 					<?php
 					settings_fields( 'developer_starter_pro_settings_group' );
+					?>
+					<input type="hidden" name="<?php echo esc_attr( $this->option_name ); ?>[active_tab]" value="<?php echo esc_attr( $active_tab ); ?>">
+					<?php
 
 					switch ( $active_tab ) {
 						case 'general':
@@ -658,4 +678,5 @@ class Developer_Starter_Pro_Admin {
 
 		wp_send_json_error( array( 'message' => esc_html__( 'No data received.', 'developer-starter-pro' ) ) );
 	}
+
 }
