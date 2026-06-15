@@ -3731,3 +3731,138 @@ body {
 	margin-bottom: 12px !important;
 	box-shadow: 0 0 15px rgba(13, 148, 136, 0.1) !important;
 }
+
+/* ==========================================================================
+   Smooth Page Load & Scroll Animations
+   ========================================================================== */
+
+/* 1. Global scroll entrance animations */
+html.js .dp-animate-on-scroll {
+	opacity: 0 !important;
+	transform: translateY(30px) !important;
+	transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+html.js .dp-animate-on-scroll.is-visible {
+	opacity: 1 !important;
+	transform: translateY(0) !important;
+}
+
+/* 2. Page Header Entrance */
+html.js #masthead {
+	opacity: 0;
+	transform: translateY(-20px);
+	transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.js.page-loaded #masthead {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* 3. Hero Left Side Content Entrance */
+html.js .dp-hero__heading,
+html.js .dp-hero__tagline,
+html.js .dp-hero__desc,
+html.js .dp-hero__cta,
+html.js .dp-hero__address {
+	opacity: 0;
+	transform: translateY(25px);
+	transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.js.page-loaded .dp-hero__heading {
+	opacity: 1;
+	transform: translateY(0);
+	transition-delay: 150ms;
+}
+
+html.js.page-loaded .dp-hero__tagline {
+	opacity: 1;
+	transform: translateY(0);
+	transition-delay: 250ms;
+}
+
+html.js.page-loaded .dp-hero__desc {
+	opacity: 1;
+	transform: translateY(0);
+	transition-delay: 350ms;
+}
+
+html.js.page-loaded .dp-hero__cta {
+	opacity: 1;
+	transform: translateY(0);
+	transition-delay: 450ms;
+}
+
+html.js.page-loaded .dp-hero__address {
+	opacity: 1;
+	transform: translateY(0);
+	transition-delay: 550ms;
+}
+
+/* 4. Hero Right Side Visual Entrance */
+html.js .dp-hero__circle {
+	opacity: 0;
+	transform: scale(0.9);
+	transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.js .dp-hero__photo-wrap {
+	opacity: 0;
+	transform: scale(0.96) translateY(10px);
+	transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.js .dp-hero__leaf {
+	opacity: 0;
+	transform: translateY(15px) rotate(-5deg);
+	transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.js.page-loaded .dp-hero__circle {
+	opacity: 1;
+	transform: scale(1);
+	transition-delay: 250ms;
+}
+
+html.js.page-loaded .dp-hero__photo-wrap {
+	opacity: 1;
+	transform: scale(1) translateY(0);
+	transition-delay: 350ms;
+}
+
+html.js.page-loaded .dp-hero__leaf {
+	opacity: 1;
+	transform: translateY(0) rotate(0deg);
+	transition-delay: 500ms;
+}
+
+/* 5. Stats Bar Entrance */
+html.js .dp-stats-bar {
+	opacity: 0 !important;
+	transform: translateX(-50%) translateY(30px) !important;
+	transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+html.js.page-loaded .dp-stats-bar {
+	opacity: 1 !important;
+	transform: translateX(-50%) translateY(0) !important;
+	transition-delay: 650ms !important;
+}
+
+/* 6. Inner Page Banners Entrance */
+html.js .developer-starter-pro-archive-banner .developer-starter-pro-section-header,
+html.js .developer-starter-pro-page-banner .developer-starter-pro-section-header {
+	opacity: 0 !important;
+	transform: translateY(20px) !important;
+	transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+html.js.page-loaded .developer-starter-pro-archive-banner .developer-starter-pro-section-header,
+html.js.page-loaded .developer-starter-pro-page-banner .developer-starter-pro-section-header {
+	opacity: 1 !important;
+	transform: translateY(0) !important;
+	transition-delay: 150ms !important;
+}
+

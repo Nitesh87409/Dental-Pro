@@ -21,6 +21,7 @@ $emergency_phone = developer_starter_pro_get_option( 'emergency_phone', '' );
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
+	<script>document.documentElement.className += ' js';</script>
 	<?php wp_head(); ?>
 </head>
 

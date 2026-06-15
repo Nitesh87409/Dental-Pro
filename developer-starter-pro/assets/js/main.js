@@ -20,6 +20,14 @@
 		initVideoModal();
 	});
 
+	window.addEventListener('load', function () {
+		document.documentElement.classList.add('page-loaded');
+	});
+	// Fallback to trigger page-loaded if window load is slow or has already fired.
+	setTimeout(function () {
+		document.documentElement.classList.add('page-loaded');
+	}, 1500);
+
 	// =========================================================================
 	// Back to Top Button
 	// =========================================================================
@@ -89,11 +97,11 @@
 
 		if (animatedElements.length === 0) return;
 
-		// Add initial state.
-		animatedElements.forEach(function (el) {
-			el.style.opacity = '0';
-			el.style.transform = 'translateY(30px)';
-			el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+		// Add animation class programmatically.
+		animatedElements.forEach(function (el, index) {
+			el.classList.add('dp-animate-on-scroll');
+			// Stagger animation delay.
+			el.style.transitionDelay = (index % 4) * 0.1 + 's';
 		});
 
 		const observer = new IntersectionObserver(
@@ -101,17 +109,14 @@
 				entries.forEach(function (entry) {
 					if (entry.isIntersecting) {
 						const el = entry.target;
-						el.style.opacity = '1';
-						el.style.transform = 'translateY(0)';
+						el.classList.add('is-visible');
 						
-						// Clean up inline styles once transition is done to restore original CSS hover states.
+						// Clean up classes once transition is done to restore original CSS states.
 						const delay = parseFloat(window.getComputedStyle(el).transitionDelay || '0') * 1000;
 						setTimeout(function () {
-							el.style.removeProperty('opacity');
-							el.style.removeProperty('transform');
-							el.style.removeProperty('transition');
+							el.classList.remove('dp-animate-on-scroll', 'is-visible');
 							el.style.removeProperty('transition-delay');
-						}, 650 + delay);
+						}, 850 + delay);
 
 						observer.unobserve(el);
 					}
@@ -123,9 +128,7 @@
 			}
 		);
 
-		animatedElements.forEach(function (el, index) {
-			// Stagger animation delay.
-			el.style.transitionDelay = (index % 4) * 0.1 + 's';
+		animatedElements.forEach(function (el) {
 			observer.observe(el);
 		});
 	}
