@@ -14,7 +14,7 @@ get_header();
 	<!-- Page Banner -->
 	<div class="developer-starter-pro-archive-banner">
 		<div class="developer-starter-pro-container">
-			<div class="developer-starter-pro-section-header" style="margin-bottom: 0; padding: 48px 0;">
+			<div class="developer-starter-pro-section-header" style="margin-bottom: 0;">
 				<span class="developer-starter-pro-section-badge"><?php esc_html_e( 'Our Team', 'developer-starter-pro' ); ?></span>
 				<h1 class="developer-starter-pro-section-title"><?php esc_html_e( 'Meet Our Expert Doctors', 'developer-starter-pro' ); ?></h1>
 				<p class="developer-starter-pro-section-subtitle"><?php esc_html_e( 'Our team of experienced dental professionals is dedicated to providing you with the highest quality care.', 'developer-starter-pro' ); ?></p>
@@ -119,65 +119,6 @@ get_header();
 </main>
 
 <style>
-.developer-starter-pro-archive-banner {
-	background: radial-gradient(circle at 10% 20%, rgba(13, 148, 136, 0.15) 0%, transparent 40%), 
-	            radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.08) 0%, transparent 40%), 
-	            linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-	color: #fff;
-	position: relative;
-	overflow: hidden;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-	text-align: center;
-}
-.developer-starter-pro-archive-banner::before {
-	content: '';
-	position: absolute;
-	top: -50%;
-	left: 50%;
-	transform: translateX(-50%);
-	width: 600px;
-	height: 300px;
-	background: radial-gradient(circle, rgba(13, 148, 136, 0.12) 0%, transparent 70%);
-	pointer-events: none;
-}
-.developer-starter-pro-archive-banner .developer-starter-pro-section-title { color: #fff; }
-.developer-starter-pro-archive-banner .developer-starter-pro-section-subtitle { color: rgba(255,255,255,0.6); }
-
-/* Premium banner and title styles */
-.developer-starter-pro-archive-banner .developer-starter-pro-section-badge {
-	display: inline-block !important;
-	background: rgba(13, 148, 136, 0.15) !important;
-	color: #2dd4bf !important;
-	border: 1px solid rgba(13, 148, 136, 0.25) !important;
-	padding: 5px 15px !important;
-	font-size: 0.75rem !important;
-	font-weight: 600 !important;
-	text-transform: uppercase !important;
-	letter-spacing: 1.5px !important;
-	border-radius: 50px !important;
-	margin-bottom: 12px !important;
-	box-shadow: 0 0 15px rgba(13, 148, 136, 0.1) !important;
-}
-.developer-starter-pro-archive-banner .developer-starter-pro-section-title {
-	font-size: 2.75rem !important;
-	font-weight: 800 !important;
-	background: linear-gradient(120deg, #ffffff 40%, #e2e8f0 70%, #2dd4bf 100%) !important;
-	-webkit-background-clip: text !important;
-	-webkit-text-fill-color: transparent !important;
-	margin: 0 0 12px 0 !important;
-	letter-spacing: -0.5px !important;
-	line-height: 1.2 !important;
-}
-.developer-starter-pro-archive-banner .developer-starter-pro-section-subtitle {
-	font-size: 1.05rem !important;
-	color: #94a3b8 !important;
-	max-width: 600px !important;
-	margin: 0 auto !important;
-	line-height: 1.6 !important;
-	font-weight: 400 !important;
-}
-
-/* Compact filter bar */
 .developer-starter-pro-filter-btn {
 	padding: 6px 14px !important;
 	font-size: 0.8rem !important;

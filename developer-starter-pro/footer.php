@@ -25,68 +25,79 @@ $map_embed_code = developer_starter_pro_get_option( 'map_embed_code', '' );
 				<!-- Column 1: Map Location -->
 				<div class="dp-footer__col dp-footer__col--map">
 					<div class="dp-footer__map-wrapper <?php echo ( ! empty( $map_embed_code ) || ! empty( $clinic_address ) ) ? 'has-real-map' : 'has-vector-map'; ?>">
-						<?php if ( ! empty( $map_embed_code ) ) : ?>
-							<?php echo wp_kses( $map_embed_code, array(
-								'iframe' => array(
-									'src'             => true,
-									'width'           => true,
-									'height'          => true,
-									'style'           => true,
-									'frameborder'     => true,
-									'allowfullscreen' => true,
-									'loading'         => true,
-									'referrerpolicy'  => true,
-									'class'           => true,
-									'id'              => true,
-								),
-							) ); ?>
-							<div class="dp-footer__map-overlay">
-								<span class="dp-footer__map-badge"><?php esc_html_e( 'Interact with Map', 'developer-starter-pro' ); ?></span>
-							</div>
-						<?php elseif ( ! empty( $clinic_address ) ) : ?>
-							<iframe 
-								width="100%" 
-								height="192" 
-								style="border:0;" 
-								loading="lazy" 
-								allowfullscreen 
-								referrerpolicy="no-referrer-when-downgrade"
-								src="https://maps.google.com/maps?q=<?php echo urlencode( $clinic_address ); ?>&t=&z=14&ie=UTF8&iwloc=&output=embed">
-							</iframe>
-							<div class="dp-footer__map-overlay">
-								<span class="dp-footer__map-badge"><?php esc_html_e( 'Interact with Map', 'developer-starter-pro' ); ?></span>
-							</div>
-						<?php else : ?>
-							<svg class="dp-footer-map-svg" viewBox="0 0 320 130" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="<?php esc_attr_e( 'Map of clinic location', 'developer-starter-pro' ); ?>">
-								<!-- Map Background -->
-								<rect width="320" height="130" rx="8" fill="#F4EFEB"/>
-								
-								<!-- Parks (Green Blocks) -->
-								<path d="M10 100 C20 95 40 105 50 120 L40 130 L0 130 Z" fill="#D3DEC6"/>
-								<path d="M250 12 C260 10 270 20 280 30 L290 0 L240 0 Z" fill="#D3DEC6"/>
-								
-								<!-- Water / River -->
-								<path d="M290 0 C280 40 250 80 255 130" stroke="#A7D2EB" stroke-width="26" stroke-linecap="square" fill="none"/>
-								
-								<!-- Road Grid -->
-								<path d="M0 25 L320 25" stroke="#FFFFFF" stroke-width="4"/>
-								<path d="M0 65 C100 70 200 60 320 75" stroke="#FFFFFF" stroke-width="4"/>
-								<path d="M0 110 L320 110" stroke="#FFFFFF" stroke-width="3"/>
-								<path d="M50 0 L50 130" stroke="#FFFFFF" stroke-width="4"/>
-								<path d="M130 0 L90 130" stroke="#FFFFFF" stroke-width="4.5"/>
-								<path d="M210 0 C200 40 205 90 180 130" stroke="#FFFFFF" stroke-width="4"/>
-								<path d="M80 0 L250 130" stroke="#FFFFFF" stroke-width="3"/>
-								
-								<!-- Pin shadow -->
-								<ellipse cx="140" cy="85" rx="6" ry="3" fill="rgba(0,0,0,0.15)"/>
-								
-								<!-- Map Pin -->
-								<g transform="translate(128, 52)">
-									<path d="M12 0C5.37 0 0 5.37 0 12C0 19.5 9.6 27.6 11.15 28.87C11.65 29.28 12.35 29.28 12.85 28.87C14.4 27.6 24 19.5 24 12C24 5.37 18.63 0 12 0Z" fill="#657F60"/>
-									<circle cx="12" cy="12" r="4.5" fill="#FFFFFF"/>
-								</g>
-							</svg>
-						<?php endif; ?>
+						<?php 
+						$address_for_map = ! empty( $clinic_address ) ? $clinic_address : __( 'Apex Dental Care, Central Avenue, City', 'developer-starter-pro' );
+						?>
+						<a class="dp-footer-map-action-link" href="#" target="_blank" data-address="<?php echo esc_attr( $address_for_map ); ?>" style="display: block; width: 100%; height: 100%; color: inherit; text-decoration: none;">
+							<?php if ( ! empty( $map_embed_code ) ) : ?>
+								<?php echo wp_kses( $map_embed_code, array(
+									'iframe' => array(
+										'src'             => true,
+										'width'           => true,
+										'height'          => true,
+										'style'           => true,
+										'frameborder'     => true,
+										'allowfullscreen' => true,
+										'loading'         => true,
+										'referrerpolicy'  => true,
+										'class'           => true,
+										'id'              => true,
+									),
+								) ); ?>
+								<div class="dp-footer__map-overlay">
+									<span class="dp-footer__map-badge">
+										<span class="dp-badge-desktop"><?php esc_html_e( 'Interact with Map', 'developer-starter-pro' ); ?></span>
+										<span class="dp-badge-mobile" style="display: none;"><?php esc_html_e( 'Open in Maps', 'developer-starter-pro' ); ?></span>
+									</span>
+								</div>
+							<?php elseif ( ! empty( $clinic_address ) ) : ?>
+								<iframe 
+									width="100%" 
+									height="192" 
+									style="border:0;" 
+									loading="lazy" 
+									allowfullscreen 
+									referrerpolicy="no-referrer-when-downgrade"
+									src="https://maps.google.com/maps?q=<?php echo urlencode( $clinic_address ); ?>&t=&z=14&ie=UTF8&iwloc=&output=embed">
+								</iframe>
+								<div class="dp-footer__map-overlay">
+									<span class="dp-footer__map-badge">
+										<span class="dp-badge-desktop"><?php esc_html_e( 'Interact with Map', 'developer-starter-pro' ); ?></span>
+										<span class="dp-badge-mobile" style="display: none;"><?php esc_html_e( 'Open in Maps', 'developer-starter-pro' ); ?></span>
+									</span>
+								</div>
+							<?php else : ?>
+								<svg class="dp-footer-map-svg" viewBox="0 0 320 130" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="<?php esc_attr_e( 'Map of clinic location', 'developer-starter-pro' ); ?>">
+									<!-- Map Background -->
+									<rect width="320" height="130" rx="8" fill="#F4EFEB"/>
+									
+									<!-- Parks (Green Blocks) -->
+									<path d="M10 100 C20 95 40 105 50 120 L40 130 L0 130 Z" fill="#D3DEC6"/>
+									<path d="M250 12 C260 10 270 20 280 30 L290 0 L240 0 Z" fill="#D3DEC6"/>
+									
+									<!-- Water / River -->
+									<path d="M290 0 C280 40 250 80 255 130" stroke="#A7D2EB" stroke-width="26" stroke-linecap="square" fill="none"/>
+									
+									<!-- Road Grid -->
+									<path d="M0 25 L320 25" stroke="#FFFFFF" stroke-width="4"/>
+									<path d="M0 65 C100 70 200 60 320 75" stroke="#FFFFFF" stroke-width="4"/>
+									<path d="M0 110 L320 110" stroke="#FFFFFF" stroke-width="3"/>
+									<path d="M50 0 L50 130" stroke="#FFFFFF" stroke-width="4"/>
+									<path d="M130 0 L90 130" stroke="#FFFFFF" stroke-width="4.5"/>
+									<path d="M210 0 C200 40 205 90 180 130" stroke="#FFFFFF" stroke-width="4"/>
+									<path d="M80 0 L250 130" stroke="#FFFFFF" stroke-width="3"/>
+									
+									<!-- Pin shadow -->
+									<ellipse cx="140" cy="85" rx="6" ry="3" fill="rgba(0,0,0,0.15)"/>
+									
+									<!-- Map Pin -->
+									<g transform="translate(128, 52)">
+										<path d="M12 0C5.37 0 0 5.37 0 12C0 19.5 9.6 27.6 11.15 28.87C11.65 29.28 12.35 29.28 12.85 28.87C14.4 27.6 24 19.5 24 12C24 5.37 18.63 0 12 0Z" fill="#657F60"/>
+										<circle cx="12" cy="12" r="4.5" fill="#FFFFFF"/>
+									</g>
+								</svg>
+							<?php endif; ?>
+						</a>
 					</div>
 				</div>
 
@@ -246,6 +257,20 @@ $map_embed_code = developer_starter_pro_get_option( 'map_embed_code', '' );
 					}, 500);
 				});
 			}
+
+			// Dynamic Map Link Redirection (Apple Maps for iOS, Google Maps for Android/Others)
+			var mapLinks = document.querySelectorAll('.dp-footer-map-action-link');
+			mapLinks.forEach(function(link) {
+				var address = link.getAttribute('data-address');
+				if (address) {
+					var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+					if (isIOS) {
+						link.href = 'https://maps.apple.com/?q=' + encodeURIComponent(address);
+					} else {
+						link.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(address);
+					}
+				}
+			});
 		});
 	</script>
 

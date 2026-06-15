@@ -24,6 +24,7 @@ class Developer_Starter_Pro_CPT {
 		add_action( 'init', array( $this, 'register_services' ) );
 		add_action( 'init', array( $this, 'register_testimonials' ) );
 		add_action( 'init', array( $this, 'register_appointments' ) );
+		add_action( 'init', array( $this, 'register_before_after' ) );
 
 		// Custom admin columns.
 		add_filter( 'manage_doctors_posts_columns', array( $this, 'doctors_columns' ) );
@@ -447,5 +448,57 @@ class Developer_Starter_Pro_CPT {
 				echo '<span class="developer-starter-pro-status developer-starter-pro-status--' . esc_attr( $status ) . '">' . esc_html( $label ) . '</span>';
 				break;
 		}
+	}
+
+	/**
+	 * Register Before & After CPT.
+	 */
+	public function register_before_after() {
+		$labels = array(
+			'name'                  => _x( 'Before & After', 'Post Type General Name', 'developer-starter-pro' ),
+			'singular_name'         => _x( 'Before & After Case', 'Post Type Singular Name', 'developer-starter-pro' ),
+			'menu_name'             => esc_html__( 'Before & After', 'developer-starter-pro' ),
+			'name_admin_bar'        => esc_html__( 'Before & After Case', 'developer-starter-pro' ),
+			'archives'              => esc_html__( 'Case Archives', 'developer-starter-pro' ),
+			'all_items'             => esc_html__( 'All Cases', 'developer-starter-pro' ),
+			'add_new_item'          => esc_html__( 'Add New Case', 'developer-starter-pro' ),
+			'add_new'               => esc_html__( 'Add New', 'developer-starter-pro' ),
+			'new_item'              => esc_html__( 'New Case', 'developer-starter-pro' ),
+			'edit_item'             => esc_html__( 'Edit Case', 'developer-starter-pro' ),
+			'update_item'           => esc_html__( 'Update Case', 'developer-starter-pro' ),
+			'view_item'             => esc_html__( 'View Case', 'developer-starter-pro' ),
+			'view_items'            => esc_html__( 'View Cases', 'developer-starter-pro' ),
+			'search_items'          => esc_html__( 'Search Cases', 'developer-starter-pro' ),
+			'not_found'             => esc_html__( 'No cases found', 'developer-starter-pro' ),
+			'not_found_in_trash'    => esc_html__( 'No cases found in Trash', 'developer-starter-pro' ),
+		);
+
+		$args = array(
+			'label'               => esc_html__( 'Before & After', 'developer-starter-pro' ),
+			'description'         => esc_html__( 'Smile makeover before and after cases', 'developer-starter-pro' ),
+			'labels'              => $labels,
+			'supports'            => array( 'title', 'editor', 'thumbnail', 'excerpt', 'page-attributes' ),
+			'taxonomies'          => array( 'before_after_cat' ),
+			'hierarchical'        => false,
+			'public'              => true,
+			'show_ui'             => true,
+			'show_in_menu'        => true,
+			'menu_position'       => 22,
+			'menu_icon'           => 'dashicons-images-alt2',
+			'show_in_admin_bar'   => true,
+			'show_in_nav_menus'   => true,
+			'can_export'          => true,
+			'has_archive'         => true,
+			'exclude_from_search' => false,
+			'publicly_queryable'  => true,
+			'capability_type'     => 'post',
+			'show_in_rest'        => true,
+			'rewrite'             => array(
+				'slug'       => 'before-after-cases',
+				'with_front' => false,
+			),
+		);
+
+		register_post_type( 'before_after', $args );
 	}
 }

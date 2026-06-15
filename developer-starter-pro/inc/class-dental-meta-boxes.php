@@ -35,6 +35,7 @@ class Developer_Starter_Pro_Meta_Boxes {
 		add_action( 'save_post', array( $this, 'save_service_meta' ), 10, 2 );
 		add_action( 'save_post', array( $this, 'save_testimonial_meta' ), 10, 2 );
 		add_action( 'save_post', array( $this, 'save_appointment_meta' ), 10, 2 );
+		add_action( 'save_post', array( $this, 'save_before_after_meta' ), 10, 2 );
 	}
 
 	/**
@@ -95,6 +96,16 @@ class Developer_Starter_Pro_Meta_Boxes {
 			esc_html__( 'Appointment Details', 'developer-starter-pro' ),
 			array( $this, 'render_appointment_details' ),
 			'appointments',
+			'normal',
+			'high'
+		);
+
+		// Before & After meta box.
+		add_meta_box(
+			'developer_starter_pro_before_after_details',
+			esc_html__( 'Before & After Details', 'developer-starter-pro' ),
+			array( $this, 'render_before_after_details' ),
+			'before_after',
 			'normal',
 			'high'
 		);
@@ -621,6 +632,118 @@ class Developer_Starter_Pro_Meta_Boxes {
 			'appointment_time'          => 'sanitize_text_field',
 			'appointment_status'        => 'sanitize_text_field',
 			'appointment_notes'         => 'sanitize_textarea_field',
+		);
+
+		foreach ( $fields as $field => $sanitize_callback ) {
+			if ( isset( $_POST[ $field ] ) ) {
+				$value = call_user_func( $sanitize_callback, wp_unslash( $_POST[ $field ] ) );
+				update_post_meta( $post_id, $this->prefix . $field, $value );
+			}
+		}
+	}
+
+	/**
+	 * Render Before & After Details meta box.
+	 *
+	 * @param WP_Post $post Current post object.
+	 */
+	public function render_before_after_details( $post ) {
+		wp_nonce_field( 'developer_starter_pro_before_after_details', 'developer_starter_pro_before_after_nonce' );
+
+		$before_image = get_post_meta( $post->ID, $this->prefix . 'before_image', true );
+		$after_image  = get_post_meta( $post->ID, $this->prefix . 'after_image', true );
+		$before_label = get_post_meta( $post->ID, $this->prefix . 'before_label', true );
+		$after_label  = get_post_meta( $post->ID, $this->prefix . 'after_label', true );
+
+		// Defaults
+		$before_label = $before_label ? $before_label : esc_html__( 'Before Treatment', 'developer-starter-pro' );
+		$after_label  = $after_label ? $after_label : esc_html__( 'After Treatment', 'developer-starter-pro' );
+		?>
+		<div class="developer-starter-pro-meta-box">
+			<table class="form-table">
+				<tr>
+					<th><label for="before_image"><?php esc_html_e( 'Before Image', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<div class="developer-starter-pro-media-upload">
+							<input type="hidden" id="before_image" name="before_image" value="<?php echo esc_url( $before_image ); ?>">
+							<div class="developer-starter-pro-logo-preview" id="before-image-preview" style="max-width: 150px; max-height: 150px; margin-bottom: 10px;">
+								<?php if ( ! empty( $before_image ) ) : ?>
+									<img src="<?php echo esc_url( $before_image ); ?>" alt="Before Preview" style="max-width: 100%; height: auto; display: block; border-radius: 4px; border: 1px solid #ddd;">
+								<?php endif; ?>
+							</div>
+							<button type="button" class="button developer-starter-pro-upload-btn" data-target="before_image" data-preview="before-image-preview">
+								<?php esc_html_e( 'Upload Before Image', 'developer-starter-pro' ); ?>
+							</button>
+							<button type="button" class="button developer-starter-pro-remove-btn" data-target="before_image" data-preview="before-image-preview" <?php echo empty( $before_image ) ? 'style="display:none"' : ''; ?>>
+								<?php esc_html_e( 'Remove', 'developer-starter-pro' ); ?>
+							</button>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="before_label"><?php esc_html_e( 'Before Image Label', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="before_label" name="before_label" value="<?php echo esc_attr( $before_label ); ?>" class="regular-text">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="after_image"><?php esc_html_e( 'After Image', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<div class="developer-starter-pro-media-upload">
+							<input type="hidden" id="after_image" name="after_image" value="<?php echo esc_url( $after_image ); ?>">
+							<div class="developer-starter-pro-logo-preview" id="after-image-preview" style="max-width: 150px; max-height: 150px; margin-bottom: 10px;">
+								<?php if ( ! empty( $after_image ) ) : ?>
+									<img src="<?php echo esc_url( $after_image ); ?>" alt="After Preview" style="max-width: 100%; height: auto; display: block; border-radius: 4px; border: 1px solid #ddd;">
+								<?php endif; ?>
+							</div>
+							<button type="button" class="button developer-starter-pro-upload-btn" data-target="after_image" data-preview="after-image-preview">
+								<?php esc_html_e( 'Upload After Image', 'developer-starter-pro' ); ?>
+							</button>
+							<button type="button" class="button developer-starter-pro-remove-btn" data-target="after_image" data-preview="after-image-preview" <?php echo empty( $after_image ) ? 'style="display:none"' : ''; ?>>
+								<?php esc_html_e( 'Remove', 'developer-starter-pro' ); ?>
+							</button>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="after_label"><?php esc_html_e( 'After Image Label', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="after_label" name="after_label" value="<?php echo esc_attr( $after_label ); ?>" class="regular-text">
+					</td>
+				</tr>
+			</table>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Save Before & After meta.
+	 *
+	 * @param int     $post_id Post ID.
+	 * @param WP_Post $post    Post object.
+	 */
+	public function save_before_after_meta( $post_id, $post ) {
+		if ( 'before_after' !== $post->post_type ) {
+			return;
+		}
+
+		if ( ! isset( $_POST['developer_starter_pro_before_after_nonce'] ) || ! wp_verify_nonce( $_POST['developer_starter_pro_before_after_nonce'], 'developer_starter_pro_before_after_details' ) ) {
+			return;
+		}
+
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
+
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			return;
+		}
+
+		$fields = array(
+			'before_image' => 'esc_url_raw',
+			'after_image'  => 'esc_url_raw',
+			'before_label' => 'sanitize_text_field',
+			'after_label'  => 'sanitize_text_field',
 		);
 
 		foreach ( $fields as $field => $sanitize_callback ) {

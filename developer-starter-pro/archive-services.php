@@ -14,7 +14,7 @@ get_header();
 	<!-- Page Banner -->
 	<div class="developer-starter-pro-archive-banner">
 		<div class="developer-starter-pro-container">
-			<div class="developer-starter-pro-section-header" style="margin-bottom: 0; padding: 48px 0;">
+			<div class="developer-starter-pro-section-header" style="margin-bottom: 0;">
 				<span class="developer-starter-pro-section-badge"><?php esc_html_e( 'Our Services', 'developer-starter-pro' ); ?></span>
 				<h1 class="developer-starter-pro-section-title"><?php esc_html_e( 'Dental Services & Treatments', 'developer-starter-pro' ); ?></h1>
 				<p class="developer-starter-pro-section-subtitle"><?php esc_html_e( 'We offer a comprehensive range of dental services to meet all your oral health needs.', 'developer-starter-pro' ); ?></p>
@@ -92,14 +92,6 @@ get_header();
 	</div>
 </main>
 
-<style>
-.developer-starter-pro-archive-banner {
-	background: linear-gradient(135deg, var(--developer-starter-pro-secondary) 0%, #0f2027 100%);
-	color: #fff;
-}
-.developer-starter-pro-archive-banner .developer-starter-pro-section-title { color: #fff; }
-.developer-starter-pro-archive-banner .developer-starter-pro-section-subtitle { color: rgba(255,255,255,0.6); }
-</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

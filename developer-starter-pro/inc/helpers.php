@@ -57,6 +57,7 @@ function developer_starter_pro_get_default_options() {
 		'clinic_logo'      => '',
 		'hero_image'       => '',
 		'hero_video'       => '',
+		'page_banner_image' => '',
 
 		// Colors.
 		'color_primary'    => '#0D9488',
@@ -352,6 +353,35 @@ function developer_starter_pro_get_template_page_url( $template_name, $fallback_
 
 	return home_url( '/' . $fallback_hash );
 }
+
+/**
+ * Retrieve the background image URL for the archive/page banner.
+ * First checks for page's featured image, then theme setting 'page_banner_image', and finally falls back to default banner.
+ *
+ * @param int $post_id Optional. Post ID to get featured image for.
+ * @return string Image URL.
+ */
+function developer_starter_pro_get_banner_bg_url( $post_id = 0 ) {
+	$banner_bg = '';
+
+	if ( is_singular() ) {
+		$id = $post_id ? $post_id : get_the_ID();
+		if ( has_post_thumbnail( $id ) ) {
+			$banner_bg = get_the_post_thumbnail_url( $id, 'full' );
+		}
+	}
+
+	if ( empty( $banner_bg ) ) {
+		$banner_bg = developer_starter_pro_get_option( 'page_banner_image' );
+	}
+
+	if ( empty( $banner_bg ) ) {
+		$banner_bg = get_template_directory_uri() . '/assets/images/main-banner.jpeg';
+	}
+
+	return $banner_bg;
+}
+
 
 
 

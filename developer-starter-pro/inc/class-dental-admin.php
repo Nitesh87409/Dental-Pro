@@ -95,6 +95,7 @@ class Developer_Starter_Pro_Admin {
 			$sanitized['clinic_logo']    = isset( $input['clinic_logo'] ) ? esc_url_raw( $input['clinic_logo'] ) : '';
 			$sanitized['hero_image']     = isset( $input['hero_image'] ) ? esc_url_raw( $input['hero_image'] ) : '';
 			$sanitized['hero_video']     = isset( $input['hero_video'] ) ? esc_url_raw( $input['hero_video'] ) : '';
+			$sanitized['page_banner_image'] = isset( $input['page_banner_image'] ) ? esc_url_raw( $input['page_banner_image'] ) : '';
 		}
 
 		if ( empty( $active_tab ) || 'colors' === $active_tab ) {
@@ -319,6 +320,26 @@ class Developer_Starter_Pro_Admin {
 							</button>
 						</div>
 						<p class="description"><?php esc_html_e( 'Upload a full background image for the hero banner (recommended dimensions: 1920x800px). If empty, the default multi-layered layout will be used.', 'developer-starter-pro' ); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="page_banner_image"><?php esc_html_e( 'Page Banner Background Image', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<div class="developer-starter-pro-media-upload">
+							<input type="hidden" id="page_banner_image" name="<?php echo esc_attr( $this->option_name ); ?>[page_banner_image]" value="<?php echo esc_url( isset( $options['page_banner_image'] ) ? $options['page_banner_image'] : '' ); ?>">
+							<div class="developer-starter-pro-logo-preview" id="page-banner-image-preview" style="max-width: 200px; max-height: 200px; margin-bottom: 10px;">
+								<?php if ( ! empty( $options['page_banner_image'] ) ) : ?>
+									<img src="<?php echo esc_url( $options['page_banner_image'] ); ?>" alt="Page Banner Image" style="max-width: 100%; height: auto; display: block; border-radius: 4px; border: 1px solid #ddd;">
+								<?php endif; ?>
+							</div>
+							<button type="button" class="button developer-starter-pro-upload-btn" data-target="page_banner_image" data-preview="page-banner-image-preview">
+								<?php esc_html_e( 'Upload Page Banner', 'developer-starter-pro' ); ?>
+							</button>
+							<button type="button" class="button developer-starter-pro-remove-btn" data-target="page_banner_image" data-preview="page-banner-image-preview" <?php echo empty( $options['page_banner_image'] ) ? 'style="display:none"' : ''; ?>>
+								<?php esc_html_e( 'Remove', 'developer-starter-pro' ); ?>
+							</button>
+						</div>
+						<p class="description"><?php esc_html_e( 'Upload a background image for all archive/inner page banners (recommended: 1920x400px). If empty, the default clinic interior background is used.', 'developer-starter-pro' ); ?></p>
 					</td>
 				</tr>
 				<tr>

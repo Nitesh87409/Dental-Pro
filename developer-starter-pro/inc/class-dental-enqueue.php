@@ -307,7 +307,8 @@ class Developer_Starter_Pro_Enqueue {
 	 * @param string $hook_suffix The current admin page.
 	 */
 	public function admin_scripts( $hook_suffix ) {
-		if ( 'toplevel_page_developer-starter-pro-settings' === $hook_suffix || strpos( $hook_suffix, 'developer-starter-pro' ) !== false ) {
+		global $post_type;
+		if ( 'toplevel_page_developer-starter-pro-settings' === $hook_suffix || strpos( $hook_suffix, 'developer-starter-pro' ) !== false || 'before_after' === $post_type ) {
 			wp_enqueue_media();
 			wp_enqueue_script( 'wp-color-picker' );
 
@@ -340,6 +341,9 @@ class Developer_Starter_Pro_Enqueue {
 		$secondary = developer_starter_pro_get_option( 'color_secondary', '#1E293B' );
 		$accent    = developer_starter_pro_get_option( 'color_accent', '#F59E0B' );
 
+		// Resolve banner background URL dynamically
+		$banner_bg = developer_starter_pro_get_banner_bg_url();
+
 		$css = "
 		<style id='developer-starter-pro-dynamic-css'>
 			:root {
@@ -350,6 +354,10 @@ class Developer_Starter_Pro_Enqueue {
 				--developer-starter-pro-accent: {$accent};
 				--developer-starter-pro-font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 				--developer-starter-pro-font-heading: 'Outfit', 'Inter', -apple-system, sans-serif;
+			}
+			.developer-starter-pro-archive-banner,
+			.developer-starter-pro-page-banner:has(.developer-starter-pro-section-header) {
+				background-image: url('" . esc_url( $banner_bg ) . "') !important;
 			}
 		</style>";
 

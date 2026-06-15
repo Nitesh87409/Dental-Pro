@@ -179,4 +179,16 @@
 	.dp-footer__map-wrapper {
 		max-width: 100%;
 	}
+	.dp-footer__map-wrapper iframe {
+		pointer-events: none; /* Block clicks on mobile so parent <a> can be clicked */
+	}
+	.dp-footer__map-overlay {
+		pointer-events: auto; /* Enable clicks on overlay for mobile */
+	}
+	.dp-badge-desktop {
+		display: none !important;
+	}
+	.dp-badge-mobile {
+		display: inline !important;
+	}
 }

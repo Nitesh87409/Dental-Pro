@@ -21,6 +21,7 @@ class Developer_Starter_Pro_Taxonomies {
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_department' ) );
 		add_action( 'init', array( $this, 'register_treatment_type' ) );
+		add_action( 'init', array( $this, 'register_before_after_cat' ) );
 	}
 
 	/**
@@ -115,5 +116,44 @@ class Developer_Starter_Pro_Taxonomies {
 		);
 
 		register_taxonomy( 'treatment_type', array( 'services' ), $args );
+	}
+
+	/**
+	 * Register Before & After Categories taxonomy.
+	 */
+	public function register_before_after_cat() {
+		$labels = array(
+			'name'                       => _x( 'Case Categories', 'Taxonomy General Name', 'developer-starter-pro' ),
+			'singular_name'              => _x( 'Case Category', 'Taxonomy Singular Name', 'developer-starter-pro' ),
+			'menu_name'                  => esc_html__( 'Case Categories', 'developer-starter-pro' ),
+			'all_items'                  => esc_html__( 'All Categories', 'developer-starter-pro' ),
+			'new_item_name'              => esc_html__( 'New Category Name', 'developer-starter-pro' ),
+			'add_new_item'               => esc_html__( 'Add New Category', 'developer-starter-pro' ),
+			'edit_item'                  => esc_html__( 'Edit Category', 'developer-starter-pro' ),
+			'update_item'                => esc_html__( 'Update Category', 'developer-starter-pro' ),
+			'separate_items_with_commas' => esc_html__( 'Separate categories with commas', 'developer-starter-pro' ),
+			'add_or_remove_items'        => esc_html__( 'Add or remove categories', 'developer-starter-pro' ),
+			'search_items'               => esc_html__( 'Search Categories', 'developer-starter-pro' ),
+			'not_found'                  => esc_html__( 'Not Found', 'developer-starter-pro' ),
+			'no_terms'                   => esc_html__( 'No categories', 'developer-starter-pro' ),
+		);
+
+		$args = array(
+			'labels'            => $labels,
+			'hierarchical'      => true,
+			'public'            => true,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'show_in_nav_menus' => true,
+			'show_tagcloud'     => false,
+			'show_in_rest'      => true,
+			'rewrite'           => array(
+				'slug'         => 'before-after-category',
+				'with_front'   => false,
+				'hierarchical' => true,
+			),
+		);
+
+		register_taxonomy( 'before_after_cat', array( 'before_after' ), $args );
 	}
 }
