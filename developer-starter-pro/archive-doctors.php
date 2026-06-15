@@ -23,7 +23,7 @@ get_header();
 	</div>
 
 	<div class="developer-starter-pro-container">
-		<div class="developer-starter-pro-section" style="padding-top: 48px;">
+		<div class="developer-starter-pro-section" style="padding-top: 16px;">
 
 			<?php if ( have_posts() ) : ?>
 
@@ -35,7 +35,7 @@ get_header();
 				) );
 
 				if ( ! empty( $departments ) && ! is_wp_error( $departments ) ) : ?>
-					<div class="developer-starter-pro-filter-bar" style="text-align: center; margin-bottom: 40px;">
+					<div class="developer-starter-pro-filter-bar" style="text-align: center; margin-bottom: 16px;">
 						<button class="developer-starter-pro-filter-btn active" data-filter="all"><?php esc_html_e( 'All Departments', 'developer-starter-pro' ); ?></button>
 						<?php foreach ( $departments as $dept ) : ?>
 							<button class="developer-starter-pro-filter-btn" data-filter="<?php echo esc_attr( $dept->slug ); ?>"><?php echo esc_html( $dept->name ); ?></button>
@@ -53,12 +53,27 @@ get_header();
 					?>
 						<div class="developer-starter-pro-doctor-card" data-department="<?php echo esc_attr( $dept_slugs ); ?>">
 							<div class="developer-starter-pro-doctor-card-image">
+								<?php 
+								$default_img = '';
+								$post_title = get_the_title();
+								if ( stripos( $post_title, 'Emma' ) !== false || stripos( $post_title, 'Chen' ) !== false ) {
+									$default_img = get_template_directory_uri() . '/assets/images/dr-emma-chen.png';
+								} elseif ( stripos( $post_title, 'James' ) !== false || stripos( $post_title, 'Patel' ) !== false ) {
+									$default_img = get_template_directory_uri() . '/assets/images/dr-james-patel.png';
+								} elseif ( stripos( $post_title, 'Michael' ) !== false || stripos( $post_title, 'Ross' ) !== false ) {
+									$default_img = get_template_directory_uri() . '/assets/images/dr-michael-ross.png';
+								} elseif ( stripos( $post_title, 'Sarah' ) !== false || stripos( $post_title, 'Mitchell' ) !== false ) {
+									$default_img = get_template_directory_uri() . '/assets/images/dr-sarah-mitchell.png';
+								}
+								if ( ! $default_img ) {
+									$dr_images = array( 'dr-emma-chen.png', 'dr-james-patel.png', 'dr-michael-ross.png', 'dr-sarah-mitchell.png' );
+									$default_img = get_template_directory_uri() . '/assets/images/' . $dr_images[ get_the_ID() % 4 ];
+								}
+								?>
 								<?php if ( has_post_thumbnail() ) : ?>
 									<?php the_post_thumbnail( 'developer-starter-pro-doctor-thumb' ); ?>
 								<?php else : ?>
-									<div class="developer-starter-pro-doctor-placeholder">
-										<svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-									</div>
+									<img src="<?php echo esc_url( $default_img ); ?>" alt="<?php the_title_attribute(); ?>" />
 								<?php endif; ?>
 								<?php if ( is_array( $social ) && ! empty( array_filter( $social ) ) ) : ?>
 									<div class="developer-starter-pro-doctor-social-overlay">
@@ -105,11 +120,112 @@ get_header();
 
 <style>
 .developer-starter-pro-archive-banner {
-	background: linear-gradient(135deg, var(--developer-starter-pro-secondary) 0%, #0f2027 100%);
+	background: radial-gradient(circle at 10% 20%, rgba(13, 148, 136, 0.15) 0%, transparent 40%), 
+	            radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.08) 0%, transparent 40%), 
+	            linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
 	color: #fff;
+	position: relative;
+	overflow: hidden;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+	text-align: center;
+}
+.developer-starter-pro-archive-banner::before {
+	content: '';
+	position: absolute;
+	top: -50%;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 600px;
+	height: 300px;
+	background: radial-gradient(circle, rgba(13, 148, 136, 0.12) 0%, transparent 70%);
+	pointer-events: none;
 }
 .developer-starter-pro-archive-banner .developer-starter-pro-section-title { color: #fff; }
 .developer-starter-pro-archive-banner .developer-starter-pro-section-subtitle { color: rgba(255,255,255,0.6); }
+
+/* Premium banner and title styles */
+.developer-starter-pro-archive-banner .developer-starter-pro-section-badge {
+	display: inline-block !important;
+	background: rgba(13, 148, 136, 0.15) !important;
+	color: #2dd4bf !important;
+	border: 1px solid rgba(13, 148, 136, 0.25) !important;
+	padding: 5px 15px !important;
+	font-size: 0.75rem !important;
+	font-weight: 600 !important;
+	text-transform: uppercase !important;
+	letter-spacing: 1.5px !important;
+	border-radius: 50px !important;
+	margin-bottom: 12px !important;
+	box-shadow: 0 0 15px rgba(13, 148, 136, 0.1) !important;
+}
+.developer-starter-pro-archive-banner .developer-starter-pro-section-title {
+	font-size: 2.75rem !important;
+	font-weight: 800 !important;
+	background: linear-gradient(120deg, #ffffff 40%, #e2e8f0 70%, #2dd4bf 100%) !important;
+	-webkit-background-clip: text !important;
+	-webkit-text-fill-color: transparent !important;
+	margin: 0 0 12px 0 !important;
+	letter-spacing: -0.5px !important;
+	line-height: 1.2 !important;
+}
+.developer-starter-pro-archive-banner .developer-starter-pro-section-subtitle {
+	font-size: 1.05rem !important;
+	color: #94a3b8 !important;
+	max-width: 600px !important;
+	margin: 0 auto !important;
+	line-height: 1.6 !important;
+	font-weight: 400 !important;
+}
+
+/* Compact filter bar */
+.developer-starter-pro-filter-btn {
+	padding: 6px 14px !important;
+	font-size: 0.8rem !important;
+}
+
+/* Compact doctor card sizes & layout */
+.developer-starter-pro-doctors-grid {
+	gap: 20px !important;
+}
+.developer-starter-pro-doctor-card {
+	border: 1px solid rgba(0, 0, 0, 0.05);
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
+	transition: var(--developer-starter-pro-transition) !important;
+}
+.developer-starter-pro-doctor-card:hover {
+	transform: translateY(-4px) !important;
+	box-shadow: 0 12px 30px rgba(13, 148, 136, 0.1) !important;
+	border-color: rgba(13, 148, 136, 0.15) !important;
+}
+.developer-starter-pro-doctor-card-image {
+	height: 240px !important; /* Slightly taller to prevent severe cropping */
+}
+.developer-starter-pro-doctor-card-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover !important;
+	object-position: center top !important; /* Align to top to prevent doctor's head from being cut off */
+}
+.developer-starter-pro-doctor-card-content {
+	padding: 12px 16px !important;
+}
+.developer-starter-pro-doctor-name {
+	font-size: 1.1rem !important;
+	margin-bottom: 2px !important;
+}
+.developer-starter-pro-doctor-speciality {
+	font-size: 0.8rem !important;
+	margin-bottom: 4px !important;
+}
+.developer-starter-pro-doctor-experience {
+	font-size: 0.75rem !important;
+	margin-bottom: 8px !important;
+	display: block;
+}
+.developer-starter-pro-doctor-card-content .developer-starter-pro-btn {
+	padding: 6px 12px !important;
+	font-size: 0.75rem !important;
+}
 
 .developer-starter-pro-filter-bar {
 	display: flex;

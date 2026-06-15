@@ -48,12 +48,27 @@ $days_labels = array(
 			<!-- Doctor Header -->
 			<div class="developer-starter-pro-doctor-profile-header">
 				<div class="developer-starter-pro-doctor-profile-photo">
+					<?php 
+					$default_img = '';
+					$post_title = get_the_title();
+					if ( stripos( $post_title, 'Emma' ) !== false || stripos( $post_title, 'Chen' ) !== false ) {
+						$default_img = get_template_directory_uri() . '/assets/images/dr-emma-chen.png';
+					} elseif ( stripos( $post_title, 'James' ) !== false || stripos( $post_title, 'Patel' ) !== false ) {
+						$default_img = get_template_directory_uri() . '/assets/images/dr-james-patel.png';
+					} elseif ( stripos( $post_title, 'Michael' ) !== false || stripos( $post_title, 'Ross' ) !== false ) {
+						$default_img = get_template_directory_uri() . '/assets/images/dr-michael-ross.png';
+					} elseif ( stripos( $post_title, 'Sarah' ) !== false || stripos( $post_title, 'Mitchell' ) !== false ) {
+						$default_img = get_template_directory_uri() . '/assets/images/dr-sarah-mitchell.png';
+					}
+					if ( ! $default_img ) {
+						$dr_images = array( 'dr-emma-chen.png', 'dr-james-patel.png', 'dr-michael-ross.png', 'dr-sarah-mitchell.png' );
+						$default_img = get_template_directory_uri() . '/assets/images/' . $dr_images[ get_the_ID() % 4 ];
+					}
+					?>
 					<?php if ( has_post_thumbnail() ) : ?>
 						<?php the_post_thumbnail( 'developer-starter-pro-doctor-large' ); ?>
 					<?php else : ?>
-						<div class="developer-starter-pro-doctor-placeholder-lg">
-							<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-						</div>
+						<img src="<?php echo esc_url( $default_img ); ?>" alt="<?php the_title_attribute(); ?>" />
 					<?php endif; ?>
 				</div>
 
