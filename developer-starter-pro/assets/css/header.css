@@ -307,12 +307,20 @@
 	top: 0;
 	left: 0;
 	right: 0;
-	background: rgba(255, 255, 255, 0.97);
-	backdrop-filter: blur(10px);
-	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-	animation: slideDown 0.3s ease-out;
+	background: rgba(255, 255, 255, 0.75) !important;
+	backdrop-filter: blur(12px) saturate(180%);
+	-webkit-backdrop-filter: blur(12px) saturate(180%);
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02);
+	border-bottom: 1px solid rgba(229, 226, 218, 0.5) !important;
 	z-index: 1000;
-	border-bottom: 1px solid #E5E2DA;
+	animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Dark Mode Sticky Header: Frosted Glass */
+body.dark-mode .developer-starter-pro-header--sticky-enabled.is-sticky {
+	background: rgba(15, 23, 42, 0.75) !important;
+	border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 }
 
 .developer-starter-pro-header--style-4.is-sticky .developer-starter-pro-logo a,
@@ -328,6 +336,151 @@
 @keyframes slideDown {
 	from { transform: translateY(-100%); }
 	to { transform: translateY(0); }
+}
+
+/* --------------------------------------------------------------------------
+   Transparent Header (Homepage Only)
+   -------------------------------------------------------------------------- */
+.dp-header--transparent {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: transparent !important;
+	border-bottom: none !important;
+	box-shadow: none !important;
+	z-index: 100;
+	transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Push headers and mobile menu down when WordPress admin bar is present */
+body.admin-bar .dp-header--transparent {
+	top: 32px !important;
+}
+body.admin-bar .developer-starter-pro-header--sticky-enabled.is-sticky {
+	top: 32px !important;
+}
+body.admin-bar .developer-starter-pro-mobile-menu {
+	top: 32px !important;
+	height: calc(100vh - 32px) !important;
+}
+
+@media screen and (max-width: 782px) {
+	body.admin-bar .dp-header--transparent {
+		top: 46px !important;
+	}
+	body.admin-bar .developer-starter-pro-header--sticky-enabled.is-sticky {
+		top: 46px !important;
+	}
+	body.admin-bar .developer-starter-pro-mobile-menu {
+		top: 46px !important;
+		height: calc(100vh - 46px) !important;
+	}
+}
+
+/* Under 600px, the admin bar is absolute, so a fixed sticky header should be at top: 0 when scrolled */
+@media screen and (max-width: 600px) {
+	body.admin-bar .developer-starter-pro-header--sticky-enabled.is-sticky {
+		top: 0 !important;
+	}
+}
+
+/* White elements for transparent state */
+.dp-header--transparent:not(.is-sticky) .brand-apex {
+	color: #FFFFFF !important;
+}
+
+.dp-header--transparent:not(.is-sticky) .brand-sub {
+	color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.dp-header--transparent:not(.is-sticky) .dp-logo-svg {
+	stroke: #FFFFFF !important;
+}
+
+.dp-header--transparent:not(.is-sticky) .developer-starter-pro-menu > li > a {
+	color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.dp-header--transparent:not(.is-sticky) .developer-starter-pro-menu > li > a:hover,
+.dp-header--transparent:not(.is-sticky) .developer-starter-pro-menu > li.current-menu-item > a,
+.dp-header--transparent:not(.is-sticky) .developer-starter-pro-menu > li.current-menu-parent > a {
+	color: #FFFFFF !important;
+	background: rgba(255, 255, 255, 0.12) !important;
+	border-radius: 6px;
+}
+
+.dp-header--transparent:not(.is-sticky) .dp-header-call-btn {
+	background: rgba(255, 255, 255, 0.15) !important;
+	border: 1px solid rgba(255, 255, 255, 0.25) !important;
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+	color: #FFFFFF !important;
+}
+
+.dp-header--transparent:not(.is-sticky) .dp-header-call-btn:hover {
+	background: rgba(255, 255, 255, 0.25) !important;
+}
+
+.dp-header--transparent:not(.is-sticky) .dp-header-call-btn * {
+	color: #FFFFFF !important;
+}
+
+.dp-header--transparent:not(.is-sticky) .developer-starter-pro-hamburger span {
+	background: #FFFFFF !important;
+}
+
+/* Sticky Transparent Header - reverts to standard light or dark mode styling */
+.dp-header--transparent.is-sticky .brand-apex {
+	color: #1A2E1A !important;
+}
+
+body.dark-mode .dp-header--transparent.is-sticky .brand-apex {
+	color: #FFFFFF !important;
+}
+
+.dp-header--transparent.is-sticky .brand-sub {
+	color: #7D7468 !important;
+}
+
+body.dark-mode .dp-header--transparent.is-sticky .brand-sub {
+	color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.dp-header--transparent.is-sticky .dp-logo-svg {
+	stroke: #657F60 !important;
+}
+
+body.dark-mode .dp-header--transparent.is-sticky .dp-logo-svg {
+	stroke: #38BDF8 !important;
+}
+
+.dp-header--transparent.is-sticky .developer-starter-pro-menu > li > a {
+	color: #3D3830 !important;
+}
+
+body.dark-mode .dp-header--transparent.is-sticky .developer-starter-pro-menu > li > a {
+	color: #E2E8F0 !important;
+}
+
+.dp-header--transparent.is-sticky .developer-starter-pro-menu > li > a:hover,
+.dp-header--transparent.is-sticky .developer-starter-pro-menu > li.current-menu-item > a {
+	color: #4E7C59 !important;
+	background: rgba(78, 124, 89, 0.07) !important;
+}
+
+body.dark-mode .dp-header--transparent.is-sticky .developer-starter-pro-menu > li > a:hover,
+body.dark-mode .dp-header--transparent.is-sticky .developer-starter-pro-menu > li.current-menu-item > a {
+	color: #38BDF8 !important;
+	background: rgba(56, 189, 248, 0.08) !important;
+}
+
+.dp-header--transparent.is-sticky .developer-starter-pro-hamburger span {
+	background: #3D3830 !important;
+}
+
+body.dark-mode .dp-header--transparent.is-sticky .developer-starter-pro-hamburger span {
+	background: #CBD5E1 !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -350,26 +503,48 @@
 	flex-direction: column;
 	gap: 5px;
 	width: 24px;
+	height: 16px;
+	justify-content: center;
+	position: relative;
 }
 
 .developer-starter-pro-hamburger span {
 	display: block;
 	height: 2px;
+	width: 100%;
 	background: #3D3830;
 	border-radius: 2px;
-	transition: var(--developer-starter-pro-transition);
+	transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), 
+	            opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+	            top 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+	position: absolute;
+}
+
+.developer-starter-pro-hamburger span:nth-child(1) {
+	top: 2px;
+}
+
+.developer-starter-pro-hamburger span:nth-child(2) {
+	top: 7px;
+}
+
+.developer-starter-pro-hamburger span:nth-child(3) {
+	top: 12px;
 }
 
 .developer-starter-pro-hamburger.active span:nth-child(1) {
-	transform: rotate(45deg) translate(5px, 5px);
+	top: 7px;
+	transform: rotate(45deg);
 }
 
 .developer-starter-pro-hamburger.active span:nth-child(2) {
 	opacity: 0;
+	transform: scale(0);
 }
 
 .developer-starter-pro-hamburger.active span:nth-child(3) {
-	transform: rotate(-45deg) translate(5px, -5px);
+	top: 7px;
+	transform: rotate(-45deg);
 }
 
 /* --------------------------------------------------------------------------
@@ -382,12 +557,14 @@
 	right: -100%;
 	width: 320px;
 	height: 100vh;
-	background: #FFFFFF;
+	background: rgba(255, 255, 255, 0.8) !important;
+	backdrop-filter: blur(16px) saturate(180%) !important;
+	-webkit-backdrop-filter: blur(16px) saturate(180%) !important;
 	z-index: 9999;
 	overflow-y: auto;
 	transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
-	border-left: 1px solid #E5E2DA;
+	box-shadow: -10px 0 30px rgba(0, 0, 0, 0.05) !important;
+	border-left: 1px solid rgba(229, 226, 218, 0.5) !important;
 }
 
 .developer-starter-pro-mobile-menu.is-open {

@@ -44,27 +44,31 @@
 		const header = document.querySelector('.developer-starter-pro-header--sticky-enabled');
 		if (!header) return;
 
+		const isTransparent = header.classList.contains('dp-header--transparent');
 		let lastScroll = 0;
 		const headerHeight = header.offsetHeight;
 
-		// Create a placeholder to prevent content jump.
+		// Create a placeholder to prevent content jump (not needed for transparent headers).
 		const placeholder = document.createElement('div');
 		placeholder.style.height = headerHeight + 'px';
 		placeholder.style.display = 'none';
 		placeholder.className = 'developer-starter-pro-header-placeholder';
-		header.parentNode.insertBefore(placeholder, header.nextSibling);
+		if (!isTransparent) {
+			header.parentNode.insertBefore(placeholder, header.nextSibling);
+		}
 
 		window.addEventListener('scroll', function () {
 			const currentScroll = window.scrollY;
+			const threshold = isTransparent ? 50 : headerHeight + 100;
 
-			if (currentScroll > headerHeight + 100) {
+			if (currentScroll > threshold) {
 				if (!header.classList.contains('is-sticky')) {
 					header.classList.add('is-sticky');
-					placeholder.style.display = 'block';
+					if (!isTransparent) placeholder.style.display = 'block';
 				}
 			} else {
 				header.classList.remove('is-sticky');
-				placeholder.style.display = 'none';
+				if (!isTransparent) placeholder.style.display = 'none';
 			}
 
 			lastScroll = currentScroll;

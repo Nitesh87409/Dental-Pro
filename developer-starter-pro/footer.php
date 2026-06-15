@@ -9,7 +9,7 @@
  */
 
 $footer_style  = developer_starter_pro_get_option( 'footer_style', '1' );
-$clinic_name   = developer_starter_pro_get_option( 'clinic_name', 'DentalPro Elite' );
+$clinic_name   = developer_starter_pro_get_option( 'clinic_name', 'Apex Dental Care' );
 $clinic_phone  = developer_starter_pro_get_option( 'clinic_phone', '' );
 $clinic_email  = developer_starter_pro_get_option( 'clinic_email', '' );
 $clinic_address = developer_starter_pro_get_option( 'clinic_address', '' );
@@ -132,7 +132,7 @@ $map_embed_code = developer_starter_pro_get_option( 'map_embed_code', '' );
 							<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 								<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
 							</svg>
-							<a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Apex Dental Care', 'developer-starter-pro' ); ?></a>
+							<a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><?php echo esc_html( $clinic_name ); ?></a>
 						</li>
 						<li>
 							<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -157,7 +157,7 @@ $map_embed_code = developer_starter_pro_get_option( 'map_embed_code', '' );
 
 			<div class="dp-footer__bottom">
 				<p class="dp-footer__copyright">
-					&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php esc_html_e( 'Apex Dental Care. All rights reserved.', 'developer-starter-pro' ); ?>
+					&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php printf( esc_html__( '%s. All rights reserved.', 'developer-starter-pro' ), esc_html( $clinic_name ) ); ?>
 				</p>
 			</div>
 

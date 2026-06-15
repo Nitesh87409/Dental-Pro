@@ -94,6 +94,7 @@ class Developer_Starter_Pro_Admin {
 			$sanitized['clinic_address'] = isset( $input['clinic_address'] ) ? sanitize_textarea_field( $input['clinic_address'] ) : '';
 			$sanitized['clinic_logo']    = isset( $input['clinic_logo'] ) ? esc_url_raw( $input['clinic_logo'] ) : '';
 			$sanitized['hero_image']     = isset( $input['hero_image'] ) ? esc_url_raw( $input['hero_image'] ) : '';
+			$sanitized['hero_video']     = isset( $input['hero_video'] ) ? esc_url_raw( $input['hero_video'] ) : '';
 		}
 
 		if ( empty( $active_tab ) || 'colors' === $active_tab ) {
@@ -318,6 +319,26 @@ class Developer_Starter_Pro_Admin {
 							</button>
 						</div>
 						<p class="description"><?php esc_html_e( 'Upload a full background image for the hero banner (recommended dimensions: 1920x800px). If empty, the default multi-layered layout will be used.', 'developer-starter-pro' ); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="hero_video"><?php esc_html_e( 'Hero Background Video (MP4)', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<div class="developer-starter-pro-media-upload">
+							<input type="text" id="hero_video" name="<?php echo esc_attr( $this->option_name ); ?>[hero_video]" value="<?php echo esc_url( isset( $options['hero_video'] ) ? $options['hero_video'] : '' ); ?>" class="regular-text" style="margin-bottom: 10px; display: inline-block; vertical-align: middle;">
+							<div class="developer-starter-pro-logo-preview" id="hero-video-preview" style="max-width: 300px; margin-bottom: 10px;">
+								<?php if ( ! empty( $options['hero_video'] ) ) : ?>
+									<video src="<?php echo esc_url( $options['hero_video'] ); ?>" style="max-width: 100%; height: auto; display: block; border-radius: 4px; border: 1px solid #ddd;" autoplay loop muted playsinline></video>
+								<?php endif; ?>
+							</div>
+							<button type="button" class="button developer-starter-pro-upload-btn" data-target="hero_video" data-preview="hero-video-preview" data-type="video">
+								<?php esc_html_e( 'Upload Video', 'developer-starter-pro' ); ?>
+							</button>
+							<button type="button" class="button developer-starter-pro-remove-btn" data-target="hero_video" data-preview="hero-video-preview" <?php echo empty( $options['hero_video'] ) ? 'style="display:none"' : ''; ?>>
+								<?php esc_html_e( 'Remove', 'developer-starter-pro' ); ?>
+							</button>
+						</div>
+						<p class="description"><?php esc_html_e( 'Select/upload a self-hosted MP4 background video or paste a direct video URL. If configured, it will play as a muted background instead of the static hero background image or multi-layer graphics.', 'developer-starter-pro' ); ?></p>
 					</td>
 				</tr>
 				<tr>

@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Theme Constants
  */
-define( 'developer_starter_pro_VERSION', '1.0.5' );
+define( 'developer_starter_pro_VERSION', '1.0.6' );
 define( 'developer_starter_pro_DIR', get_template_directory() );
 define( 'developer_starter_pro_URI', get_template_directory_uri() );
 define( 'developer_starter_pro_INC', developer_starter_pro_DIR . '/inc' );

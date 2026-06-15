@@ -196,9 +196,70 @@ document.querySelectorAll('.dp-time-slot').forEach(function(btn) {
 	color: #fff;
 }
 
+/* Hide entire booking section on desktop/PC */
+@media (min-width: 769px) {
+	.dp-booking {
+		display: none !important;
+	}
+}
+
+/* Mobile: Floating pill "Book now" button */
 @media (max-width: 768px) {
-	.dp-booking__bar { flex-direction: column; align-items: stretch; }
-	.dp-booking__field--cta { text-align: center; }
-	.dp-booking__btn { width: 100%; text-align: center; display: block; }
+	.dp-booking {
+		padding: 0 !important;
+		background: transparent !important;
+		position: fixed;
+		bottom: 20px;
+		left: 16px;
+		right: 16px;
+		z-index: 9997;
+		pointer-events: none;
+	}
+	.dp-booking .dp-section-container {
+		padding: 0 !important;
+		max-width: 100% !important;
+	}
+	.dp-booking__heading {
+		display: none !important;
+	}
+	.dp-booking__bar {
+		background: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+		padding: 0 !important;
+		display: block !important;
+		pointer-events: auto;
+	}
+	.dp-booking__field,
+	.dp-booking__field--time {
+		display: none !important;
+	}
+	.dp-booking__field--cta {
+		display: block !important;
+	}
+	.dp-booking__btn {
+		display: flex !important;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		width: 100% !important;
+		padding: 14px 24px !important;
+		font-size: 1rem !important;
+		font-weight: 700 !important;
+		background: linear-gradient(135deg, #4E7C59 0%, #3D6347 100%) !important;
+		color: #fff !important;
+		border-radius: 50px !important;
+		text-decoration: none !important;
+		box-shadow: 0 4px 20px rgba(78, 124, 89, 0.45), 0 2px 8px rgba(0,0,0,0.1) !important;
+		transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+		text-align: center !important;
+		letter-spacing: 0.3px;
+	}
+	.dp-booking__btn:hover,
+	.dp-booking__btn:active {
+		transform: translateY(-2px) !important;
+		box-shadow: 0 6px 28px rgba(78, 124, 89, 0.55), 0 3px 12px rgba(0,0,0,0.12) !important;
+		background: linear-gradient(135deg, #3D6347 0%, #2E4A2E 100%) !important;
+	}
 }
 </style>

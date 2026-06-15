@@ -33,7 +33,7 @@ $emergency_phone = developer_starter_pro_get_option( 'emergency_phone', '' );
 	</a>
 
 	<!-- Main Header -->
-	<header id="masthead" class="developer-starter-pro-header developer-starter-pro-header--style-1 <?php echo '1' === $header_sticky ? 'developer-starter-pro-header--sticky-enabled' : ''; ?>" role="banner">
+	<header id="masthead" class="developer-starter-pro-header developer-starter-pro-header--style-1 <?php echo ( '1' === $header_sticky || is_front_page() ) ? 'developer-starter-pro-header--sticky-enabled' : ''; ?> <?php if ( is_front_page() ) echo 'dp-header--transparent'; ?>" role="banner">
 		<div class="developer-starter-pro-container">
 			<div class="developer-starter-pro-header-inner">
 

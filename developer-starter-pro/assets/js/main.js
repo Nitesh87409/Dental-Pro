@@ -73,11 +73,18 @@
 		if (!('IntersectionObserver' in window)) return;
 
 		const animatedElements = document.querySelectorAll(
+			'.dp-section-header, ' +
+			'.dp-service-card, ' +
+			'.dp-doctor-card, ' +
+			'.dp-testimonial-card, ' +
+			'.benefit-card, ' +
+			'.dp-stats-item, ' +
+			'.dp-booking__heading, ' +
+			'.dp-booking__bar, ' +
+			'.developer-starter-pro-section-header, ' +
 			'.developer-starter-pro-service-card, ' +
 			'.developer-starter-pro-doctor-card, ' +
-			'.developer-starter-pro-testimonial-card, ' +
-			'.developer-starter-pro-post-card, ' +
-			'.developer-starter-pro-section-header'
+			'.developer-starter-pro-testimonial-card'
 		);
 
 		if (animatedElements.length === 0) return;
@@ -93,9 +100,20 @@
 			function (entries) {
 				entries.forEach(function (entry) {
 					if (entry.isIntersecting) {
-						entry.target.style.opacity = '1';
-						entry.target.style.transform = 'translateY(0)';
-						observer.unobserve(entry.target);
+						const el = entry.target;
+						el.style.opacity = '1';
+						el.style.transform = 'translateY(0)';
+						
+						// Clean up inline styles once transition is done to restore original CSS hover states.
+						const delay = parseFloat(window.getComputedStyle(el).transitionDelay || '0') * 1000;
+						setTimeout(function () {
+							el.style.removeProperty('opacity');
+							el.style.removeProperty('transform');
+							el.style.removeProperty('transition');
+							el.style.removeProperty('transition-delay');
+						}, 650 + delay);
+
+						observer.unobserve(el);
 					}
 				});
 			},

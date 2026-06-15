@@ -29,6 +29,9 @@ get_header();
 	// 8. Testimonials Section
 	get_template_part( 'template-parts/homepage/testimonials', 'section' );
 
+	// Treatment Cost Calculator Section
+	get_template_part( 'template-parts/homepage/calculator', 'section' );
+
 	// 7. CTA Banner Booking Section (Appointment Booking)
 	get_template_part( 'template-parts/homepage/cta', 'banner' );
 

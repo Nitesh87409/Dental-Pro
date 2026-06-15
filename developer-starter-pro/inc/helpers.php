@@ -56,6 +56,7 @@ function developer_starter_pro_get_default_options() {
 		'clinic_address'   => '123 Dental Street, Medical District, City',
 		'clinic_logo'      => '',
 		'hero_image'       => '',
+		'hero_video'       => '',
 
 		// Colors.
 		'color_primary'    => '#0D9488',

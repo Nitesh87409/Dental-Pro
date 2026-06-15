@@ -21,6 +21,30 @@
 
 /* Mobile */
 @media (max-width: 768px) {
+	/* Header Collapse - Trigger hamburger menu on mobile only */
+	.developer-starter-pro-nav {
+		display: none;
+	}
+
+	.developer-starter-pro-mobile-toggle {
+		display: flex;
+	}
+
+	.developer-starter-pro-mobile-menu {
+		display: block;
+	}
+
+	.developer-starter-pro-header-cta {
+		display: none;
+	}
+
+	.developer-starter-pro-top-bar-left {
+		display: none;
+	}
+
+	.developer-starter-pro-top-bar-inner {
+		justify-content: center;
+	}
 	/* Header */
 	.developer-starter-pro-nav {
 		display: none;

@@ -59,17 +59,25 @@
 			var $button = $(this);
 			var targetInput = $button.data('target');
 			var previewId = $button.data('preview');
+			var mediaType = $button.data('type') || 'image';
 
 			mediaFrame = wp.media({
-				title: developerStarterProAdmin.mediaTitle || 'Select Image',
-				button: { text: developerStarterProAdmin.mediaButton || 'Use this image' },
+				title: mediaType === 'video' ? 'Select Video' : (typeof developerStarterProAdmin !== 'undefined' ? developerStarterProAdmin.mediaTitle : 'Select Image'),
+				button: { text: mediaType === 'video' ? 'Use this video' : (typeof developerStarterProAdmin !== 'undefined' ? developerStarterProAdmin.mediaButton : 'Use this image') },
+				library: { type: mediaType },
 				multiple: false,
 			});
 
 			mediaFrame.on('select', function () {
 				var attachment = mediaFrame.state().get('selection').first().toJSON();
 				$('#' + targetInput).val(attachment.url);
-				$('#' + previewId).html('<img src="' + attachment.url + '" alt="Preview">');
+				if (previewId) {
+					if (mediaType === 'video') {
+						$('#' + previewId).html('<video src="' + attachment.url + '" style="max-width: 100%; height: auto; display: block; border-radius: 4px; border: 1px solid #ddd;" autoplay loop muted playsinline></video>');
+					} else {
+						$('#' + previewId).html('<img src="' + attachment.url + '" alt="Preview">');
+					}
+				}
 				$button.siblings('.developer-starter-pro-remove-btn').show();
 			});
 
