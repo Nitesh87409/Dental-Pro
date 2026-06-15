@@ -73,11 +73,19 @@ function developer_starter_pro_get_default_options() {
 		'footer_style'     => '1',
 
 		// Social Media.
-		'social_facebook'  => '',
-		'social_instagram' => '',
-		'social_twitter'   => '',
-		'social_youtube'   => '',
-		'social_linkedin'  => '',
+		'social_facebook'       => '',
+		'social_instagram'      => '',
+		'social_twitter'        => '',
+		'social_youtube'        => '',
+		'social_linkedin'       => '',
+		'social_tiktok'         => '',
+		'social_pinterest'      => '',
+		'social_custom_1_label' => '',
+		'social_custom_1_url'   => '',
+		'social_custom_1_icon'  => '🔗',
+		'social_custom_2_label' => '',
+		'social_custom_2_url'   => '',
+		'social_custom_2_icon'  => '🔗',
 
 		// Contact.
 		'google_maps_key'   => '',

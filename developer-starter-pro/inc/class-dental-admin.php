@@ -119,10 +119,26 @@ class Developer_Starter_Pro_Admin {
 
 		if ( empty( $active_tab ) || 'social' === $active_tab ) {
 			// Social Media.
-			$social_fields = array( 'social_facebook', 'social_instagram', 'social_twitter', 'social_youtube', 'social_linkedin' );
+			$social_fields = array( 
+				'social_facebook', 
+				'social_instagram', 
+				'social_twitter', 
+				'social_youtube', 
+				'social_linkedin',
+				'social_tiktok',
+				'social_pinterest',
+				'social_custom_1_url',
+				'social_custom_2_url'
+			);
 			foreach ( $social_fields as $field ) {
 				$sanitized[ $field ] = isset( $input[ $field ] ) ? esc_url_raw( $input[ $field ] ) : '';
 			}
+
+			// Sanitize custom labels and icons
+			$sanitized['social_custom_1_label'] = isset( $input['social_custom_1_label'] ) ? sanitize_text_field( $input['social_custom_1_label'] ) : '';
+			$sanitized['social_custom_2_label'] = isset( $input['social_custom_2_label'] ) ? sanitize_text_field( $input['social_custom_2_label'] ) : '';
+			$sanitized['social_custom_1_icon']  = isset( $input['social_custom_1_icon'] ) ? sanitize_text_field( $input['social_custom_1_icon'] ) : '🔗';
+			$sanitized['social_custom_2_icon']  = isset( $input['social_custom_2_icon'] ) ? sanitize_text_field( $input['social_custom_2_icon'] ) : '🔗';
 		}
 
 		if ( empty( $active_tab ) || 'contact' === $active_tab ) {
@@ -402,6 +418,78 @@ class Developer_Starter_Pro_Admin {
 			<h2><?php esc_html_e( 'Color Scheme', 'developer-starter-pro' ); ?></h2>
 			<p class="description"><?php esc_html_e( 'Customize the color scheme of your theme.', 'developer-starter-pro' ); ?></p>
 
+			<!-- Pre-made Skins Library -->
+			<div class="developer-starter-pro-skins-library">
+				<h3><?php esc_html_e( 'Pre-made Skins Library', 'developer-starter-pro' ); ?></h3>
+				<p class="description"><?php esc_html_e( 'Click on the apply button to preview and load a pre-made color scheme.', 'developer-starter-pro' ); ?></p>
+				
+				<div class="skins-grid">
+					<!-- Skin: Main -->
+					<div class="skin-card">
+						<div class="skin-name"><?php esc_html_e( 'Main (Teal)', 'developer-starter-pro' ); ?></div>
+						<div class="skin-palette">
+							<span class="color-block" style="background-color: #0D9488;" title="Primary"></span>
+							<span class="color-block" style="background-color: #1E293B;" title="Secondary"></span>
+							<span class="color-block" style="background-color: #F59E0B;" title="Accent"></span>
+						</div>
+						<button type="button" class="button developer-starter-pro-apply-skin-btn" 
+								data-primary="#0D9488" 
+								data-secondary="#1E293B" 
+								data-accent="#F59E0B">
+							<?php esc_html_e( 'APPLY', 'developer-starter-pro' ); ?>
+						</button>
+					</div>
+
+					<!-- Skin: Classic Blue -->
+					<div class="skin-card">
+						<div class="skin-name"><?php esc_html_e( 'Classic Blue', 'developer-starter-pro' ); ?></div>
+						<div class="skin-palette">
+							<span class="color-block" style="background-color: #1E6FD9;" title="Primary"></span>
+							<span class="color-block" style="background-color: #0F172A;" title="Secondary"></span>
+							<span class="color-block" style="background-color: #60A5FA;" title="Accent"></span>
+						</div>
+						<button type="button" class="button developer-starter-pro-apply-skin-btn" 
+								data-primary="#1E6FD9" 
+								data-secondary="#0F172A" 
+								data-accent="#60A5FA">
+							<?php esc_html_e( 'APPLY', 'developer-starter-pro' ); ?>
+						</button>
+					</div>
+
+					<!-- Skin: Forest Green -->
+					<div class="skin-card">
+						<div class="skin-name"><?php esc_html_e( 'Forest Green', 'developer-starter-pro' ); ?></div>
+						<div class="skin-palette">
+							<span class="color-block" style="background-color: #4E7C59;" title="Primary"></span>
+							<span class="color-block" style="background-color: #111827;" title="Secondary"></span>
+							<span class="color-block" style="background-color: #82B08D;" title="Accent"></span>
+						</div>
+						<button type="button" class="button developer-starter-pro-apply-skin-btn" 
+								data-primary="#4E7C59" 
+								data-secondary="#111827" 
+								data-accent="#82B08D">
+							<?php esc_html_e( 'APPLY', 'developer-starter-pro' ); ?>
+						</button>
+					</div>
+
+					<!-- Skin: Lavender Gray -->
+					<div class="skin-card">
+						<div class="skin-name"><?php esc_html_e( 'Lavender Gray', 'developer-starter-pro' ); ?></div>
+						<div class="skin-palette">
+							<span class="color-block" style="background-color: #8F9BB3;" title="Primary"></span>
+							<span class="color-block" style="background-color: #1A202C;" title="Secondary"></span>
+							<span class="color-block" style="background-color: #CBD5E1;" title="Accent"></span>
+						</div>
+						<button type="button" class="button developer-starter-pro-apply-skin-btn" 
+								data-primary="#8F9BB3" 
+								data-secondary="#1A202C" 
+								data-accent="#CBD5E1">
+							<?php esc_html_e( 'APPLY', 'developer-starter-pro' ); ?>
+						</button>
+					</div>
+				</div>
+			</div>
+
 			<table class="form-table">
 				<tr>
 					<th><label for="color_primary"><?php esc_html_e( 'Primary Color', 'developer-starter-pro' ); ?></label></th>
@@ -563,6 +651,8 @@ class Developer_Starter_Pro_Admin {
 					'social_twitter'   => array( 'label' => 'Twitter / X', 'icon' => '🐦', 'placeholder' => 'https://x.com/yourclinic' ),
 					'social_youtube'   => array( 'label' => 'YouTube',    'icon' => '📺', 'placeholder' => 'https://youtube.com/@yourclinic' ),
 					'social_linkedin'  => array( 'label' => 'LinkedIn',   'icon' => '💼', 'placeholder' => 'https://linkedin.com/company/yourclinic' ),
+					'social_tiktok'    => array( 'label' => 'TikTok',     'icon' => '🎵', 'placeholder' => 'https://tiktok.com/@yourclinic' ),
+					'social_pinterest' => array( 'label' => 'Pinterest',  'icon' => '📌', 'placeholder' => 'https://pinterest.com/yourclinic' ),
 				);
 
 				foreach ( $social_platforms as $key => $platform ) : ?>
@@ -573,10 +663,36 @@ class Developer_Starter_Pro_Admin {
 							</label>
 						</th>
 						<td>
-							<input type="url" id="<?php echo esc_attr( $key ); ?>" name="<?php echo esc_attr( $this->option_name ); ?>[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_url( $options[ $key ] ); ?>" class="regular-text" placeholder="<?php echo esc_attr( $platform['placeholder'] ); ?>">
+							<input type="url" id="<?php echo esc_attr( $key ); ?>" name="<?php echo esc_attr( $this->option_name ); ?>[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_url( isset( $options[ $key ] ) ? $options[ $key ] : '' ); ?>" class="regular-text" placeholder="<?php echo esc_attr( $platform['placeholder'] ); ?>">
 						</td>
 					</tr>
 				<?php endforeach; ?>
+			</table>
+
+			<h3 style="margin-top: 40px; margin-bottom: 5px; font-size: 1.2em; border-bottom: 1px solid #ddd; padding-bottom: 5px;"><?php esc_html_e( 'Custom Social Links', 'developer-starter-pro' ); ?></h3>
+			<p class="description"><?php esc_html_e( 'Add custom links (e.g. blog, portal, or other platforms) with custom emojis, labels, and URLs.', 'developer-starter-pro' ); ?></p>
+			
+			<table class="form-table">
+				<tr>
+					<th><label><?php esc_html_e( 'Custom Link 1', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<div style="display: flex; gap: 10px; max-width: 800px; align-items: center;">
+							<input type="text" name="<?php echo esc_attr( $this->option_name ); ?>[social_custom_1_icon]" value="<?php echo esc_attr( isset($options['social_custom_1_icon']) ? $options['social_custom_1_icon'] : '🔗' ); ?>" style="width: 60px; text-align: center;" placeholder="Icon (Emoji)" title="Emoji Icon">
+							<input type="text" name="<?php echo esc_attr( $this->option_name ); ?>[social_custom_1_label]" value="<?php echo esc_attr( isset($options['social_custom_1_label']) ? $options['social_custom_1_label'] : '' ); ?>" style="flex: 1;" placeholder="Label (e.g., Blog)">
+							<input type="url" name="<?php echo esc_attr( $this->option_name ); ?>[social_custom_1_url]" value="<?php echo esc_url( isset($options['social_custom_1_url']) ? $options['social_custom_1_url'] : '' ); ?>" style="flex: 2;" placeholder="URL (https://...)">
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th><label><?php esc_html_e( 'Custom Link 2', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<div style="display: flex; gap: 10px; max-width: 800px; align-items: center;">
+							<input type="text" name="<?php echo esc_attr( $this->option_name ); ?>[social_custom_2_icon]" value="<?php echo esc_attr( isset($options['social_custom_2_icon']) ? $options['social_custom_2_icon'] : '🔗' ); ?>" style="width: 60px; text-align: center;" placeholder="Icon (Emoji)" title="Emoji Icon">
+							<input type="text" name="<?php echo esc_attr( $this->option_name ); ?>[social_custom_2_label]" value="<?php echo esc_attr( isset($options['social_custom_2_label']) ? $options['social_custom_2_label'] : '' ); ?>" style="flex: 1;" placeholder="Label (e.g., Portal)">
+							<input type="url" name="<?php echo esc_attr( $this->option_name ); ?>[social_custom_2_url]" value="<?php echo esc_url( isset($options['social_custom_2_url']) ? $options['social_custom_2_url'] : '' ); ?>" style="flex: 2;" placeholder="URL (https://...)">
+						</div>
+					</td>
+				</tr>
 			</table>
 		</div>
 		<?php

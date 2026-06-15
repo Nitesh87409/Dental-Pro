@@ -319,7 +319,7 @@ body.dark-mode .dp-stats-item:not(:last-child) {
 	width: 40px;
 	height: 40px;
 	border-radius: 50%;
-	background: rgba(78, 124, 89, 0.08);
+	background: var(--developer-starter-pro-primary-light);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -333,7 +333,7 @@ body.dark-mode .dp-stats-icon-wrap {
 .dp-stats-icon-wrap svg {
 	width: 20px;
 	height: 20px;
-	color: #4E7C59;
+	color: var(--developer-starter-pro-primary);
 }
 
 body.dark-mode .dp-stats-icon-wrap svg {

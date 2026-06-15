@@ -34,7 +34,38 @@ $emergency_phone = developer_starter_pro_get_option( 'emergency_phone', '' );
 	</a>
 
 	<!-- Main Header -->
-	<header id="masthead" class="developer-starter-pro-header developer-starter-pro-header--style-1 <?php echo ( '1' === $header_sticky || is_front_page() ) ? 'developer-starter-pro-header--sticky-enabled' : ''; ?> <?php if ( is_front_page() ) echo 'dp-header--transparent'; ?>" role="banner">
+	<header id="masthead" class="developer-starter-pro-header developer-starter-pro-header--style-<?php echo esc_attr( $header_style ); ?> <?php echo ( '1' === $header_sticky || is_front_page() ) ? 'developer-starter-pro-header--sticky-enabled' : ''; ?> <?php if ( is_front_page() ) echo 'dp-header--transparent'; ?>" role="banner">
+		
+		<?php if ( '3' === $header_style ) : ?>
+			<!-- Top Bar -->
+			<div class="developer-starter-pro-top-bar">
+				<div class="developer-starter-pro-container">
+					<div class="developer-starter-pro-top-bar-inner">
+						<div class="developer-starter-pro-top-bar-left">
+							<?php if ( $clinic_phone ) : ?>
+								<span class="developer-starter-pro-top-bar-item">
+									<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+									<?php echo esc_html( $clinic_phone ); ?>
+								</span>
+							<?php endif; ?>
+							<?php if ( $clinic_email ) : ?>
+								<span class="developer-starter-pro-top-bar-item">
+									<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+									<?php echo esc_html( $clinic_email ); ?>
+								</span>
+							<?php endif; ?>
+						</div>
+						<div class="developer-starter-pro-top-bar-right">
+							<span class="developer-starter-pro-top-bar-item">
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+								<?php esc_html_e( 'Mon - Sat: 9:00 AM - 6:00 PM', 'developer-starter-pro' ); ?>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		<?php endif; ?>
+
 		<div class="developer-starter-pro-container">
 			<div class="developer-starter-pro-header-inner">
 

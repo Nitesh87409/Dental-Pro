@@ -88,7 +88,7 @@
 }
 
 .dp-logo-svg {
-	stroke: #657F60;
+	stroke: var(--developer-starter-pro-primary);
 	flex-shrink: 0;
 }
 
@@ -153,7 +153,7 @@
 .developer-starter-pro-menu > li > a:hover,
 .developer-starter-pro-menu > li.current-menu-item > a,
 .developer-starter-pro-menu > li.current-menu-parent > a {
-	color: #657F60;
+	color: var(--developer-starter-pro-primary);
 	background: transparent;
 }
 
@@ -191,8 +191,8 @@
 }
 
 .developer-starter-pro-menu .sub-menu li a:hover {
-	color: #657F60;
-	background: rgba(101, 127, 96, 0.06);
+	color: var(--developer-starter-pro-primary);
+	background: var(--developer-starter-pro-primary-light);
 	padding-left: 24px;
 }
 
@@ -211,7 +211,7 @@
 
 /* Sage Green Call Now Button */
 .dp-header-call-btn {
-	background: #657F60;
+	background: var(--developer-starter-pro-primary);
 	border-radius: 12px;
 	padding: 8px 18px;
 	display: flex;
@@ -219,11 +219,11 @@
 	gap: 12px;
 	color: #FFFFFF;
 	text-decoration: none;
-	transition: background-color 0.2s ease, transform 0.15s ease;
+	transition: background-color 0.2s ease, transform 0.15s ease, filter 0.2s ease;
 }
 
 .dp-header-call-btn:hover {
-	background: #546B50;
+	filter: brightness(0.9);
 	transform: translateY(-1px);
 	color: #FFFFFF;
 }
@@ -448,7 +448,7 @@ body.dark-mode .dp-header--transparent.is-sticky .brand-sub {
 }
 
 .dp-header--transparent.is-sticky .dp-logo-svg {
-	stroke: #657F60 !important;
+	stroke: var(--developer-starter-pro-primary) !important;
 }
 
 body.dark-mode .dp-header--transparent.is-sticky .dp-logo-svg {
@@ -465,8 +465,8 @@ body.dark-mode .dp-header--transparent.is-sticky .developer-starter-pro-menu > l
 
 .dp-header--transparent.is-sticky .developer-starter-pro-menu > li > a:hover,
 .dp-header--transparent.is-sticky .developer-starter-pro-menu > li.current-menu-item > a {
-	color: #4E7C59 !important;
-	background: rgba(78, 124, 89, 0.07) !important;
+	color: var(--developer-starter-pro-primary) !important;
+	background: var(--developer-starter-pro-primary-light) !important;
 }
 
 body.dark-mode .dp-header--transparent.is-sticky .developer-starter-pro-menu > li > a:hover,
@@ -642,3 +642,39 @@ body.dark-mode .dp-header--transparent.is-sticky .developer-starter-pro-hamburge
 	opacity: 1;
 	visibility: visible;
 }
+
+/* ==========================================================================
+   Header Style 3 — Full Width with Top Bar
+   ========================================================================== */
+.developer-starter-pro-header--style-3 .developer-starter-pro-container {
+	max-width: 100% !important;
+	padding-left: 40px !important;
+	padding-right: 40px !important;
+}
+
+/* Hide top bar on sticky scroll to keep header compact */
+.developer-starter-pro-header.is-sticky .developer-starter-pro-top-bar {
+	display: none !important;
+}
+
+/* Make top bar responsive */
+@media (max-width: 768px) {
+	.developer-starter-pro-top-bar {
+		display: none !important;
+	}
+}
+
+/* Link top bar background to secondary color variable and text to gray */
+.developer-starter-pro-top-bar {
+	background: var(--developer-starter-pro-secondary) !important;
+	border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.developer-starter-pro-top-bar-item {
+	color: var(--developer-starter-pro-gray-300) !important;
+}
+
+.developer-starter-pro-top-bar-item svg {
+	color: var(--developer-starter-pro-primary) !important;
+}
+

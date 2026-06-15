@@ -14,153 +14,242 @@ $clinic_phone  = developer_starter_pro_get_option( 'clinic_phone', '' );
 $clinic_email  = developer_starter_pro_get_option( 'clinic_email', '' );
 $clinic_address = developer_starter_pro_get_option( 'clinic_address', '' );
 $map_embed_code = developer_starter_pro_get_option( 'map_embed_code', '' );
+
+// Get dynamic social links
+$social_links = array(
+	'facebook'  => array( 'url' => developer_starter_pro_get_option( 'social_facebook', '' ), 'label' => 'Facebook', 'svg' => '<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>' ),
+	'instagram' => array( 'url' => developer_starter_pro_get_option( 'social_instagram', '' ), 'label' => 'Instagram', 'svg' => '<rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>' ),
+	'twitter'   => array( 'url' => developer_starter_pro_get_option( 'social_twitter', '' ), 'label' => 'Twitter / X', 'svg' => '<path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>' ),
+	'youtube'   => array( 'url' => developer_starter_pro_get_option( 'social_youtube', '' ), 'label' => 'YouTube', 'svg' => '<path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>' ),
+	'linkedin'  => array( 'url' => developer_starter_pro_get_option( 'social_linkedin', '' ), 'label' => 'LinkedIn', 'svg' => '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>' ),
+	'tiktok'    => array( 'url' => developer_starter_pro_get_option( 'social_tiktok', '' ), 'label' => 'TikTok', 'svg' => '<path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path>' ),
+	'pinterest' => array( 'url' => developer_starter_pro_get_option( 'social_pinterest', '' ), 'label' => 'Pinterest', 'svg' => '<path d="M8 22a9 9 0 0 1-1.91-5.17c0-2.6 1.34-4.89 3.25-6a5.57 5.57 0 0 0-.17 1.36c0 2 1.36 4.7 3.5 4.7 1.8 0 3.5-1.5 3.5-4 0-3.3-2.6-5.5-6.5-5.5-4 0-7.5 2.8-7.5 7.5 0 2.2 1.1 4.2 2.8 5l-.5 2C2.8 19 1 15.7 1 12 1 5.9 5.9 1 12 1s11 4.9 11 11c0 5.6-4 10-9.5 10a7.21 7.21 0 0 1-3.64-.95c-.83 1.63-1.85 3.12-2.86 4.65l-1 1.3Z"/>' )
+);
+
+$custom_1_url   = developer_starter_pro_get_option( 'social_custom_1_url', '' );
+$custom_1_label = developer_starter_pro_get_option( 'social_custom_1_label', '' );
+$custom_1_icon  = developer_starter_pro_get_option( 'social_custom_1_icon', '🔗' );
+if ( ! empty( $custom_1_url ) && ! empty( $custom_1_label ) ) {
+	$social_links['custom_1'] = array(
+		'url'       => $custom_1_url,
+		'label'     => $custom_1_label,
+		'is_custom' => true,
+		'icon'      => $custom_1_icon,
+	);
+}
+
+$custom_2_url   = developer_starter_pro_get_option( 'social_custom_2_url', '' );
+$custom_2_label = developer_starter_pro_get_option( 'social_custom_2_label', '' );
+$custom_2_icon  = developer_starter_pro_get_option( 'social_custom_2_icon', '🔗' );
+if ( ! empty( $custom_2_url ) && ! empty( $custom_2_label ) ) {
+	$social_links['custom_2'] = array(
+		'url'       => $custom_2_url,
+		'label'     => $custom_2_label,
+		'is_custom' => true,
+		'icon'      => $custom_2_icon,
+	);
+}
+
+// Fallback to defaults if no social link is filled
+$has_social_links = false;
+foreach ( $social_links as $link ) {
+	if ( ! empty( $link['url'] ) ) {
+		$has_social_links = true;
+		break;
+	}
+}
+if ( ! $has_social_links ) {
+	$social_links['facebook']['url']  = 'https://facebook.com';
+	$social_links['instagram']['url'] = 'https://instagram.com';
+}
 ?>
 
 	</div><!-- #content -->
 
 	<footer id="colophon" class="dp-footer" role="contentinfo">
 		<div class="dp-footer__container">
-			<div class="dp-footer__grid">
+			<div class="dp-footer__grid dp-footer__grid--style-<?php echo esc_attr( $footer_style ); ?>">
 
-				<!-- Column 1: Map Location -->
-				<div class="dp-footer__col dp-footer__col--map">
-					<div class="dp-footer__map-wrapper <?php echo ( ! empty( $map_embed_code ) || ! empty( $clinic_address ) ) ? 'has-real-map' : 'has-vector-map'; ?>">
-						<?php 
-						$address_for_map = ! empty( $clinic_address ) ? $clinic_address : __( 'Apex Dental Care, Central Avenue, City', 'developer-starter-pro' );
-						?>
-						<a class="dp-footer-map-action-link" href="#" target="_blank" data-address="<?php echo esc_attr( $address_for_map ); ?>" style="display: block; width: 100%; height: 100%; color: inherit; text-decoration: none;">
-							<?php if ( ! empty( $map_embed_code ) ) : ?>
-								<?php echo wp_kses( $map_embed_code, array(
-									'iframe' => array(
-										'src'             => true,
-										'width'           => true,
-										'height'          => true,
-										'style'           => true,
-										'frameborder'     => true,
-										'allowfullscreen' => true,
-										'loading'         => true,
-										'referrerpolicy'  => true,
-										'class'           => true,
-										'id'              => true,
-									),
-								) ); ?>
-								<div class="dp-footer__map-overlay">
-									<span class="dp-footer__map-badge">
-										<span class="dp-badge-desktop"><?php esc_html_e( 'Interact with Map', 'developer-starter-pro' ); ?></span>
-										<span class="dp-badge-mobile" style="display: none;"><?php esc_html_e( 'Open in Maps', 'developer-starter-pro' ); ?></span>
-									</span>
-								</div>
-							<?php elseif ( ! empty( $clinic_address ) ) : ?>
-								<iframe 
-									width="100%" 
-									height="192" 
-									style="border:0;" 
-									loading="lazy" 
-									allowfullscreen 
-									referrerpolicy="no-referrer-when-downgrade"
-									src="https://maps.google.com/maps?q=<?php echo urlencode( $clinic_address ); ?>&t=&z=14&ie=UTF8&iwloc=&output=embed">
-								</iframe>
-								<div class="dp-footer__map-overlay">
-									<span class="dp-footer__map-badge">
-										<span class="dp-badge-desktop"><?php esc_html_e( 'Interact with Map', 'developer-starter-pro' ); ?></span>
-										<span class="dp-badge-mobile" style="display: none;"><?php esc_html_e( 'Open in Maps', 'developer-starter-pro' ); ?></span>
-									</span>
-								</div>
-							<?php else : ?>
-								<svg class="dp-footer-map-svg" viewBox="0 0 320 130" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="<?php esc_attr_e( 'Map of clinic location', 'developer-starter-pro' ); ?>">
-									<!-- Map Background -->
-									<rect width="320" height="130" rx="8" fill="#F4EFEB"/>
-									
-									<!-- Parks (Green Blocks) -->
-									<path d="M10 100 C20 95 40 105 50 120 L40 130 L0 130 Z" fill="#D3DEC6"/>
-									<path d="M250 12 C260 10 270 20 280 30 L290 0 L240 0 Z" fill="#D3DEC6"/>
-									
-									<!-- Water / River -->
-									<path d="M290 0 C280 40 250 80 255 130" stroke="#A7D2EB" stroke-width="26" stroke-linecap="square" fill="none"/>
-									
-									<!-- Road Grid -->
-									<path d="M0 25 L320 25" stroke="#FFFFFF" stroke-width="4"/>
-									<path d="M0 65 C100 70 200 60 320 75" stroke="#FFFFFF" stroke-width="4"/>
-									<path d="M0 110 L320 110" stroke="#FFFFFF" stroke-width="3"/>
-									<path d="M50 0 L50 130" stroke="#FFFFFF" stroke-width="4"/>
-									<path d="M130 0 L90 130" stroke="#FFFFFF" stroke-width="4.5"/>
-									<path d="M210 0 C200 40 205 90 180 130" stroke="#FFFFFF" stroke-width="4"/>
-									<path d="M80 0 L250 130" stroke="#FFFFFF" stroke-width="3"/>
-									
-									<!-- Pin shadow -->
-									<ellipse cx="140" cy="85" rx="6" ry="3" fill="rgba(0,0,0,0.15)"/>
-									
-									<!-- Map Pin -->
-									<g transform="translate(128, 52)">
-										<path d="M12 0C5.37 0 0 5.37 0 12C0 19.5 9.6 27.6 11.15 28.87C11.65 29.28 12.35 29.28 12.85 28.87C14.4 27.6 24 19.5 24 12C24 5.37 18.63 0 12 0Z" fill="#657F60"/>
-										<circle cx="12" cy="12" r="4.5" fill="#FFFFFF"/>
-									</g>
-								</svg>
-							<?php endif; ?>
-						</a>
+				<?php if ( '3' === $footer_style ) : ?>
+					<!-- Style 3: 2 Columns (Minimal) -->
+					
+					<!-- Column 1: Clinic Location & Contact Info combined -->
+					<div class="dp-footer__col dp-footer__col--info">
+						<h3 class="dp-footer__title"><?php echo esc_html( $clinic_name ); ?></h3>
+						<p style="font-size: 0.875rem; color: #5C5449; line-height: 1.6; margin-bottom: 20px;">
+							<?php echo esc_html( ! empty( $clinic_address ) ? $clinic_address : __( 'Apex Dental Care, Central Avenue, City', 'developer-starter-pro' ) ); ?>
+						</p>
+						<ul class="dp-footer__list">
+							<li>
+								<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+								<?php $display_email = ! empty( $clinic_email ) ? $clinic_email : 'info@apexdentalcare.com'; ?>
+								<a href="mailto:<?php echo esc_attr( $display_email ); ?>"><?php echo esc_html( $display_email ); ?></a>
+							</li>
+							<li>
+								<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+								<?php $display_phone = ! empty( $clinic_phone ) ? $clinic_phone : '+1 800 123 4567'; ?>
+								<a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $display_phone ) ); ?>"><?php echo esc_html( $display_phone ); ?></a>
+							</li>
+						</ul>
 					</div>
-				</div>
 
-				<!-- Column 2: Contact -->
-				<div class="dp-footer__col dp-footer__col--contact">
-					<h3 class="dp-footer__title"><?php esc_html_e( 'Contact', 'developer-starter-pro' ); ?></h3>
-					<ul class="dp-footer__list">
-						<li>
-							<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-								<circle cx="12" cy="10" r="3"/>
-							</svg>
-							<span><?php echo esc_html( ! empty( $clinic_address ) ? $clinic_address : __( 'Apex Dental Care, Central Avenue, City', 'developer-starter-pro' ) ); ?></span>
-						</li>
-						<li>
-							<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-								<polyline points="22,6 12,13 2,6"/>
-							</svg>
-							<?php 
-							$display_email = ! empty( $clinic_email ) ? $clinic_email : 'info@apexdentalcare.com';
+					<!-- Column 2: Social Us / Quick Links -->
+					<div class="dp-footer__col dp-footer__col--social">
+						<h3 class="dp-footer__title"><?php esc_html_e( 'Connect With Us', 'developer-starter-pro' ); ?></h3>
+						<ul class="dp-footer__list">
+							<?php foreach ( $social_links as $id => $link ) : 
+								if ( empty( $link['url'] ) ) continue;
 							?>
-							<a href="mailto:<?php echo esc_attr( $display_email ); ?>"><?php echo esc_html( $display_email ); ?></a>
-						</li>
-						<li>
-							<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-							</svg>
-							<?php 
-							$display_phone = ! empty( $clinic_phone ) ? $clinic_phone : '+1 800 123 4567';
-							$clean_phone = preg_replace( '/[^0-9+]/', '', $display_phone );
-							?>
-							<a href="tel:<?php echo esc_attr( $clean_phone ); ?>"><?php echo esc_html( $display_phone ); ?></a>
-						</li>
-					</ul>
-				</div>
+								<li>
+									<?php if ( ! empty( $link['is_custom'] ) ) : ?>
+										<span class="dp-footer-icon" style="font-size: 16px; width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; line-height: 1;"><?php echo esc_html( $link['icon'] ); ?></span>
+									<?php else : ?>
+										<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+											<?php echo $link['svg']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+										</svg>
+									<?php endif; ?>
+									<a href="<?php echo esc_url( $link['url'] ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html( $link['label'] ); ?></a>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+					</div>
 
-				<!-- Column 3: Social Us -->
-				<div class="dp-footer__col dp-footer__col--social">
-					<h3 class="dp-footer__title"><?php esc_html_e( 'Social Us', 'developer-starter-pro' ); ?></h3>
-					<ul class="dp-footer__list">
-						<li>
-							<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-							</svg>
-							<a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><?php echo esc_html( $clinic_name ); ?></a>
-						</li>
-						<li>
-							<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-								<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-								<line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-							</svg>
-							<a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Apex Media', 'developer-starter-pro' ); ?></a>
-						</li>
-						<li>
-							<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-							</svg>
-							<a href="#booking"><?php esc_html_e( 'Contact', 'developer-starter-pro' ); ?></a>
-						</li>
-					</ul>
-				</div>
+				<?php elseif ( '2' === $footer_style ) : ?>
+					<!-- Style 2: 3 Columns (With newsletter) -->
+					
+					<!-- Column 1: Map -->
+					<div class="dp-footer__col dp-footer__col--map">
+						<div class="dp-footer__map-wrapper <?php echo ( ! empty( $map_embed_code ) || ! empty( $clinic_address ) ) ? 'has-real-map' : 'has-vector-map'; ?>">
+							<?php $address_for_map = ! empty( $clinic_address ) ? $clinic_address : __( 'Apex Dental Care, Central Avenue, City', 'developer-starter-pro' ); ?>
+							<a class="dp-footer-map-action-link" href="#" target="_blank" data-address="<?php echo esc_attr( $address_for_map ); ?>" style="display: block; width: 100%; height: 100%; color: inherit; text-decoration: none;">
+								<?php if ( ! empty( $map_embed_code ) ) : ?>
+									<?php echo wp_kses( $map_embed_code, array('iframe' => array('src'=>true,'width'=>true,'height'=>true,'style'=>true,'frameborder'=>true,'allowfullscreen'=>true,'loading'=>true,'referrerpolicy'=>true,'class'=>true,'id'=>true)) ); ?>
+								<?php elseif ( ! empty( $clinic_address ) ) : ?>
+									<iframe width="100%" height="192" style="border:0;" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=<?php echo urlencode( $clinic_address ); ?>&t=&z=14&ie=UTF8&iwloc=&output=embed"></iframe>
+								<?php else : ?>
+									<svg class="dp-footer-map-svg" viewBox="0 0 320 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<rect width="320" height="130" rx="8" fill="#F4EFEB"/>
+										<path d="M10 100 C20 95 40 105 50 120 L40 130 L0 130 Z" fill="#D3DEC6"/>
+										<path d="M250 12 C260 10 270 20 280 30 L290 0 L240 0 Z" fill="#D3DEC6"/>
+										<path d="M290 0 C280 40 250 80 255 130" stroke="#A7D2EB" stroke-width="26" stroke-linecap="square" fill="none"/>
+										<path d="M0 25 L320 25" stroke="#FFFFFF" stroke-width="4"/><path d="M0 65 C100 70 200 60 320 75" stroke="#FFFFFF" stroke-width="4"/><path d="M0 110 L320 110" stroke="#FFFFFF" stroke-width="3"/><path d="M50 0 L50 130" stroke="#FFFFFF" stroke-width="4"/><path d="M130 0 L90 130" stroke="#FFFFFF" stroke-width="4.5"/><path d="M210 0 C200 40 205 90 180 130" stroke="#FFFFFF" stroke-width="4"/><path d="M80 0 L250 130" stroke="#FFFFFF" stroke-width="3"/>
+										<ellipse cx="140" cy="85" rx="6" ry="3" fill="rgba(0,0,0,0.15)"/>
+										<g transform="translate(128, 52)"><path d="M12 0C5.37 0 0 5.37 0 12C0 19.5 9.6 27.6 11.15 28.87C11.65 29.28 12.35 29.28 12.85 28.87C14.4 27.6 24 19.5 24 12C24 5.37 18.63 0 12 0Z" fill="currentColor" style="color: var(--developer-starter-pro-primary);"/><circle cx="12" cy="12" r="4.5" fill="#FFFFFF"/></g>
+									</svg>
+								<?php endif; ?>
+							</a>
+						</div>
+					</div>
+
+					<!-- Column 2: Contact Info -->
+					<div class="dp-footer__col dp-footer__col--contact">
+						<h3 class="dp-footer__title"><?php esc_html_e( 'Contact Info', 'developer-starter-pro' ); ?></h3>
+						<ul class="dp-footer__list">
+							<li>
+								<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+								<span><?php echo esc_html( ! empty( $clinic_address ) ? $clinic_address : __( 'Apex Dental Care, Central Avenue, City', 'developer-starter-pro' ) ); ?></span>
+							</li>
+							<li>
+								<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+								<?php $display_email = ! empty( $clinic_email ) ? $clinic_email : 'info@apexdentalcare.com'; ?>
+								<a href="mailto:<?php echo esc_attr( $display_email ); ?>"><?php echo esc_html( $display_email ); ?></a>
+							</li>
+						</ul>
+					</div>
+
+					<!-- Column 3: Newsletter -->
+					<div class="dp-footer__col dp-footer__col--newsletter">
+						<h3 class="dp-footer__title"><?php esc_html_e( 'Newsletter', 'developer-starter-pro' ); ?></h3>
+						<p style="font-size: 0.875rem; color: #5C5449; margin-bottom: 12px; line-height: 1.5;">
+							<?php esc_html_e( 'Subscribe to get updates.', 'developer-starter-pro' ); ?>
+						</p>
+						<form class="dp-footer__newsletter-form" onsubmit="alert('Thank you for subscribing!'); return false;" style="display: flex; gap: 8px;">
+							<input type="email" placeholder="<?php esc_attr_e( 'Your email...', 'developer-starter-pro' ); ?>" required style="flex: 1; padding: 10px 14px; border: 1px solid #E8E4DC; border-radius: 8px; font-size: 0.875rem; outline: none; background: #FFFFFF; color: #3D3830;">
+							<button type="submit" class="button" style="background: var(--developer-starter-pro-primary); color: #FFFFFF; border: none; padding: 10px 18px; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s ease;">
+								<?php esc_html_e( 'Join', 'developer-starter-pro' ); ?>
+							</button>
+						</form>
+					</div>
+
+				<?php else : ?>
+					<!-- Style 1: 4 Columns (Full Featured) -->
+					
+					<!-- Column 1: Map -->
+					<div class="dp-footer__col dp-footer__col--map">
+						<div class="dp-footer__map-wrapper <?php echo ( ! empty( $map_embed_code ) || ! empty( $clinic_address ) ) ? 'has-real-map' : 'has-vector-map'; ?>">
+							<?php $address_for_map = ! empty( $clinic_address ) ? $clinic_address : __( 'Apex Dental Care, Central Avenue, City', 'developer-starter-pro' ); ?>
+							<a class="dp-footer-map-action-link" href="#" target="_blank" data-address="<?php echo esc_attr( $address_for_map ); ?>" style="display: block; width: 100%; height: 100%; color: inherit; text-decoration: none;">
+								<?php if ( ! empty( $map_embed_code ) ) : ?>
+									<?php echo wp_kses( $map_embed_code, array('iframe' => array('src'=>true,'width'=>true,'height'=>true,'style'=>true,'frameborder'=>true,'allowfullscreen'=>true,'loading'=>true,'referrerpolicy'=>true,'class'=>true,'id'=>true)) ); ?>
+								<?php elseif ( ! empty( $clinic_address ) ) : ?>
+									<iframe width="100%" height="192" style="border:0;" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=<?php echo urlencode( $clinic_address ); ?>&t=&z=14&ie=UTF8&iwloc=&output=embed"></iframe>
+								<?php else : ?>
+									<svg class="dp-footer-map-svg" viewBox="0 0 320 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<rect width="320" height="130" rx="8" fill="#F4EFEB"/>
+										<path d="M10 100 C20 95 40 105 50 120 L40 130 L0 130 Z" fill="#D3DEC6"/>
+										<path d="M250 12 C260 10 270 20 280 30 L290 0 L240 0 Z" fill="#D3DEC6"/>
+										<path d="M290 0 C280 40 250 80 255 130" stroke="#A7D2EB" stroke-width="26" stroke-linecap="square" fill="none"/>
+										<path d="M0 25 L320 25" stroke="#FFFFFF" stroke-width="4"/><path d="M0 65 C100 70 200 60 320 75" stroke="#FFFFFF" stroke-width="4"/><path d="M0 110 L320 110" stroke="#FFFFFF" stroke-width="3"/><path d="M50 0 L50 130" stroke="#FFFFFF" stroke-width="4"/><path d="M130 0 L90 130" stroke="#FFFFFF" stroke-width="4.5"/><path d="M210 0 C200 40 205 90 180 130" stroke="#FFFFFF" stroke-width="4"/><path d="M80 0 L250 130" stroke="#FFFFFF" stroke-width="3"/>
+										<ellipse cx="140" cy="85" rx="6" ry="3" fill="rgba(0,0,0,0.15)"/>
+										<g transform="translate(128, 52)"><path d="M12 0C5.37 0 0 5.37 0 12C0 19.5 9.6 27.6 11.15 28.87C11.65 29.28 12.35 29.28 12.85 28.87C14.4 27.6 24 19.5 24 12C24 5.37 18.63 0 12 0Z" fill="currentColor" style="color: var(--developer-starter-pro-primary);"/><circle cx="12" cy="12" r="4.5" fill="#FFFFFF"/></g>
+									</svg>
+								<?php endif; ?>
+							</a>
+						</div>
+					</div>
+
+					<!-- Column 2: Contact Info -->
+					<div class="dp-footer__col dp-footer__col--contact">
+						<h3 class="dp-footer__title"><?php esc_html_e( 'Contact Info', 'developer-starter-pro' ); ?></h3>
+						<ul class="dp-footer__list">
+							<li>
+								<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+								<span><?php echo esc_html( ! empty( $clinic_address ) ? $clinic_address : __( 'Apex Dental Care, Central Avenue, City', 'developer-starter-pro' ) ); ?></span>
+							</li>
+							<li>
+								<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+								<?php $display_email = ! empty( $clinic_email ) ? $clinic_email : 'info@apexdentalcare.com'; ?>
+								<a href="mailto:<?php echo esc_attr( $display_email ); ?>"><?php echo esc_html( $display_email ); ?></a>
+							</li>
+						</ul>
+					</div>
+
+					<!-- Column 3: Quick Links -->
+					<div class="dp-footer__col dp-footer__col--social">
+						<h3 class="dp-footer__title"><?php esc_html_e( 'Quick Links', 'developer-starter-pro' ); ?></h3>
+						<ul class="dp-footer__list">
+							<?php foreach ( $social_links as $id => $link ) : 
+								if ( empty( $link['url'] ) ) continue;
+							?>
+								<li>
+									<?php if ( ! empty( $link['is_custom'] ) ) : ?>
+										<span class="dp-footer-icon" style="font-size: 16px; width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; line-height: 1;"><?php echo esc_html( $link['icon'] ); ?></span>
+									<?php else : ?>
+										<svg class="dp-footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+											<?php echo $link['svg']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+										</svg>
+									<?php endif; ?>
+									<a href="<?php echo esc_url( $link['url'] ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html( $link['label'] ); ?></a>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+					</div>
+
+					<!-- Column 4: Newsletter -->
+					<div class="dp-footer__col dp-footer__col--newsletter">
+						<h3 class="dp-footer__title"><?php esc_html_e( 'Newsletter', 'developer-starter-pro' ); ?></h3>
+						<p style="font-size: 0.875rem; color: #5C5449; margin-bottom: 12px; line-height: 1.5;">
+							<?php esc_html_e( 'Subscribe to get updates.', 'developer-starter-pro' ); ?>
+						</p>
+						<form class="dp-footer__newsletter-form" onsubmit="alert('Thank you for subscribing!'); return false;" style="display: flex; gap: 8px;">
+							<input type="email" placeholder="<?php esc_attr_e( 'Your email...', 'developer-starter-pro' ); ?>" required style="flex: 1; padding: 10px 14px; border: 1px solid #E8E4DC; border-radius: 8px; font-size: 0.875rem; outline: none; background: #FFFFFF; color: #3D3830;">
+							<button type="submit" class="button" style="background: var(--developer-starter-pro-primary); color: #FFFFFF; border: none; padding: 10px 18px; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s ease;">
+								<?php esc_html_e( 'Join', 'developer-starter-pro' ); ?>
+							</button>
+						</form>
+					</div>
+
+				<?php endif; ?>
 
 			</div><!-- .dp-footer__grid -->
 

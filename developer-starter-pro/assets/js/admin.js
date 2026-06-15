@@ -15,6 +15,7 @@
 		initMediaUploader();
 		initRemoveButtons();
 		initRadioCards();
+		initSkinPresets();
 	});
 
 	// =========================================================================
@@ -111,6 +112,29 @@
 
 			$group.find('.developer-starter-pro-radio-card').removeClass('selected');
 			$card.addClass('selected');
+		});
+	}
+
+	// =========================================================================
+	// Skin Presets — Apply Color Schemes
+	// =========================================================================
+	function initSkinPresets() {
+		$(document).on('click', '.developer-starter-pro-apply-skin-btn', function (e) {
+			e.preventDefault();
+			var $btn = $(this);
+			var primary = $btn.data('primary');
+			var secondary = $btn.data('secondary');
+			var accent = $btn.data('accent');
+
+			if (primary) {
+				$('#color_primary').wpColorPicker('color', primary);
+			}
+			if (secondary) {
+				$('#color_secondary').wpColorPicker('color', secondary);
+			}
+			if (accent) {
+				$('#color_accent').wpColorPicker('color', accent);
+			}
 		});
 	}
 })(jQuery);
