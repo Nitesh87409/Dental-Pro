@@ -12,6 +12,7 @@
  *
  * @package developer-starter-pro
  * @since   1.0.0
+ * @modified 2026-06-16
  */
 
 $clinic_name = developer_starter_pro_get_option( 'clinic_name', 'DentalPro Elite' );
