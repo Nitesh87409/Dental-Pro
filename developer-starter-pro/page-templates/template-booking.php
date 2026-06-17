@@ -31,6 +31,9 @@ $selected_doctor   = isset( $_GET['doctor_id'] ) ? absint( $_GET['doctor_id'] ) 
 $selected_service  = isset( $_GET['service_id'] ) ? absint( $_GET['service_id'] ) : 0;
 $selected_location = isset( $_GET['location_id'] ) ? absint( $_GET['location_id'] ) : 0;
 ?>
+<style>
+	.iti { width: 100%; }
+</style>
 
 <main id="primary" class="developer-starter-pro-main" role="main">
 

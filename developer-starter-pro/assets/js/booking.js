@@ -19,6 +19,16 @@ document.addEventListener('DOMContentLoaded', function() {
 	var indicators = document.querySelectorAll('.wizard-step-indicator');
 	var panels = document.querySelectorAll('.booking-wizard-panel');
 
+	var phoneInput = form.querySelector('input[name="patient_phone"]');
+	var iti = null;
+	if (phoneInput && typeof window.intlTelInput === 'function') {
+		iti = window.intlTelInput(phoneInput, {
+			initialCountry: "in",
+			separateDialCode: true,
+			utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.1/build/js/utils.js"
+		});
+	}
+
 	// Localized parameters setup fallback
 	var l10n = window.developerStarterProBooking || {
 		restUrl: '/wp-json/dentalpro/v1/',
@@ -181,6 +191,10 @@ document.addEventListener('DOMContentLoaded', function() {
 					form.reportValidity();
 					return;
 				}
+				if (iti && !iti.isValidNumber()) {
+					showError('Please enter a valid phone number for the selected country.');
+					return;
+				}
 				submitBooking();
 				return;
 			}
@@ -246,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			time_slot: selectedTimeSlot,
 			patient_name: form.elements['patient_name'].value,
 			patient_email: form.elements['patient_email'].value,
-			patient_phone: form.elements['patient_phone'].value,
+			patient_phone: (iti && iti.isValidNumber()) ? iti.getNumber() : form.elements['patient_phone'].value,
 			notes: form.elements['notes'].value,
 			website_url: form.elements['website_url'] ? form.elements['website_url'].value : ''
 		};

@@ -145,10 +145,25 @@ class Developer_Starter_Pro_Enqueue {
 
 		// Booking Wizard JS
 		if ( is_page_template( 'page-templates/template-booking.php' ) ) {
+			wp_enqueue_style(
+				'intl-tel-input',
+				'https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.1/build/css/intlTelInput.css',
+				array(),
+				'23.0.1'
+			);
+
+			wp_enqueue_script(
+				'intl-tel-input',
+				'https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.1/build/js/intlTelInput.min.js',
+				array(),
+				'23.0.1',
+				true
+			);
+
 			wp_enqueue_script(
 				'developer-starter-pro-booking',
 				developer_starter_pro_JS . '/booking.js',
-				array( 'developer-starter-pro-main' ),
+				array( 'developer-starter-pro-main', 'intl-tel-input' ),
 				developer_starter_pro_VERSION,
 				true
 			);

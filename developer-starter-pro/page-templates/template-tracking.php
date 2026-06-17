@@ -18,6 +18,8 @@ $ref_id = sanitize_text_field( $_POST['ref_id'] ?? '' );
 $phone  = sanitize_text_field( $_POST['phone'] ?? '' );
 $action = sanitize_text_field( $_POST['tracking_action'] ?? '' );
 
+
+
 $booking = null;
 $error = '';
 $success_msg = '';
@@ -193,7 +195,16 @@ elseif ( ! empty( $ref_id ) && ! empty( $phone ) ) {
 						</tr>
 						<tr style="border-bottom:1px solid var(--developer-starter-pro-gray-100);">
 							<td style="padding:12px 0; color:var(--developer-starter-pro-gray-400); font-weight:500; font-size:0.9rem;"><?php esc_html_e( 'Appointment Date', 'developer-starter-pro' ); ?></td>
-							<td style="padding:12px 0; color:var(--developer-starter-pro-secondary); font-weight:600; text-align:right;"><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $booking->booking_date ) ) ); ?></td>
+							<td style="padding:12px 0; color:var(--developer-starter-pro-secondary); font-weight:600; text-align:right;">
+								<?php 
+								$booking_time = strtotime( $booking->booking_date );
+								if ( $booking_time && $booking_time > 0 ) {
+									echo esc_html( date_i18n( get_option( 'date_format' ), $booking_time ) );
+								} else {
+									echo esc_html__( 'Invalid Date', 'developer-starter-pro' );
+								}
+								?>
+							</td>
 						</tr>
 						<tr style="border-bottom:1px solid var(--developer-starter-pro-gray-100);">
 							<td style="padding:12px 0; color:var(--developer-starter-pro-gray-400); font-weight:500; font-size:0.9rem;"><?php esc_html_e( 'Scheduled Time', 'developer-starter-pro' ); ?></td>
@@ -212,16 +223,9 @@ elseif ( ! empty( $ref_id ) && ! empty( $phone ) ) {
 						<a href="" style="color:var(--developer-starter-pro-gray-400); font-weight:600; text-decoration:none; font-size:0.875rem;">← <?php esc_html_e( 'Check Another', 'developer-starter-pro' ); ?></a>
 						
 						<?php if ( 'cancelled' !== $status ) : ?>
-							<form method="post" action="" onsubmit="return confirm('<?php esc_attr_e( 'Are you sure you want to cancel this appointment?', 'developer-starter-pro' ); ?>');">
-								<?php wp_nonce_field( 'cancel_appointment_action', 'cancel_nonce' ); ?>
-								<input type="hidden" name="tracking_action" value="cancel_appointment">
-								<input type="hidden" name="booking_id" value="<?php echo intval( $booking->id ); ?>">
-								<input type="hidden" name="ref_id" value="<?php echo esc_attr( $ref_id ); ?>">
-								<input type="hidden" name="phone" value="<?php echo esc_attr( $phone ); ?>">
-								<button type="submit" class="developer-starter-pro-btn" style="background:#ef4444; border:none; color:#fff; border-radius:24px; padding:10px 20px; font-weight:600; font-size:0.82rem; cursor:pointer;">
-									<?php esc_html_e( 'Cancel Appointment', 'developer-starter-pro' ); ?>
-								</button>
-							</form>
+							<button type="button" class="developer-starter-pro-btn" onclick="showCancelModal()" style="background:#ef4444; border:none; color:#fff; border-radius:24px; padding:10px 20px; font-weight:600; font-size:0.82rem; cursor:pointer;">
+								<?php esc_html_e( 'Cancel Appointment', 'developer-starter-pro' ); ?>
+							</button>
 						<?php endif; ?>
 					</div>
 
@@ -230,6 +234,149 @@ elseif ( ! empty( $ref_id ) && ! empty( $phone ) ) {
 
 		</div>
 	</section>
+
+</main>
+
+<!-- Custom Premium Cancellation Modal -->
+<div id="dp-cancel-modal" class="dp-modal-backdrop" aria-hidden="true" role="dialog">
+	<div class="dp-modal-card">
+		<div class="dp-modal-icon">⚠️</div>
+		<h3 class="dp-modal-title"><?php esc_html_e( 'Cancel Appointment?', 'developer-starter-pro' ); ?></h3>
+		<p class="dp-modal-desc"><?php esc_html_e( 'Are you sure you want to cancel your scheduled appointment? This action cannot be undone.', 'developer-starter-pro' ); ?></p>
+		<div class="dp-modal-actions">
+			<button type="button" class="dp-modal-btn dp-modal-btn--secondary" onclick="closeCancelModal()">
+				<?php esc_html_e( 'No, Keep It', 'developer-starter-pro' ); ?>
+			</button>
+			<form id="dp-cancel-form" method="post" action="">
+				<?php wp_nonce_field( 'cancel_appointment_action', 'cancel_nonce' ); ?>
+				<input type="hidden" name="tracking_action" value="cancel_appointment">
+				<input type="hidden" name="booking_id" value="<?php echo intval( $booking ? $booking->id : 0 ); ?>">
+				<input type="hidden" name="ref_id" value="<?php echo esc_attr( $ref_id ); ?>">
+				<input type="hidden" name="phone" value="<?php echo esc_attr( $phone ); ?>">
+				<button type="submit" class="dp-modal-btn dp-modal-btn--danger">
+					<?php esc_html_e( 'Yes, Cancel It', 'developer-starter-pro' ); ?>
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<style>
+.dp-modal-backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(15, 23, 42, 0.4);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	z-index: 99999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dp-modal-backdrop.is-active {
+	opacity: 1;
+	pointer-events: auto;
+}
+.dp-modal-card {
+	background: rgba(255, 255, 255, 0.85);
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	border-radius: 24px;
+	padding: 32px;
+	max-width: 420px;
+	width: 90%;
+	text-align: center;
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+	transform: scale(0.9);
+	transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.dp-modal-backdrop.is-active .dp-modal-card {
+	transform: scale(1);
+}
+.dp-modal-icon {
+	font-size: 3rem;
+	margin-bottom: 16px;
+	display: inline-block;
+}
+.dp-modal-title {
+	margin-top: 0;
+	margin-bottom: 12px;
+	font-size: 1.5rem;
+	color: var(--developer-starter-pro-secondary);
+	font-weight: 700;
+}
+.dp-modal-desc {
+	color: var(--developer-starter-pro-gray-500);
+	font-size: 0.95rem;
+	line-height: 1.5;
+	margin-bottom: 24px;
+}
+.dp-modal-actions {
+	display: flex;
+	gap: 12px;
+	justify-content: center;
+	align-items: center;
+}
+.dp-modal-btn {
+	padding: 12px 24px;
+	font-size: 0.9rem;
+	font-weight: 600;
+	border-radius: 24px;
+	border: none;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+.dp-modal-btn--secondary {
+	background: var(--developer-starter-pro-gray-200);
+	color: var(--developer-starter-pro-secondary);
+}
+.dp-modal-btn--secondary:hover {
+	background: var(--developer-starter-pro-gray-300);
+}
+.dp-modal-btn--danger {
+	background: #ef4444;
+	color: #fff;
+}
+.dp-modal-btn--danger:hover {
+	background: #dc2626;
+	box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+#dp-cancel-form {
+	margin: 0;
+}
+</style>
+
+<script>
+function showCancelModal() {
+	const modal = document.getElementById('dp-cancel-modal');
+	if (modal) {
+		modal.classList.add('is-active');
+		modal.setAttribute('aria-hidden', 'false');
+	}
+}
+function closeCancelModal() {
+	const modal = document.getElementById('dp-cancel-modal');
+	if (modal) {
+		modal.classList.remove('is-active');
+		modal.setAttribute('aria-hidden', 'true');
+	}
+}
+document.addEventListener('DOMContentLoaded', function() {
+	const modal = document.getElementById('dp-cancel-modal');
+	if (modal) {
+		modal.addEventListener('click', function(e) {
+			if (e.target === modal) {
+				closeCancelModal();
+			}
+		});
+	}
+});
+</script>
 
 </main>
 

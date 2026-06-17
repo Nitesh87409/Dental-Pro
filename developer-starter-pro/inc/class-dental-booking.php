@@ -219,6 +219,12 @@ class Developer_Starter_Pro_Booking {
 		$time_slot   = sanitize_text_field( $params['time_slot'] ?? '' );
 		$notes       = sanitize_textarea_field( $params['notes'] ?? '' );
 
+		// Validate booking date format and ensure it is parseable
+		$booking_time = strtotime( $date );
+		if ( ! $booking_time || $booking_time <= 0 ) {
+			return new WP_REST_Response( array( 'success' => false, 'message' => __( 'Please select a valid booking date.', 'developer-starter-pro' ) ), 400 );
+		}
+
 		// Honeypot anti-spam check — hidden field must be empty.
 		$honeypot = sanitize_text_field( $params['website_url'] ?? '' );
 		if ( ! empty( $honeypot ) ) {

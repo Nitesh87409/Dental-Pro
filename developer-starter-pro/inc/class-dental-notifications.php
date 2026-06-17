@@ -413,45 +413,140 @@ class Developer_Starter_Pro_Notifications {
 	}
 
 	/**
-	 * Core SMS Dispatcher helper using Twilio API.
+	 * Core SMS Dispatcher helper using Twilio API or Custom HTTP Gateway.
 	 */
 	public function dispatch_sms( $phone, $message ) {
 		$options = developer_starter_pro_get_all_options();
-		$twilio_enabled = isset( $options['twilio_sms_enabled'] ) ? $options['twilio_sms_enabled'] : '0';
+		$sms_enabled = isset( $options['twilio_sms_enabled'] ) ? $options['twilio_sms_enabled'] : '0';
 
-		if ( '1' === $twilio_enabled ) {
-			$sid   = $options['twilio_sid'] ?? '';
-			$token = $options['twilio_auth_token'] ?? '';
-			$from  = $options['twilio_from_number'] ?? '';
+		if ( '1' === $sms_enabled ) {
+			$provider = isset( $options['sms_provider'] ) ? $options['sms_provider'] : 'twilio';
 
-			if ( ! empty( $sid ) && ! empty( $token ) && ! empty( $from ) ) {
-				$url = 'https://api.twilio.com/2010-04-01/Accounts/' . $sid . '/Messages.json';
-				
-				$response = wp_remote_post( $url, array(
-					'headers' => array(
-						'Authorization' => 'Basic ' . base64_encode( $sid . ':' . $token ),
-						'Content-Type'  => 'application/x-www-form-urlencoded',
-					),
-					'body' => array(
-						'From' => $from,
-						'To'   => $phone,
-						'Body' => $message,
-					),
-				) );
+			if ( 'twilio' === $provider ) {
+				$sid   = $options['twilio_sid'] ?? '';
+				$token = $options['twilio_auth_token'] ?? '';
+				$from  = $options['twilio_from_number'] ?? '';
 
-				if ( is_wp_error( $response ) ) {
-					error_log( 'Twilio SMS failed to dispatch: ' . $response->get_error_message() );
-				} else {
-					$code = wp_remote_retrieve_response_code( $response );
-					$body = wp_remote_retrieve_body( $response );
-					if ( $code < 200 || $code >= 300 ) {
-						error_log( "Twilio SMS API Error (HTTP $code): " . $body );
+				if ( ! empty( $sid ) && ! empty( $token ) && ! empty( $from ) ) {
+					$url = 'https://api.twilio.com/2010-04-01/Accounts/' . $sid . '/Messages.json';
+					
+					$response = wp_remote_post( $url, array(
+						'headers' => array(
+							'Authorization' => 'Basic ' . base64_encode( $sid . ':' . $token ),
+							'Content-Type'  => 'application/x-www-form-urlencoded',
+						),
+						'body' => array(
+							'From' => $from,
+							'To'   => $phone,
+							'Body' => $message,
+						),
+					) );
+
+					if ( is_wp_error( $response ) ) {
+						error_log( 'Twilio SMS failed to dispatch: ' . $response->get_error_message() );
 					} else {
-						error_log( "Twilio SMS successfully sent to $phone." );
+						$code = wp_remote_retrieve_response_code( $response );
+						$body = wp_remote_retrieve_body( $response );
+						if ( $code < 200 || $code >= 300 ) {
+							error_log( "Twilio SMS API Error (HTTP $code): " . $body );
+						} else {
+							error_log( "Twilio SMS successfully sent to $phone." );
+						}
 					}
+				} else {
+					error_log( 'Twilio SMS enabled but settings are incomplete.' );
 				}
-			} else {
-				error_log( 'Twilio SMS enabled but settings are incomplete.' );
+			} elseif ( 'custom' === $provider ) {
+				$api_url     = $options['sms_custom_url'] ?? '';
+				$method      = $options['sms_custom_method'] ?? 'GET';
+				$headers_raw = $options['sms_custom_headers'] ?? '';
+				$body_raw    = $options['sms_custom_body'] ?? '';
+
+				if ( ! empty( $api_url ) ) {
+					$headers = array();
+					if ( ! empty( $headers_raw ) ) {
+						$lines = explode( "\n", str_replace( "\r", "", $headers_raw ) );
+						foreach ( $lines as $line ) {
+							$line = trim( $line );
+							if ( empty( $line ) ) {
+								continue;
+							}
+							$parts = explode( ':', $line, 2 );
+							if ( count( $parts ) === 2 ) {
+								$headers[ trim( $parts[0] ) ] = trim( $parts[1] );
+							}
+						}
+					}
+
+					$phone_no_plus = ltrim( $phone, '+' );
+
+					$replacements = array(
+						'{phone}'         => $phone,
+						'{phone_no_plus}' => $phone_no_plus,
+						'{message}'       => $message,
+					);
+
+					// Replace placeholders in URL, Headers, and Body
+					$api_url  = str_replace( array_keys( $replacements ), array_values( $replacements ), $api_url );
+					$body_raw = str_replace( array_keys( $replacements ), array_values( $replacements ), $body_raw );
+					foreach ( $headers as $k => $v ) {
+						$headers[ $k ] = str_replace( array_keys( $replacements ), array_values( $replacements ), $v );
+					}
+
+					if ( 'GET' === $method ) {
+						if ( ! empty( $body_raw ) ) {
+							parse_str( $body_raw, $params );
+							$api_url = add_query_arg( $params, $api_url );
+						}
+						$response = wp_remote_get( $api_url, array(
+							'headers' => $headers,
+							'timeout' => 15,
+						) );
+					} else {
+						// POST methods
+						$post_args = array(
+							'headers' => $headers,
+							'timeout' => 15,
+						);
+
+						if ( 'POST_JSON' === $method ) {
+							$headers['Content-Type'] = 'application/json';
+							$post_args['headers']    = $headers;
+							
+							$json_decoded = json_decode( $body_raw, true );
+							if ( json_last_error() === JSON_ERROR_NONE ) {
+								$post_args['body'] = $body_raw;
+							} else {
+								parse_str( $body_raw, $parsed_body );
+								$post_args['body'] = wp_json_encode( $parsed_body );
+							}
+						} else {
+							// POST Form-Data
+							if ( ! isset( $headers['Content-Type'] ) ) {
+								$headers['Content-Type'] = 'application/x-www-form-urlencoded';
+								$post_args['headers']    = $headers;
+							}
+							parse_str( $body_raw, $parsed_body );
+							$post_args['body'] = $parsed_body;
+						}
+
+						$response = wp_remote_post( $api_url, $post_args );
+					}
+
+					if ( is_wp_error( $response ) ) {
+						error_log( 'Custom SMS failed to dispatch: ' . $response->get_error_message() );
+					} else {
+						$code = wp_remote_retrieve_response_code( $response );
+						$body = wp_remote_retrieve_body( $response );
+						if ( $code < 200 || $code >= 300 ) {
+							error_log( "Custom SMS API Error (HTTP $code): " . $body );
+						} else {
+							error_log( "Custom SMS successfully sent to $phone via HTTP Gateway." );
+						}
+					}
+				} else {
+					error_log( 'Custom SMS Gateway enabled but API URL is empty.' );
+				}
 			}
 		} else {
 			// Mock mode logging

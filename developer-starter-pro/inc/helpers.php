@@ -119,6 +119,13 @@ function developer_starter_pro_get_default_options() {
 		'twilio_sid'         => '',
 		'twilio_auth_token'  => '',
 		'twilio_from_number' => '',
+
+		// Custom SMS Gateway options
+		'sms_provider'       => 'twilio',
+		'sms_custom_url'     => '',
+		'sms_custom_method'  => 'GET',
+		'sms_custom_headers' => '',
+		'sms_custom_body'    => '',
 	);
 }
 

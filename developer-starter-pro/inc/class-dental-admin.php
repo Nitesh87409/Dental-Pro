@@ -198,6 +198,13 @@ class Developer_Starter_Pro_Admin {
 			$sanitized['twilio_sid']         = isset( $input['twilio_sid'] ) ? sanitize_text_field( $input['twilio_sid'] ) : '';
 			$sanitized['twilio_auth_token']  = isset( $input['twilio_auth_token'] ) ? sanitize_text_field( $input['twilio_auth_token'] ) : '';
 			$sanitized['twilio_from_number'] = isset( $input['twilio_from_number'] ) ? sanitize_text_field( $input['twilio_from_number'] ) : '';
+
+			// Custom SMS Gateway settings
+			$sanitized['sms_provider']       = isset( $input['sms_provider'] ) ? sanitize_text_field( $input['sms_provider'] ) : 'twilio';
+			$sanitized['sms_custom_url']     = isset( $input['sms_custom_url'] ) ? sanitize_text_field( $input['sms_custom_url'] ) : '';
+			$sanitized['sms_custom_method']  = isset( $input['sms_custom_method'] ) ? sanitize_text_field( $input['sms_custom_method'] ) : 'GET';
+			$sanitized['sms_custom_headers'] = isset( $input['sms_custom_headers'] ) ? sanitize_textarea_field( $input['sms_custom_headers'] ) : '';
+			$sanitized['sms_custom_body']    = isset( $input['sms_custom_body'] ) ? sanitize_textarea_field( $input['sms_custom_body'] ) : '';
 		}
 
 		unset( $sanitized['active_tab'] );
@@ -930,7 +937,7 @@ class Developer_Starter_Pro_Admin {
 				</tr>
 			</table>
 
-			<h2 style="margin-top: 30px;"><?php esc_html_e( 'Twilio SMS Notification Settings', 'developer-starter-pro' ); ?></h2>
+			<h2 style="margin-top: 30px;"><?php esc_html_e( 'SMS Notification Settings', 'developer-starter-pro' ); ?></h2>
 			<p class="description"><?php esc_html_e( 'Configure real-time SMS notifications for patient appointments.', 'developer-starter-pro' ); ?></p>
 
 			<table class="form-table">
@@ -944,25 +951,73 @@ class Developer_Starter_Pro_Admin {
 						</label>
 					</td>
 				</tr>
-				<tr>
-					<th><label for="twilio_sid"><?php esc_html_e( 'Account SID', 'developer-starter-pro' ); ?></label></th>
+				<tr class="sms-toggle-dep">
+					<th><label for="sms_provider"><?php esc_html_e( 'SMS Gateway Provider', 'developer-starter-pro' ); ?></label></th>
 					<td>
-						<input type="text" id="twilio_sid" name="<?php echo esc_attr( $this->option_name ); ?>[twilio_sid]" value="<?php echo esc_attr( isset( $options['twilio_sid'] ) ? $options['twilio_sid'] : '' ); ?>" class="regular-text" placeholder="ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
+						<select id="sms_provider" name="<?php echo esc_attr( $this->option_name ); ?>[sms_provider]">
+							<option value="twilio" <?php selected( isset( $options['sms_provider'] ) ? $options['sms_provider'] : 'twilio', 'twilio' ); ?>><?php esc_html_e( 'Twilio API', 'developer-starter-pro' ); ?></option>
+							<option value="custom" <?php selected( isset( $options['sms_provider'] ) ? $options['sms_provider'] : 'twilio', 'custom' ); ?>><?php esc_html_e( 'Custom HTTP Gateway (Fast2SMS, MSG91, etc.)', 'developer-starter-pro' ); ?></option>
+						</select>
 					</td>
 				</tr>
-				<tr>
-					<th><label for="twilio_auth_token"><?php esc_html_e( 'Auth Token', 'developer-starter-pro' ); ?></label></th>
-					<td>
-						<input type="password" id="twilio_auth_token" name="<?php echo esc_attr( $this->option_name ); ?>[twilio_auth_token]" value="<?php echo esc_attr( isset( $options['twilio_auth_token'] ) ? $options['twilio_auth_token'] : '' ); ?>" class="regular-text" placeholder="••••••••••••••••••••••••••••••••">
-					</td>
-				</tr>
-				<tr>
-					<th><label for="twilio_from_number"><?php esc_html_e( 'Twilio Phone Number', 'developer-starter-pro' ); ?></label></th>
-					<td>
-						<input type="text" id="twilio_from_number" name="<?php echo esc_attr( $this->option_name ); ?>[twilio_from_number]" value="<?php echo esc_attr( isset( $options['twilio_from_number'] ) ? $options['twilio_from_number'] : '' ); ?>" class="regular-text" placeholder="+1234567890">
-						<p class="description"><?php esc_html_e( 'Twilio phone number or Sender ID in E.164 format.', 'developer-starter-pro' ); ?></p>
-					</td>
-				</tr>
+				
+				<!-- Twilio Gateway Settings -->
+				<tbody class="sms-gateway-fields sms-gateway-twilio">
+					<tr>
+						<th><label for="twilio_sid"><?php esc_html_e( 'Account SID', 'developer-starter-pro' ); ?></label></th>
+						<td>
+							<input type="text" id="twilio_sid" name="<?php echo esc_attr( $this->option_name ); ?>[twilio_sid]" value="<?php echo esc_attr( isset( $options['twilio_sid'] ) ? $options['twilio_sid'] : '' ); ?>" class="regular-text" placeholder="ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
+						</td>
+					</tr>
+					<tr>
+						<th><label for="twilio_auth_token"><?php esc_html_e( 'Auth Token', 'developer-starter-pro' ); ?></label></th>
+						<td>
+							<input type="password" id="twilio_auth_token" name="<?php echo esc_attr( $this->option_name ); ?>[twilio_auth_token]" value="<?php echo esc_attr( isset( $options['twilio_auth_token'] ) ? $options['twilio_auth_token'] : '' ); ?>" class="regular-text" placeholder="••••••••••••••••••••••••••••••••">
+						</td>
+					</tr>
+					<tr>
+						<th><label for="twilio_from_number"><?php esc_html_e( 'Twilio Phone Number', 'developer-starter-pro' ); ?></label></th>
+						<td>
+							<input type="text" id="twilio_from_number" name="<?php echo esc_attr( $this->option_name ); ?>[twilio_from_number]" value="<?php echo esc_attr( isset( $options['twilio_from_number'] ) ? $options['twilio_from_number'] : '' ); ?>" class="regular-text" placeholder="+1234567890">
+							<p class="description"><?php esc_html_e( 'Twilio phone number or Sender ID in E.164 format.', 'developer-starter-pro' ); ?></p>
+						</td>
+					</tr>
+				</tbody>
+
+				<!-- Custom HTTP Gateway Settings -->
+				<tbody class="sms-gateway-fields sms-gateway-custom" style="display:none;">
+					<tr>
+						<th><label for="sms_custom_url"><?php esc_html_e( 'API URL', 'developer-starter-pro' ); ?></label></th>
+						<td>
+							<input type="text" id="sms_custom_url" name="<?php echo esc_attr( $this->option_name ); ?>[sms_custom_url]" value="<?php echo esc_attr( isset( $options['sms_custom_url'] ) ? $options['sms_custom_url'] : '' ); ?>" class="large-text" placeholder="https://api.provider.com/send?to={phone}&msg={message}" style="width:100%; max-width:600px;">
+							<p class="description"><?php esc_html_e( 'The HTTP/HTTPS API endpoint URL. Supported placeholders: {phone} (with + sign), {phone_no_plus} (without + sign), {message} (text message).', 'developer-starter-pro' ); ?></p>
+						</td>
+					</tr>
+					<tr>
+						<th><label for="sms_custom_method"><?php esc_html_e( 'HTTP Method', 'developer-starter-pro' ); ?></label></th>
+						<td>
+							<select id="sms_custom_method" name="<?php echo esc_attr( $this->option_name ); ?>[sms_custom_method]">
+								<option value="GET" <?php selected( isset( $options['sms_custom_method'] ) ? $options['sms_custom_method'] : 'GET', 'GET' ); ?>><?php esc_html_e( 'GET Request', 'developer-starter-pro' ); ?></option>
+								<option value="POST_FORM" <?php selected( isset( $options['sms_custom_method'] ) ? $options['sms_custom_method'] : 'POST_FORM', 'POST_FORM' ); ?>><?php esc_html_e( 'POST Request (Form Data / URL encoded)', 'developer-starter-pro' ); ?></option>
+								<option value="POST_JSON" <?php selected( isset( $options['sms_custom_method'] ) ? $options['sms_custom_method'] : 'POST_JSON', 'POST_JSON' ); ?>><?php esc_html_e( 'POST Request (JSON Payload)', 'developer-starter-pro' ); ?></option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th><label for="sms_custom_headers"><?php esc_html_e( 'Custom HTTP Headers', 'developer-starter-pro' ); ?></label></th>
+						<td>
+							<textarea id="sms_custom_headers" name="<?php echo esc_attr( $this->option_name ); ?>[sms_custom_headers]" rows="3" class="large-text" placeholder="Authorization: Bearer YOUR_API_KEY&#10;api-key: 123456" style="width:100%; max-width:600px;"><?php echo esc_textarea( isset( $options['sms_custom_headers'] ) ? $options['sms_custom_headers'] : '' ); ?></textarea>
+							<p class="description"><?php esc_html_e( 'Enter custom headers, one header per line. e.g. "Authorization: Bearer KEY". Supports placeholders.', 'developer-starter-pro' ); ?></p>
+						</td>
+					</tr>
+					<tr>
+						<th><label for="sms_custom_body"><?php esc_html_e( 'Request Body / Parameters', 'developer-starter-pro' ); ?></label></th>
+						<td>
+							<textarea id="sms_custom_body" name="<?php echo esc_attr( $this->option_name ); ?>[sms_custom_body]" rows="3" class="large-text" placeholder="route=q&message={message}&numbers={phone_no_plus}" style="width:100%; max-width:600px;"><?php echo esc_textarea( isset( $options['sms_custom_body'] ) ? $options['sms_custom_body'] : '' ); ?></textarea>
+							<p class="description"><?php esc_html_e( 'Query string format (e.g. param1=val1&param2={message}) or raw JSON depending on selected method. For GET requests, these are appended as query arguments.', 'developer-starter-pro' ); ?></p>
+						</td>
+					</tr>
+				</tbody>
 			</table>
 		</div>
 		<?php

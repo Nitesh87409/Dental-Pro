@@ -63,8 +63,8 @@ $doctors = get_posts( array(
 					$display_doctors = array();
 					if ( ! empty( $doctors ) ) {
 						foreach ( $doctors as $doctor ) {
-							$specialty  = get_post_meta( $doctor->ID, '_developer_starter_pro_doctor_specialization', true ) ?: __( 'Dental Specialist', 'developer-starter-pro' );
-							$bio        = get_post_meta( $doctor->ID, '_developer_starter_pro_doctor_bio', true );
+							$specialty  = get_post_meta( $doctor->ID, '_developer_starter_pro_doctor_speciality', true ) ?: ( get_post_meta( $doctor->ID, '_developer_starter_pro_doctor_specialization', true ) ?: __( 'Dental Specialist', 'developer-starter-pro' ) );
+							$bio        = get_post_meta( $doctor->ID, '_developer_starter_pro_doctor_bio', true ) ?: get_post_meta( $doctor->ID, '_developer_starter_pro_doctor_qualifications', true );
 							$photo_html = '';
 
 							if ( has_post_thumbnail( $doctor->ID ) ) {

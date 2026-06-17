@@ -35,19 +35,16 @@ get_header();
 	// 7. CTA Banner Booking Section (Appointment Booking)
 	get_template_part( 'template-parts/homepage/cta', 'banner' );
 
-	/* Comment out non-essential sections to match the clean reference layout
 	// 6.5. Gallery Showcase Section
 	get_template_part( 'template-parts/homepage/gallery', 'section' );
 
-	// 7.5. Clinic 360-Degree Virtual Tour Section
-	get_template_part( 'template-parts/homepage/tour', 'section' );
+
 
 	// 9. Google Reviews Section
 	get_template_part( 'template-parts/homepage/google', 'reviews' );
 
 	// 10. FAQ Accordion Section
 	get_template_part( 'template-parts/homepage/faq', 'section' );
-	*/
 
 	// 11. Latest Blog Posts Section
 	if ( '1' === developer_starter_pro_get_option( 'blog_section_enabled', '1' ) ) {

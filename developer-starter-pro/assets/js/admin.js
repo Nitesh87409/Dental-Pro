@@ -16,6 +16,7 @@
 		initRemoveButtons();
 		initRadioCards();
 		initSkinPresets();
+		initSmsGatewayToggles();
 	});
 
 	// =========================================================================
@@ -136,5 +137,31 @@
 				$('#color_accent').wpColorPicker('color', accent);
 			}
 		});
+	}
+
+	// =========================================================================
+	// SMS Gateway Settings Toggles
+	// =========================================================================
+	function initSmsGatewayToggles() {
+		var $enabledCheck = $('#twilio_sms_enabled');
+		var $providerSelect = $('#sms_provider');
+		if (!$enabledCheck.length) return;
+
+		function updateSmsFields() {
+			var isEnabled = $enabledCheck.is(':checked');
+			if (isEnabled) {
+				$('.sms-toggle-dep').show();
+				var provider = $providerSelect.val();
+				$('.sms-gateway-fields').hide();
+				$('.sms-gateway-' + provider).show();
+			} else {
+				$('.sms-toggle-dep').hide();
+				$('.sms-gateway-fields').hide();
+			}
+		}
+
+		$enabledCheck.on('change', updateSmsFields);
+		$providerSelect.on('change', updateSmsFields);
+		updateSmsFields();
 	}
 })(jQuery);
