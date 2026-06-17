@@ -35,7 +35,7 @@ $default_services = array(
 		'price'    => '299',
 		'duration' => '60',
 		'card_img' => get_theme_file_uri( 'assets/images/main-banner.jpeg' ),
-		'icon'     => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-.5 0-1 .5-1.5 1.5C9.5 5.5 9 6.5 8 7.5 7 8.5 5.5 9 4.5 9 3.5 9 3 9.5 3 10.5c0 1.5.5 3 1 4.5.5 1.5 1 3 1 4.5 0 1 .5 1.5 1.5 1.5.8 0 1.5-.5 2-1.5.5-1 1-2.5 1.5-2.5.5 0 1 1.5 1.5 2.5.5 1 1.2 1.5 2 1.5 1 0 1.5-.5 1.5-1.5 0-1.5.5-3 1-4.5.5-1.5 1-3 1-4.5 0-1-.5-1.5-1.5-1.5-1 0-2.5-.5-3.5-1.5-1-1-1.5-2-2.5-4C13 2.5 12.5 2 12 2z"/></svg>',
+		'icon'     => '<svg viewBox="-1 0 65 65" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M30.2,3.8 C20.1,3.8 -9.1,-13.2 2.8,25.1 C2.8,34.3 5,62.1 14.1,62.1 C23.2,62.1 20.4,38.6 30.2,38.6 C40,38.6 37.2,62.1 46.3,62.1 C55.5,62.1 57.4,34.1 57.4,24.9 C68.8,-12.9 40.4,3.8 30.2,3.8 L30.2,3.8 Z"/><path d="M22.7,2.4 C22.7,2.4 34.5,3.8 36.2,10"/></svg>',
 		'url'      => '#',
 		'color'    => 'teal',
 	),
@@ -124,7 +124,7 @@ $card_colors = array(
 						$icon_html  = isset( $icons_list[ $icon_key ] ) ? $icons_list[ $icon_key ]['svg'] : '';
 					}
 					if ( empty( $icon_html ) ) {
-						$icon_html = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-.5 0-1 .5-1.5 1.5C9.5 5.5 9 6.5 8 7.5 7 8.5 5.5 9 4.5 9 3.5 9 3 9.5 3 10.5c0 1.5.5 3 1 4.5.5 1.5 1 3 1 4.5 0 1 .5 1.5 1.5 1.5.8 0 1.5-.5 2-1.5.5-1 1-2.5 1.5-2.5.5 0 1 1.5 1.5 2.5.5 1 1.2 1.5 2 1.5 1 0 1.5-.5 1.5-1.5 0-1.5.5-3 1-4.5.5-1.5 1-3 1-4.5 0-1-.5-1.5-1.5-1.5-1 0-2.5-.5-3.5-1.5-1-1-1.5-2-2.5-4C13 2.5 12.5 2 12 2z"/></svg>';
+						$icon_html = '<svg viewBox="-1 0 65 65" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M30.2,3.8 C20.1,3.8 -9.1,-13.2 2.8,25.1 C2.8,34.3 5,62.1 14.1,62.1 C23.2,62.1 20.4,38.6 30.2,38.6 C40,38.6 37.2,62.1 46.3,62.1 C55.5,62.1 57.4,34.1 57.4,24.9 C68.8,-12.9 40.4,3.8 30.2,3.8 L30.2,3.8 Z"/><path d="M22.7,2.4 C22.7,2.4 34.5,3.8 36.2,10"/></svg>';
 					}
 
 					$display_services[] = array(
@@ -164,28 +164,32 @@ $card_colors = array(
 				$clean_price = function_exists( 'developer_starter_pro_get_clean_service_price' ) ? developer_starter_pro_get_clean_service_price( $svc['price'] ) : floatval( preg_replace( '/[^\d.]/', '', (string) $svc['price'] ) );
 				$has_price = $clean_price > 0;
 				$price_fmt = $has_price ? '$' . number_format( $clean_price ) : '';
-				$has_dur   = ! empty( $svc['duration'] );
+				// Clean duration to prevent double 'mins' suffix
+				$clean_dur = ! empty( $svc['duration'] ) ? preg_replace( '/[^\d]/', '', $svc['duration'] ) : '';
+				$has_dur   = ! empty( $clean_dur );
 				$has_card_img = ! empty( $svc['card_img'] );
-				// Strip style: image bg or gradient
-				if ( $has_card_img ) {
-					$strip_style = 'background: url(' . esc_url( $svc['card_img'] ) . ') center/cover no-repeat; position:relative;';
-				} else {
-					$strip_style = 'background:' . esc_attr( $color['strip'] ) . ';';
-				}
 			?>
 			<article class="dp-svc-card" style="--card-glow:<?php echo esc_attr( $color['glow'] ); ?>">
 
-				<!-- Gradient Strip with Icon -->
-				<div class="dp-svc-card__strip" style="<?php echo $strip_style; // phpcs:ignore ?>">
-					<!-- Card background image is shown directly without overlay -->
+				<!-- Full Card Background Image -->
+				<?php if ( $has_card_img ) : ?>
+					<div class="dp-svc-card__bg" style="background-image: url('<?php echo esc_url( $svc['card_img'] ); ?>');"></div>
+				<?php else : ?>
+					<div class="dp-svc-card__bg" style="background: <?php echo esc_attr( $color['strip'] ); ?>;"></div>
+				<?php endif; ?>
+
+				<!-- Translucent Overlay -->
+				<div class="dp-svc-card__overlay"></div>
+
+				<!-- Top Area with Icon and Duration -->
+				<div class="dp-svc-card__header-row">
 					<div class="dp-svc-card__icon-wrap">
 						<?php echo $svc['icon']; // phpcs:ignore ?>
 					</div>
-					<div class="dp-svc-card__strip-deco" aria-hidden="true"></div>
 					<?php if ( $has_dur ) : ?>
 					<div class="dp-svc-card__dur-badge" style="background:<?php echo esc_attr( $color['badge'] ); ?>">
 						<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="10" height="10"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>
-						<?php echo esc_html( $svc['duration'] ); ?> <?php esc_html_e( 'mins', 'developer-starter-pro' ); ?>
+						<?php echo esc_html( $clean_dur ); ?> <?php esc_html_e( 'mins', 'developer-starter-pro' ); ?>
 					</div>
 					<?php endif; ?>
 				</div>
@@ -204,7 +208,7 @@ $card_colors = array(
 						<?php if ( $has_price ) : ?>
 							<span class="dp-price-amount"><?php echo esc_html( $price_fmt ); ?></span>
 						<?php else : ?>
-							<span class="dp-price-amount" style="font-size: 1.05rem; color: #5A6E5A;"><?php esc_html_e( 'Call Us', 'developer-starter-pro' ); ?></span>
+							<span class="dp-price-amount" style="font-size: 1.05rem; color: #E5EDE5;"><?php esc_html_e( 'Call Us', 'developer-starter-pro' ); ?></span>
 						<?php endif; ?>
 					</div>
 					<a href="<?php echo esc_url( $svc['url'] ); ?>" class="dp-svc-card__btn" aria-label="<?php echo esc_attr( sprintf( __( 'Learn more about %s', 'developer-starter-pro' ), $svc['title'] ) ); ?>">
@@ -267,7 +271,8 @@ $card_colors = array(
 
 .dp-services .dp-services__container {
 	position: relative;
-	max-width: 1160px;
+	max-width: 1360px;
+	width: 95%;
 	margin: 0 auto;
 	padding: 0 32px;
 	z-index: 1;
@@ -345,80 +350,98 @@ $card_colors = array(
 /* ── Service Card ── */
 .dp-svc-card {
 	position: relative;
-	background: #FFFFFF;
+	background: #101E12; /* Dark forest base to match the theme */
 	border-radius: 18px;
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
+	border: 1px solid rgba(255, 255, 255, 0.12);
 	box-shadow:
-		0 1px 3px rgba(26,46,26,0.06),
-		0 4px 16px rgba(26,46,26,0.07);
+		0 4px 20px rgba(0, 0, 0, 0.25),
+		0 1px 4px rgba(0, 0, 0, 0.15);
 	transition:
-		transform 0.35s cubic-bezier(0.34, 1.5, 0.64, 1),
-		box-shadow 0.35s ease;
+		transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+		box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 	cursor: pointer;
+	min-height: 380px;
 }
 
 .dp-svc-card:hover {
-	transform: translateY(-10px);
+	transform: translateY(-8px);
 	box-shadow:
-		0 8px 32px var(--card-glow),
-		0 24px 56px rgba(26,46,26,0.12),
-		0 2px 8px rgba(26,46,26,0.08);
+		0 12px 36px var(--card-glow),
+		0 24px 56px rgba(0, 0, 0, 0.35);
+}
+
+/* Background image covering the entire card */
+.dp-svc-card__bg {
+	position: absolute;
+	inset: 0;
+	background-size: cover;
+	background-position: center;
+	transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+	z-index: 0;
+}
+.dp-svc-card:hover .dp-svc-card__bg {
+	transform: scale(1.08);
+}
+
+/* Translucent premium dark overlay */
+.dp-svc-card__overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		to bottom,
+		rgba(10, 20, 15, 0.22) 0%,
+		rgba(10, 20, 12, 0.55) 50%,
+		rgba(5, 10, 6, 0.78) 100%
+	);
+	z-index: 1;
+	transition: background 0.4s ease;
+}
+.dp-svc-card:hover .dp-svc-card__overlay {
+	background: linear-gradient(
+		to bottom,
+		rgba(10, 20, 15, 0.12) 0%,
+		rgba(10, 20, 12, 0.60) 50%,
+		rgba(5, 10, 6, 0.82) 100%
+	);
 }
 
 /* Hover shine sweep */
 .dp-svc-card__shine {
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.18) 50%, transparent 60%);
+	background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.12) 50%, transparent 60%);
 	transform: translateX(-100%);
 	transition: transform 0.6s ease;
 	pointer-events: none;
 	border-radius: 18px;
+	z-index: 3;
 }
 .dp-svc-card:hover .dp-svc-card__shine {
 	transform: translateX(100%);
 }
 
-/* ── Gradient Strip (top) ── */
-.dp-svc-card__strip {
+/* Header row (replacing strip) */
+.dp-svc-card__header-row {
 	position: relative;
-	padding: 24px 20px 20px;
+	z-index: 2;
+	padding: 24px 20px 12px;
 	display: flex;
 	align-items: flex-start;
 	justify-content: space-between;
-	min-height: 110px;
-	overflow: hidden;
-}
-
-/* Strip decorative circle */
-.dp-svc-card__strip-deco {
-	position: absolute;
-	bottom: -30px;
-	right: -30px;
-	width: 100px;
-	height: 100px;
-	background: rgba(255,255,255,0.1);
-	border-radius: 50%;
-}
-.dp-svc-card__strip-deco::before {
-	content: '';
-	position: absolute;
-	bottom: 10px; right: 10px;
-	width: 60px; height: 60px;
-	background: rgba(255,255,255,0.08);
-	border-radius: 50%;
 }
 
 /* Icon wrapper */
 .dp-svc-card__icon-wrap {
-	width: 56px;
-	height: 56px;
-	background: rgba(255,255,255,0.2);
-	backdrop-filter: blur(4px);
-	border: 1.5px solid rgba(255,255,255,0.35);
-	border-radius: 14px;
+	width: 32px;
+	height: 32px;
+	background: rgba(255, 255, 255, 0.12);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	border-radius: 8px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -426,30 +449,31 @@ $card_colors = array(
 	transition: transform 0.3s ease, background 0.3s ease;
 }
 .dp-svc-card:hover .dp-svc-card__icon-wrap {
-	transform: scale(1.1) rotate(-3deg);
-	background: rgba(255,255,255,0.3);
+	transform: scale(1.08) rotate(-3deg);
+	background: rgba(255, 255, 255, 0.22);
 }
 
 .dp-svc-card__icon-wrap svg {
-	width: 26px;
-	height: 26px;
+	width: 15px;
+	height: 15px;
 	stroke: #FFFFFF;
 	color: #FFFFFF;
 }
 
-/* Duration badge (top-right of strip) */
+/* Duration badge (top-right of card) */
 .dp-svc-card__dur-badge {
 	display: inline-flex;
 	align-items: center;
 	gap: 4px;
 	padding: 5px 10px;
 	border-radius: 20px;
-	font-size: 0.7rem;
+	font-size: 0.68rem;
 	font-weight: 600;
-	color: rgba(255,255,255,0.92);
+	color: rgba(255, 255, 255, 0.95);
 	letter-spacing: 0.02em;
 	white-space: nowrap;
-	margin-top: 4px;
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	backdrop-filter: blur(4px);
 }
 .dp-svc-card__dur-badge svg {
 	stroke: rgba(255,255,255,0.8);
@@ -457,36 +481,45 @@ $card_colors = array(
 
 /* ── Card Body ── */
 .dp-svc-card__body {
-	padding: 20px 20px 12px;
+	position: relative;
+	z-index: 2;
+	padding: 12px 20px 16px;
 	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
 }
 
 .dp-svc-card__title {
 	font-family: 'Playfair Display', Georgia, serif;
-	font-size: 1.05rem;
+	font-size: 1.15rem;
 	font-weight: 600;
-	color: #1A2E1A;
+	color: #FFFFFF;
 	margin: 0 0 10px 0;
-	line-height: 1.3;
+	line-height: 1.35;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 .dp-svc-card__title a {
 	color: inherit;
 	text-decoration: none;
 	transition: color 0.2s;
 }
-.dp-svc-card__title a:hover { color: var(--developer-starter-pro-primary); }
+.dp-svc-card__title a:hover { color: #F3C64F; }
 
 .dp-svc-card__desc {
 	font-size: 0.83rem;
-	color: #6B7C6B;
+	color: rgba(255, 255, 255, 0.78);
 	line-height: 1.7;
 	margin: 0;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* ── Card Footer ── */
 .dp-svc-card__footer {
-	padding: 14px 20px 20px;
-	border-top: 1px solid rgba(78,124,89,0.08);
+	position: relative;
+	z-index: 2;
+	padding: 16px 20px 24px;
+	border-top: 1px solid rgba(255, 255, 255, 0.08);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -502,20 +535,21 @@ $card_colors = array(
 }
 .dp-price-label {
 	font-family: 'Inter', 'Helvetica Neue', sans-serif;
-	font-size: 0.68rem;
+	font-size: 0.65rem;
 	font-weight: 600;
 	letter-spacing: 0.06em;
 	text-transform: uppercase;
-	color: #9AAA9A;
+	color: rgba(255, 255, 255, 0.45);
 	line-height: 1;
 }
 .dp-price-amount {
 	font-family: 'Inter', 'Helvetica Neue', sans-serif;
-	font-size: 1.25rem;
+	font-size: 1.35rem;
 	font-weight: 700;
-	color: #C9A84C;
+	color: #F3C64F; /* Elegant gold accent */
 	letter-spacing: -0.02em;
 	line-height: 1;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 /* Learn More button */
@@ -523,21 +557,24 @@ $card_colors = array(
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
-	padding: 9px 16px;
+	padding: 9px 18px;
 	background: linear-gradient(135deg, var(--developer-starter-pro-primary), var(--developer-starter-pro-primary-dark));
-	color: #FFFFFF;
+	color: #FFFFFF !important;
 	border-radius: 24px;
 	font-size: 0.78rem;
 	font-weight: 600;
 	text-decoration: none;
 	letter-spacing: 0.02em;
+	box-shadow: 0 4px 12px rgba(78, 124, 89, 0.2);
 	transition: gap 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
 	white-space: nowrap;
 	flex-shrink: 0;
+	border: 1px solid rgba(255, 255, 255, 0.08);
 }
 .dp-svc-card__btn:hover {
+	color: #FFFFFF !important;
 	gap: 10px;
-	box-shadow: 0 6px 18px rgba(78,124,89,0.35);
+	box-shadow: 0 6px 20px rgba(78,124,89,0.45);
 	transform: translateX(2px);
 }
 .dp-svc-card__btn svg {

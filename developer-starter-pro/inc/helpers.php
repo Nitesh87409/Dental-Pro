@@ -414,7 +414,7 @@ function developer_starter_pro_get_service_icons() {
 	return array(
 		'tooth'       => array(
 			'label' => __( 'Tooth (General / Implants)', 'developer-starter-pro' ),
-			'svg'   => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-.5 0-1 .5-1.5 1.5C9.5 5.5 9 6.5 8 7.5 7 8.5 5.5 9 4.5 9 3.5 9 3 9.5 3 10.5c0 1.5.5 3 1 4.5.5 1.5 1 3 1 4.5 0 1 .5 1.5 1.5 1.5.8 0 1.5-.5 2-1.5.5-1 1-2.5 1.5-2.5.5 0 1 1.5 1.5 2.5.5 1 1.2 1.5 2 1.5 1 0 1.5-.5 1.5-1.5 0-1.5.5-3 1-4.5.5-1.5 1-3 1-4.5 0-1-.5-1.5-1.5-1.5-1 0-2.5-.5-3.5-1.5-1-1-1.5-2-2.5-4C13 2.5 12.5 2 12 2z"/></svg>'
+			'svg'   => '<svg viewBox="-1 0 65 65" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M30.2,3.8 C20.1,3.8 -9.1,-13.2 2.8,25.1 C2.8,34.3 5,62.1 14.1,62.1 C23.2,62.1 20.4,38.6 30.2,38.6 C40,38.6 37.2,62.1 46.3,62.1 C55.5,62.1 57.4,34.1 57.4,24.9 C68.8,-12.9 40.4,3.8 30.2,3.8 L30.2,3.8 Z"/><path d="M22.7,2.4 C22.7,2.4 34.5,3.8 36.2,10"/></svg>'
 		),
 		'shield'      => array(
 			'label' => __( 'Shield (Preventative / Hygiene)', 'developer-starter-pro' ),

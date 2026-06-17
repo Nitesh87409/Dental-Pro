@@ -121,7 +121,8 @@ $card_colors = array(
 }
 .arc-container {
 	position: relative;
-	max-width: 1200px;
+	max-width: 1360px;
+	width: 95%;
 	margin: 0 auto;
 	padding: 0 32px;
 	z-index: 1;
@@ -176,20 +177,60 @@ $card_colors = array(
 /* ── Service Card ── */
 .arc-card {
 	position: relative;
-	background: #FFFFFF;
+	background: #101E12; /* Dark forest base to match the theme */
 	border-radius: 18px;
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
-	box-shadow: 0 2px 12px rgba(26,46,26,0.07), 0 1px 3px rgba(26,46,26,0.05);
-	transition: transform 0.35s cubic-bezier(0.34, 1.5, 0.64, 1), box-shadow 0.35s ease;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 1px 4px rgba(0, 0, 0, 0.15);
+	transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+	min-height: 380px;
 }
 .arc-card:hover {
-	transform: translateY(-10px);
+	transform: translateY(-8px);
 	box-shadow:
-		0 8px 32px var(--card-glow, rgba(78,124,89,0.18)),
-		0 24px 56px rgba(26,46,26,0.12),
-		0 2px 8px rgba(26,46,26,0.07);
+		0 12px 36px var(--card-glow, rgba(78,124,89,0.18)),
+		0 24px 56px rgba(0,0,0,0.35);
+}
+
+/* Background image covering the entire card */
+.arc-card__bg {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	overflow: hidden;
+}
+.arc-card__bg img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.arc-card:hover .arc-card__bg img {
+	transform: scale(1.08);
+}
+
+/* Translucent premium dark overlay */
+.arc-card__overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		to bottom,
+		rgba(10, 20, 15, 0.22) 0%,
+		rgba(10, 20, 12, 0.55) 50%,
+		rgba(5, 10, 6, 0.78) 100%
+	);
+	z-index: 1;
+	transition: background 0.4s ease;
+}
+.arc-card:hover .arc-card__overlay {
+	background: linear-gradient(
+		to bottom,
+		rgba(10, 20, 15, 0.12) 0%,
+		rgba(10, 20, 12, 0.60) 50%,
+		rgba(5, 10, 6, 0.82) 100%
+	);
 }
 
 /* Shine sweep on hover */
@@ -197,70 +238,36 @@ $card_colors = array(
 	content: '';
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.16) 50%, transparent 60%);
+	background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.12) 50%, transparent 60%);
 	transform: translateX(-100%);
 	transition: transform 0.6s ease;
 	pointer-events: none;
 	border-radius: 18px;
+	z-index: 3;
 }
 .arc-card:hover::after { transform: translateX(100%); }
 
-/* ── Gradient Strip ── */
-.arc-card__strip {
+/* Header row (replacing strip) */
+.arc-card__header-row {
 	position: relative;
-	padding: 22px 18px 18px;
+	z-index: 2;
+	padding: 24px 20px 12px;
 	display: flex;
 	align-items: flex-start;
 	justify-content: space-between;
-	min-height: 100px;
-	overflow: hidden;
-}
-.arc-card__strip::before {
-	content: '';
-	position: absolute;
-	bottom: -28px; right: -28px;
-	width: 90px; height: 90px;
-	background: rgba(255,255,255,0.1);
-	border-radius: 50%;
-}
-.arc-card__strip::after {
-	content: '';
-	position: absolute;
-	bottom: 4px; right: 4px;
-	width: 54px; height: 54px;
-	background: rgba(255,255,255,0.07);
-	border-radius: 50%;
-}
-
-/* Thumbnail if exists — overlay on strip */
-.arc-card__thumb {
-	position: absolute;
-	inset: 0;
-	z-index: 0;
-}
-.arc-card__thumb img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	opacity: 1;
-}
-.arc-card__thumb-overlay {
-	position: absolute;
-	inset: 0;
-	background: inherit; /* inherits strip gradient */
-	opacity: 0.8;
 }
 
 /* Icon */
 .arc-card__icon-wrap {
 	position: relative;
-	z-index: 1;
-	width: 54px;
-	height: 54px;
-	background: rgba(255,255,255,0.22);
-	backdrop-filter: blur(4px);
-	border: 1.5px solid rgba(255,255,255,0.35);
-	border-radius: 13px;
+	z-index: 2;
+	width: 32px;
+	height: 32px;
+	background: rgba(255, 255, 255, 0.12);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	border-radius: 8px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -268,58 +275,68 @@ $card_colors = array(
 	transition: transform 0.3s ease, background 0.3s ease;
 }
 .arc-card:hover .arc-card__icon-wrap {
-	transform: scale(1.1) rotate(-3deg);
-	background: rgba(255,255,255,0.32);
+	transform: scale(1.08) rotate(-3deg);
+	background: rgba(255, 255, 255, 0.22);
 }
 .arc-card__icon-wrap svg {
-	width: 24px; height: 24px;
+	width: 15px; height: 15px;
 	stroke: #FFFFFF; color: #FFFFFF;
 }
 
 /* Duration badge */
 .arc-card__dur {
 	position: relative;
-	z-index: 1;
+	z-index: 2;
 	display: inline-flex;
 	align-items: center;
 	gap: 4px;
 	padding: 5px 10px;
 	border-radius: 20px;
-	font-size: 0.69rem;
+	font-size: 0.68rem;
 	font-weight: 600;
-	color: rgba(255,255,255,0.92);
+	color: rgba(255, 255, 255, 0.95);
 	letter-spacing: 0.02em;
 	white-space: nowrap;
-	margin-top: 3px;
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	backdrop-filter: blur(4px);
 }
 .arc-card__dur svg { stroke: rgba(255,255,255,0.8); }
 
 /* ── Card Body ── */
 .arc-card__body {
-	padding: 18px 18px 10px;
+	position: relative;
+	z-index: 2;
+	padding: 12px 20px 16px;
 	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
 }
 .arc-card__title {
 	font-family: 'Playfair Display', Georgia, serif;
-	font-size: 1.05rem;
+	font-size: 1.15rem;
 	font-weight: 600;
-	color: #1A2E1A;
-	margin: 0 0 9px 0;
-	line-height: 1.3;
+	color: #FFFFFF;
+	margin: 0 0 10px 0;
+	line-height: 1.35;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 .arc-card__title a { color: inherit; text-decoration: none; transition: color 0.2s; }
-.arc-card__title a:hover { color: var(--developer-starter-pro-primary); }
+.arc-card__title a:hover { color: #F3C64F; }
 .arc-card__desc {
-	font-size: 0.82rem;
-	color: #6B7C6B;
+	font-size: 0.83rem;
+	color: rgba(255, 255, 255, 0.78);
 	line-height: 1.7;
 	margin: 0;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* ── Card Footer ── */
 .arc-card__footer {
-	padding: 13px 18px 18px;
-	border-top: 1px solid rgba(78,124,89,0.09);
+	position: relative;
+	z-index: 2;
+	padding: 16px 20px 24px;
+	border-top: 1px solid rgba(255, 255, 255, 0.08);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -328,40 +345,43 @@ $card_colors = array(
 }
 .arc-card__price-block { display: flex; flex-direction: column; line-height: 1; }
 .arc-price-label {
-	font-size: 0.6rem;
+	font-size: 0.65rem;
 	font-weight: 700;
-	letter-spacing: 0.12em;
+	letter-spacing: 0.06em;
 	text-transform: uppercase;
-	color: #9AAA9A;
-	margin-bottom: 3px;
+	color: rgba(255, 255, 255, 0.45);
+	margin-bottom: 4px;
 }
 .arc-price-amount {
-	font-family: 'Playfair Display', Georgia, serif;
-	font-size: 1.45rem;
+	font-family: 'Inter', 'Helvetica Neue', sans-serif;
+	font-size: 1.35rem;
 	font-weight: 700;
-	color: #C9A84C;
-	letter-spacing: -0.5px;
+	color: #F3C64F; /* Elegant gold accent */
+	letter-spacing: -0.02em;
 	line-height: 1;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 .arc-card__btn {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
-	padding: 9px 16px;
+	padding: 9px 18px;
 	background: linear-gradient(135deg, var(--developer-starter-pro-primary), var(--developer-starter-pro-primary-dark));
 	color: #FFFFFF;
 	border-radius: 24px;
-	font-size: 0.77rem;
+	font-size: 0.78rem;
 	font-weight: 600;
 	text-decoration: none;
 	letter-spacing: 0.02em;
+	box-shadow: 0 4px 12px rgba(78, 124, 89, 0.2);
 	transition: gap 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
 	white-space: nowrap;
 	flex-shrink: 0;
+	border: 1px solid rgba(255, 255, 255, 0.08);
 }
 .arc-card__btn:hover {
 	gap: 10px;
-	box-shadow: 0 6px 18px rgba(var(--developer-starter-pro-primary-rgb, 78, 124, 89), 0.35);
+	box-shadow: 0 6px 20px rgba(var(--developer-starter-pro-primary-rgb, 78, 124, 89), 0.45);
 	transform: translateX(2px);
 }
 .arc-card__btn svg { transition: transform 0.25s ease; }
@@ -473,7 +493,7 @@ $card_colors = array(
 							$icon_html  = isset( $icons_list[ $icon_key ] ) ? $icons_list[ $icon_key ]['svg'] : '';
 						}
 						if ( empty( $icon_html ) ) {
-							$icon_html = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-.5 0-1 .5-1.5 1.5C9.5 5.5 9 6.5 8 7.5 7 8.5 5.5 9 4.5 9 3.5 9 3 9.5 3 10.5c0 1.5.5 3 1 4.5.5 1.5 1 3 1 4.5 0 1 .5 1.5 1.5 1.5.8 0 1.5-.5 2-1.5.5-1 1-2.5 1.5-2.5.5 0 1 1.5 1.5 2.5.5 1 1.2 1.5 2 1.5 1 0 1.5-.5 1.5-1.5 0-1.5.5-3 1-4.5.5-1.5 1-3 1-4.5 0-1-.5-1.5-1.5-1.5-1 0-2.5-.5-3.5-1.5-1-1-1.5-2-2.5-4C13 2.5 12.5 2 12 2z"/></svg>';
+							$icon_html = '<svg viewBox="-1 0 65 65" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M30.2,3.8 C20.1,3.8 -9.1,-13.2 2.8,25.1 C2.8,34.3 5,62.1 14.1,62.1 C23.2,62.1 20.4,38.6 30.2,38.6 C40,38.6 37.2,62.1 46.3,62.1 C55.5,62.1 57.4,34.1 57.4,24.9 C68.8,-12.9 40.4,3.8 30.2,3.8 L30.2,3.8 Z"/><path d="M22.7,2.4 C22.7,2.4 34.5,3.8 36.2,10"/></svg>';
 						}
 
 						$color       = $card_colors[ $card_idx % count( $card_colors ) ];
@@ -486,22 +506,31 @@ $card_colors = array(
 						data-treatment="<?php echo esc_attr( $type_slugs ); ?>"
 						style="--card-glow:<?php echo esc_attr( $color['glow'] ); ?>">
 
-						<!-- Gradient Strip -->
-						<div class="arc-card__strip" style="background:<?php echo esc_attr( $color['strip'] ); ?>">
-							<?php if ( has_post_thumbnail() ) : ?>
-							<div class="arc-card__thumb">
-								<?php the_post_thumbnail( 'developer-starter-pro-service-thumb' ); ?>
+						<!-- Full Card Background Image -->
+						<?php if ( has_post_thumbnail() ) : ?>
+							<div class="arc-card__bg">
+								<?php the_post_thumbnail( 'large' ); ?>
 							</div>
-							<?php endif; ?>
+						<?php else : ?>
+							<div class="arc-card__bg" style="background: <?php echo esc_attr( $color['strip'] ); ?>;"></div>
+						<?php endif; ?>
 
+						<!-- Translucent Overlay -->
+						<div class="arc-card__overlay"></div>
+
+						<!-- Top Header Row -->
+						<div class="arc-card__header-row">
 							<div class="arc-card__icon-wrap">
 								<?php echo $icon_html; // phpcs:ignore ?>
 							</div>
-
 							<?php if ( $has_dur ) : ?>
+							<?php
+								// Clean duration display
+								$clean_dur_text = preg_replace( '/[^\d]/', '', $dur_clean );
+							?>
 							<div class="arc-card__dur" style="background:<?php echo esc_attr( $color['badge'] ); ?>">
 								<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="10" height="10"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>
-								<?php echo esc_html( $dur_clean ); ?>
+								<?php echo esc_html( $clean_dur_text ); ?> <?php esc_html_e( 'mins', 'developer-starter-pro' ); ?>
 							</div>
 							<?php endif; ?>
 						</div>

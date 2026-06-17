@@ -152,38 +152,38 @@ $doctors = get_posts( array(
 					foreach ( $display_doctors as $idx => $doc ) :
 					?>
 					<article class="dpt-doctor-card">
-						<!-- Photo with overlay -->
+						<!-- Photo wrap -->
 						<div class="dpt-doctor-card__photo-wrap">
 							<div class="dpt-doctor-card__photo">
 								<?php echo $doc['photo']; // phpcs:ignore ?>
 							</div>
-
-							<!-- Hover overlay -->
-							<div class="dpt-doctor-card__overlay">
-								<div class="dpt-doctor-card__overlay-content">
-									<?php if ( ! empty( $doc['bio'] ) ) : ?>
-									<p class="dpt-doctor-card__bio"><?php echo esc_html( $doc['bio'] ); ?></p>
-									<?php endif; ?>
-									<a href="<?php echo esc_url( $doc['url'] ); ?>" class="dpt-doctor-card__view-btn">
-										<?php esc_html_e( 'View Profile', 'developer-starter-pro' ); ?>
-										<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M4 10h12M12 6l4 4-4 4"/></svg>
-									</a>
-								</div>
-							</div>
-
-							<!-- Number badge -->
-							<div class="dpt-doctor-card__num" aria-hidden="true"><?php echo str_pad( $idx + 1, 2, '0', STR_PAD_LEFT ); ?></div>
 						</div>
 
-						<!-- Info -->
-						<div class="dpt-doctor-card__info">
+						<!-- Hover overlay -->
+						<div class="dpt-doctor-card__overlay"></div>
+
+						<!-- Number badge -->
+						<div class="dpt-doctor-card__num" aria-hidden="true"><?php echo str_pad( $idx + 1, 2, '0', STR_PAD_LEFT ); ?></div>
+
+						<!-- Content overlaid at bottom -->
+						<div class="dpt-doctor-card__content">
+							<span class="dpt-doctor-card__specialty">
+								<svg viewBox="0 0 12 12" fill="currentColor" width="6" height="6"><circle cx="6" cy="6" r="6"/></svg>
+								<?php echo esc_html( $doc['specialty'] ); ?>
+							</span>
 							<h3 class="dpt-doctor-card__name">
 								<a href="<?php echo esc_url( $doc['url'] ); ?>"><?php echo esc_html( $doc['name'] ); ?></a>
 							</h3>
-							<span class="dpt-doctor-card__specialty">
-								<svg viewBox="0 0 12 12" fill="currentColor" width="7" height="7"><circle cx="6" cy="6" r="6"/></svg>
-								<?php echo esc_html( $doc['specialty'] ); ?>
-							</span>
+							
+							<div class="dpt-doctor-card__hover-content">
+								<?php if ( ! empty( $doc['bio'] ) ) : ?>
+									<p class="dpt-doctor-card__bio"><?php echo esc_html( $doc['bio'] ); ?></p>
+								<?php endif; ?>
+								<a href="<?php echo esc_url( $doc['url'] ); ?>" class="dpt-doctor-card__view-btn">
+									<?php esc_html_e( 'View Profile', 'developer-starter-pro' ); ?>
+									<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M4 10h12M12 6l4 4-4 4"/></svg>
+								</a>
+							</div>
 						</div>
 					</article>
 					<?php endforeach; ?>
@@ -331,21 +331,40 @@ $doctors = get_posts( array(
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
+	position: relative;
+	min-height: 420px;
+	border-radius: 18px;
+	overflow: hidden;
+	justify-content: flex-end;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	box-shadow:
+		0 4px 20px rgba(0, 0, 0, 0.25),
+		0 1px 4px rgba(0, 0, 0, 0.15);
+	transition:
+		transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+		box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+	cursor: pointer;
+}
+
+.dpt-doctor-card:hover {
+	transform: translateY(-8px);
+	box-shadow:
+		0 12px 36px rgba(78, 124, 89, 0.22),
+		0 24px 56px rgba(0, 0, 0, 0.35);
 }
 
 /* Photo wrap */
 .dpt-doctor-card__photo-wrap {
-	position: relative;
-	border-radius: 16px 16px 0 0;
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	background: #101E12;
 	overflow: hidden;
-	background: #E8EFE8;
-	margin-bottom: 0;
 }
 
 .dpt-doctor-card__photo {
 	width: 100%;
-	aspect-ratio: 3 / 4;
-	overflow: hidden;
+	height: 100%;
 }
 
 .dpt-doctor-card__photo img {
@@ -354,144 +373,143 @@ $doctors = get_posts( array(
 	object-fit: cover;
 	object-position: center top;
 	display: block;
-	transition: transform 0.5s ease;
+	transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .dpt-doctor-card:hover .dpt-doctor-card__photo img {
-	transform: scale(1.06);
+	transform: scale(1.08);
 }
 
-/* Permanent bottom gradient for readability */
-.dpt-doctor-card__photo-wrap::after {
-	content: '';
-	position: absolute;
-	bottom: 0; left: 0; right: 0;
-	height: 50%;
-	background: linear-gradient(to top, rgba(10,20,10,0.85) 0%, transparent 100%);
-	pointer-events: none;
-	transition: height 0.4s ease;
-	z-index: 1;
-}
-
-/* Hover overlay */
+/* Premium dark gradient overlay */
 .dpt-doctor-card__overlay {
 	position: absolute;
 	inset: 0;
 	background: linear-gradient(
-		to top,
-		rgba(26,46,26,0.95) 0%,
-		rgba(46,77,46,0.88) 40%,
-		rgba(78,124,89,0.60) 70%,
-		rgba(78,124,89,0.10) 100%
+		to bottom,
+		rgba(10, 20, 15, 0.15) 0%,
+		rgba(10, 20, 12, 0.45) 50%,
+		rgba(5, 10, 6, 0.88) 100%
 	);
-	display: flex;
-	align-items: flex-end;
-	justify-content: flex-start;
-	padding: 22px 20px;
-	opacity: 0;
-	transition: opacity 0.35s ease;
-	z-index: 2;
+	z-index: 1;
+	transition: background 0.4s ease;
+	pointer-events: none;
 }
-
 .dpt-doctor-card:hover .dpt-doctor-card__overlay {
-	opacity: 1;
+	background: linear-gradient(
+		to bottom,
+		rgba(10, 20, 15, 0.08) 0%,
+		rgba(10, 20, 12, 0.55) 45%,
+		rgba(5, 10, 6, 0.94) 100%
+	);
 }
 
-.dpt-doctor-card__overlay-content {
-	transform: translateY(12px);
-	transition: transform 0.35s ease;
+/* Card number */
+.dpt-doctor-card__num {
+	position: absolute;
+	top: 16px;
+	right: 16px;
+	width: 32px;
+	height: 32px;
+	background: rgba(255, 255, 255, 0.12);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 0.72rem;
+	font-weight: 700;
+	color: #FFFFFF;
+	z-index: 3;
 }
-.dpt-doctor-card:hover .dpt-doctor-card__overlay-content {
-	transform: translateY(0);
+
+/* Content container */
+.dpt-doctor-card__content {
+	position: relative;
+	z-index: 2;
+	padding: 24px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.dpt-doctor-card__specialty {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 0.68rem;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: #F3C64F;
+	margin-bottom: 8px;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+.dpt-doctor-card__specialty svg {
+	color: #F3C64F;
+	opacity: 0.85;
+}
+
+.dpt-doctor-card__name {
+	font-family: 'Playfair Display', Georgia, serif;
+	font-size: 1.25rem;
+	font-weight: 600;
+	color: #FFFFFF;
+	margin: 0;
+	line-height: 1.35;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+.dpt-doctor-card__name a {
+	color: inherit;
+	text-decoration: none;
+	transition: color 0.2s;
+}
+.dpt-doctor-card__name a:hover {
+	color: #F3C64F;
+}
+
+/* Expandable hover content */
+.dpt-doctor-card__hover-content {
+	max-height: 0;
+	opacity: 0;
+	overflow: hidden;
+	transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease;
+}
+.dpt-doctor-card:hover .dpt-doctor-card__hover-content {
+	max-height: 160px;
+	opacity: 1;
+	margin-top: 12px;
 }
 
 .dpt-doctor-card__bio {
-	font-size: 0.8rem;
-	color: rgba(255,255,255,0.8);
-	line-height: 1.6;
-	margin: 0 0 14px 0;
+	font-size: 0.82rem;
+	color: rgba(255, 255, 255, 0.85);
+	line-height: 1.5;
+	margin: 0 0 16px 0;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .dpt-doctor-card__view-btn {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
-	padding: 8px 16px;
-	background: linear-gradient(135deg, #C9A84C, #E8C76A);
-	color: #1A2E1A;
-	border-radius: 20px;
-	font-size: 0.76rem;
-	font-weight: 700;
+	padding: 9px 18px;
+	background: linear-gradient(135deg, var(--developer-starter-pro-primary), var(--developer-starter-pro-primary-dark));
+	color: #FFFFFF !important;
+	border-radius: 24px;
+	font-size: 0.78rem;
+	font-weight: 600;
 	text-decoration: none;
 	letter-spacing: 0.02em;
-	transition: box-shadow 0.25s ease, transform 0.2s ease;
+	box-shadow: 0 4px 12px rgba(78, 124, 89, 0.2);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	transition: gap 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
 }
 .dpt-doctor-card__view-btn:hover {
-	box-shadow: 0 6px 20px rgba(201,168,76,0.4);
+	color: #FFFFFF !important;
+	gap: 10px;
+	box-shadow: 0 6px 20px rgba(78, 124, 89, 0.45);
 	transform: translateX(2px);
-}
-
-/* Card number */
-.dpt-doctor-card__num {
-	position: absolute;
-	top: 14px;
-	right: 14px;
-	width: 32px;
-	height: 32px;
-	background: rgba(255,255,255,0.85);
-	border: 1px solid var(--developer-starter-pro-primary-light);
-	border-radius: 8px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 0.7rem;
-	font-weight: 700;
-	color: var(--developer-starter-pro-primary);
-	letter-spacing: 0.02em;
-	z-index: 3;
-	backdrop-filter: blur(4px);
-}
-
-/* ── Info Bar ── */
-.dpt-doctor-card__info {
-	background: #FFFFFF;
-	border: 1px solid rgba(78,124,89,0.12);
-	border-top: 0;
-	border-radius: 0 0 16px 16px;
-	padding: 16px 18px;
-	text-align: center;
-	box-shadow: 0 4px 16px rgba(26,46,26,0.07);
-}
-
-/* Re-attach photo to info bar */
-.dpt-doctor-card__photo-wrap {
-	border-radius: 16px 16px 0 0;
-}
-
-.dpt-doctor-card__name {
-	font-family: 'Playfair Display', Georgia, serif;
-	font-size: 1rem;
-	font-weight: 600;
-	color: #1A2E1A;
-	margin: 0 0 7px 0;
-	line-height: 1.3;
-}
-.dpt-doctor-card__name a {
-	color: #1A2E1A;
-	text-decoration: none;
-	transition: color 0.2s;
-}
-.dpt-doctor-card__name a:hover { color: var(--developer-starter-pro-primary); }
-
-.dpt-doctor-card__specialty {
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
-	font-size: 0.7rem;
-	font-weight: 700;
-	letter-spacing: 0.12em;
-	text-transform: uppercase;
-	color: var(--developer-starter-pro-primary);
 }
 
 /* ── Arrows ── */
@@ -545,12 +563,12 @@ $doctors = get_posts( array(
 
 /* ── Responsive ── */
 @media (max-width: 1024px) {
-	.dpt-doctor-card { flex: 0 0 calc((100% - 22px) / 2); }
+	.dpt-doctor-card { flex: 0 0 calc((100% - 22px) / 2); min-height: 380px; }
 	.dpt-doctors__arrow { display: none; }
 }
 @media (max-width: 600px) {
 	.dpt-doctors { padding: 64px 0 72px; }
-	.dpt-doctor-card { flex: 0 0 80%; }
+	.dpt-doctor-card { flex: 0 0 80%; min-height: 360px; }
 	.dpt-doctors__container { padding: 0 20px; }
 	.dpt-doctors__header { margin-bottom: 40px; }
 }
