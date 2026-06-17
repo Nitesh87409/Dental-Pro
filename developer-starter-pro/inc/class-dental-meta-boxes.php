@@ -337,6 +337,7 @@ class Developer_Starter_Pro_Meta_Boxes {
 		$icon        = get_post_meta( $post->ID, $this->prefix . 'service_icon', true );
 		$custom_svg  = get_post_meta( $post->ID, $this->prefix . 'service_custom_svg', true );
 		$short_desc  = get_post_meta( $post->ID, $this->prefix . 'service_short_description', true );
+		$card_image  = get_post_meta( $post->ID, $this->prefix . 'service_card_image', true );
 		?>
 		<div class="developer-starter-pro-meta-box">
 			<table class="form-table">
@@ -383,6 +384,32 @@ class Developer_Starter_Pro_Meta_Boxes {
 						<textarea id="service_short_description" name="service_short_description" rows="3" class="large-text" placeholder="<?php esc_attr_e( 'Brief description for service cards (max 150 characters)', 'developer-starter-pro' ); ?>"><?php echo esc_textarea( $short_desc ); ?></textarea>
 					</td>
 				</tr>
+				<tr>
+					<th><label><?php esc_html_e( 'Card Background Image', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<div style="margin-bottom:8px;">
+							<?php if ( ! empty( $card_image ) ) : ?>
+								<img id="service-card-image-preview" src="<?php echo esc_url( $card_image ); ?>" alt="Card Image" style="max-width:200px;height:auto;display:block;border-radius:6px;border:1px solid #ddd;margin-bottom:8px;">
+							<?php else : ?>
+								<img id="service-card-image-preview" src="" alt="" style="max-width:200px;height:auto;display:none;border-radius:6px;border:1px solid #ddd;margin-bottom:8px;">
+							<?php endif; ?>
+						</div>
+						<input type="hidden" id="service_card_image" name="service_card_image" value="<?php echo esc_url( $card_image ); ?>">
+						<button type="button" class="button developer-starter-pro-upload-btn" data-target="service_card_image" data-preview="service-card-image-preview">
+							<?php esc_html_e( 'Upload / Choose Image', 'developer-starter-pro' ); ?>
+						</button>
+						<?php if ( ! empty( $card_image ) ) : ?>
+							<button type="button" class="button developer-starter-pro-remove-btn" data-target="service_card_image" data-preview="service-card-image-preview">
+								<?php esc_html_e( 'Remove Image', 'developer-starter-pro' ); ?>
+							</button>
+						<?php else : ?>
+							<button type="button" class="button developer-starter-pro-remove-btn" data-target="service_card_image" data-preview="service-card-image-preview" style="display:none;">
+								<?php esc_html_e( 'Remove Image', 'developer-starter-pro' ); ?>
+							</button>
+						<?php endif; ?>
+						<p class="description"><?php esc_html_e( 'Upload a background image for this service card strip. If set, it will replace the gradient color with the image + dark overlay.', 'developer-starter-pro' ); ?></p>
+					</td>
+				</tr>
 			</table>
 		</div>
 		<?php
@@ -417,6 +444,7 @@ class Developer_Starter_Pro_Meta_Boxes {
 			'service_icon'              => 'sanitize_text_field',
 			'service_custom_svg'        => 'wp_kses_post',
 			'service_short_description' => 'sanitize_textarea_field',
+			'service_card_image'        => 'esc_url_raw',
 		);
 
 		foreach ( $fields as $field => $sanitize_callback ) {

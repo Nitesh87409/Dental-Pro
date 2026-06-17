@@ -138,6 +138,35 @@ if ( count( $display_testimonials ) < 6 ) {
 	padding: 72px 0 80px;
 }
 
+/* Scoped header fix — prevents conflict with services section CSS */
+.dp-testimonials .dp-section-container {
+	max-width: 1160px;
+	margin: 0 auto;
+	padding: 0 32px;
+}
+.dp-testimonials .dp-section-header {
+	text-align: center;
+	margin-bottom: 44px;
+}
+.dp-testimonials .dp-section-title {
+	font-family: 'Playfair Display', Georgia, serif;
+	font-size: clamp(1.8rem, 3vw, 2.4rem);
+	font-weight: 700;
+	color: #1A2E1A;
+	margin: 0 0 12px 0;
+	letter-spacing: -0.3px;
+}
+.dp-testimonials .dp-section-rule {
+	width: 48px;
+	height: 3px;
+	background: linear-gradient(90deg, #C9A84C, #E8C76A);
+	margin: 0 auto;
+	border-radius: 2px;
+}
+@media (max-width: 500px) {
+	.dp-testimonials .dp-section-container { padding: 0 18px; }
+}
+
 .dp-testimonials__slider-outer {
 	position: relative;
 	width: 100%;

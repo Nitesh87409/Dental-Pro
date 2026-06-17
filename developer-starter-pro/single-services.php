@@ -55,16 +55,22 @@ $related = get_posts( array(
 					<h1 class="developer-starter-pro-service-detail-title"><?php the_title(); ?></h1>
 
 					<div class="developer-starter-pro-service-detail-badges">
-						<?php if ( $price && $price > 0 ) : ?>
+						<?php 
+						$price_clean = developer_starter_pro_get_clean_service_price( $price );
+						if ( $price_clean > 0 ) : 
+							?>
 							<span class="developer-starter-pro-service-detail-price">
 								<?php esc_html_e( 'From', 'developer-starter-pro' ); ?>
-								$<?php echo esc_html( number_format( (float) $price, 0 ) ); ?>
+								$<?php echo esc_html( number_format( $price_clean, 0 ) ); ?>
 							</span>
 						<?php endif; ?>
-						<?php if ( $duration ) : ?>
+						<?php 
+						$duration_clean = developer_starter_pro_get_clean_service_duration( $duration );
+						if ( $duration_clean ) : 
+							?>
 							<span class="developer-starter-pro-service-detail-duration">
 								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-								<?php echo esc_html( $duration ); ?> <?php esc_html_e( 'minutes', 'developer-starter-pro' ); ?>
+								<?php echo esc_html( $duration_clean ); ?>
 							</span>
 						<?php endif; ?>
 						<?php if ( $treatments && ! is_wp_error( $treatments ) ) : ?>

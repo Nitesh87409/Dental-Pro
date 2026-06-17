@@ -18,27 +18,63 @@
 
 		<div class="developer-starter-pro-ba-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; margin-top: 40px;">
 
-			<!-- Case 1: Whitening -->
-			<div class="developer-starter-pro-ba-item" style="background: var(--developer-starter-pro-gray-50); border: 1px solid var(--developer-starter-pro-gray-200); border-radius: var(--developer-starter-pro-radius-lg); padding: 15px; box-shadow: var(--developer-starter-pro-shadow-sm);">
-				<?php
-				echo do_shortcode( '[dental_before_after title="Laser Teeth Whitening" before_url="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&q=80&w=600" after_url="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&q=80&w=600" before_label="Before Treatment" after_label="After Whitening"]' );
-				?>
-				<div style="text-align: center; margin-top: 15px; padding: 10px;">
-					<h4 style="margin: 0 0 6px 0; color: var(--developer-starter-pro-secondary);"><?php esc_html_e( 'Cosmetic Teeth Whitening', 'developer-starter-pro' ); ?></h4>
-					<p style="font-size: 0.875rem; color: var(--developer-starter-pro-gray-500); margin: 0;"><?php esc_html_e( 'Results achieved after a single 60-minute in-office teeth laser whitening session.', 'developer-starter-pro' ); ?></p>
-				</div>
-			</div>
+			<?php
+			$cases_query = new WP_Query( array(
+				'post_type'      => 'before_after',
+				'posts_per_page' => 3,
+				'post_status'    => 'publish',
+				'orderby'        => 'menu_order',
+				'order'          => 'ASC',
+			) );
 
-			<!-- Case 2: Veneers -->
-			<div class="developer-starter-pro-ba-item" style="background: var(--developer-starter-pro-gray-50); border: 1px solid var(--developer-starter-pro-gray-200); border-radius: var(--developer-starter-pro-radius-lg); padding: 15px; box-shadow: var(--developer-starter-pro-shadow-sm);">
-				<?php
-				echo do_shortcode( '[dental_before_after title="Porcelain Veneers Restorations" before_url="https://images.unsplash.com/photo-1579684389782-64d84b5e902a?auto=format&fit=crop&q=80&w=600" after_url="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=600" before_label="Crooked Teeth" after_label="Perfect Veneers"]' );
+			$count = 0;
+			if ( $cases_query->have_posts() ) :
+				while ( $cases_query->have_posts() ) : $cases_query->the_post();
+					$count++;
+					$before_image = get_post_meta( get_the_ID(), '_developer_starter_pro_before_image', true );
+					$after_image  = get_post_meta( get_the_ID(), '_developer_starter_pro_after_image', true );
+					$before_label = get_post_meta( get_the_ID(), '_developer_starter_pro_before_label', true );
+					$after_label  = get_post_meta( get_the_ID(), '_developer_starter_pro_after_label', true );
+
+					$before_label = $before_label ? $before_label : esc_html__( 'Before', 'developer-starter-pro' );
+					$after_label  = $after_label ? $after_label : esc_html__( 'After', 'developer-starter-pro' );
+					?>
+					<div class="developer-starter-pro-ba-item" style="background: var(--developer-starter-pro-gray-50); border: 1px solid var(--developer-starter-pro-gray-200); border-radius: var(--developer-starter-pro-radius-lg); padding: 15px; box-shadow: var(--developer-starter-pro-shadow-sm);">
+						<?php
+						echo do_shortcode( sprintf(
+							'[dental_before_after title="%s" before_url="%s" after_url="%s" before_label="%s" after_label="%s"]',
+							esc_attr( get_the_title() ),
+							esc_url( $before_image ),
+							esc_url( $after_image ),
+							esc_attr( $before_label ),
+							esc_attr( $after_label )
+						) );
+						?>
+						<div style="text-align: center; margin-top: 15px; padding: 10px;">
+							<h4 style="margin: 0 0 6px 0; color: var(--developer-starter-pro-secondary);"><?php the_title(); ?></h4>
+							<p style="font-size: 0.875rem; color: var(--developer-starter-pro-gray-500); margin: 0;"><?php echo esc_html( get_the_excerpt() ); ?></p>
+						</div>
+					</div>
+				<?php endwhile; wp_reset_postdata(); ?>
+			<?php endif; ?>
+
+			<?php
+			// Fill up with format placeholders to ensure at least 2 cards are shown
+			while ( $count < 2 ) :
+				$count++;
 				?>
-				<div style="text-align: center; margin-top: 15px; padding: 10px;">
-					<h4 style="margin: 0 0 6px 0; color: var(--developer-starter-pro-secondary);"><?php esc_html_e( 'Porcelain Veneers', 'developer-starter-pro' ); ?></h4>
-					<p style="font-size: 0.875rem; color: var(--developer-starter-pro-gray-500); margin: 0;"><?php esc_html_e( 'Full upper arch smile restoration using custom dental porcelain veneers.', 'developer-starter-pro' ); ?></p>
+				<div class="developer-starter-pro-ba-item placeholder-card" style="background: var(--developer-starter-pro-gray-50); border: 1px dashed var(--developer-starter-pro-gray-300); border-radius: var(--developer-starter-pro-radius-lg); padding: 15px; box-shadow: var(--developer-starter-pro-shadow-sm); display: flex; flex-direction: column; justify-content: space-between; min-height: 380px;">
+					<div style="width: 100%; aspect-ratio: 4 / 3; background: var(--developer-starter-pro-gray-100); border-radius: var(--developer-starter-pro-radius-lg); display: flex; flex-direction: column; justify-content: center; align-items: center; border: 1.5px dashed var(--developer-starter-pro-gray-200); color: var(--developer-starter-pro-gray-400); margin-bottom: 20px;">
+						<span style="font-size: 2.5rem; margin-bottom: 10px;">✨</span>
+						<span style="font-size: 0.9rem; font-weight: 600;"><?php printf( esc_html__( 'Smile Transformation Case %d', 'developer-starter-pro' ), $count ); ?></span>
+						<span style="font-size: 0.75rem; margin-top: 4px;"><?php esc_html_e( '(Configure in WP Admin)', 'developer-starter-pro' ); ?></span>
+					</div>
+					<div style="text-align: center; padding: 10px;">
+						<h4 style="margin: 0 0 6px 0; color: var(--developer-starter-pro-gray-400);"><?php esc_html_e( 'Pending Case Spot', 'developer-starter-pro' ); ?></h4>
+						<p style="font-size: 0.875rem; color: var(--developer-starter-pro-gray-400); margin: 0;"><?php esc_html_e( 'Add clinical transformation cases under the Before/After Cases dashboard page.', 'developer-starter-pro' ); ?></p>
+					</div>
 				</div>
-			</div>
+			<?php endwhile; ?>
 
 		</div>
 

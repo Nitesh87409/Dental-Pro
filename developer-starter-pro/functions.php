@@ -42,7 +42,6 @@ require_once developer_starter_pro_INC . '/class-dental-booking.php';
 require_once developer_starter_pro_INC . '/class-dental-admin-booking.php';
 require_once developer_starter_pro_INC . '/class-dental-chatbot.php';
 require_once developer_starter_pro_INC . '/class-dental-portal.php';
-require_once developer_starter_pro_INC . '/class-dental-calculator.php';
 require_once developer_starter_pro_INC . '/class-dental-notifications.php';
 require_once developer_starter_pro_INC . '/class-dental-seo.php';
 
@@ -61,7 +60,6 @@ function developer_starter_pro_init_theme() {
 	new Developer_Starter_Pro_Admin_Booking();
 	new Developer_Starter_Pro_Chatbot();
 	new Developer_Starter_Pro_Portal();
-	new Developer_Starter_Pro_Calculator();
 	new Developer_Starter_Pro_Notifications();
 	new Developer_Starter_Pro_SEO();
 }
@@ -151,10 +149,6 @@ function developer_starter_pro_create_pages() {
 			'title'    => 'Doctors Directory',
 			'template' => 'page-templates/template-doctors.php',
 		),
-		'video-consult' => array(
-			'title'    => 'Video Consultation',
-			'template' => 'page-templates/template-video-consult.php',
-		),
 		'emergency' => array(
 			'title'    => 'Emergency Care',
 			'template' => 'page-templates/template-emergency.php',
@@ -193,13 +187,6 @@ function developer_starter_pro_create_pages() {
 
 			if ( $post_id && ! is_wp_error( $post_id ) ) {
 				update_post_meta( $post_id, '_wp_page_template', $page_data['template'] );
-				// If pricing page, insert calculator shortcode as post content to support testing both template pricing list and calculator shortcode!
-				if ( 'pricing' === $slug ) {
-					wp_update_post( array(
-						'ID'           => $post_id,
-						'post_content' => '[dental_calculator]',
-					) );
-				}
 			}
 		}
 	}
@@ -216,6 +203,40 @@ function developer_starter_pro_save_comment_rating( $comment_id ) {
 	}
 }
 add_action( 'comment_post', 'developer_starter_pro_save_comment_rating' );
+
+/**
+ * Filter custom menu items to remove "Patient Portal" on desktop and rename it to "Log In" on mobile.
+ */
+function developer_starter_pro_filter_nav_menu_objects( $sorted_menu_items, $args ) {
+	if ( is_admin() ) {
+		return $sorted_menu_items;
+	}
+
+	$login_page_url = developer_starter_pro_get_template_page_url( 'page-templates/template-patient-login.php', '#portal' );
+
+	foreach ( $sorted_menu_items as $key => $item ) {
+		$is_portal = ( $item->url === $login_page_url || strpos( $item->url, '/patient-login/' ) !== false || strtolower( $item->title ) === 'patient portal' );
+		if ( $is_portal ) {
+			if ( isset( $args->menu_id ) && 'mobile-menu-nav' === $args->menu_id ) {
+				// Rename to "Log In" in mobile menu
+				$item->title = __( 'Log In', 'developer-starter-pro' );
+				$item->post_title = __( 'Log In', 'developer-starter-pro' );
+			} else {
+				// Remove from desktop primary menu (or any other non-mobile menu)
+				unset( $sorted_menu_items[ $key ] );
+			}
+		}
+
+		$is_doctors = ( strtolower( $item->title ) === 'meet the team' );
+		if ( $is_doctors ) {
+			$item->title = __( 'Doctors', 'developer-starter-pro' );
+			$item->post_title = __( 'Doctors', 'developer-starter-pro' );
+		}
+	}
+	return $sorted_menu_items;
+}
+add_filter( 'wp_nav_menu_objects', 'developer_starter_pro_filter_nav_menu_objects', 10, 2 );
+
 
 
 

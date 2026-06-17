@@ -90,14 +90,20 @@ $terms = get_terms( array(
 							
 							<div style="border-top: 1px solid var(--developer-starter-pro-gray-100); padding: 20px 28px; display: flex; align-items: center; justify-content: space-between;">
 								<div>
-									<?php if ( $price && $price > 0 ) : ?>
-										<span style="font-family: var(--developer-starter-pro-font-heading); font-size: 1.375rem; font-weight: 800; color: var(--developer-starter-pro-primary);">$<?php echo esc_html( number_format( (float) $price, 0 ) ); ?></span>
+									<?php 
+									$price_clean = developer_starter_pro_get_clean_service_price( $price );
+									if ( $price_clean > 0 ) : 
+										?>
+										<span style="font-family: var(--developer-starter-pro-font-heading); font-size: 1.375rem; font-weight: 800; color: var(--developer-starter-pro-primary);">$<?php echo esc_html( number_format( $price_clean, 0 ) ); ?></span>
 									<?php else : ?>
 										<span style="font-size: 0.9375rem; font-weight: 600; color: var(--developer-starter-pro-gray-400);"><?php esc_html_e( 'Consultation', 'developer-starter-pro' ); ?></span>
 									<?php endif; ?>
 									
-									<?php if ( $duration ) : ?>
-										<span style="display: block; font-size: 0.75rem; color: var(--developer-starter-pro-gray-400); margin-top: 2px;"><?php echo esc_html( $duration ); ?> <?php esc_html_e( 'mins', 'developer-starter-pro' ); ?></span>
+									<?php 
+									$duration_clean = developer_starter_pro_get_clean_service_duration( $duration );
+									if ( $duration_clean ) : 
+										?>
+										<span style="display: block; font-size: 0.75rem; color: var(--developer-starter-pro-gray-400); margin-top: 2px;"><?php echo esc_html( $duration_clean ); ?></span>
 									<?php endif; ?>
 								</div>
 								

@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		if (e.target.name === 'doctor_id') updateSelectionHighlight(doctorRadios);
 	});
 
-	// Pre-highlight initially selected cards (e.g. from cost calculator)
+	// Pre-highlight initially selected cards
 	updateSelectionHighlight(serviceRadios);
 	updateSelectionHighlight(doctorRadios);
 
@@ -244,19 +244,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			nextBtn.disabled = false;
 			nextBtn.textContent = l10n.strings.bookAppointment;
 		});
-	}
-
-	// Cost calculator integration
-	var savedService = sessionStorage.getItem('selected_calculator_service');
-	if (savedService) {
-		sessionStorage.removeItem('selected_calculator_service'); // clear it
-		var matchingRadio = form.querySelector('input[name="service_id"][value="' + savedService + '"]');
-		if (matchingRadio) {
-			matchingRadio.checked = true;
-			updateSelectionHighlight(serviceRadios);
-			// Automatically advance to Step 2
-			goToStep(2);
-		}
 	}
 
 	// URL query params or PHP pre-selected inputs auto-advance

@@ -89,9 +89,9 @@ class Developer_Starter_Pro_Chatbot {
 				'answer' => esc_html__( 'Our clinic is located in the health center district at 123 Dental Plaza, Suite 100. Valet parking is available for all patients.', 'developer-starter-pro' ),
 			),
 			array(
-				'keys' => 'price,cost,insurance,fee,cheap,calculator',
+				'keys' => 'price,cost,insurance,fee,cheap',
 				'question' => esc_html__( 'Do you accept insurance or how much do treatments cost?', 'developer-starter-pro' ),
-				'answer' => esc_html__( 'Yes! We accept most major dental insurance plans. You can use our online Cost Calculator tool to estimate prices and coverage bounds.', 'developer-starter-pro' ),
+				'answer' => esc_html__( 'Yes! We accept most major dental insurance plans. Please check our Pricing Packages page for estimated costs, or contact our desk for insurance verification details.', 'developer-starter-pro' ),
 			),
 			array(
 				'keys' => 'emergency,pain,hurt,ache,urgent',

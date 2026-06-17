@@ -93,6 +93,7 @@ class Developer_Starter_Pro_Admin {
 			$sanitized['clinic_email']   = isset( $input['clinic_email'] ) ? sanitize_email( $input['clinic_email'] ) : '';
 			$sanitized['clinic_address'] = isset( $input['clinic_address'] ) ? sanitize_textarea_field( $input['clinic_address'] ) : '';
 			$sanitized['clinic_logo']    = isset( $input['clinic_logo'] ) ? esc_url_raw( $input['clinic_logo'] ) : '';
+			$sanitized['clinic_logo_height'] = isset( $input['clinic_logo_height'] ) ? absint( $input['clinic_logo_height'] ) : 45;
 			$sanitized['hero_image']     = isset( $input['hero_image'] ) ? esc_url_raw( $input['hero_image'] ) : '';
 			$sanitized['hero_video']     = isset( $input['hero_video'] ) ? esc_url_raw( $input['hero_video'] ) : '';
 			$sanitized['page_banner_image'] = isset( $input['page_banner_image'] ) ? esc_url_raw( $input['page_banner_image'] ) : '';
@@ -316,6 +317,13 @@ class Developer_Starter_Pro_Admin {
 								<?php esc_html_e( 'Remove', 'developer-starter-pro' ); ?>
 							</button>
 						</div>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="clinic_logo_height"><?php esc_html_e( 'Logo Height (px)', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="number" id="clinic_logo_height" name="<?php echo esc_attr( $this->option_name ); ?>[clinic_logo_height]" value="<?php echo esc_attr( isset( $options['clinic_logo_height'] ) ? $options['clinic_logo_height'] : 45 ); ?>" min="20" max="150" class="small-text">
+						<p class="description"><?php esc_html_e( 'Adjust the maximum height of the clinic logo in pixels (default is 45px).', 'developer-starter-pro' ); ?></p>
 					</td>
 				</tr>
 				<tr>

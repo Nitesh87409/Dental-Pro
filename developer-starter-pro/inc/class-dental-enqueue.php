@@ -51,6 +51,7 @@ class Developer_Starter_Pro_Enqueue {
 	 * Enqueue frontend stylesheets.
 	 */
 	public function frontend_styles() {
+		global $post;
 		// Main theme stylesheet (style.css — for WP theme recognition).
 		wp_enqueue_style(
 			'developer-starter-pro-theme',
@@ -111,19 +112,10 @@ class Developer_Starter_Pro_Enqueue {
 			);
 		}
 
-		// Cost Calculator CSS
-		global $post;
-		if ( ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'dental_calculator' ) ) || is_page_template( 'page-templates/template-pricing.php' ) ) {
-			wp_enqueue_style(
-				'developer-starter-pro-calculator',
-				developer_starter_pro_CSS . '/calculator.css',
-				array( 'developer-starter-pro-main' ),
-				developer_starter_pro_VERSION
-			);
-		}
+
 
 		// Before/After CSS
-		if ( ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'dental_before_after' ) ) || is_page_template( 'page-templates/template-before-after.php' ) ) {
+		if ( is_front_page() || ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'dental_before_after' ) ) || is_page_template( 'page-templates/template-before-after.php' ) ) {
 			wp_enqueue_style(
 				'developer-starter-pro-before-after',
 				developer_starter_pro_CSS . '/before-after.css',
@@ -137,6 +129,7 @@ class Developer_Starter_Pro_Enqueue {
 	 * Enqueue frontend scripts.
 	 */
 	public function frontend_scripts() {
+		global $post;
 		// Main JS.
 		wp_enqueue_script(
 			'developer-starter-pro-main',
@@ -239,28 +232,10 @@ class Developer_Starter_Pro_Enqueue {
 			);
 		}
 
-		// Cost Calculator JS
-		global $post;
-		if ( ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'dental_calculator' ) ) || is_page_template( 'page-templates/template-pricing.php' ) ) {
-			wp_enqueue_script(
-				'developer-starter-pro-calculator',
-				developer_starter_pro_JS . '/calculator.js',
-				array( 'developer-starter-pro-main' ),
-				developer_starter_pro_VERSION,
-				true
-			);
 
-			wp_localize_script(
-				'developer-starter-pro-calculator',
-				'developerStarterProCalculator',
-				array(
-					'bookingUrl' => developer_starter_pro_get_booking_url(), // fallback booking url
-				)
-			);
-		}
 
 		// Before/After JS
-		if ( ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'dental_before_after' ) ) || is_page_template( 'page-templates/template-before-after.php' ) ) {
+		if ( is_front_page() || ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'dental_before_after' ) ) || is_page_template( 'page-templates/template-before-after.php' ) ) {
 			wp_enqueue_script(
 				'developer-starter-pro-before-after',
 				developer_starter_pro_JS . '/before-after.js',

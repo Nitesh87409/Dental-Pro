@@ -55,6 +55,7 @@ function developer_starter_pro_get_default_options() {
 		'clinic_email'     => 'info@dentalpro-elite.com',
 		'clinic_address'   => '123 Dental Street, Medical District, City',
 		'clinic_logo'      => '',
+		'clinic_logo_height' => '45',
 		'hero_image'       => '',
 		'hero_video'       => '',
 		'page_banner_image' => '',
@@ -423,6 +424,36 @@ function developer_starter_pro_get_service_icons() {
 		),
 	);
 }
+
+/**
+ * Get the clean float value of a raw service price.
+ *
+ * @param string|float $price Raw price.
+ * @return float Clean numeric price.
+ */
+function developer_starter_pro_get_clean_service_price( $price ) {
+	$price_clean = preg_replace( '/[^\d.]/', '', (string) $price );
+	return floatval( $price_clean );
+}
+
+/**
+ * Get the clean formatted service duration.
+ *
+ * @param string $duration Raw duration.
+ * @return string Clean formatted duration (e.g. "45 mins").
+ */
+function developer_starter_pro_get_clean_service_duration( $duration ) {
+	$duration_clean = trim( $duration );
+	if ( empty( $duration_clean ) ) {
+		return '';
+	}
+	$duration_num = preg_replace( '/\s*(mins?|minutes?)\s*/i', '', $duration_clean );
+	if ( ctype_digit( $duration_num ) ) {
+		return $duration_num . ' mins';
+	}
+	return $duration_clean;
+}
+
 
 
 

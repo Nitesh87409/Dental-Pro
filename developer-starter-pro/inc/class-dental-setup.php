@@ -25,6 +25,10 @@ class Developer_Starter_Pro_Setup {
 		add_action( 'after_setup_theme', array( $this, 'content_width' ), 0 );
 		add_action( 'after_setup_theme', array( $this, 'custom_image_sizes' ) );
 
+		// Allow SVG uploads.
+		add_filter( 'upload_mimes', array( $this, 'allow_svg_uploads' ) );
+		add_filter( 'wp_check_filetype_and_ext', array( $this, 'check_svg_filetype' ), 10, 4 );
+
 		// WooCommerce wrapper overrides.
 		remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10 );
 		remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10 );
@@ -270,5 +274,38 @@ class Developer_Starter_Pro_Setup {
 		echo '</div>';
 		echo '</div>';
 		echo '</main>';
+	}
+
+	/**
+	 * Allow SVG file uploads in WordPress media library.
+	 *
+	 * @param array $mimes Allowed mime types.
+	 * @return array Modified allowed mime types.
+	 */
+	public function allow_svg_uploads( $mimes ) {
+		$mimes['svg']  = 'image/svg+xml';
+		$mimes['svgz'] = 'image/svg+xml';
+		return $mimes;
+	}
+
+	/**
+	 * Override file extension validation check for SVG files.
+	 *
+	 * @param array  $data     File data.
+	 * @param string $file     Full path to the file.
+	 * @param string $filename The name of the file.
+	 * @param array  $mimes    Allowed mime types.
+	 * @return array Modified file data.
+	 */
+	public function check_svg_filetype( $data, $file, $filename, $mimes ) {
+		$filetype = wp_check_filetype( $filename, $mimes );
+		$ext      = $filetype['ext'];
+
+		if ( 'svg' === $ext ) {
+			$data['ext']  = 'svg';
+			$data['type'] = 'image/svg+xml';
+		}
+
+		return $data;
 	}
 }

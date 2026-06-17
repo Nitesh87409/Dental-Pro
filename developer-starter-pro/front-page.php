@@ -29,16 +29,13 @@ get_header();
 	// 8. Testimonials Section
 	get_template_part( 'template-parts/homepage/testimonials', 'section' );
 
-	// Treatment Cost Calculator Section
-	get_template_part( 'template-parts/homepage/calculator', 'section' );
+	// Before/After Comparison Slider Section
+	get_template_part( 'template-parts/homepage/before-after', 'section' );
 
 	// 7. CTA Banner Booking Section (Appointment Booking)
 	get_template_part( 'template-parts/homepage/cta', 'banner' );
 
 	/* Comment out non-essential sections to match the clean reference layout
-	// 6. Before/After Comparison Slider Section
-	get_template_part( 'template-parts/homepage/before-after', 'section' );
-
 	// 6.5. Gallery Showcase Section
 	get_template_part( 'template-parts/homepage/gallery', 'section' );
 

@@ -209,6 +209,27 @@
 	gap: var(--developer-starter-pro-space-md);
 }
 
+/* Header Log In Button */
+.dp-header-login-btn {
+	background: transparent;
+	border: 2px solid var(--developer-starter-pro-primary);
+	color: var(--developer-starter-pro-primary);
+	border-radius: 12px;
+	padding: 8px 18px;
+	display: inline-flex;
+	align-items: center;
+	font-size: 0.875rem;
+	font-weight: 600;
+	text-decoration: none;
+	transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.dp-header-login-btn:hover {
+	background: var(--developer-starter-pro-primary);
+	color: #FFFFFF !important;
+	transform: translateY(-1px);
+}
+
 /* Sage Green Call Now Button */
 .dp-header-call-btn {
 	background: var(--developer-starter-pro-primary);
@@ -423,6 +444,18 @@ body.admin-bar .developer-starter-pro-mobile-menu {
 }
 
 .dp-header--transparent:not(.is-sticky) .dp-header-call-btn * {
+	color: #FFFFFF !important;
+}
+
+.dp-header--transparent:not(.is-sticky) .dp-header-login-btn {
+	background: transparent !important;
+	border: 2px solid rgba(255, 255, 255, 0.4) !important;
+	color: #FFFFFF !important;
+}
+
+.dp-header--transparent:not(.is-sticky) .dp-header-login-btn:hover {
+	background: rgba(255, 255, 255, 0.15) !important;
+	border-color: #FFFFFF !important;
 	color: #FFFFFF !important;
 }
 
@@ -659,7 +692,8 @@ body.dark-mode .dp-header--transparent.is-sticky .developer-starter-pro-hamburge
 
 /* Make top bar responsive */
 @media (max-width: 768px) {
-	.developer-starter-pro-top-bar {
+	.developer-starter-pro-top-bar,
+	.dp-header-login-btn {
 		display: none !important;
 	}
 }

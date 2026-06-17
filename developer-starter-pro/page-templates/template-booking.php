@@ -96,13 +96,19 @@ $selected_service = isset( $_GET['service_id'] ) ? absint( $_GET['service_id'] )
 											</div>
 										</div>
 										<div style="text-align:right;">
-											<?php if ( $price && $price > 0 ) : ?>
-												<span style="font-size:1.25rem; font-weight:700; color:var(--developer-starter-pro-primary); display:block;">$<?php echo esc_html( number_format( (float) $price, 0 ) ); ?></span>
+											<?php 
+											$price_clean = developer_starter_pro_get_clean_service_price( $price );
+											if ( $price_clean > 0 ) : 
+												?>
+												<span style="font-size:1.25rem; font-weight:700; color:var(--developer-starter-pro-primary); display:block;">$<?php echo esc_html( number_format( $price_clean, 0 ) ); ?></span>
 											<?php else : ?>
 												<span style="font-size:1.0625rem; font-weight:600; color:var(--developer-starter-pro-gray-500); display:block;"><?php esc_html_e( 'Consultation', 'developer-starter-pro' ); ?></span>
 											<?php endif; ?>
-											<?php if ( $duration ) : ?>
-												<span style="font-size:0.75rem; color:var(--developer-starter-pro-gray-400); display:block; margin-top:2px;"><?php echo esc_html( $duration ); ?> <?php esc_html_e( 'mins', 'developer-starter-pro' ); ?></span>
+											<?php 
+											$duration_clean = developer_starter_pro_get_clean_service_duration( $duration );
+											if ( $duration_clean ) : 
+												?>
+												<span style="font-size:0.75rem; color:var(--developer-starter-pro-gray-400); display:block; margin-top:2px;"><?php echo esc_html( $duration_clean ); ?></span>
 											<?php endif; ?>
 										</div>
 									</label>

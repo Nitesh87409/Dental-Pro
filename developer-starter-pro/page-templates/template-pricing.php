@@ -79,14 +79,20 @@ get_header();
 										
 										<div style="border-top: 1px solid var(--developer-starter-pro-gray-100); padding-top:16px; display:flex; align-items:center; justify-content:space-between;">
 											<div>
-												<?php if ( $price && $price > 0 ) : ?>
-													<span style="font-family: var(--developer-starter-pro-font-heading); font-size: 1.75rem; font-weight: 800; color: var(--developer-starter-pro-primary);">$<?php echo esc_html( number_format( (float) $price, 0 ) ); ?></span>
+												<?php 
+												$price_clean = developer_starter_pro_get_clean_service_price( $price );
+												if ( $price_clean > 0 ) : 
+													?>
+													<span style="font-family: var(--developer-starter-pro-font-heading); font-size: 1.75rem; font-weight: 800; color: var(--developer-starter-pro-primary);">$<?php echo esc_html( number_format( $price_clean, 0 ) ); ?></span>
 												<?php else : ?>
 													<span style="font-family: var(--developer-starter-pro-font-heading); font-size: 1.25rem; font-weight: 700; color: var(--developer-starter-pro-gray-500);"><?php esc_html_e( 'Free Consultation', 'developer-starter-pro' ); ?></span>
 												<?php endif; ?>
 												
-												<?php if ( $duration ) : ?>
-													<span style="display:block; font-size:0.75rem; color:var(--developer-starter-pro-gray-400); margin-top:2px;">⏱ <?php echo esc_html( $duration ); ?> <?php esc_html_e( 'mins', 'developer-starter-pro' ); ?></span>
+												<?php 
+												$duration_clean = developer_starter_pro_get_clean_service_duration( $duration );
+												if ( $duration_clean ) : 
+													?>
+													<span style="display:block; font-size:0.75rem; color:var(--developer-starter-pro-gray-400); margin-top:2px;">⏱ <?php echo esc_html( $duration_clean ); ?></span>
 												<?php endif; ?>
 											</div>
 											<a href="<?php echo esc_url( developer_starter_pro_get_booking_url() ); ?>" class="developer-starter-pro-btn developer-starter-pro-btn--sm developer-starter-pro-btn--primary">
