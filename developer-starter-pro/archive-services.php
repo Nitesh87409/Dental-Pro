@@ -153,17 +153,17 @@ $card_colors = array(
 	box-shadow: 0 2px 8px rgba(26,46,26,0.06);
 }
 .arc-filter-btn:hover {
-	border-color: #4E7C59;
-	background: rgba(78,124,89,0.06);
-	color: #2E5A38;
+	border-color: var(--developer-starter-pro-primary);
+	background: var(--developer-starter-pro-primary-light);
+	color: var(--developer-starter-pro-primary-dark);
 	transform: translateY(-1px);
-	box-shadow: 0 4px 14px rgba(78,124,89,0.15);
+	box-shadow: 0 4px 14px rgba(var(--developer-starter-pro-primary-rgb, 78, 124, 89), 0.15);
 }
 .arc-filter-btn.active {
-	background: linear-gradient(135deg, #4E7C59, #3A6045);
+	background: linear-gradient(135deg, var(--developer-starter-pro-primary), var(--developer-starter-pro-primary-dark));
 	border-color: transparent;
 	color: #FFFFFF;
-	box-shadow: 0 4px 16px rgba(78,124,89,0.35);
+	box-shadow: 0 4px 16px rgba(var(--developer-starter-pro-primary-rgb, 78, 124, 89), 0.35);
 }
 
 /* ── Grid ── */
@@ -309,7 +309,7 @@ $card_colors = array(
 	line-height: 1.3;
 }
 .arc-card__title a { color: inherit; text-decoration: none; transition: color 0.2s; }
-.arc-card__title a:hover { color: #4E7C59; }
+.arc-card__title a:hover { color: var(--developer-starter-pro-primary); }
 .arc-card__desc {
 	font-size: 0.82rem;
 	color: #6B7C6B;
@@ -349,7 +349,7 @@ $card_colors = array(
 	align-items: center;
 	gap: 6px;
 	padding: 9px 16px;
-	background: linear-gradient(135deg, #4E7C59, #3A6045);
+	background: linear-gradient(135deg, var(--developer-starter-pro-primary), var(--developer-starter-pro-primary-dark));
 	color: #FFFFFF;
 	border-radius: 24px;
 	font-size: 0.77rem;
@@ -362,7 +362,7 @@ $card_colors = array(
 }
 .arc-card__btn:hover {
 	gap: 10px;
-	box-shadow: 0 6px 18px rgba(78,124,89,0.35);
+	box-shadow: 0 6px 18px rgba(var(--developer-starter-pro-primary-rgb, 78, 124, 89), 0.35);
 	transform: translateX(2px);
 }
 .arc-card__btn svg { transition: transform 0.25s ease; }
@@ -376,9 +376,9 @@ $card_colors = array(
 .arc-pagination .page-numbers {
 	display: inline-flex; align-items: center; justify-content: center;
 	width: 40px; height: 40px;
-	border: 1.5px solid rgba(78,124,89,0.2);
+	border: 1.5px solid var(--developer-starter-pro-primary-light);
 	border-radius: 50%;
-	color: #4E7C59;
+	color: var(--developer-starter-pro-primary);
 	font-size: 0.875rem;
 	font-weight: 600;
 	text-decoration: none;
@@ -387,10 +387,10 @@ $card_colors = array(
 }
 .arc-pagination .page-numbers.current,
 .arc-pagination .page-numbers:hover {
-	background: linear-gradient(135deg, #4E7C59, #3A6045);
+	background: linear-gradient(135deg, var(--developer-starter-pro-primary), var(--developer-starter-pro-primary-dark));
 	border-color: transparent;
 	color: #FFFFFF;
-	box-shadow: 0 4px 14px rgba(78,124,89,0.3);
+	box-shadow: 0 4px 14px rgba(var(--developer-starter-pro-primary-rgb, 78, 124, 89), 0.3);
 }
 
 /* ── Responsive ── */

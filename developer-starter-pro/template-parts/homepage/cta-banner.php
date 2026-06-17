@@ -166,13 +166,13 @@ document.querySelectorAll('.dp-time-slot').forEach(function(btn) {
 }
 
 .dp-time-slot:hover {
-	border-color: #4E7C59;
-	color: #4E7C59;
+	border-color: var(--developer-starter-pro-primary);
+	color: var(--developer-starter-pro-primary);
 }
 
 .dp-time-slot--active {
-	background: #4E7C59;
-	border-color: #4E7C59;
+	background: var(--developer-starter-pro-primary);
+	border-color: var(--developer-starter-pro-primary);
 	color: #FFFFFF;
 	font-weight: 600;
 }
@@ -180,7 +180,7 @@ document.querySelectorAll('.dp-time-slot').forEach(function(btn) {
 /* Book Now */
 .dp-booking__btn {
 	display: inline-block;
-	background: #4E7C59;
+	background: var(--developer-starter-pro-primary);
 	color: #FFFFFF;
 	font-size: 0.9rem;
 	font-weight: 600;
@@ -192,7 +192,7 @@ document.querySelectorAll('.dp-time-slot').forEach(function(btn) {
 }
 
 .dp-booking__btn:hover {
-	background: #3D6347;
+	background: var(--developer-starter-pro-primary-dark);
 	color: #fff;
 }
 
@@ -246,11 +246,11 @@ document.querySelectorAll('.dp-time-slot').forEach(function(btn) {
 		padding: 14px 24px !important;
 		font-size: 1rem !important;
 		font-weight: 700 !important;
-		background: linear-gradient(135deg, #4E7C59 0%, #3D6347 100%) !important;
+		background: linear-gradient(135deg, var(--developer-starter-pro-primary) 0%, var(--developer-starter-pro-primary-dark) 100%) !important;
 		color: #fff !important;
 		border-radius: 50px !important;
 		text-decoration: none !important;
-		box-shadow: 0 4px 20px rgba(78, 124, 89, 0.45), 0 2px 8px rgba(0,0,0,0.1) !important;
+		box-shadow: 0 4px 20px rgba(var(--developer-starter-pro-primary-rgb, 78, 124, 89), 0.35), 0 2px 8px rgba(0,0,0,0.1) !important;
 		transition: transform 0.2s ease, box-shadow 0.2s ease !important;
 		text-align: center !important;
 		letter-spacing: 0.3px;
@@ -258,8 +258,8 @@ document.querySelectorAll('.dp-time-slot').forEach(function(btn) {
 	.dp-booking__btn:hover,
 	.dp-booking__btn:active {
 		transform: translateY(-2px) !important;
-		box-shadow: 0 6px 28px rgba(78, 124, 89, 0.55), 0 3px 12px rgba(0,0,0,0.12) !important;
-		background: linear-gradient(135deg, #3D6347 0%, #2E4A2E 100%) !important;
+		box-shadow: 0 6px 28px rgba(var(--developer-starter-pro-primary-rgb, 78, 124, 89), 0.45), 0 3px 12px rgba(0,0,0,0.12) !important;
+		background: var(--developer-starter-pro-primary-dark) !important;
 	}
 }
 </style>

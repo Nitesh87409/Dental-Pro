@@ -256,8 +256,8 @@ if ( count( $display_testimonials ) < 6 ) {
 	justify-content: center;
 	font-size: 0.8rem;
 	font-weight: 700;
-	color: #4E7C59;
-	background: rgba(78, 124, 89, 0.12);
+	color: var(--developer-starter-pro-primary);
+	background: var(--developer-starter-pro-primary-light);
 }
 
 .dp-testimonial-card__name {
@@ -294,7 +294,7 @@ if ( count( $display_testimonials ) < 6 ) {
 }
 
 .dp-dot--active {
-	background: #4E7C59;
+	background: var(--developer-starter-pro-primary);
 	width: 22px;
 	border-radius: 4px;
 }

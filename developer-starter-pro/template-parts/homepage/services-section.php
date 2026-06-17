@@ -286,7 +286,7 @@ $card_colors = array(
 	font-weight: 700;
 	letter-spacing: 0.2em;
 	text-transform: uppercase;
-	color: #4E7C59;
+	color: var(--developer-starter-pro-primary);
 	margin-bottom: 16px;
 }
 
@@ -473,7 +473,7 @@ $card_colors = array(
 	text-decoration: none;
 	transition: color 0.2s;
 }
-.dp-svc-card__title a:hover { color: #4E7C59; }
+.dp-svc-card__title a:hover { color: var(--developer-starter-pro-primary); }
 
 .dp-svc-card__desc {
 	font-size: 0.83rem;
@@ -523,7 +523,7 @@ $card_colors = array(
 	align-items: center;
 	gap: 6px;
 	padding: 9px 16px;
-	background: linear-gradient(135deg, #4E7C59, #3A6045);
+	background: linear-gradient(135deg, var(--developer-starter-pro-primary), var(--developer-starter-pro-primary-dark));
 	color: #FFFFFF;
 	border-radius: 24px;
 	font-size: 0.78rem;
@@ -556,8 +556,8 @@ $card_colors = array(
 	align-items: center;
 	gap: 8px;
 	padding: 14px 32px;
-	border: 2px solid #4E7C59;
-	color: #4E7C59;
+	border: 2px solid var(--developer-starter-pro-primary);
+	color: var(--developer-starter-pro-primary);
 	border-radius: 32px;
 	font-size: 0.9rem;
 	font-weight: 600;
@@ -566,7 +566,7 @@ $card_colors = array(
 	transition: background 0.25s ease, color 0.25s ease, gap 0.25s ease, box-shadow 0.25s ease;
 }
 .dp-services__view-all:hover {
-	background: #4E7C59;
+	background: var(--developer-starter-pro-primary);
 	color: #FFFFFF;
 	gap: 14px;
 	box-shadow: 0 8px 24px rgba(78,124,89,0.25);

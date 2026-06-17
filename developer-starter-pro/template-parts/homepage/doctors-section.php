@@ -262,8 +262,8 @@ $doctors = get_posts( array(
 	font-weight: 700;
 	letter-spacing: 0.25em;
 	text-transform: uppercase;
-	color: #4E7C59;
-	background: rgba(78,124,89,0.1);
+	color: var(--developer-starter-pro-primary);
+	background: var(--developer-starter-pro-primary-light);
 	padding: 5px 14px;
 	border-radius: 20px;
 	margin-bottom: 16px;
@@ -439,14 +439,14 @@ $doctors = get_posts( array(
 	width: 32px;
 	height: 32px;
 	background: rgba(255,255,255,0.85);
-	border: 1px solid rgba(78,124,89,0.2);
+	border: 1px solid var(--developer-starter-pro-primary-light);
 	border-radius: 8px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	font-size: 0.7rem;
 	font-weight: 700;
-	color: #4E7C59;
+	color: var(--developer-starter-pro-primary);
 	letter-spacing: 0.02em;
 	z-index: 3;
 	backdrop-filter: blur(4px);
@@ -481,7 +481,7 @@ $doctors = get_posts( array(
 	text-decoration: none;
 	transition: color 0.2s;
 }
-.dpt-doctor-card__name a:hover { color: #4E7C59; }
+.dpt-doctor-card__name a:hover { color: var(--developer-starter-pro-primary); }
 
 .dpt-doctor-card__specialty {
 	display: inline-flex;
@@ -491,7 +491,7 @@ $doctors = get_posts( array(
 	font-weight: 700;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
-	color: #4E7C59;
+	color: var(--developer-starter-pro-primary);
 }
 
 /* ── Arrows ── */
@@ -503,8 +503,8 @@ $doctors = get_posts( array(
 	height: 46px;
 	border-radius: 50%;
 	background: rgba(255,255,255,0.9);
-	border: 1.5px solid rgba(78,124,89,0.2);
-	color: #4E7C59;
+	border: 1.5px solid var(--developer-starter-pro-primary-light);
+	color: var(--developer-starter-pro-primary);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -514,10 +514,10 @@ $doctors = get_posts( array(
 	box-shadow: 0 4px 12px rgba(26,46,26,0.1);
 }
 .dpt-doctors__arrow:hover {
-	background: #4E7C59;
+	background: var(--developer-starter-pro-primary);
 	color: #FFFFFF;
-	border-color: #4E7C59;
-	box-shadow: 0 6px 20px rgba(78,124,89,0.3);
+	border-color: var(--developer-starter-pro-primary);
+	box-shadow: 0 6px 20px rgba(var(--developer-starter-pro-primary-rgb, 78, 124, 89), 0.3);
 }
 .dpt-doctors__arrow--prev { left: -23px; }
 .dpt-doctors__arrow--next { right: -23px; }
@@ -538,7 +538,7 @@ $doctors = get_posts( array(
 	border: none;
 }
 .dpt-dot--active {
-	background: #4E7C59;
+	background: var(--developer-starter-pro-primary);
 	width: 24px;
 	border-radius: 4px;
 }

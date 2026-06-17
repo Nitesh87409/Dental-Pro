@@ -3771,10 +3771,7 @@ html.js.page-loaded .developer-starter-pro-page-banner .developer-starter-pro-se
 	left: 30px;
 }
 
-/* Push widget up to avoid overlapping with chatbot when active on the right */
-.dp-unified-fab-widget.pos-right.has-chatbot-active {
-	bottom: 100px;
-}
+
 
 /* Trigger Button */
 .dp-fab-trigger {
@@ -3783,14 +3780,14 @@ html.js.page-loaded .developer-starter-pro-page-banner .developer-starter-pro-se
 	height: 60px;
 	border-radius: 50%;
 	border: none;
-	background: linear-gradient(135deg, #ef4444, #dc2626);
+	background: var(--developer-starter-pro-primary);
 	color: #fff;
 	font-size: 24px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
-	box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	z-index: 10;
 	padding: 0;
@@ -3798,7 +3795,8 @@ html.js.page-loaded .developer-starter-pro-page-banner .developer-starter-pro-se
 
 .dp-fab-trigger:hover {
 	transform: scale(1.05);
-	box-shadow: 0 6px 20px rgba(220, 38, 38, 0.6);
+	background: var(--developer-starter-pro-primary-dark);
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .dp-unified-fab-widget.expanded .dp-fab-trigger {
@@ -3812,7 +3810,7 @@ html.js.page-loaded .developer-starter-pro-page-banner .developer-starter-pro-se
 	position: absolute;
 	inset: 0;
 	border-radius: 50%;
-	background-color: #ef4444;
+	background-color: var(--developer-starter-pro-primary);
 	opacity: 0.4;
 	z-index: -1;
 	animation: dpFabPulse 2s infinite;

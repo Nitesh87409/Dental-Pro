@@ -284,13 +284,7 @@ if ( ! $has_social_links ) {
 			$wa_link .= '?text=' . rawurlencode( $wa_message );
 		}
 
-		$chatbot_settings = get_option( 'developer_starter_pro_chatbot_settings', array() );
-		$chatbot_active   = isset( $chatbot_settings['enabled'] ) ? $chatbot_settings['enabled'] : '1';
-		
 		$widget_classes = array( 'dp-unified-fab-widget', 'pos-' . $wa_position );
-		if ( '1' === $chatbot_active && 'right' === $wa_position ) {
-			$widget_classes[] = 'has-chatbot-active';
-		}
 		?>
 		<div class="<?php echo esc_attr( implode( ' ', $widget_classes ) ); ?>" id="dp-unified-fab-widget">
 			<!-- Expandable Options Menu -->

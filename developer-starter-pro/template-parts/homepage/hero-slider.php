@@ -82,11 +82,11 @@ $has_media_class = ( ! empty( $saved_hero_image ) || ! empty( $hero_video ) ) ? 
 					<!-- Botanical leaf SVG — top right corner -->
 					<div class="dp-hero__leaf">
 						<svg viewBox="0 0 160 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-							<path d="M80 0 C 50 40, 20 90, 35 160 C 50 220, 80 250, 80 260" stroke="#4E7C59" stroke-width="2" fill="none" opacity="0.55"/>
+							<path d="M80 0 C 50 40, 20 90, 35 160 C 50 220, 80 250, 80 260" stroke="var(--developer-starter-pro-primary)" stroke-width="2" fill="none" opacity="0.55"/>
 							<path d="M80 35 C 115 22, 155 48, 142 88 C 130 118, 80 128, 80 128" fill="#7AAB8A" opacity="0.32"/>
 							<path d="M80 35 C 48 22, 12 52, 28 90 C 44 120, 80 128, 80 128" fill="#5B8A6A" opacity="0.28"/>
 							<path d="M80 95 C 120 82, 152 112, 140 145 C 128 172, 80 180, 80 180" fill="#7AAB8A" opacity="0.28"/>
-							<path d="M80 95 C 42 82, 14 116, 30 148 C 46 172, 80 180, 80 180" fill="#4E7C59" opacity="0.22"/>
+							<path d="M80 95 C 42 82, 14 116, 30 148 C 46 172, 80 180, 80 180" fill="var(--developer-starter-pro-primary)" opacity="0.22"/>
 							<path d="M80 150 C 118 138, 148 164, 136 194 C 124 218, 80 225, 80 225" fill="#7AAB8A" opacity="0.26"/>
 							<circle cx="82" cy="33" r="2.5" fill="#C9A84C" opacity="0.65"/>
 							<circle cx="143" cy="86" r="2" fill="#C9A84C" opacity="0.55"/>
@@ -437,7 +437,7 @@ body.dark-mode .dp-stats-label {
 
 .dp-hero__cta {
 	display: inline-block;
-	background: #4E7C59;
+	background: var(--developer-starter-pro-primary);
 	color: #FFFFFF;
 	font-size: 1rem;
 	font-weight: 600;
@@ -448,7 +448,7 @@ body.dark-mode .dp-stats-label {
 }
 
 .dp-hero__cta:hover {
-	background: #3D6347;
+	background: var(--developer-starter-pro-primary-dark);
 	color: #fff;
 }
 
@@ -462,7 +462,7 @@ body.dark-mode .dp-stats-label {
 }
 
 .dp-hero__address svg {
-	color: #4E7C59;
+	color: var(--developer-starter-pro-primary);
 	flex-shrink: 0;
 }
 
