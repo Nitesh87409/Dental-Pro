@@ -390,6 +390,40 @@ function developer_starter_pro_get_banner_bg_url( $post_id = 0 ) {
 	return $banner_bg;
 }
 
+/**
+ * Get a list of premium modern dental/medical outline icons for services.
+ *
+ * @return array Icons list.
+ */
+function developer_starter_pro_get_service_icons() {
+	return array(
+		'tooth'       => array(
+			'label' => __( 'Tooth (General / Implants)', 'developer-starter-pro' ),
+			'svg'   => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-.5 0-1 .5-1.5 1.5C9.5 5.5 9 6.5 8 7.5 7 8.5 5.5 9 4.5 9 3.5 9 3 9.5 3 10.5c0 1.5.5 3 1 4.5.5 1.5 1 3 1 4.5 0 1 .5 1.5 1.5 1.5.8 0 1.5-.5 2-1.5.5-1 1-2.5 1.5-2.5.5 0 1 1.5 1.5 2.5.5 1 1.2 1.5 2 1.5 1 0 1.5-.5 1.5-1.5 0-1.5.5-3 1-4.5.5-1.5 1-3 1-4.5 0-1-.5-1.5-1.5-1.5-1 0-2.5-.5-3.5-1.5-1-1-1.5-2-2.5-4C13 2.5 12.5 2 12 2z"/></svg>'
+		),
+		'shield'      => array(
+			'label' => __( 'Shield (Preventative / Hygiene)', 'developer-starter-pro' ),
+			'svg'   => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 11l2 2 4-4"/></svg>'
+		),
+		'sparkles'    => array(
+			'label' => __( 'Sparkles (Cosmetic / Whitening)', 'developer-starter-pro' ),
+			'svg'   => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.132 2.639 1.633 4.14 4.272 4.272-2.639.132-4.14 1.633-4.272 4.272-.132-2.639-1.633-4.14-4.272-4.272 2.639-.132 4.14-1.633 4.272-4.272z"/><path d="M19 13.5c.082 1.649 1.02 2.589 2.668 2.668-1.649.082-2.589 1.02-2.668 2.668-.082-1.649-1.02-2.589-2.668-2.668 1.649-.082 2.589-1.02 2.668-2.668z"/><path d="M5 11c.071 1.419.877 2.226 2.296 2.296-1.419.071-2.226.877-2.296 2.296-.071-1.419-.877-2.226-2.296-2.296 1.419-.071 2.226-.877 2.296-2.296z"/></svg>'
+		),
+		'heart'       => array(
+			'label' => __( 'Heart (Care / Health)', 'developer-starter-pro' ),
+			'svg'   => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>'
+		),
+		'stethoscope' => array(
+			'label' => __( 'Stethoscope (Medical / Surgery)', 'developer-starter-pro' ),
+			'svg'   => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.25-2.5 3-2.5 5h20c0-2-1-3.75-2.5-5"/><path d="M12 2v10m-3-7h6"/></svg>'
+		),
+		'activity'    => array(
+			'label' => __( 'Activity (Emergency / 24/7)', 'developer-starter-pro' ),
+			'svg'   => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>'
+		),
+	);
+}
+
 
 
 

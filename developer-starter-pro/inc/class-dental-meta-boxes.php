@@ -335,6 +335,7 @@ class Developer_Starter_Pro_Meta_Boxes {
 		$price       = get_post_meta( $post->ID, $this->prefix . 'service_price', true );
 		$duration    = get_post_meta( $post->ID, $this->prefix . 'service_duration', true );
 		$icon        = get_post_meta( $post->ID, $this->prefix . 'service_icon', true );
+		$custom_svg  = get_post_meta( $post->ID, $this->prefix . 'service_custom_svg', true );
 		$short_desc  = get_post_meta( $post->ID, $this->prefix . 'service_short_description', true );
 		?>
 		<div class="developer-starter-pro-meta-box">
@@ -354,10 +355,26 @@ class Developer_Starter_Pro_Meta_Boxes {
 					</td>
 				</tr>
 				<tr>
-					<th><label for="service_icon"><?php esc_html_e( 'Icon Class', 'developer-starter-pro' ); ?></label></th>
+					<th><label for="service_icon"><?php esc_html_e( 'Icon Selection', 'developer-starter-pro' ); ?></label></th>
 					<td>
-						<input type="text" id="service_icon" name="service_icon" value="<?php echo esc_attr( $icon ); ?>" class="regular-text" placeholder="<?php esc_attr_e( 'e.g., dashicons-heart', 'developer-starter-pro' ); ?>">
-						<p class="description"><?php esc_html_e( 'Dashicon class name for the service icon', 'developer-starter-pro' ); ?></p>
+						<select id="service_icon" name="service_icon" class="regular-text">
+							<option value=""><?php esc_html_e( '— Default Theme Fallback —', 'developer-starter-pro' ); ?></option>
+							<?php 
+							if ( function_exists( 'developer_starter_pro_get_service_icons' ) ) {
+								foreach ( developer_starter_pro_get_service_icons() as $key => $icon_data ) {
+									echo '<option value="' . esc_attr( $key ) . '" ' . selected( $icon, $key, false ) . '>' . esc_html( $icon_data['label'] ) . '</option>';
+								}
+							}
+							?>
+						</select>
+						<p class="description"><?php esc_html_e( 'Choose a premium, modern line-art icon to represent this service.', 'developer-starter-pro' ); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="service_custom_svg"><?php esc_html_e( 'Custom SVG Icon (Optional)', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<textarea id="service_custom_svg" name="service_custom_svg" rows="3" class="large-text" placeholder="<?php esc_attr_e( 'e.g., <svg>...</svg>', 'developer-starter-pro' ); ?>"><?php echo esc_textarea( $custom_svg ); ?></textarea>
+						<p class="description"><?php esc_html_e( 'Paste raw SVG XML code to use a custom icon. This overrides the dropdown selection above.', 'developer-starter-pro' ); ?></p>
 					</td>
 				</tr>
 				<tr>
@@ -398,6 +415,7 @@ class Developer_Starter_Pro_Meta_Boxes {
 			'service_price'             => 'floatval',
 			'service_duration'          => 'absint',
 			'service_icon'              => 'sanitize_text_field',
+			'service_custom_svg'        => 'wp_kses_post',
 			'service_short_description' => 'sanitize_textarea_field',
 		);
 

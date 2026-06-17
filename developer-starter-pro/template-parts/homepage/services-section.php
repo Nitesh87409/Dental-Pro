@@ -62,10 +62,22 @@ $default_services = array(
 			if ( ! empty( $services ) ) {
 				foreach ( $services as $service ) {
 					$short_desc = get_post_meta( $service->ID, '_developer_starter_pro_service_short_description', true );
-					$icon_html  = get_post_meta( $service->ID, '_developer_starter_pro_service_icon', true );
-					if ( empty( $icon_html ) ) {
-						$icon_html = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s-8-5-8-11a8 8 0 0 1 16 0c0 6-8 11-8 11z"/></svg>';
+					$icon_key   = get_post_meta( $service->ID, '_developer_starter_pro_service_icon', true );
+					$custom_svg = get_post_meta( $service->ID, '_developer_starter_pro_service_custom_svg', true );
+					
+					$icon_html = '';
+					if ( ! empty( $custom_svg ) ) {
+						$icon_html = $custom_svg;
+					} elseif ( ! empty( $icon_key ) && function_exists( 'developer_starter_pro_get_service_icons' ) ) {
+						$icons_list = developer_starter_pro_get_service_icons();
+						$icon_html  = isset( $icons_list[ $icon_key ] ) ? $icons_list[ $icon_key ]['svg'] : '';
 					}
+					
+					// Fallback to premium modern tooth outline SVG
+					if ( empty( $icon_html ) ) {
+						$icon_html = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-.5 0-1 .5-1.5 1.5C9.5 5.5 9 6.5 8 7.5 7 8.5 5.5 9 4.5 9 3.5 9 3 9.5 3 10.5c0 1.5.5 3 1 4.5.5 1.5 1 3 1 4.5 0 1 .5 1.5 1.5 1.5.8 0 1.5-.5 2-1.5.5-1 1-2.5 1.5-2.5.5 0 1 1.5 1.5 2.5.5 1 1.2 1.5 2 1.5 1 0 1.5-.5 1.5-1.5 0-1.5.5-3 1-4.5.5-1.5 1-3 1-4.5 0-1-.5-1.5-1.5-1.5-1 0-2.5-.5-3.5-1.5-1-1-1.5-2-2.5-4C13 2.5 12.5 2 12 2z"/></svg>';
+					}
+					
 					$display_services[] = array(
 						'title' => $service->post_title,
 						'desc'  => $short_desc ?: wp_trim_words( $service->post_content, 12 ),
