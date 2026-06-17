@@ -67,7 +67,8 @@ class Developer_Starter_Pro_Booking {
 			internal_notes text DEFAULT '' NOT NULL,
 			created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
 			PRIMARY KEY  (id),
-			KEY doctor_date_idx (doctor_id, booking_date)
+			KEY doctor_date_idx (doctor_id, booking_date),
+			KEY status_created_idx (status, created_at)
 		) $charset_collate;";
 
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';

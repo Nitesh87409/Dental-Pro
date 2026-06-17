@@ -31,6 +31,7 @@ class Developer_Starter_Pro_Notifications {
 		// Register hooks for triggers
 		add_action( 'dentalpro_appointment_booked', array( $this, 'send_instant_notifications' ) );
 		add_action( 'dentalpro_appointment_status_changed', array( $this, 'handle_status_change_notifications' ), 10, 3 );
+		add_action( 'dentalpro_appointment_rescheduled', array( $this, 'handle_reschedule_notifications' ), 10, 1 );
 
 		// Hook into WP-Cron event for reminders
 		add_action( 'dentalpro_daily_reminder_cron', array( $this, 'send_daily_reminders' ) );
@@ -712,14 +713,14 @@ class Developer_Starter_Pro_Notifications {
 		$admin_body = "<h2>Appointment Cancelled</h2>\n<p>An appointment has been cancelled by the patient:</p>\n<p><strong>Reference ID:</strong> {$reference_id}<br>\n<strong>Patient Name:</strong> {$patient_name}<br>\n<strong>Email:</strong> {$patient_email}<br>\n<strong>Phone:</strong> {$booking->patient_phone}<br>\n<strong>Doctor:</strong> {$doctor_name}<br>\n<strong>Service:</strong> {$service_name}<br>\n<strong>Date:</strong> {$appointment_date}<br>\n<strong>Time:</strong> {$appointment_time}</p>";
 
 		// Send formatted HTML emails
-		$this->send_formatted_email( $patient_email, $patient_subject, $patient_body, $clinic_name );
-		$this->send_formatted_email( $admin_email, $admin_subject, $admin_body, $clinic_name );
+		$this->send_formatted_email( $patient_email, $patient_subject, $patient_body, $clinic_name, '#ef4444' );
+		$this->send_formatted_email( $admin_email, $admin_subject, $admin_body, $clinic_name, '#ef4444' );
 	}
 
 	/**
 	 * Send generic formatted HTML email.
 	 */
-	private function send_formatted_email( $to, $subject, $body, $clinic_name ) {
+	private function send_formatted_email( $to, $subject, $body, $clinic_name, $header_color = '#0d9488' ) {
 		$html_body = "
 		<!DOCTYPE html>
 		<html>
@@ -729,7 +730,7 @@ class Developer_Starter_Pro_Notifications {
 			<style>
 				body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 0; background-color: #f8fafc; color: #1e293b; }
 				.email-container { max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
-				.email-header { background-color: #ef4444; color: #ffffff; padding: 24px; text-align: center; }
+				.email-header { background-color: " . esc_attr( $header_color ) . "; color: #ffffff; padding: 24px; text-align: center; }
 				.email-header h1 { margin: 0; font-size: 20px; font-weight: 700; }
 				.email-body { padding: 30px; line-height: 1.6; font-size: 15px; }
 				.email-footer { background-color: #f1f5f9; text-align: center; padding: 16px; font-size: 12px; color: #64748b; }
@@ -796,7 +797,7 @@ class Developer_Starter_Pro_Notifications {
 				// Send cancellation notifications
 				$subject = sprintf( __( 'Appointment Cancelled: %s', 'developer-starter-pro' ), $service_name );
 				$body = "<h2>Hello {$patient_name},</h2>\n<p>Your appointment has been <strong>cancelled</strong>.</p>\n<p><strong>Reference ID:</strong> {$reference_id}<br>\n<strong>Treatment:</strong> {$service_name}<br>\n<strong>Doctor:</strong> {$doctor_name}<br>\n<strong>Date:</strong> {$appointment_date}<br>\n<strong>Time:</strong> {$appointment_time}</p>";
-				$this->send_formatted_email( $patient_email, $subject, $body, $clinic_name );
+				$this->send_formatted_email( $patient_email, $subject, $body, $clinic_name, '#ef4444' );
 
 				$sms_msg = sprintf(
 					__( "Hello %s, your appointment %s on %s has been cancelled.", 'developer-starter-pro' ),
@@ -810,7 +811,7 @@ class Developer_Starter_Pro_Notifications {
 			case 'rejected':
 				$subject = sprintf( __( 'Appointment Declined: %s', 'developer-starter-pro' ), $service_name );
 				$body = "<h2>Hello {$patient_name},</h2>\n<p>We regret to inform you that we are unable to accept your appointment request at this time.</p>\n<p><strong>Reference ID:</strong> {$reference_id}<br>\n<strong>Treatment:</strong> {$service_name}<br>\n<strong>Doctor:</strong> {$doctor_name}<br>\n<strong>Requested Date:</strong> {$appointment_date}<br>\n<strong>Requested Time:</strong> {$appointment_time}</p>\n<p>Please feel free to book another time or contact our clinic for assistance.</p>";
-				$this->send_formatted_email( $patient_email, $subject, $body, $clinic_name );
+				$this->send_formatted_email( $patient_email, $subject, $body, $clinic_name, '#64748b' );
 
 				$sms_msg = sprintf(
 					__( "Hello %s, your appointment request %s has been declined. Please call us to reschedule.", 'developer-starter-pro' ),
@@ -823,7 +824,7 @@ class Developer_Starter_Pro_Notifications {
 			case 'rescheduled':
 				$subject = sprintf( __( 'Appointment Rescheduled: %s', 'developer-starter-pro' ), $service_name );
 				$body = "<h2>Hello {$patient_name},</h2>\n<p>Your appointment has been <strong>rescheduled</strong> by our clinic.</p>\n<p><strong>Reference ID:</strong> {$reference_id}<br>\n<strong>Treatment:</strong> {$service_name}<br>\n<strong>Doctor:</strong> {$doctor_name}<br>\n<strong>New Date:</strong> {$appointment_date}<br>\n<strong>New Time:</strong> {$appointment_time}</p>\n<p>We look forward to seeing you!</p>";
-				$this->send_formatted_email( $patient_email, $subject, $body, $clinic_name );
+				$this->send_formatted_email( $patient_email, $subject, $body, $clinic_name, '#3b82f6' );
 
 				$sms_msg = sprintf(
 					__( "Hello %s, your appointment %s has been rescheduled to %s at %s.", 'developer-starter-pro' ),
@@ -834,6 +835,40 @@ class Developer_Starter_Pro_Notifications {
 				);
 				$this->dispatch_sms( $booking->patient_phone, $sms_msg );
 				break;
+
+			case 'completed':
+				$subject = sprintf( __( 'Appointment Completed: %s', 'developer-starter-pro' ), $service_name );
+				$body = "<h2>Hello {$patient_name},</h2>\n<p>Thank you for visiting our clinic today for your <strong>{$service_name}</strong> treatment.</p>\n<p>We hope you had a pleasant experience with <strong>{$doctor_name}</strong>.</p>\n<p>If you have any feedback or further questions, please do not hesitate to contact us.</p>\n<p>Wishing you great health!</p>";
+				
+				if ( ! empty( $options['google_review_url'] ) ) {
+					$google_review_url = esc_url( $options['google_review_url'] );
+					$body .= "<p style='margin-top: 24px; text-align: center;'><a href='{$google_review_url}' target='_blank' style='background-color: #10b981; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 24px; font-weight: 600; display: inline-block;'>" . esc_html__( 'Share Your Feedback on Google', 'developer-starter-pro' ) . "</a></p>";
+				}
+				
+				$this->send_formatted_email( $patient_email, $subject, $body, $clinic_name, '#10b981' );
+
+				$sms_msg = sprintf(
+					__( "Hello %s, thank you for visiting us for your appointment %s today. We hope you had a great experience!", 'developer-starter-pro' ),
+					$patient_name,
+					$reference_id
+				);
+				
+				if ( ! empty( $options['google_review_url'] ) ) {
+					$google_review_url = esc_url( $options['google_review_url'] );
+					$sms_msg .= " " . sprintf( __( "Please share your review on Google: %s", 'developer-starter-pro' ), $google_review_url );
+				}
+				
+				$this->dispatch_sms( $booking->patient_phone, $sms_msg );
+				break;
 		}
+	}
+
+	/**
+	 * Handle notifications on appointment reschedule.
+	 *
+	 * @param int $booking_id Database ID.
+	 */
+	public function handle_reschedule_notifications( $booking_id ) {
+		$this->handle_status_change_notifications( $booking_id, 'dummy', 'rescheduled' );
 	}
 }

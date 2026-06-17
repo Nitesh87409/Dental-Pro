@@ -547,6 +547,17 @@ class Developer_Starter_Pro_Admin_Booking {
 
 			var selectedIDs = [];
 
+			function openModal(id) {
+				$(id).show();
+				$('html, body').addClass('clinic-modal-open');
+			}
+			function closeModal(id) {
+				$(id).hide();
+				if ($('.clinic-modal-backdrop:visible').length === 0) {
+					$('html, body').removeClass('clinic-modal-open');
+				}
+			}
+
 			// Initial Load
 			fetchAppointments();
 
@@ -766,7 +777,7 @@ class Developer_Starter_Pro_Admin_Booking {
 				}
 
 				if ('reschedule' === actionType) {
-					$('#bulk-reschedule-modal').show();
+					openModal('#bulk-reschedule-modal');
 					return;
 				}
 
@@ -774,7 +785,7 @@ class Developer_Starter_Pro_Admin_Booking {
 					var serviceName = 'send_sms' === actionType ? 'SMS' : 'WhatsApp';
 					$('#bulk-message-title').text('Send Bulk ' + serviceName);
 					$('#bulk-message-text').val("Hello {patient_name}, this is a message from {clinic_name} regarding your appointment on {appointment_date} at {appointment_time}.");
-					$('#bulk-message-modal').show();
+					openModal('#bulk-message-modal');
 					return;
 				}
 
@@ -820,11 +831,11 @@ class Developer_Starter_Pro_Admin_Booking {
 					return;
 				}
 				executeBulkAction('reschedule', { date: date, time: time });
-				$('#bulk-reschedule-modal').hide();
+				closeModal('#bulk-reschedule-modal');
 			});
 
 			$('#cancel-bulk-reschedule, #close-bulk-reschedule').on('click', function() {
-				$('#bulk-reschedule-modal').hide();
+				closeModal('#bulk-reschedule-modal');
 			});
 
 			// Bulk Notification Sender Confirm Save
@@ -836,11 +847,11 @@ class Developer_Starter_Pro_Admin_Booking {
 					return;
 				}
 				executeBulkAction(actionType, { message: text });
-				$('#bulk-message-modal').hide();
+				closeModal('#bulk-message-modal');
 			});
 
 			$('#cancel-bulk-message, #close-bulk-message').on('click', function() {
-				$('#bulk-message-modal').hide();
+				closeModal('#bulk-message-modal');
 			});
 
 			// OPEN CREATE APPOINTMENT MODAL
@@ -852,7 +863,7 @@ class Developer_Starter_Pro_Admin_Booking {
 				$('#edit-status').val('pending');
 				$('#edit-booking_source').val('admin');
 				$('#edit-appointment_type').val('clinic_visit');
-				$('#appointment-modal').show();
+				openModal('#appointment-modal');
 			});
 
 			// OPEN EDIT MODAL BY DYNAMIC ROW CLICK
@@ -873,7 +884,7 @@ class Developer_Starter_Pro_Admin_Booking {
 				$('#edit-appointment_type').val(data.appointment_type);
 				$('#edit-notes').val(data.notes);
 				$('#edit-internal_notes').val(data.internal_notes);
-				$('#appointment-modal').show();
+				openModal('#appointment-modal');
 			});
 
 			function padZero(num) {
@@ -898,7 +909,7 @@ class Developer_Starter_Pro_Admin_Booking {
 					},
 					success: function(response) {
 						if (response.success) {
-							$('#appointment-modal').hide();
+							closeModal('#appointment-modal');
 							fetchAppointments();
 						} else {
 							alert(response.data.message || 'Error occurred while saving.');
@@ -914,7 +925,7 @@ class Developer_Starter_Pro_Admin_Booking {
 
 			// CLOSE EDIT MODAL
 			$('#cancel-modal, #close-modal').on('click', function() {
-				$('#appointment-modal').hide();
+				closeModal('#appointment-modal');
 			});
 
 			// Inline quick action buttons click
@@ -1428,6 +1439,17 @@ class Developer_Starter_Pro_Admin_Booking {
 			justify-content: center;
 			z-index: 99999;
 			animation: fadeIn 0.15s ease-out;
+		}
+		html.clinic-modal-open,
+		body.clinic-modal-open {
+			overflow: hidden !important;
+			height: 100% !important;
+		}
+		#appointment-editor-form {
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
+			flex-grow: 1;
 		}
 		.clinic-modal-card {
 			background: #ffffff;
@@ -1943,7 +1965,10 @@ class Developer_Starter_Pro_Admin_Booking {
 
 		if ( ! empty( $id ) ) {
 			// Update mode
-			$old_status = $wpdb->get_var( $wpdb->prepare( "SELECT status FROM $table_name WHERE id = %d", $id ) );
+			$old_booking = $wpdb->get_row( $wpdb->prepare( "SELECT booking_date, time_slot, status FROM $table_name WHERE id = %d", $id ) );
+			$old_status  = $old_booking ? $old_booking->status : 'pending';
+			$old_date    = $old_booking ? $old_booking->booking_date : '';
+			$old_time    = $old_booking ? $old_booking->time_slot : '';
 
 			$updated = $wpdb->update(
 				$table_name,
@@ -1954,9 +1979,23 @@ class Developer_Starter_Pro_Admin_Booking {
 			);
 
 			if ( false !== $updated ) {
-				// Trigger status change hooks if changed
-				if ( $old_status !== $status ) {
-					do_action( 'dentalpro_appointment_status_changed', $id, $old_status, $status );
+				$date_changed = ( $old_date !== $booking_date );
+				$time_changed = ( $old_time !== $time_slot );
+				$status_is_terminal = in_array( $status, array( 'cancelled', 'rejected', 'completed' ), true );
+
+				if ( ( $date_changed || $time_changed ) && ! $status_is_terminal ) {
+					// Date or time slot changed, and it's not cancelled/declined/completed: trigger reschedule notification
+					do_action( 'dentalpro_appointment_rescheduled', $id );
+					
+					// Also, if the status changed to something else (excluding rescheduled), trigger status changed
+					if ( $old_status !== $status && 'rescheduled' !== $status ) {
+						do_action( 'dentalpro_appointment_status_changed', $id, $old_status, $status );
+					}
+				} else {
+					// Either no date change, or status changed to a terminal state (cancelled/rejected/completed)
+					if ( $old_status !== $status ) {
+						do_action( 'dentalpro_appointment_status_changed', $id, $old_status, $status );
+					}
 				}
 				wp_send_json_success();
 			}

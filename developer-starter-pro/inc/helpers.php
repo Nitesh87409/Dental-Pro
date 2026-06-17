@@ -126,6 +126,11 @@ function developer_starter_pro_get_default_options() {
 		'sms_custom_method'  => 'GET',
 		'sms_custom_headers' => '',
 		'sms_custom_body'    => '',
+		'google_review_url'  => '',
+
+		// Archive & Cleanup settings
+		'archive_completed_months' => '12',
+		'archive_cancelled_months' => '6',
 	);
 }
 

@@ -41,6 +41,7 @@ require_once developer_starter_pro_INC . '/class-dental-hero-slider.php';
 require_once developer_starter_pro_INC . '/class-dental-booking.php';
 require_once developer_starter_pro_INC . '/class-dental-admin-booking.php';
 require_once developer_starter_pro_INC . '/class-dental-notifications.php';
+require_once developer_starter_pro_INC . '/class-dental-archive.php';
 require_once developer_starter_pro_INC . '/class-dental-seo.php';
 
 /**
@@ -57,6 +58,7 @@ function developer_starter_pro_init_theme() {
 	new Developer_Starter_Pro_Booking();
 	new Developer_Starter_Pro_Admin_Booking();
 	new Developer_Starter_Pro_Notifications();
+	new Developer_Starter_Pro_Archive();
 	new Developer_Starter_Pro_SEO();
 }
 add_action( 'after_setup_theme', 'developer_starter_pro_init_theme', 5 );
@@ -85,6 +87,11 @@ function developer_starter_pro_activation() {
 		wp_schedule_event( time(), 'daily', 'dentalpro_daily_reminder_cron' );
 	}
 
+	// Schedule monthly database archive/cleanup cron
+	if ( ! wp_next_scheduled( 'dentalpro_monthly_cleanup_cron' ) ) {
+		wp_schedule_event( time(), 'monthly', 'dentalpro_monthly_cleanup_cron' );
+	}
+
 	// Flush rewrite rules.
 	flush_rewrite_rules();
 }
@@ -96,6 +103,7 @@ add_action( 'after_switch_theme', 'developer_starter_pro_activation' );
 function developer_starter_pro_deactivation() {
 	// Clear cron
 	wp_clear_scheduled_hook( 'dentalpro_daily_reminder_cron' );
+	wp_clear_scheduled_hook( 'dentalpro_monthly_cleanup_cron' );
 	flush_rewrite_rules();
 }
 add_action( 'switch_theme', 'developer_starter_pro_deactivation' );

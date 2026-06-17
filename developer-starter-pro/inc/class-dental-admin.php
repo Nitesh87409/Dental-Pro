@@ -205,6 +205,13 @@ class Developer_Starter_Pro_Admin {
 			$sanitized['sms_custom_method']  = isset( $input['sms_custom_method'] ) ? sanitize_text_field( $input['sms_custom_method'] ) : 'GET';
 			$sanitized['sms_custom_headers'] = isset( $input['sms_custom_headers'] ) ? sanitize_textarea_field( $input['sms_custom_headers'] ) : '';
 			$sanitized['sms_custom_body']    = isset( $input['sms_custom_body'] ) ? sanitize_textarea_field( $input['sms_custom_body'] ) : '';
+
+			// Google Review URL
+			$sanitized['google_review_url']  = isset( $input['google_review_url'] ) ? esc_url_raw( $input['google_review_url'] ) : '';
+
+			// Archive & Cleanup
+			$sanitized['archive_completed_months'] = isset( $input['archive_completed_months'] ) ? sanitize_text_field( $input['archive_completed_months'] ) : '12';
+			$sanitized['archive_cancelled_months'] = isset( $input['archive_cancelled_months'] ) ? sanitize_text_field( $input['archive_cancelled_months'] ) : '6';
 		}
 
 		unset( $sanitized['active_tab'] );
@@ -937,6 +944,19 @@ class Developer_Starter_Pro_Admin {
 				</tr>
 			</table>
 
+			<h2 style="margin-top: 30px;"><?php esc_html_e( 'Google Review / Rating Settings', 'developer-starter-pro' ); ?></h2>
+			<p class="description"><?php esc_html_e( 'Configure the Google Review Link that will be sent to patients when their appointment is completed.', 'developer-starter-pro' ); ?></p>
+
+			<table class="form-table">
+				<tr>
+					<th><label for="google_review_url"><?php esc_html_e( 'Google Review URL', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="url" id="google_review_url" name="<?php echo esc_attr( $this->option_name ); ?>[google_review_url]" value="<?php echo esc_url( isset( $options['google_review_url'] ) ? $options['google_review_url'] : '' ); ?>" class="large-text" placeholder="https://g.page/r/your-clinic-id/review" style="width:100%; max-width:600px;">
+						<p class="description"><?php esc_html_e( 'Enter your Google Business review link. Patients will receive this link to rate their visit upon completion.', 'developer-starter-pro' ); ?></p>
+					</td>
+				</tr>
+			</table>
+
 			<h2 style="margin-top: 30px;"><?php esc_html_e( 'SMS Notification Settings', 'developer-starter-pro' ); ?></h2>
 			<p class="description"><?php esc_html_e( 'Configure real-time SMS notifications for patient appointments.', 'developer-starter-pro' ); ?></p>
 
@@ -1019,6 +1039,141 @@ class Developer_Starter_Pro_Admin {
 					</tr>
 				</tbody>
 			</table>
+		</div>
+
+		<?php // ---- Archive & Cleanup Section ---- ?>
+		<div class="developer-starter-pro-settings-section" style="margin-top:30px; border-top: 2px solid #e0e0e0; padding-top: 24px;">
+			<h2 style="display:flex; align-items:center; gap:10px;">
+				<span style="font-size:22px;">🗄️</span>
+				<?php esc_html_e( 'Database Archive & Cleanup', 'developer-starter-pro' ); ?>
+			</h2>
+			<p class="description">
+				<?php esc_html_e( 'Old appointment records are automatically archived to CSV and deleted monthly. Configure retention periods below. Active appointments (Pending / Confirmed) are never deleted.', 'developer-starter-pro' ); ?>
+			</p>
+
+			<table class="form-table">
+				<tr>
+					<th><label for="archive_completed_months"><?php esc_html_e( 'Keep Completed Appointments For', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<select id="archive_completed_months" name="<?php echo esc_attr( $this->option_name ); ?>[archive_completed_months]">
+							<?php
+							$completed_val = isset( $options['archive_completed_months'] ) ? $options['archive_completed_months'] : '12';
+							$completed_options = array( '3' => '3 Months', '6' => '6 Months', '12' => '12 Months (Recommended)', '24' => '24 Months', '0' => 'Never Delete' );
+							foreach ( $completed_options as $val => $label ) {
+								printf( '<option value="%s" %s>%s</option>', esc_attr( $val ), selected( $completed_val, $val, false ), esc_html( $label ) );
+							}
+							?>
+						</select>
+						<p class="description"><?php esc_html_e( 'Completed appointments older than this will be exported to CSV and deleted automatically each month.', 'developer-starter-pro' ); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="archive_cancelled_months"><?php esc_html_e( 'Keep Cancelled / Rejected Records For', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<select id="archive_cancelled_months" name="<?php echo esc_attr( $this->option_name ); ?>[archive_cancelled_months]">
+							<?php
+							$cancelled_val = isset( $options['archive_cancelled_months'] ) ? $options['archive_cancelled_months'] : '6';
+							$cancelled_options = array( '1' => '1 Month', '3' => '3 Months', '6' => '6 Months (Recommended)', '12' => '12 Months', '0' => 'Never Delete' );
+							foreach ( $cancelled_options as $val => $label ) {
+								printf( '<option value="%s" %s>%s</option>', esc_attr( $val ), selected( $cancelled_val, $val, false ), esc_html( $label ) );
+							}
+							?>
+						</select>
+						<p class="description"><?php esc_html_e( 'Cancelled, rejected, and no-show appointments older than this will be exported to CSV and deleted.', 'developer-starter-pro' ); ?></p>
+					</td>
+				</tr>
+			</table>
+
+			<?php
+			// Show live preview count if archive class is loaded
+			if ( class_exists( 'Developer_Starter_Pro_Archive' ) ) {
+				$archive     = new Developer_Starter_Pro_Archive();
+				$preview     = $archive->get_cleanup_preview();
+				$total_recs  = $preview['total'];
+				$badge_color = $total_recs > 0 ? '#d63638' : '#00a32a';
+				?>
+				<div id="dentalpro-archive-preview" style="background:#f8f9fa; border:1px solid #ddd; border-radius:8px; padding:16px 20px; margin:20px 0; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+					<div style="flex:1; min-width:200px;">
+						<strong><?php esc_html_e( 'Records Eligible for Cleanup:', 'developer-starter-pro' ); ?></strong><br>
+						<span style="font-size:13px; color:#666;">
+							✅ <?php printf( esc_html__( 'Completed: %d records', 'developer-starter-pro' ), $preview['completed'] ); ?><br>
+							❌ <?php printf( esc_html__( 'Cancelled/Rejected: %d records', 'developer-starter-pro' ), $preview['cancelled'] ); ?>
+						</span>
+					</div>
+					<div>
+						<span style="background:<?php echo esc_attr( $badge_color ); ?>; color:#fff; padding:4px 12px; border-radius:20px; font-weight:600; font-size:14px;">
+							<?php printf( esc_html__( 'Total: %d', 'developer-starter-pro' ), $total_recs ); ?>
+						</span>
+					</div>
+				</div>
+				<?php
+			}
+			?>
+
+			<div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-top:10px;">
+				<button type="button" id="dentalpro-manual-cleanup-btn" class="button button-primary"
+					style="background:#d63638; border-color:#d63638; font-weight:600; padding:6px 18px; height:auto; font-size:14px;"
+					data-nonce="<?php echo esc_attr( wp_create_nonce( 'dentalpro_archive_nonce' ) ); ?>">
+					🗑️ <?php esc_html_e( 'Run Manual Cleanup Now', 'developer-starter-pro' ); ?>
+				</button>
+				<span id="dentalpro-cleanup-status" style="font-size:13px;"></span>
+			</div>
+
+			<div id="dentalpro-cleanup-download" style="margin-top:14px; display:none;">
+				<strong><?php esc_html_e( 'CSV Backup Files:', 'developer-starter-pro' ); ?></strong>
+				<ul id="dentalpro-cleanup-links" style="margin-top:6px;"></ul>
+			</div>
+
+			<p class="description" style="margin-top:12px; font-style:italic; color:#888;">
+				⚠️ <?php esc_html_e( 'Manual cleanup will permanently delete matching records. CSV files are generated as backup before deletion and are available for download for 1 hour.', 'developer-starter-pro' ); ?>
+			</p>
+
+			<script>
+			(function() {
+				var btn = document.getElementById('dentalpro-manual-cleanup-btn');
+				if ( ! btn ) return;
+				btn.addEventListener('click', function() {
+					if ( ! confirm('<?php echo esc_js( __( 'Are you sure? This will permanently delete old records (CSV backup will be created). Continue?', 'developer-starter-pro' ) ); ?>') ) {
+						return;
+					}
+					var status = document.getElementById('dentalpro-cleanup-status');
+					status.innerHTML = '⏳ <?php echo esc_js( __( 'Running cleanup...', 'developer-starter-pro' ) ); ?>';
+					btn.disabled = true;
+
+					var formData = new FormData();
+					formData.append('action', 'dentalpro_manual_cleanup');
+					formData.append('nonce', btn.getAttribute('data-nonce'));
+
+					fetch(ajaxurl, { method: 'POST', body: formData })
+						.then(function(r) { return r.json(); })
+						.then(function(data) {
+							if ( data.success ) {
+								status.innerHTML = '✅ ' + data.data.message;
+								var dl = document.getElementById('dentalpro-cleanup-download');
+								var ul = document.getElementById('dentalpro-cleanup-links');
+								ul.innerHTML = '';
+								if ( data.data.download_links && data.data.download_links.length > 0 ) {
+									dl.style.display = 'block';
+									data.data.download_links.forEach(function(link) {
+										var li = document.createElement('li');
+										li.innerHTML = '📥 <a href="' + link.url + '" target="_blank" style="font-weight:600;">' + link.filename + '</a>';
+										ul.appendChild(li);
+									});
+								} else {
+									dl.style.display = 'none';
+								}
+							} else {
+								status.innerHTML = '❌ ' + (data.data ? data.data.message : '<?php echo esc_js( __( 'Error occurred.', 'developer-starter-pro' ) ); ?>');
+							}
+							btn.disabled = false;
+						})
+						.catch(function() {
+							status.innerHTML = '❌ <?php echo esc_js( __( 'Request failed.', 'developer-starter-pro' ) ); ?>';
+							btn.disabled = false;
+						});
+				});
+			})();
+			</script>
 		</div>
 		<?php
 	}
