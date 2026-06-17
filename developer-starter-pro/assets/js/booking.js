@@ -6,7 +6,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 	var currentStep = 1;
-	var totalSteps = 4;
+	var totalSteps = 5;
 	
 	var form = document.getElementById('booking-wizard-form');
 	if (!form) return;
@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			loadingSlots: 'Loading available slots...',
 			noSlots: 'No slot intervals generated.',
 			serverError: 'Server request failed.',
+			selectLocation: 'Please select a clinic location to continue.',
 			selectService: 'Please select a dental service to continue.',
 			selectDoctor: 'Please select a doctor to continue.',
 			selectDate: 'Please pick a booking date.',
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	};
 
 	// Selection Cards highlight triggers
+	var locationRadios = document.querySelectorAll('input[name="location_id"]');
 	var serviceRadios = document.querySelectorAll('input[name="service_id"]');
 	var doctorRadios = document.querySelectorAll('input[name="doctor_id"]');
 
@@ -55,11 +57,13 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 
 	form.addEventListener('change', function(e) {
+		if (e.target.name === 'location_id') updateSelectionHighlight(locationRadios);
 		if (e.target.name === 'service_id') updateSelectionHighlight(serviceRadios);
 		if (e.target.name === 'doctor_id') updateSelectionHighlight(doctorRadios);
 	});
 
 	// Pre-highlight initially selected cards
+	updateSelectionHighlight(locationRadios);
 	updateSelectionHighlight(serviceRadios);
 	updateSelectionHighlight(doctorRadios);
 
@@ -118,6 +122,26 @@ document.addEventListener('DOMContentLoaded', function() {
 			});
 	}
 
+	function filterDoctorsByLocation(locationId) {
+		var doctorCards = document.querySelectorAll('.wizard-doctors-list .wizard-selection-card');
+		var checkedDoctor = form.elements['doctor_id'] ? form.elements['doctor_id'].value : '';
+		
+		doctorCards.forEach(function(card) {
+			var docLoc = card.getAttribute('data-location-id');
+			// Show doctor if they are general (0) or assigned to selected location
+			if (docLoc === '0' || docLoc === locationId) {
+				card.style.display = '';
+			} else {
+				card.style.display = 'none';
+				var radio = card.querySelector('input[name="doctor_id"]');
+				if (radio && radio.checked) {
+					radio.checked = false;
+					card.classList.remove('selected');
+				}
+			}
+		});
+	}
+
 	// Step Navigation Logic
 	if (nextBtn) {
 		nextBtn.addEventListener('click', function() {
@@ -125,18 +149,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
 			// Validate current step fields
 			if (1 === currentStep) {
+				if (!form.elements['location_id'].value) {
+					showError(l10n.strings.selectLocation || 'Please select a clinic location to continue.');
+					return;
+				}
+				// Filter doctor cards based on selected location
+				filterDoctorsByLocation(form.elements['location_id'].value);
+			} else if (2 === currentStep) {
 				if (!form.elements['service_id'].value) {
 					showError(l10n.strings.selectService);
 					return;
 				}
-			} else if (2 === currentStep) {
+			} else if (3 === currentStep) {
 				if (!form.elements['doctor_id'].value) {
 					showError(l10n.strings.selectDoctor);
 					return;
 				}
 				// Trigger a slot fetch beforehand to prepopulate if date is selected
 				fetchTimeSlots();
-			} else if (3 === currentStep) {
+			} else if (4 === currentStep) {
 				if (!dateInput.value) {
 					showError(l10n.strings.selectDate);
 					return;
@@ -145,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					showError(l10n.strings.selectSlot);
 					return;
 				}
-			} else if (4 === currentStep) {
+			} else if (5 === currentStep) {
 				if (!form.checkValidity()) {
 					form.reportValidity();
 					return;
@@ -208,6 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		nextBtn.textContent = l10n.strings.processing;
 
 		var payload = {
+			location_id: parseInt(form.elements['location_id'].value, 10),
 			service_id: parseInt(form.elements['service_id'].value, 10),
 			doctor_id: parseInt(form.elements['doctor_id'].value, 10),
 			date: dateInput.value,
@@ -256,14 +288,18 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 
 	// URL query params or PHP pre-selected inputs auto-advance
-	var initialServiceChecked = form.querySelector('input[name="service_id"]:checked');
-	if (initialServiceChecked) {
+	var initialLocationChecked = form.querySelector('input[name="location_id"]:checked');
+	if (initialLocationChecked) {
+		filterDoctorsByLocation(initialLocationChecked.value);
 		goToStep(2);
-		var initialDoctorChecked = form.querySelector('input[name="doctor_id"]:checked');
-		if (initialDoctorChecked) {
+		var initialServiceChecked = form.querySelector('input[name="service_id"]:checked');
+		if (initialServiceChecked) {
 			goToStep(3);
-			fetchTimeSlots();
+			var initialDoctorChecked = form.querySelector('input[name="doctor_id"]:checked');
+			if (initialDoctorChecked) {
+				goToStep(4);
+				fetchTimeSlots();
+			}
 		}
 	}
 });
-

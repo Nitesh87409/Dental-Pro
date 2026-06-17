@@ -3749,3 +3749,240 @@ html.js.page-loaded .developer-starter-pro-page-banner .developer-starter-pro-se
 	transition-delay: 150ms !important;
 }
 
+/* ==========================================================================
+   Unified Emergency & WhatsApp Floating FAB Widget Styles
+   ========================================================================== */
+
+.dp-unified-fab-widget {
+	position: fixed;
+	bottom: 30px;
+	z-index: 9999;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dp-unified-fab-widget.pos-right {
+	right: 30px;
+}
+
+.dp-unified-fab-widget.pos-left {
+	left: 30px;
+}
+
+/* Push widget up to avoid overlapping with chatbot when active on the right */
+.dp-unified-fab-widget.pos-right.has-chatbot-active {
+	bottom: 100px;
+}
+
+/* Trigger Button */
+.dp-fab-trigger {
+	position: relative;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	border: none;
+	background: linear-gradient(135deg, #ef4444, #dc2626);
+	color: #fff;
+	font-size: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	z-index: 10;
+	padding: 0;
+}
+
+.dp-fab-trigger:hover {
+	transform: scale(1.05);
+	box-shadow: 0 6px 20px rgba(220, 38, 38, 0.6);
+}
+
+.dp-unified-fab-widget.expanded .dp-fab-trigger {
+	background: #1e293b;
+	box-shadow: 0 4px 15px rgba(30, 41, 59, 0.4);
+	transform: rotate(90deg);
+}
+
+/* Pulse effect representing active emergency assistance */
+.dp-fab-pulse {
+	position: absolute;
+	inset: 0;
+	border-radius: 50%;
+	background-color: #ef4444;
+	opacity: 0.4;
+	z-index: -1;
+	animation: dpFabPulse 2s infinite;
+}
+
+.dp-unified-fab-widget.expanded .dp-fab-pulse {
+	animation: none;
+	opacity: 0;
+}
+
+@keyframes dpFabPulse {
+	0% {
+		transform: scale(1);
+		opacity: 0.4;
+	}
+	100% {
+		transform: scale(1.6);
+		opacity: 0;
+	}
+}
+
+/* Expandable Options Menu */
+.dp-fab-menu {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	margin-bottom: 15px;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(20px) scale(0.9);
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	pointer-events: none;
+}
+
+.dp-unified-fab-widget.expanded .dp-fab-menu {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0) scale(1);
+	pointer-events: auto;
+}
+
+/* Menu Items */
+.dp-fab-item {
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	position: relative;
+	transition: all 0.2s ease;
+}
+
+.dp-unified-fab-widget.pos-right .dp-fab-item {
+	flex-direction: row-reverse;
+}
+
+.dp-unified-fab-widget.pos-left .dp-fab-item {
+	flex-direction: row;
+}
+
+/* Icon Container */
+.dp-fab-icon {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.whatsapp-item .dp-fab-icon {
+	background-color: #25D366;
+	box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+}
+
+.emergency-item .dp-fab-icon {
+	background-color: #ef4444;
+	box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
+	animation: pulseRed 1.5s infinite;
+}
+
+.dp-fab-item:hover .dp-fab-icon {
+	transform: scale(1.1);
+}
+
+@keyframes pulseRed {
+	0% {
+		box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+	}
+	70% {
+		box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+	}
+	100% {
+		box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+	}
+}
+
+/* Glassmorphic Labels */
+.dp-fab-label {
+	background: rgba(30, 41, 59, 0.85);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	color: #fff;
+	padding: 6px 14px;
+	border-radius: 8px;
+	font-size: 0.875rem;
+	font-weight: 500;
+	white-space: nowrap;
+	opacity: 0;
+	visibility: hidden;
+	transform: scale(0.9);
+	transition: all 0.2s ease;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dp-unified-fab-widget.pos-right .dp-fab-label {
+	margin-right: 12px;
+	transform-origin: right center;
+}
+
+.dp-unified-fab-widget.pos-left .dp-fab-label {
+	margin-left: 12px;
+	transform-origin: left center;
+}
+
+.dp-fab-item:hover .dp-fab-label {
+	opacity: 1;
+	visibility: visible;
+	transform: scale(1);
+}
+
+/* Default Tooltip on Main Trigger Button */
+.dp-fab-tooltip {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%) scale(0.8);
+	background: #1e293b;
+	color: #fff;
+	padding: 8px 16px;
+	border-radius: 8px;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	white-space: nowrap;
+	opacity: 0;
+	pointer-events: none;
+	transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	z-index: 5;
+}
+
+.dp-unified-fab-widget.pos-right .dp-fab-tooltip {
+	right: 76px;
+	transform-origin: right center;
+}
+
+.dp-unified-fab-widget.pos-left .dp-fab-tooltip {
+	left: 76px;
+	transform-origin: left center;
+}
+
+.dp-fab-trigger:hover .dp-fab-tooltip {
+	opacity: 1;
+	transform: translateY(-50%) scale(1);
+}
+
+/* Hide tooltip when expanded */
+.dp-unified-fab-widget.expanded .dp-fab-trigger .dp-fab-tooltip {
+	opacity: 0 !important;
+	transform: translateY(-50%) scale(0.8) !important;
+}
+

@@ -8,7 +8,7 @@
 
 get_header();
 
-// Fetch services and doctors for lists
+// Fetch services, doctors, and locations for lists
 $services = get_posts( array(
 	'post_type'      => 'services',
 	'posts_per_page' => -1,
@@ -21,8 +21,15 @@ $doctors = get_posts( array(
 	'post_status'    => 'publish',
 ) );
 
-$selected_doctor  = isset( $_GET['doctor_id'] ) ? absint( $_GET['doctor_id'] ) : 0;
-$selected_service = isset( $_GET['service_id'] ) ? absint( $_GET['service_id'] ) : 0;
+$locations = get_posts( array(
+	'post_type'      => 'locations',
+	'posts_per_page' => -1,
+	'post_status'    => 'publish',
+) );
+
+$selected_doctor   = isset( $_GET['doctor_id'] ) ? absint( $_GET['doctor_id'] ) : 0;
+$selected_service  = isset( $_GET['service_id'] ) ? absint( $_GET['service_id'] ) : 0;
+$selected_location = isset( $_GET['location_id'] ) ? absint( $_GET['location_id'] ) : 0;
 ?>
 
 <main id="primary" class="developer-starter-pro-main" role="main">
@@ -33,7 +40,7 @@ $selected_service = isset( $_GET['service_id'] ) ? absint( $_GET['service_id'] )
 			<div class="developer-starter-pro-section-header" style="margin-bottom: 0; padding: 48px 0;">
 				<span class="developer-starter-pro-section-badge"><?php esc_html_e( 'Scheduler', 'developer-starter-pro' ); ?></span>
 				<h1 class="developer-starter-pro-section-title"><?php the_title(); ?></h1>
-				<p class="developer-starter-pro-section-subtitle"><?php esc_html_e( 'Book your dental appointment in four simple steps.', 'developer-starter-pro' ); ?></p>
+				<p class="developer-starter-pro-section-subtitle"><?php esc_html_e( 'Book your dental appointment in five simple steps.', 'developer-starter-pro' ); ?></p>
 			</div>
 		</div>
 	</div>
@@ -52,21 +59,26 @@ $selected_service = isset( $_GET['service_id'] ) ? absint( $_GET['service_id'] )
 					
 					<div class="wizard-step-indicator active" data-step="1" style="position:relative; z-index:2; text-align:center; flex:1;">
 						<span class="step-number" style="width:40px; height:40px; display:inline-flex; align-items:center; justify-content:center; border-radius:50%; background:#fff; border:3px solid var(--developer-starter-pro-gray-200); font-weight:700; color:var(--developer-starter-pro-gray-400); transition: all 0.3s ease;">1</span>
-						<span class="step-label" style="display:block; font-size:0.75rem; font-weight:600; text-transform:uppercase; margin-top:8px; color:var(--developer-starter-pro-gray-400);"><?php esc_html_e( 'Service', 'developer-starter-pro' ); ?></span>
+						<span class="step-label" style="display:block; font-size:0.75rem; font-weight:600; text-transform:uppercase; margin-top:8px; color:var(--developer-starter-pro-gray-400);"><?php esc_html_e( 'Location', 'developer-starter-pro' ); ?></span>
 					</div>
 					
 					<div class="wizard-step-indicator" data-step="2" style="position:relative; z-index:2; text-align:center; flex:1;">
 						<span class="step-number" style="width:40px; height:40px; display:inline-flex; align-items:center; justify-content:center; border-radius:50%; background:#fff; border:3px solid var(--developer-starter-pro-gray-200); font-weight:700; color:var(--developer-starter-pro-gray-400); transition: all 0.3s ease;">2</span>
-						<span class="step-label" style="display:block; font-size:0.75rem; font-weight:600; text-transform:uppercase; margin-top:8px; color:var(--developer-starter-pro-gray-400);"><?php esc_html_e( 'Doctor', 'developer-starter-pro' ); ?></span>
+						<span class="step-label" style="display:block; font-size:0.75rem; font-weight:600; text-transform:uppercase; margin-top:8px; color:var(--developer-starter-pro-gray-400);"><?php esc_html_e( 'Service', 'developer-starter-pro' ); ?></span>
 					</div>
 					
 					<div class="wizard-step-indicator" data-step="3" style="position:relative; z-index:2; text-align:center; flex:1;">
 						<span class="step-number" style="width:40px; height:40px; display:inline-flex; align-items:center; justify-content:center; border-radius:50%; background:#fff; border:3px solid var(--developer-starter-pro-gray-200); font-weight:700; color:var(--developer-starter-pro-gray-400); transition: all 0.3s ease;">3</span>
-						<span class="step-label" style="display:block; font-size:0.75rem; font-weight:600; text-transform:uppercase; margin-top:8px; color:var(--developer-starter-pro-gray-400);"><?php esc_html_e( 'Schedule', 'developer-starter-pro' ); ?></span>
+						<span class="step-label" style="display:block; font-size:0.75rem; font-weight:600; text-transform:uppercase; margin-top:8px; color:var(--developer-starter-pro-gray-400);"><?php esc_html_e( 'Doctor', 'developer-starter-pro' ); ?></span>
 					</div>
 					
 					<div class="wizard-step-indicator" data-step="4" style="position:relative; z-index:2; text-align:center; flex:1;">
 						<span class="step-number" style="width:40px; height:40px; display:inline-flex; align-items:center; justify-content:center; border-radius:50%; background:#fff; border:3px solid var(--developer-starter-pro-gray-200); font-weight:700; color:var(--developer-starter-pro-gray-400); transition: all 0.3s ease;">4</span>
+						<span class="step-label" style="display:block; font-size:0.75rem; font-weight:600; text-transform:uppercase; margin-top:8px; color:var(--developer-starter-pro-gray-400);"><?php esc_html_e( 'Schedule', 'developer-starter-pro' ); ?></span>
+					</div>
+					
+					<div class="wizard-step-indicator" data-step="5" style="position:relative; z-index:2; text-align:center; flex:1;">
+						<span class="step-number" style="width:40px; height:40px; display:inline-flex; align-items:center; justify-content:center; border-radius:50%; background:#fff; border:3px solid var(--developer-starter-pro-gray-200); font-weight:700; color:var(--developer-starter-pro-gray-400); transition: all 0.3s ease;">5</span>
 						<span class="step-label" style="display:block; font-size:0.75rem; font-weight:600; text-transform:uppercase; margin-top:8px; color:var(--developer-starter-pro-gray-400);"><?php esc_html_e( 'Patient Info', 'developer-starter-pro' ); ?></span>
 					</div>
 				</div>
@@ -74,8 +86,43 @@ $selected_service = isset( $_GET['service_id'] ) ? absint( $_GET['service_id'] )
 				<!-- Wizard Form -->
 				<form id="booking-wizard-form" method="post" action="#">
 					
-					<!-- Step 1: Choose Service -->
+					<!-- Step 1: Choose Location -->
 					<div class="booking-wizard-panel active" data-panel="1">
+						<h2 style="margin-top:0; margin-bottom:24px; font-size:1.5rem; text-align:center;"><?php esc_html_e( 'Select Clinic Branch', 'developer-starter-pro' ); ?></h2>
+						
+						<div class="wizard-locations-list" style="display:grid; grid-template-columns: 1fr; gap:16px;">
+							<?php if ( ! empty( $locations ) ) :
+								foreach ( $locations as $loc ) :
+									$address = get_post_meta( $loc->ID, '_developer_starter_pro_location_address', true );
+									$phone   = get_post_meta( $loc->ID, '_developer_starter_pro_location_phone', true );
+									$email   = get_post_meta( $loc->ID, '_developer_starter_pro_location_email', true );
+									?>
+									<label class="wizard-selection-card" style="display:flex; justify-content:space-between; align-items:center; border:2px solid var(--developer-starter-pro-gray-200); border-radius:12px; padding: 20px; cursor:pointer; transition:all 0.2s ease;">
+										<div style="display:flex; align-items:center; gap:16px;">
+											<input type="radio" name="location_id" value="<?php echo intval( $loc->ID ); ?>" <?php checked( $loc->ID, $selected_location ); ?> required style="width:20px; height:20px; accent-color: var(--developer-starter-pro-primary);">
+											<div>
+												<strong style="font-size:1.0625rem; display:block; color:var(--developer-starter-pro-secondary);"><?php echo esc_html( $loc->post_title ); ?></strong>
+												<?php if ( $address ) : ?>
+													<span style="font-size:0.875rem; color:var(--developer-starter-pro-gray-500); display:block; margin-top:2px;">📍 <?php echo esc_html( $address ); ?></span>
+												<?php endif; ?>
+												<?php if ( $phone || $email ) : ?>
+													<span style="font-size:0.75rem; color:var(--developer-starter-pro-gray-400); display:block; margin-top:4px;">
+														<?php if ( $phone ) echo '📞 ' . esc_html( $phone ) . ' '; ?>
+														<?php if ( $email ) echo '✉️ ' . esc_html( $email ); ?>
+													</span>
+												<?php endif; ?>
+											</div>
+										</div>
+									</label>
+								<?php endforeach;
+							else : ?>
+								<p style="text-align:center; color:var(--developer-starter-pro-gray-500);"><?php esc_html_e( 'No branches available to book.', 'developer-starter-pro' ); ?></p>
+							<?php endif; ?>
+						</div>
+					</div>
+
+					<!-- Step 2: Choose Service -->
+					<div class="booking-wizard-panel" data-panel="2" style="display:none;">
 						<h2 style="margin-top:0; margin-bottom:24px; font-size:1.5rem; text-align:center;"><?php esc_html_e( 'Select Your Dental Treatment', 'developer-starter-pro' ); ?></h2>
 						
 						<div class="wizard-services-list" style="display:grid; grid-template-columns: 1fr; gap:16px;">
@@ -119,16 +166,17 @@ $selected_service = isset( $_GET['service_id'] ) ? absint( $_GET['service_id'] )
 						</div>
 					</div>
 
-					<!-- Step 2: Choose Doctor -->
-					<div class="booking-wizard-panel" data-panel="2" style="display:none;">
+					<!-- Step 3: Choose Doctor -->
+					<div class="booking-wizard-panel" data-panel="3" style="display:none;">
 						<h2 style="margin-top:0; margin-bottom:24px; font-size:1.5rem; text-align:center;"><?php esc_html_e( 'Select Your Doctor', 'developer-starter-pro' ); ?></h2>
 						
 						<div class="wizard-doctors-list" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap:20px;">
 							<?php if ( ! empty( $doctors ) ) :
 								foreach ( $doctors as $doc ) :
 									$spec = get_post_meta( $doc->ID, '_developer_starter_pro_doctor_speciality', true );
+									$doc_location = get_post_meta( $doc->ID, '_developer_starter_pro_doctor_location_id', true );
 									?>
-									<label class="wizard-selection-card flex-column" style="display:flex; flex-direction:column; align-items:center; border:2px solid var(--developer-starter-pro-gray-200); border-radius:12px; padding: 24px; cursor:pointer; text-align:center; transition:all 0.2s ease;">
+									<label class="wizard-selection-card flex-column" data-location-id="<?php echo esc_attr( $doc_location ? $doc_location : 0 ); ?>" style="display:flex; flex-direction:column; align-items:center; border:2px solid var(--developer-starter-pro-gray-200); border-radius:12px; padding: 24px; cursor:pointer; text-align:center; transition:all 0.2s ease;">
 										<input type="radio" name="doctor_id" value="<?php echo intval( $doc->ID ); ?>" <?php checked( $doc->ID, $selected_doctor ); ?> required style="margin-bottom:16px; width:20px; height:20px; accent-color: var(--developer-starter-pro-primary);">
 										<div class="doctor-avatar" style="width:90px; height:90px; border-radius:50%; background:var(--developer-starter-pro-gray-100); display:flex; align-items:center; justify-content:center; font-size:2rem; margin-bottom:12px; overflow:hidden;">
 											<?php if ( has_post_thumbnail( $doc->ID ) ) : ?>
@@ -149,8 +197,8 @@ $selected_service = isset( $_GET['service_id'] ) ? absint( $_GET['service_id'] )
 						</div>
 					</div>
 
-					<!-- Step 3: Choose Date & Time -->
-					<div class="booking-wizard-panel" data-panel="3" style="display:none;">
+					<!-- Step 4: Choose Date & Time -->
+					<div class="booking-wizard-panel" data-panel="4" style="display:none;">
 						<h2 style="margin-top:0; margin-bottom:24px; font-size:1.5rem; text-align:center;"><?php esc_html_e( 'Select Appointment Date & Time', 'developer-starter-pro' ); ?></h2>
 						
 						<div class="wizard-schedule-split" style="display:grid; grid-template-columns: 1fr 1fr; gap:32px;">
@@ -167,8 +215,8 @@ $selected_service = isset( $_GET['service_id'] ) ? absint( $_GET['service_id'] )
 						</div>
 					</div>
 
-					<!-- Step 4: Patient Info -->
-					<div class="booking-wizard-panel" data-panel="4" style="display:none;">
+					<!-- Step 5: Patient Info -->
+					<div class="booking-wizard-panel" data-panel="5" style="display:none;">
 						<h2 style="margin-top:0; margin-bottom:24px; font-size:1.5rem; text-align:center;"><?php esc_html_e( 'Provide Contact Information', 'developer-starter-pro' ); ?></h2>
 						
 						<div style="display:flex; flex-direction:column; gap:16px;">

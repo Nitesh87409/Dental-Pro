@@ -25,6 +25,7 @@ class Developer_Starter_Pro_CPT {
 		add_action( 'init', array( $this, 'register_testimonials' ) );
 		add_action( 'init', array( $this, 'register_appointments' ) );
 		add_action( 'init', array( $this, 'register_before_after' ) );
+		add_action( 'init', array( $this, 'register_locations' ) );
 
 		// Custom admin columns.
 		add_filter( 'manage_doctors_posts_columns', array( $this, 'doctors_columns' ) );
@@ -500,5 +501,53 @@ class Developer_Starter_Pro_CPT {
 		);
 
 		register_post_type( 'before_after', $args );
+	}
+
+	/**
+	 * Register Locations CPT.
+	 */
+	public function register_locations() {
+		$labels = array(
+			'name'                  => _x( 'Locations', 'Post Type General Name', 'developer-starter-pro' ),
+			'singular_name'         => _x( 'Location', 'Post Type Singular Name', 'developer-starter-pro' ),
+			'menu_name'             => esc_html__( 'Locations', 'developer-starter-pro' ),
+			'name_admin_bar'        => esc_html__( 'Location', 'developer-starter-pro' ),
+			'all_items'             => esc_html__( 'All Locations', 'developer-starter-pro' ),
+			'add_new_item'          => esc_html__( 'Add New Location', 'developer-starter-pro' ),
+			'add_new'               => esc_html__( 'Add New', 'developer-starter-pro' ),
+			'edit_item'             => esc_html__( 'Edit Location', 'developer-starter-pro' ),
+			'update_item'           => esc_html__( 'Update Location', 'developer-starter-pro' ),
+			'view_item'             => esc_html__( 'View Location', 'developer-starter-pro' ),
+			'search_items'          => esc_html__( 'Search Locations', 'developer-starter-pro' ),
+			'not_found'             => esc_html__( 'No locations found', 'developer-starter-pro' ),
+			'not_found_in_trash'    => esc_html__( 'No locations found in Trash', 'developer-starter-pro' ),
+		);
+
+		$args = array(
+			'label'               => esc_html__( 'Location', 'developer-starter-pro' ),
+			'description'         => esc_html__( 'Clinic branches and locations', 'developer-starter-pro' ),
+			'labels'              => $labels,
+			'supports'            => array( 'title', 'editor', 'thumbnail', 'custom-fields' ),
+			'hierarchical'        => false,
+			'public'              => true,
+			'show_ui'             => true,
+			'show_in_menu'        => true,
+			'menu_position'       => 24,
+			'menu_icon'           => 'dashicons-location',
+			'show_in_admin_bar'   => true,
+			'show_in_nav_menus'   => true,
+			'can_export'          => true,
+			'has_archive'         => false,
+			'exclude_from_search' => false,
+			'publicly_queryable'  => true,
+			'capability_type'     => 'post',
+			'show_in_rest'        => true,
+			'rewrite'             => array(
+				'slug'       => 'locations',
+				'with_front' => false,
+			),
+		);
+
+		register_post_type( 'locations', $args );
 	}
 }

@@ -54,6 +54,7 @@ class Developer_Starter_Pro_Booking {
 			patient_name varchar(100) NOT NULL,
 			patient_email varchar(100) NOT NULL,
 			patient_phone varchar(50) NOT NULL,
+			location_id bigint(20) DEFAULT 0 NOT NULL,
 			doctor_id bigint(20) NOT NULL,
 			service_id bigint(20) NOT NULL,
 			booking_date date NOT NULL,
@@ -71,6 +72,14 @@ class Developer_Starter_Pro_Booking {
 
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
+
+		// Alter table to add location_id manually if dbDelta skipped it
+		if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) === $table_name ) {
+			$row = $wpdb->get_row( "SELECT * FROM $table_name LIMIT 1", ARRAY_A );
+			if ( $row && ! isset( $row['location_id'] ) ) {
+				$wpdb->query( "ALTER TABLE $table_name ADD location_id bigint(20) DEFAULT 0 NOT NULL AFTER patient_phone" );
+			}
+		}
 	}
 
 	/**
@@ -200,14 +209,15 @@ class Developer_Starter_Pro_Booking {
 
 		$params = $request->get_json_params();
 
-		$name      = sanitize_text_field( $params['patient_name'] ?? '' );
-		$email     = sanitize_email( $params['patient_email'] ?? '' );
-		$phone     = sanitize_text_field( $params['patient_phone'] ?? '' );
-		$doctor_id = absint( $params['doctor_id'] ?? 0 );
-		$service_id = absint( $params['service_id'] ?? 0 );
-		$date      = sanitize_text_field( $params['date'] ?? '' );
-		$time_slot = sanitize_text_field( $params['time_slot'] ?? '' );
-		$notes     = sanitize_textarea_field( $params['notes'] ?? '' );
+		$name        = sanitize_text_field( $params['patient_name'] ?? '' );
+		$email       = sanitize_email( $params['patient_email'] ?? '' );
+		$phone       = sanitize_text_field( $params['patient_phone'] ?? '' );
+		$location_id = absint( $params['location_id'] ?? 0 );
+		$doctor_id   = absint( $params['doctor_id'] ?? 0 );
+		$service_id  = absint( $params['service_id'] ?? 0 );
+		$date        = sanitize_text_field( $params['date'] ?? '' );
+		$time_slot   = sanitize_text_field( $params['time_slot'] ?? '' );
+		$notes       = sanitize_textarea_field( $params['notes'] ?? '' );
 
 		// Honeypot anti-spam check — hidden field must be empty.
 		$honeypot = sanitize_text_field( $params['website_url'] ?? '' );
@@ -250,6 +260,7 @@ class Developer_Starter_Pro_Booking {
 				'patient_name' => $name,
 				'patient_email' => $email,
 				'patient_phone' => $phone,
+				'location_id'  => $location_id,
 				'doctor_id'    => $doctor_id,
 				'service_id'   => $service_id,
 				'booking_date' => $date,
@@ -261,7 +272,7 @@ class Developer_Starter_Pro_Booking {
 				'notes'        => $notes,
 				'internal_notes' => '',
 			),
-			array( '%s', '%s', '%s', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' )
+			array( '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' )
 		);
 
 		if ( ! $inserted ) {

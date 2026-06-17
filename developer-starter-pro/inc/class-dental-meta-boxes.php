@@ -36,6 +36,7 @@ class Developer_Starter_Pro_Meta_Boxes {
 		add_action( 'save_post', array( $this, 'save_testimonial_meta' ), 10, 2 );
 		add_action( 'save_post', array( $this, 'save_appointment_meta' ), 10, 2 );
 		add_action( 'save_post', array( $this, 'save_before_after_meta' ), 10, 2 );
+		add_action( 'save_post', array( $this, 'save_location_meta' ), 10, 2 );
 	}
 
 	/**
@@ -108,6 +109,26 @@ class Developer_Starter_Pro_Meta_Boxes {
 			'before_after',
 			'normal',
 			'high'
+		);
+
+		// Location Details meta box.
+		add_meta_box(
+			'developer_starter_pro_location_details',
+			esc_html__( 'Location Details', 'developer-starter-pro' ),
+			array( $this, 'render_location_details' ),
+			'locations',
+			'normal',
+			'high'
+		);
+
+		// Doctor Location assignment meta box.
+		add_meta_box(
+			'developer_starter_pro_doctor_location',
+			esc_html__( 'Branch Location Assignment', 'developer-starter-pro' ),
+			array( $this, 'render_doctor_location' ),
+			'doctors',
+			'side',
+			'default'
 		);
 	}
 
@@ -317,6 +338,11 @@ class Developer_Starter_Pro_Meta_Boxes {
 				$social[ sanitize_key( $platform ) ] = esc_url_raw( $url );
 			}
 			update_post_meta( $post_id, $this->prefix . 'doctor_social', $social );
+		}
+
+		// Save Location Assignment
+		if ( isset( $_POST['doctor_location_id'] ) ) {
+			update_post_meta( $post_id, $this->prefix . 'doctor_location_id', absint( wp_unslash( $_POST['doctor_location_id'] ) ) );
 		}
 	}
 
@@ -790,6 +816,101 @@ class Developer_Starter_Pro_Meta_Boxes {
 			'after_image'  => 'esc_url_raw',
 			'before_label' => 'sanitize_text_field',
 			'after_label'  => 'sanitize_text_field',
+		);
+
+		foreach ( $fields as $field => $sanitize_callback ) {
+			if ( isset( $_POST[ $field ] ) ) {
+				$value = call_user_func( $sanitize_callback, wp_unslash( $_POST[ $field ] ) );
+				update_post_meta( $post_id, $this->prefix . $field, $value );
+			}
+		}
+	}
+
+	/**
+	 * Render Location Details meta box.
+	 */
+	public function render_location_details( $post ) {
+		wp_nonce_field( 'developer_starter_pro_location_details', 'developer_starter_pro_location_nonce' );
+
+		$address = get_post_meta( $post->ID, $this->prefix . 'location_address', true );
+		$phone   = get_post_meta( $post->ID, $this->prefix . 'location_phone', true );
+		$email   = get_post_meta( $post->ID, $this->prefix . 'location_email', true );
+		?>
+		<div class="developer-starter-pro-meta-box">
+			<table class="form-table">
+				<tr>
+					<th><label for="location_address"><?php esc_html_e( 'Address', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="location_address" name="location_address" value="<?php echo esc_attr( $address ); ?>" class="large-text" placeholder="<?php esc_attr_e( '123 Branch St, City', 'developer-starter-pro' ); ?>">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="location_phone"><?php esc_html_e( 'Phone Number', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="tel" id="location_phone" name="location_phone" value="<?php echo esc_attr( $phone ); ?>" class="regular-text">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="location_email"><?php esc_html_e( 'Email Address', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="email" id="location_email" name="location_email" value="<?php echo esc_attr( $email ); ?>" class="regular-text">
+					</td>
+				</tr>
+			</table>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Render Doctor Location selection dropdown.
+	 */
+	public function render_doctor_location( $post ) {
+		$selected_location = get_post_meta( $post->ID, $this->prefix . 'doctor_location_id', true );
+
+		$locations = get_posts( array(
+			'post_type'      => 'locations',
+			'posts_per_page' => -1,
+			'post_status'    => 'publish',
+		) );
+		?>
+		<div class="developer-starter-pro-meta-box">
+			<label for="doctor_location_id"><strong><?php esc_html_e( 'Assigned Branch:', 'developer-starter-pro' ); ?></strong></label>
+			<select id="doctor_location_id" name="doctor_location_id" class="widefat" style="margin-top: 8px;">
+				<option value="0"><?php esc_html_e( '— No Location (General) —', 'developer-starter-pro' ); ?></option>
+				<?php foreach ( $locations as $loc ) : ?>
+					<option value="<?php echo esc_attr( $loc->ID ); ?>" <?php selected( $selected_location, $loc->ID ); ?>>
+						<?php echo esc_html( $loc->post_title ); ?>
+					</option>
+				<?php endforeach; ?>
+			</select>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Save Location meta.
+	 */
+	public function save_location_meta( $post_id, $post ) {
+		if ( 'locations' !== $post->post_type ) {
+			return;
+		}
+
+		if ( ! isset( $_POST['developer_starter_pro_location_nonce'] ) || ! wp_verify_nonce( $_POST['developer_starter_pro_location_nonce'], 'developer_starter_pro_location_details' ) ) {
+			return;
+		}
+
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
+
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			return;
+		}
+
+		$fields = array(
+			'location_address' => 'sanitize_text_field',
+			'location_phone'   => 'sanitize_text_field',
+			'location_email'   => 'sanitize_email',
 		);
 
 		foreach ( $fields as $field => $sanitize_callback ) {

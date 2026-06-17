@@ -192,6 +192,12 @@ class Developer_Starter_Pro_Admin {
 		if ( empty( $active_tab ) || 'appointments' === $active_tab ) {
 			// Appointment options
 			$sanitized['appointment_approval_mode'] = isset( $input['appointment_approval_mode'] ) ? sanitize_text_field( $input['appointment_approval_mode'] ) : 'automatic';
+			
+			// Twilio settings
+			$sanitized['twilio_sms_enabled'] = isset( $input['twilio_sms_enabled'] ) ? '1' : '0';
+			$sanitized['twilio_sid']         = isset( $input['twilio_sid'] ) ? sanitize_text_field( $input['twilio_sid'] ) : '';
+			$sanitized['twilio_auth_token']  = isset( $input['twilio_auth_token'] ) ? sanitize_text_field( $input['twilio_auth_token'] ) : '';
+			$sanitized['twilio_from_number'] = isset( $input['twilio_from_number'] ) ? sanitize_text_field( $input['twilio_from_number'] ) : '';
 		}
 
 		unset( $sanitized['active_tab'] );
@@ -920,6 +926,41 @@ class Developer_Starter_Pro_Admin {
 								<p class="description" style="margin-left: 24px; margin-top:4px;"><?php esc_html_e( 'Appointments remain "Pending" upon submission. Admin receives notification to Approve, Reject, Reschedule, or Cancel, and the patient is notified of status changes.', 'developer-starter-pro' ); ?></p>
 							</label>
 						</fieldset>
+					</td>
+				</tr>
+			</table>
+
+			<h2 style="margin-top: 30px;"><?php esc_html_e( 'Twilio SMS Notification Settings', 'developer-starter-pro' ); ?></h2>
+			<p class="description"><?php esc_html_e( 'Configure real-time SMS notifications for patient appointments.', 'developer-starter-pro' ); ?></p>
+
+			<table class="form-table">
+				<tr>
+					<th><label for="twilio_sms_enabled"><?php esc_html_e( 'Enable SMS Notifications', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<label class="developer-starter-pro-toggle">
+							<input type="checkbox" id="twilio_sms_enabled" name="<?php echo esc_attr( $this->option_name ); ?>[twilio_sms_enabled]" value="1" <?php checked( isset( $options['twilio_sms_enabled'] ) ? $options['twilio_sms_enabled'] : '0', '1' ); ?>>
+							<span class="developer-starter-pro-toggle-slider"></span>
+							<span class="developer-starter-pro-toggle-label"><?php esc_html_e( 'Send automatic SMS on booking and confirmation', 'developer-starter-pro' ); ?></span>
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="twilio_sid"><?php esc_html_e( 'Account SID', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="twilio_sid" name="<?php echo esc_attr( $this->option_name ); ?>[twilio_sid]" value="<?php echo esc_attr( isset( $options['twilio_sid'] ) ? $options['twilio_sid'] : '' ); ?>" class="regular-text" placeholder="ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="twilio_auth_token"><?php esc_html_e( 'Auth Token', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="password" id="twilio_auth_token" name="<?php echo esc_attr( $this->option_name ); ?>[twilio_auth_token]" value="<?php echo esc_attr( isset( $options['twilio_auth_token'] ) ? $options['twilio_auth_token'] : '' ); ?>" class="regular-text" placeholder="••••••••••••••••••••••••••••••••">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="twilio_from_number"><?php esc_html_e( 'Twilio Phone Number', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="twilio_from_number" name="<?php echo esc_attr( $this->option_name ); ?>[twilio_from_number]" value="<?php echo esc_attr( isset( $options['twilio_from_number'] ) ? $options['twilio_from_number'] : '' ); ?>" class="regular-text" placeholder="+1234567890">
+						<p class="description"><?php esc_html_e( 'Twilio phone number or Sender ID in E.164 format.', 'developer-starter-pro' ); ?></p>
 					</td>
 				</tr>
 			</table>

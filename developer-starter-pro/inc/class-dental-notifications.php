@@ -119,7 +119,7 @@ class Developer_Starter_Pro_Notifications {
 
 			<div style="background:#fff; border:1px solid #cbd5e1; padding:16px; border-radius:6px; margin-top:20px;">
 				<p><strong><?php esc_html_e( 'Supported Merge Tags:', 'developer-starter-pro' ); ?></strong></p>
-				<code>{patient_name}</code>, <code>{patient_email}</code>, <code>{patient_phone}</code>, <code>{patient_notes}</code>, <code>{doctor_name}</code>, <code>{service_name}</code>, <code>{appointment_date}</code>, <code>{appointment_time}</code>, <code>{clinic_name}</code>
+				<code>{patient_name}</code>, <code>{patient_email}</code>, <code>{patient_phone}</code>, <code>{patient_notes}</code>, <code>{doctor_name}</code>, <code>{service_name}</code>, <code>{appointment_date}</code>, <code>{appointment_time}</code>, <code>{clinic_name}</code>, <code>{google_calendar_link}</code>
 			</div>
 
 			<form method="post" action="" style="margin-top:24px;">
@@ -297,21 +297,25 @@ class Developer_Starter_Pro_Notifications {
 		$clinic_name = ! empty( $options['clinic_name'] ) ? $options['clinic_name'] : get_bloginfo( 'name' );
 		$admin_email = ! empty( $options['clinic_email'] ) ? $options['clinic_email'] : get_bloginfo( 'admin_email' );
 
+		// Dynamic Google Calendar URL
+		$google_calendar_url = $this->generate_google_calendar_url( $booking );
+
 		// Subject and Body keys
 		$subject = $settings[ $type . '_subject' ];
 		$body    = $settings[ $type . '_body' ];
 
 		// Replaces tags array
 		$replacements = array(
-			'{patient_name}'     => $patient_name,
-			'{patient_email}'    => $patient_email,
-			'{patient_phone}'    => $patient_phone,
-			'{patient_notes}'    => $patient_notes,
-			'{doctor_name}'      => $doctor_name,
-			'{service_name}'     => $service_name,
-			'{appointment_date}' => $appointment_date,
-			'{appointment_time}' => $appointment_time,
-			'{clinic_name}'      => $clinic_name,
+			'{patient_name}'        => $patient_name,
+			'{patient_email}'       => $patient_email,
+			'{patient_phone}'       => $patient_phone,
+			'{patient_notes}'       => $patient_notes,
+			'{doctor_name}'         => $doctor_name,
+			'{service_name}'        => $service_name,
+			'{appointment_date}'    => $appointment_date,
+			'{appointment_time}'    => $appointment_time,
+			'{clinic_name}'         => $clinic_name,
+			'{google_calendar_link}' => esc_url( $google_calendar_url ),
 		);
 
 		$subject = str_replace( array_keys( $replacements ), array_values( $replacements ), $subject );
@@ -354,11 +358,28 @@ class Developer_Starter_Pro_Notifications {
 		// Set recipient
 		$to = ( 'admin_alert' === $type ) ? $admin_email : $patient_email;
 
-		return wp_mail( $to, $subject, $html_body, $headers );
+		// Handle ICS attachment if patient notification
+		$attachments = array();
+		$ics_file = '';
+		if ( in_array( $type, array( 'patient_conf', 'patient_rem' ), true ) ) {
+			$ics_file = $this->generate_ics_attachment( $booking );
+			if ( $ics_file && file_exists( $ics_file ) ) {
+				$attachments[] = $ics_file;
+			}
+		}
+
+		$result = wp_mail( $to, $subject, $html_body, $headers, $attachments );
+
+		// Cleanup temporary ICS file
+		if ( ! empty( $ics_file ) && file_exists( $ics_file ) ) {
+			unlink( $ics_file );
+		}
+
+		return $result;
 	}
 
 	/**
-	 * Send Mock SMS/WhatsApp notification to patient.
+	 * Send SMS/WhatsApp notification to patient.
 	 *
 	 * @param int $booking_id Database ID.
 	 */
@@ -388,8 +409,178 @@ class Developer_Starter_Pro_Notifications {
 			$appointment_time
 		);
 
-		// Log SMS/WhatsApp to PHP error log for testing
-		error_log( "SMS/WhatsApp notification dispatched to $patient_phone: $message" );
+		$this->dispatch_sms( $patient_phone, $message );
+	}
+
+	/**
+	 * Core SMS Dispatcher helper using Twilio API.
+	 */
+	public function dispatch_sms( $phone, $message ) {
+		$options = developer_starter_pro_get_all_options();
+		$twilio_enabled = isset( $options['twilio_sms_enabled'] ) ? $options['twilio_sms_enabled'] : '0';
+
+		if ( '1' === $twilio_enabled ) {
+			$sid   = $options['twilio_sid'] ?? '';
+			$token = $options['twilio_auth_token'] ?? '';
+			$from  = $options['twilio_from_number'] ?? '';
+
+			if ( ! empty( $sid ) && ! empty( $token ) && ! empty( $from ) ) {
+				$url = 'https://api.twilio.com/2010-04-01/Accounts/' . $sid . '/Messages.json';
+				
+				$response = wp_remote_post( $url, array(
+					'headers' => array(
+						'Authorization' => 'Basic ' . base64_encode( $sid . ':' . $token ),
+						'Content-Type'  => 'application/x-www-form-urlencoded',
+					),
+					'body' => array(
+						'From' => $from,
+						'To'   => $phone,
+						'Body' => $message,
+					),
+				) );
+
+				if ( is_wp_error( $response ) ) {
+					error_log( 'Twilio SMS failed to dispatch: ' . $response->get_error_message() );
+				} else {
+					$code = wp_remote_retrieve_response_code( $response );
+					$body = wp_remote_retrieve_body( $response );
+					if ( $code < 200 || $code >= 300 ) {
+						error_log( "Twilio SMS API Error (HTTP $code): " . $body );
+					} else {
+						error_log( "Twilio SMS successfully sent to $phone." );
+					}
+				}
+			} else {
+				error_log( 'Twilio SMS enabled but settings are incomplete.' );
+			}
+		} else {
+			// Mock mode logging
+			error_log( "SMS/WhatsApp notification dispatched (Mock Mode) to $phone: $message" );
+		}
+	}
+
+	/**
+	 * Generate iCalendar .ics file and return the temporary file path.
+	 */
+	private function generate_ics_attachment( $booking ) {
+		$doctor_name = get_the_title( $booking->doctor_id );
+		$service_name = get_the_title( $booking->service_id );
+		
+		// Parse date/time
+		$start_timestamp = strtotime( $booking->booking_date . ' ' . $booking->time_slot );
+		
+		// Get duration
+		$duration_minutes = 30; // Default
+		$duration = get_post_meta( $booking->service_id, '_developer_starter_pro_service_duration', true );
+		if ( ! empty( $duration ) ) {
+			$duration_num = preg_replace( '/\s*(mins?|minutes?)\s*/i', '', $duration );
+			if ( ctype_digit( $duration_num ) ) {
+				$duration_minutes = intval( $duration_num );
+			}
+		}
+
+		$start_utc = $start_timestamp - ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
+		$end_utc = $start_utc + ( $duration_minutes * MINUTE_IN_SECONDS );
+
+		$options = developer_starter_pro_get_all_options();
+		$clinic_name = ! empty( $options['clinic_name'] ) ? $options['clinic_name'] : get_bloginfo( 'name' );
+
+		// Retrieve Branch location if set
+		$location_name = '';
+		if ( ! empty( $booking->location_id ) ) {
+			$location_name = get_the_title( $booking->location_id );
+			$loc_address = get_post_meta( $booking->location_id, '_developer_starter_pro_location_address', true );
+			if ( ! empty( $loc_address ) ) {
+				$location_name .= ' (' . $loc_address . ')';
+			}
+		}
+		if ( empty( $location_name ) ) {
+			$location_name = ! empty( $options['clinic_address'] ) ? $options['clinic_address'] : 'Online / Clinic';
+		}
+
+		$uid = 'apt-' . $booking->id . '-' . md5( $booking->created_at ) . '@' . parse_url( home_url(), PHP_URL_HOST );
+
+		$ics_content = "BEGIN:VCALENDAR\r\n";
+		$ics_content .= "VERSION:2.0\r\n";
+		$ics_content .= "PRODID:-//Dental Pro//NONSGML Appointment Booking//EN\r\n";
+		$ics_content .= "CALSCALE:GREGORIAN\r\n";
+		$ics_content .= "METHOD:PUBLISH\r\n";
+		$ics_content .= "BEGIN:VEVENT\r\n";
+		$ics_content .= "UID:" . $uid . "\r\n";
+		$ics_content .= "DTSTAMP:" . gmdate( 'Ymd\THis\Z' ) . "\r\n";
+		$ics_content .= "DTSTART:" . gmdate( 'Ymd\THis\Z', $start_utc ) . "\r\n";
+		$ics_content .= "DTEND:" . gmdate( 'Ymd\THis\Z', $end_utc ) . "\r\n";
+		$ics_content .= "SUMMARY:" . sprintf( __( 'Dental Appointment: %1$s with %2$s', 'developer-starter-pro' ), $service_name, $doctor_name ) . "\r\n";
+		$ics_content .= "DESCRIPTION:" . sprintf( __( 'Patient: %1$s\nDoctor: %2$s\nTreatment: %3$s\nClinic: %4$s', 'developer-starter-pro' ), $booking->patient_name, $doctor_name, $service_name, $clinic_name ) . "\r\n";
+		$ics_content .= "LOCATION:" . str_replace( array( "\r", "\n" ), '', $location_name ) . "\r\n";
+		$ics_content .= "END:VEVENT\r\n";
+		$ics_content .= "END:VCALENDAR\r\n";
+
+		// Write to temporary file in uploads directory
+		$wp_uploads = wp_upload_dir();
+		$temp_dir = $wp_uploads['basedir'] . '/dentalpro-ics';
+		if ( ! file_exists( $temp_dir ) ) {
+			wp_mkdir_p( $temp_dir );
+		}
+		
+		$file_path = $temp_dir . '/appointment-' . $booking->id . '.ics';
+		file_put_contents( $file_path, $ics_content );
+
+		return $file_path;
+	}
+
+	/**
+	 * Generate a Google Calendar Add Event URL link.
+	 */
+	private function generate_google_calendar_url( $booking ) {
+		$doctor_name = get_the_title( $booking->doctor_id );
+		$service_name = get_the_title( $booking->service_id );
+
+		$start_timestamp = strtotime( $booking->booking_date . ' ' . $booking->time_slot );
+		
+		$duration_minutes = 30;
+		$duration = get_post_meta( $booking->service_id, '_developer_starter_pro_service_duration', true );
+		if ( ! empty( $duration ) ) {
+			$duration_num = preg_replace( '/\s*(mins?|minutes?)\s*/i', '', $duration );
+			if ( ctype_digit( $duration_num ) ) {
+				$duration_minutes = intval( $duration_num );
+			}
+		}
+
+		$start_utc = $start_timestamp - ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
+		$end_utc = $start_utc + ( $duration_minutes * MINUTE_IN_SECONDS );
+
+		$dates = gmdate( 'Ymd\THis\Z', $start_utc ) . '/' . gmdate( 'Ymd\THis\Z', $end_utc );
+		
+		$title = sprintf( __( 'Dental Appointment: %1$s with %2$s', 'developer-starter-pro' ), $service_name, $doctor_name );
+		
+		$options = developer_starter_pro_get_all_options();
+		$clinic_name = ! empty( $options['clinic_name'] ) ? $options['clinic_name'] : get_bloginfo( 'name' );
+		
+		$details = sprintf( __( 'Patient: %1$s\nDoctor: %2$s\nTreatment: %3$s\nClinic: %4$s', 'developer-starter-pro' ), $booking->patient_name, $doctor_name, $service_name, $clinic_name );
+
+		$location_name = '';
+		if ( ! empty( $booking->location_id ) ) {
+			$location_name = get_the_title( $booking->location_id );
+			$loc_address = get_post_meta( $booking->location_id, '_developer_starter_pro_location_address', true );
+			if ( ! empty( $loc_address ) ) {
+				$location_name .= ' (' . $loc_address . ')';
+			}
+		}
+		if ( empty( $location_name ) ) {
+			$location_name = ! empty( $options['clinic_address'] ) ? $options['clinic_address'] : 'Online / Clinic';
+		}
+
+		return add_query_arg(
+			array(
+				'action'   => 'TEMPLATE',
+				'text'     => rawurlencode( $title ),
+				'dates'    => $dates,
+				'details'  => rawurlencode( $details ),
+				'location' => rawurlencode( $location_name ),
+			),
+			'https://calendar.google.com/calendar/render'
+		);
 	}
 
 	/**
@@ -518,7 +709,7 @@ class Developer_Starter_Pro_Notifications {
 					$reference_id,
 					$appointment_date
 				);
-				error_log( "SMS/WhatsApp notification dispatched to {$booking->patient_phone}: $sms_msg" );
+				$this->dispatch_sms( $booking->patient_phone, $sms_msg );
 				break;
 
 			case 'rejected':
@@ -531,7 +722,7 @@ class Developer_Starter_Pro_Notifications {
 					$patient_name,
 					$reference_id
 				);
-				error_log( "SMS/WhatsApp notification dispatched to {$booking->patient_phone}: $sms_msg" );
+				$this->dispatch_sms( $booking->patient_phone, $sms_msg );
 				break;
 
 			case 'rescheduled':
@@ -546,7 +737,7 @@ class Developer_Starter_Pro_Notifications {
 					$appointment_date,
 					$appointment_time
 				);
-				error_log( "SMS/WhatsApp notification dispatched to {$booking->patient_phone}: $sms_msg" );
+				$this->dispatch_sms( $booking->patient_phone, $sms_msg );
 				break;
 		}
 	}

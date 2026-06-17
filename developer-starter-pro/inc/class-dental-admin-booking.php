@@ -296,8 +296,10 @@ class Developer_Starter_Pro_Admin_Booking {
 							<th class="col-check" style="width: 35px;"><input type="checkbox" id="select-all-bookings"></th>
 							<th class="col-id"><?php esc_html_e( 'ID', 'developer-starter-pro' ); ?></th>
 							<th class="col-patient"><?php esc_html_e( 'Patient Info', 'developer-starter-pro' ); ?></th>
+							<th class="col-location"><?php esc_html_e( 'Location/Branch', 'developer-starter-pro' ); ?></th>
 							<th class="col-doctor"><?php esc_html_e( 'Doctor', 'developer-starter-pro' ); ?></th>
 							<th class="col-service"><?php esc_html_e( 'Service / Treatment', 'developer-starter-pro' ); ?></th>
+							<th class="col-datetime"><?php esc_html_e( 'Date/Time', 'developer-starter-pro' ); ?></th>
 							<th class="col-source"><?php esc_html_e( 'Source', 'developer-starter-pro' ); ?></th>
 							<th class="col-type"><?php esc_html_e( 'Type', 'developer-starter-pro' ); ?></th>
 							<th class="col-status"><?php esc_html_e( 'Status', 'developer-starter-pro' ); ?></th>
@@ -345,6 +347,22 @@ class Developer_Starter_Pro_Admin_Booking {
 								<div class="form-group">
 									<label><?php esc_html_e( 'Patient Email', 'developer-starter-pro' ); ?> *</label>
 									<input type="email" name="patient_email" id="edit-patient_email" required>
+								</div>
+								<!-- Location ID -->
+								<div class="form-group">
+									<label><?php esc_html_e( 'Clinic Location/Branch', 'developer-starter-pro' ); ?></label>
+									<select name="location_id" id="edit-location_id">
+										<option value="0"><?php esc_html_e( '— General (No Location) —', 'developer-starter-pro' ); ?></option>
+										<?php 
+										$locations = get_posts( array(
+											'post_type'      => 'locations',
+											'posts_per_page' => -1,
+											'post_status'    => 'publish',
+										) );
+										foreach ( $locations as $loc ) : ?>
+											<option value="<?php echo esc_attr( $loc->ID ); ?>"><?php echo esc_html( $loc->post_title ); ?></option>
+										<?php endforeach; ?>
+									</select>
 								</div>
 								<!-- Doctor ID -->
 								<div class="form-group">
@@ -830,6 +848,7 @@ class Developer_Starter_Pro_Admin_Booking {
 				$('#appointment-editor-form')[0].reset();
 				$('#edit-id').val('');
 				$('#modal-title-label').text('Create Appointment Record');
+				$('#edit-location_id').val('0');
 				$('#edit-status').val('pending');
 				$('#edit-booking_source').val('admin');
 				$('#edit-appointment_type').val('clinic_visit');
@@ -844,6 +863,7 @@ class Developer_Starter_Pro_Admin_Booking {
 				$('#edit-patient_name').val(data.patient_name);
 				$('#edit-patient_phone').val(data.patient_phone);
 				$('#edit-patient_email').val(data.patient_email);
+				$('#edit-location_id').val(data.location_id || '0');
 				$('#edit-doctor_id').val(data.doctor_id);
 				$('#edit-service_id').val(data.service_id);
 				$('#edit-booking_date').val(data.booking_date);
@@ -1740,6 +1760,10 @@ class Developer_Starter_Pro_Admin_Booking {
 				}
 				$table_html .= '</td>';
 				
+				// Location Cell
+				$loc_name = $apt->location_id ? get_the_title( $apt->location_id ) : esc_html__( 'General / All', 'developer-starter-pro' );
+				$table_html .= '<td class="col-location">📍 ' . esc_html( $loc_name ) . '</td>';
+				
 				$table_html .= '<td class="col-doctor">👨‍⚕️ ' . esc_html( $doc_name ) . '</td>';
 				$table_html .= '<td class="col-service"><span style="color:var(--developer-starter-pro-primary); font-weight:600;">' . esc_html( $srv_name ) . '</span></td>';
 				
@@ -1769,6 +1793,7 @@ class Developer_Starter_Pro_Admin_Booking {
 					'data-patient_name="' . esc_attr( $apt->patient_name ) . '" ' .
 					'data-patient_phone="' . esc_attr( $apt->patient_phone ) . '" ' .
 					'data-patient_email="' . esc_attr( $apt->patient_email ) . '" ' .
+					'data-location_id="' . intval( $apt->location_id ) . '" ' .
 					'data-doctor_id="' . intval( $apt->doctor_id ) . '" ' .
 					'data-service_id="' . intval( $apt->service_id ) . '" ' .
 					'data-booking_date="' . esc_attr( $apt->booking_date ) . '" ' .
@@ -1878,6 +1903,7 @@ class Developer_Starter_Pro_Admin_Booking {
 		$patient_name     = sanitize_text_field( $form_data['patient_name'] ?? '' );
 		$patient_phone    = sanitize_text_field( $form_data['patient_phone'] ?? '' );
 		$patient_email    = sanitize_email( $form_data['patient_email'] ?? '' );
+		$location_id      = absint( $form_data['location_id'] ?? 0 );
 		$doctor_id        = absint( $form_data['doctor_id'] ?? 0 );
 		$service_id       = absint( $form_data['service_id'] ?? 0 );
 		$booking_date     = sanitize_text_field( $form_data['booking_date'] ?? '' );
@@ -1901,6 +1927,7 @@ class Developer_Starter_Pro_Admin_Booking {
 			'patient_name'     => $patient_name,
 			'patient_phone'    => $patient_phone,
 			'patient_email'    => $patient_email,
+			'location_id'      => $location_id,
 			'doctor_id'        => $doctor_id,
 			'service_id'       => $service_id,
 			'booking_date'     => $booking_date,
@@ -1912,7 +1939,7 @@ class Developer_Starter_Pro_Admin_Booking {
 			'notes'            => $notes,
 			'internal_notes'   => $internal_notes
 		);
-		$formats = array( '%s', '%s', '%s', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' );
+		$formats = array( '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' );
 
 		if ( ! empty( $id ) ) {
 			// Update mode

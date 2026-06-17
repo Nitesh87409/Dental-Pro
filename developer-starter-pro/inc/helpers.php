@@ -113,6 +113,12 @@ function developer_starter_pro_get_default_options() {
 
 		// Appointment Approval Mode
 		'appointment_approval_mode' => 'automatic',
+
+		// Twilio SMS Integration
+		'twilio_sms_enabled' => '0',
+		'twilio_sid'         => '',
+		'twilio_auth_token'  => '',
+		'twilio_from_number' => '',
 	);
 }
 
