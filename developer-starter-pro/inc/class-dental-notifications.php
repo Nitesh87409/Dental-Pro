@@ -845,6 +845,7 @@ class Developer_Starter_Pro_Notifications {
 					$body .= "<p style='margin-top: 24px; text-align: center;'><a href='{$google_review_url}' target='_blank' style='background-color: #10b981; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 24px; font-weight: 600; display: inline-block;'>" . esc_html__( 'Share Your Feedback on Google', 'developer-starter-pro' ) . "</a></p>";
 				}
 				
+				error_log( "DentalPro: Completed notification sent to {$patient_email}" );
 				$this->send_formatted_email( $patient_email, $subject, $body, $clinic_name, '#10b981' );
 
 				$sms_msg = sprintf(
