@@ -237,7 +237,7 @@ class Developer_Starter_Pro_Notifications {
 		global $wpdb;
 		$table_name = Developer_Starter_Pro_Booking::get_table_name();
 		
-		if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) !== $table_name ) {
+		if ( $wpdb->get_var( $wpdb->prepare( "SHOW TABLES LIKE %s", $table_name ) ) !== $table_name ) {
 			return;
 		}
 

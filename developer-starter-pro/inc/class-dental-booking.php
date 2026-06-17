@@ -59,7 +59,11 @@ class Developer_Starter_Pro_Booking {
 			booking_date date NOT NULL,
 			time_slot varchar(10) NOT NULL,
 			status varchar(20) DEFAULT 'pending' NOT NULL,
+			payment_status varchar(20) DEFAULT 'unpaid' NOT NULL,
+			booking_source varchar(20) DEFAULT 'website' NOT NULL,
+			appointment_type varchar(20) DEFAULT 'clinic_visit' NOT NULL,
 			notes text DEFAULT '' NOT NULL,
+			internal_notes text DEFAULT '' NOT NULL,
 			created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
 			PRIMARY KEY  (id),
 			KEY doctor_date_idx (doctor_id, booking_date)
@@ -79,7 +83,10 @@ class Developer_Starter_Pro_Booking {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_available_slots' ),
-				'permission_callback' => '__return_true',
+				'permission_callback' => function() {
+					$check = developer_starter_pro_rate_limit( 'slots', 20, 60 );
+					return is_wp_error( $check ) ? $check : true;
+				},
 			)
 		);
 
@@ -89,7 +96,10 @@ class Developer_Starter_Pro_Booking {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'process_booking' ),
-				'permission_callback' => '__return_true',
+				'permission_callback' => function() {
+					$check = developer_starter_pro_rate_limit( 'book', 10, 60 );
+					return is_wp_error( $check ) ? $check : true;
+				},
 			)
 		);
 	}
@@ -199,6 +209,13 @@ class Developer_Starter_Pro_Booking {
 		$time_slot = sanitize_text_field( $params['time_slot'] ?? '' );
 		$notes     = sanitize_textarea_field( $params['notes'] ?? '' );
 
+		// Honeypot anti-spam check — hidden field must be empty.
+		$honeypot = sanitize_text_field( $params['website_url'] ?? '' );
+		if ( ! empty( $honeypot ) ) {
+			// Bot detected — silently reject with a fake success.
+			return new WP_REST_Response( array( 'success' => true, 'booking_id' => 0, 'reference_id' => 'APT-00000', 'message' => __( 'Your appointment has been successfully scheduled!', 'developer-starter-pro' ) ), 200 );
+		}
+
 		// Basic validation.
 		if ( empty( $name ) || empty( $email ) || empty( $phone ) || empty( $doctor_id ) || empty( $service_id ) || empty( $date ) || empty( $time_slot ) ) {
 			return new WP_REST_Response( array( 'success' => false, 'message' => __( 'Please fill in all required fields.', 'developer-starter-pro' ) ), 400 );
@@ -238,9 +255,13 @@ class Developer_Starter_Pro_Booking {
 				'booking_date' => $date,
 				'time_slot'    => $time_slot,
 				'status'       => $initial_status,
+				'payment_status' => 'unpaid',
+				'booking_source' => 'website',
+				'appointment_type' => 'clinic_visit',
 				'notes'        => $notes,
+				'internal_notes' => '',
 			),
-			array( '%s', '%s', '%s', '%d', '%d', '%s', '%s', '%s', '%s' )
+			array( '%s', '%s', '%s', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' )
 		);
 
 		if ( ! $inserted ) {

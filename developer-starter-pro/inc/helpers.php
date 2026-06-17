@@ -464,6 +464,38 @@ function developer_starter_pro_get_clean_service_duration( $duration ) {
 }
 
 
+/**
+ * Rate limiter using WordPress transients.
+ *
+ * Limits requests per IP address within a time window.
+ * Returns true if the request is allowed, WP_Error if rate limit exceeded.
+ *
+ * @param string $context   A unique context identifier (e.g., 'booking', 'chatbot').
+ * @param int    $max_hits  Maximum allowed requests within the window.
+ * @param int    $window    Time window in seconds (default: 60).
+ * @return true|WP_Error True if allowed, WP_Error if rate limited.
+ *
+ * @since 1.0.0
+ */
+function developer_starter_pro_rate_limit( $context = 'global', $max_hits = 30, $window = 60 ) {
+	$ip  = preg_replace( '/[^a-fA-F0-9:.]/', '', $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0' );
+	$key = 'dpro_rl_' . $context . '_' . md5( $ip );
 
+	$count = get_transient( $key );
 
+	if ( false === $count ) {
+		set_transient( $key, 1, $window );
+		return true;
+	}
 
+	if ( (int) $count >= $max_hits ) {
+		return new WP_Error(
+			'rate_limit_exceeded',
+			__( 'Too many requests. Please wait a moment and try again.', 'developer-starter-pro' ),
+			array( 'status' => 429 )
+		);
+	}
+
+	set_transient( $key, (int) $count + 1, $window );
+	return true;
+}

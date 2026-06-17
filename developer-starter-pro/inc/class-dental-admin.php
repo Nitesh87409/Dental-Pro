@@ -949,7 +949,7 @@ class Developer_Starter_Pro_Admin {
 		}
 
 		// Parse the form data.
-		parse_str( $_POST['form_data'], $form_data );
+		parse_str( wp_unslash( $_POST['form_data'] ), $form_data );
 
 		if ( isset( $form_data[ $this->option_name ] ) ) {
 			$sanitized = $this->sanitize_options( $form_data[ $this->option_name ] );

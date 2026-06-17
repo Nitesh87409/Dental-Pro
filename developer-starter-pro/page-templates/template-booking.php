@@ -190,6 +190,11 @@ $selected_service = isset( $_GET['service_id'] ) ? absint( $_GET['service_id'] )
 								<label style="display:block; font-weight:500; margin-bottom:6px;"><?php esc_html_e( 'Symptom Details / Medical Notes', 'developer-starter-pro' ); ?></label>
 								<textarea name="notes" rows="3" style="width:100%; padding:12px; border:2px solid var(--developer-starter-pro-gray-200); border-radius:8px;" placeholder="<?php esc_attr_e( 'Briefly explain your reasons for booking (optional)...', 'developer-starter-pro' ); ?>"></textarea>
 							</div>
+							<!-- Honeypot anti-spam field — hidden from real users -->
+							<div style="position:absolute; left:-9999px; opacity:0; height:0; overflow:hidden;" aria-hidden="true">
+								<label for="website_url"><?php esc_html_e( 'Website', 'developer-starter-pro' ); ?></label>
+								<input type="text" name="website_url" id="website_url" value="" tabindex="-1" autocomplete="off">
+							</div>
 						</div>
 					</div>
 

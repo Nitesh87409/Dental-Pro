@@ -285,7 +285,10 @@ class Developer_Starter_Pro_Chatbot {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'query_chatbot' ),
-				'permission_callback' => '__return_true',
+				'permission_callback' => function() {
+					$check = developer_starter_pro_rate_limit( 'chatbot', 20, 60 );
+					return is_wp_error( $check ) ? $check : true;
+				},
 			)
 		);
 	}

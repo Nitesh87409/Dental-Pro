@@ -61,22 +61,33 @@ if ( 'cancel_appointment' === $action && isset( $_POST['cancel_nonce'] ) && wp_v
 }
 // 2. Process Lookup / Verify
 elseif ( ! empty( $ref_id ) && ! empty( $phone ) ) {
-	// Extract numeric ID from reference string (e.g. "APT-00095" -> "00095" -> 95)
-	$booking_id = intval( preg_replace( '/[^\d]/', '', $ref_id ) );
-	
-	$booking = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE id = %d", $booking_id ) );
-	
-	if ( $booking ) {
-		$phone_clean = preg_replace( '/[^\d]/', '', $phone );
-		$db_phone_clean = preg_replace( '/[^\d]/', '', $booking->patient_phone );
-
-		// Match phone numbers (relaxed matching to handle suffix/prefix extensions)
-		if ( $phone_clean !== $db_phone_clean && strpos( $db_phone_clean, $phone_clean ) === false && strpos( $phone_clean, $db_phone_clean ) === false ) {
-			$error = __( 'Verification failed. Mobile number does not match.', 'developer-starter-pro' );
-			$booking = null;
-		}
+	// Verify nonce for lookup
+	if ( ! isset( $_POST['tracking_lookup_nonce'] ) || ! wp_verify_nonce( $_POST['tracking_lookup_nonce'], 'tracking_lookup_action' ) ) {
+		$error = __( 'Security check failed. Please refresh and try again.', 'developer-starter-pro' );
 	} else {
-		$error = __( 'Invalid Reference ID. No matching appointment found.', 'developer-starter-pro' );
+		// Rate limiting — 10 lookups per minute per IP
+		$rl_check = developer_starter_pro_rate_limit( 'tracking', 10, 60 );
+		if ( is_wp_error( $rl_check ) ) {
+			$error = __( 'Too many attempts. Please wait a moment and try again.', 'developer-starter-pro' );
+		} else {
+			// Extract numeric ID from reference string (e.g. "APT-00095" -> "00095" -> 95)
+			$booking_id = intval( preg_replace( '/[^\d]/', '', $ref_id ) );
+			
+			$booking = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE id = %d", $booking_id ) );
+			
+			if ( $booking ) {
+				$phone_clean = preg_replace( '/[^\d]/', '', $phone );
+				$db_phone_clean = preg_replace( '/[^\d]/', '', $booking->patient_phone );
+
+				// Match phone numbers (relaxed matching to handle suffix/prefix extensions)
+				if ( $phone_clean !== $db_phone_clean && strpos( $db_phone_clean, $phone_clean ) === false && strpos( $phone_clean, $db_phone_clean ) === false ) {
+					$error = __( 'Verification failed. Mobile number does not match.', 'developer-starter-pro' );
+					$booking = null;
+				}
+			} else {
+				$error = __( 'Invalid Reference ID. No matching appointment found.', 'developer-starter-pro' );
+			}
+		}
 	}
 }
 ?>
@@ -118,6 +129,7 @@ elseif ( ! empty( $ref_id ) && ! empty( $phone ) ) {
 					<p style="text-align:center; color:var(--developer-starter-pro-gray-500); font-size:0.9rem; margin-bottom:32px;"><?php esc_html_e( 'Provide your Reference ID and the mobile number used during booking.', 'developer-starter-pro' ); ?></p>
 
 					<form method="post" action="">
+						<?php wp_nonce_field( 'tracking_lookup_action', 'tracking_lookup_nonce' ); ?>
 						<div style="display:flex; flex-direction:column; gap:20px;">
 							<div>
 								<label for="ref_id" style="display:block; font-weight:600; margin-bottom:8px; color:var(--developer-starter-pro-secondary);"><?php esc_html_e( 'Appointment Reference ID', 'developer-starter-pro' ); ?></label>

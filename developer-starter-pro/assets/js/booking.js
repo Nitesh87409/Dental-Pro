@@ -215,7 +215,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			patient_name: form.elements['patient_name'].value,
 			patient_email: form.elements['patient_email'].value,
 			patient_phone: form.elements['patient_phone'].value,
-			notes: form.elements['notes'].value
+			notes: form.elements['notes'].value,
+			website_url: form.elements['website_url'] ? form.elements['website_url'].value : ''
 		};
 
 		fetch(l10n.restUrl + 'book', {
