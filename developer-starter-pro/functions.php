@@ -41,7 +41,6 @@ require_once developer_starter_pro_INC . '/class-dental-hero-slider.php';
 require_once developer_starter_pro_INC . '/class-dental-booking.php';
 require_once developer_starter_pro_INC . '/class-dental-admin-booking.php';
 require_once developer_starter_pro_INC . '/class-dental-chatbot.php';
-require_once developer_starter_pro_INC . '/class-dental-portal.php';
 require_once developer_starter_pro_INC . '/class-dental-notifications.php';
 require_once developer_starter_pro_INC . '/class-dental-seo.php';
 
@@ -59,7 +58,6 @@ function developer_starter_pro_init_theme() {
 	new Developer_Starter_Pro_Booking();
 	new Developer_Starter_Pro_Admin_Booking();
 	new Developer_Starter_Pro_Chatbot();
-	new Developer_Starter_Pro_Portal();
 	new Developer_Starter_Pro_Notifications();
 	new Developer_Starter_Pro_SEO();
 }
@@ -113,17 +111,9 @@ function developer_starter_pro_create_pages() {
 			'title'    => 'Pricing Packages',
 			'template' => 'page-templates/template-pricing.php',
 		),
-		'patient-login' => array(
-			'title'    => 'Patient Login',
-			'template' => 'page-templates/template-patient-login.php',
-		),
-		'patient-register' => array(
-			'title'    => 'Patient Register',
-			'template' => 'page-templates/template-patient-register.php',
-		),
-		'patient-dashboard' => array(
-			'title'    => 'Patient Dashboard',
-			'template' => 'page-templates/template-patient-dashboard.php',
+		'tracking' => array(
+			'title'    => 'Track Appointment',
+			'template' => 'page-templates/template-tracking.php',
 		),
 		'about' => array(
 			'title'    => 'About Us',
@@ -212,19 +202,10 @@ function developer_starter_pro_filter_nav_menu_objects( $sorted_menu_items, $arg
 		return $sorted_menu_items;
 	}
 
-	$login_page_url = developer_starter_pro_get_template_page_url( 'page-templates/template-patient-login.php', '#portal' );
-
 	foreach ( $sorted_menu_items as $key => $item ) {
-		$is_portal = ( $item->url === $login_page_url || strpos( $item->url, '/patient-login/' ) !== false || strtolower( $item->title ) === 'patient portal' );
+		$is_portal = ( strpos( $item->url, '/patient-login/' ) !== false || strpos( $item->url, '/patient-register/' ) !== false || strpos( $item->url, '/patient-dashboard/' ) !== false || strtolower( $item->title ) === 'patient portal' || strtolower( $item->title ) === 'log in' || strtolower( $item->title ) === 'register' );
 		if ( $is_portal ) {
-			if ( isset( $args->menu_id ) && 'mobile-menu-nav' === $args->menu_id ) {
-				// Rename to "Log In" in mobile menu
-				$item->title = __( 'Log In', 'developer-starter-pro' );
-				$item->post_title = __( 'Log In', 'developer-starter-pro' );
-			} else {
-				// Remove from desktop primary menu (or any other non-mobile menu)
-				unset( $sorted_menu_items[ $key ] );
-			}
+			unset( $sorted_menu_items[ $key ] );
 		}
 
 		$is_doctors = ( strtolower( $item->title ) === 'meet the team' );

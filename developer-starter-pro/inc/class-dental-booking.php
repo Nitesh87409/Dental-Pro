@@ -127,12 +127,19 @@ class Developer_Starter_Pro_Booking {
 
 		$is_available = false;
 		$start_time   = '09:00';
-		$end_time     = '18:00';
+		$end_time     = '17:00'; // Default end time is 17:00 to match meta boxes
 
-		if ( is_array( $schedule ) && isset( $schedule[ $weekday ] ) ) {
-			$is_available = isset( $schedule[ $weekday ]['available'] ) && '1' === $schedule[ $weekday ]['available'];
-			$start_time   = ! empty( $schedule[ $weekday ]['start'] ) ? $schedule[ $weekday ]['start'] : '09:00';
-			$end_time     = ! empty( $schedule[ $weekday ]['end'] ) ? $schedule[ $weekday ]['end'] : '18:00';
+		if ( is_array( $schedule ) && ! empty( $schedule ) ) {
+			if ( isset( $schedule[ $weekday ] ) ) {
+				$is_available = isset( $schedule[ $weekday ]['available'] ) && '1' === $schedule[ $weekday ]['available'];
+				$start_time   = ! empty( $schedule[ $weekday ]['start'] ) ? $schedule[ $weekday ]['start'] : '09:00';
+				$end_time     = ! empty( $schedule[ $weekday ]['end'] ) ? $schedule[ $weekday ]['end'] : '17:00';
+			}
+		} else {
+			// Fallback default schedule: Monday-Saturday available, Sunday off
+			if ( 'sunday' !== $weekday ) {
+				$is_available = true;
+			}
 		}
 
 		if ( ! $is_available ) {
@@ -214,6 +221,11 @@ class Developer_Starter_Pro_Booking {
 			return new WP_REST_Response( array( 'success' => false, 'message' => __( 'This slot has already been reserved. Please select another time.', 'developer-starter-pro' ) ), 409 );
 		}
 
+		// Check approval mode setting
+		$options = developer_starter_pro_get_all_options();
+		$mode = isset( $options['appointment_approval_mode'] ) ? $options['appointment_approval_mode'] : 'automatic';
+		$initial_status = ( 'automatic' === $mode ) ? 'confirmed' : 'pending';
+
 		// Insert booking.
 		$inserted = $wpdb->insert(
 			$table_name,
@@ -225,7 +237,7 @@ class Developer_Starter_Pro_Booking {
 				'service_id'   => $service_id,
 				'booking_date' => $date,
 				'time_slot'    => $time_slot,
-				'status'       => 'pending',
+				'status'       => $initial_status,
 				'notes'        => $notes,
 			),
 			array( '%s', '%s', '%s', '%d', '%d', '%s', '%s', '%s', '%s' )
@@ -236,14 +248,16 @@ class Developer_Starter_Pro_Booking {
 		}
 
 		$booking_id = $wpdb->insert_id;
+		$reference_id = 'APT-' . sprintf( '%05d', $booking_id );
 
 		// Trigger notifications hooks
 		do_action( 'dentalpro_appointment_booked', $booking_id );
 
 		return new WP_REST_Response( array(
-			'success'    => true,
-			'booking_id' => $booking_id,
-			'message'    => __( 'Your appointment booking has been received successfully!', 'developer-starter-pro' ),
+			'success'      => true,
+			'booking_id'   => $booking_id,
+			'reference_id' => $reference_id,
+			'message'      => sprintf( __( 'Your appointment has been successfully scheduled! Your Reference ID is %s.', 'developer-starter-pro' ), $reference_id ),
 		), 200 );
 	}
 }

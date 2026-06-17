@@ -30,6 +30,7 @@ class Developer_Starter_Pro_Notifications {
 
 		// Register hooks for triggers
 		add_action( 'dentalpro_appointment_booked', array( $this, 'send_instant_notifications' ) );
+		add_action( 'dentalpro_appointment_status_changed', array( $this, 'handle_status_change_notifications' ), 10, 3 );
 
 		// Hook into WP-Cron event for reminders
 		add_action( 'dentalpro_daily_reminder_cron', array( $this, 'send_daily_reminders' ) );
@@ -214,8 +215,18 @@ class Developer_Starter_Pro_Notifications {
 	 * @param int $booking_id Database booking record ID.
 	 */
 	public function send_instant_notifications( $booking_id ) {
-		$this->send_email_by_id( $booking_id, 'patient_conf' );
-		$this->send_email_by_id( $booking_id, 'admin_alert' );
+		$options = developer_starter_pro_get_all_options();
+		$mode = isset( $options['appointment_approval_mode'] ) ? $options['appointment_approval_mode'] : 'automatic';
+
+		if ( 'automatic' === $mode ) {
+			// In Automatic Mode, patient is confirmed instantly
+			$this->send_email_by_id( $booking_id, 'patient_conf' );
+			$this->send_email_by_id( $booking_id, 'admin_alert' );
+			$this->send_sms_whatsapp( $booking_id );
+		} else {
+			// In Manual Mode, only notify admin (remains pending until approved)
+			$this->send_email_by_id( $booking_id, 'admin_alert' );
+		}
 	}
 
 	/**
@@ -344,5 +355,199 @@ class Developer_Starter_Pro_Notifications {
 		$to = ( 'admin_alert' === $type ) ? $admin_email : $patient_email;
 
 		return wp_mail( $to, $subject, $html_body, $headers );
+	}
+
+	/**
+	 * Send Mock SMS/WhatsApp notification to patient.
+	 *
+	 * @param int $booking_id Database ID.
+	 */
+	public function send_sms_whatsapp( $booking_id ) {
+		global $wpdb;
+		$table_name = Developer_Starter_Pro_Booking::get_table_name();
+		$booking = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE id = %d", $booking_id ) );
+		if ( ! $booking ) {
+			return;
+		}
+
+		$patient_phone = $booking->patient_phone;
+		$patient_name  = $booking->patient_name;
+		$doctor_name   = get_the_title( $booking->doctor_id );
+		$service_name  = get_the_title( $booking->service_id );
+		$appointment_date = date_i18n( get_option( 'date_format' ), strtotime( $booking->booking_date ) );
+		$appointment_time = date( 'g:i A', strtotime( $booking->time_slot ) );
+		$reference_id  = 'APT-' . sprintf( '%05d', $booking_id );
+
+		$message = sprintf(
+			__( "Hello %s, your appointment (Ref: %s) for %s with %s on %s at %s has been confirmed. Thank you!", 'developer-starter-pro' ),
+			$patient_name,
+			$reference_id,
+			$service_name,
+			$doctor_name,
+			$appointment_date,
+			$appointment_time
+		);
+
+		// Log SMS/WhatsApp to PHP error log for testing
+		error_log( "SMS/WhatsApp notification dispatched to $patient_phone: $message" );
+	}
+
+	/**
+	 * Send Cancellation Notification emails to patient and admin.
+	 *
+	 * @param int $booking_id Database ID.
+	 */
+	public function send_cancellation_emails( $booking_id ) {
+		global $wpdb;
+		$table_name = Developer_Starter_Pro_Booking::get_table_name();
+		$booking = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE id = %d", $booking_id ) );
+		if ( ! $booking ) {
+			return;
+		}
+
+		$patient_name = $booking->patient_name;
+		$patient_email = $booking->patient_email;
+		$doctor_name = get_the_title( $booking->doctor_id );
+		$service_name = get_the_title( $booking->service_id );
+		$appointment_date = date_i18n( get_option( 'date_format' ), strtotime( $booking->booking_date ) );
+		$appointment_time = date( 'g:i A', strtotime( $booking->time_slot ) );
+		$reference_id  = 'APT-' . sprintf( '%05d', $booking_id );
+
+		$options = developer_starter_pro_get_all_options();
+		$clinic_name = ! empty( $options['clinic_name'] ) ? $options['clinic_name'] : get_bloginfo( 'name' );
+		$admin_email = ! empty( $options['clinic_email'] ) ? $options['clinic_email'] : get_bloginfo( 'admin_email' );
+
+		// Subject and Body for Patient
+		$patient_subject = sprintf( __( 'Appointment Cancelled: %s', 'developer-starter-pro' ), $service_name );
+		$patient_body = "<h2>Hello {$patient_name},</h2>\n<p>Your appointment has been <strong>cancelled</strong>.</p>\n<p><strong>Reference ID:</strong> {$reference_id}<br>\n<strong>Treatment:</strong> {$service_name}<br>\n<strong>Doctor:</strong> {$doctor_name}<br>\n<strong>Date:</strong> {$appointment_date}<br>\n<strong>Time:</strong> {$appointment_time}</p>";
+
+		// Subject and Body for Admin
+		$admin_subject = sprintf( __( '[Cancelled] %s - %s', 'developer-starter-pro' ), $patient_name, $service_name );
+		$admin_body = "<h2>Appointment Cancelled</h2>\n<p>An appointment has been cancelled by the patient:</p>\n<p><strong>Reference ID:</strong> {$reference_id}<br>\n<strong>Patient Name:</strong> {$patient_name}<br>\n<strong>Email:</strong> {$patient_email}<br>\n<strong>Phone:</strong> {$booking->patient_phone}<br>\n<strong>Doctor:</strong> {$doctor_name}<br>\n<strong>Service:</strong> {$service_name}<br>\n<strong>Date:</strong> {$appointment_date}<br>\n<strong>Time:</strong> {$appointment_time}</p>";
+
+		// Send formatted HTML emails
+		$this->send_formatted_email( $patient_email, $patient_subject, $patient_body, $clinic_name );
+		$this->send_formatted_email( $admin_email, $admin_subject, $admin_body, $clinic_name );
+	}
+
+	/**
+	 * Send generic formatted HTML email.
+	 */
+	private function send_formatted_email( $to, $subject, $body, $clinic_name ) {
+		$html_body = "
+		<!DOCTYPE html>
+		<html>
+		<head>
+			<meta charset='UTF-8'>
+			<title>" . esc_html( $subject ) . "</title>
+			<style>
+				body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 0; background-color: #f8fafc; color: #1e293b; }
+				.email-container { max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+				.email-header { background-color: #ef4444; color: #ffffff; padding: 24px; text-align: center; }
+				.email-header h1 { margin: 0; font-size: 20px; font-weight: 700; }
+				.email-body { padding: 30px; line-height: 1.6; font-size: 15px; }
+				.email-footer { background-color: #f1f5f9; text-align: center; padding: 16px; font-size: 12px; color: #64748b; }
+			</style>
+		</head>
+		<body>
+			<div class='email-container'>
+				<div class='email-header'>
+					<h1>" . esc_html( $clinic_name ) . "</h1>
+				</div>
+				<div class='email-body'>
+					" . $body . "
+				</div>
+				<div class='email-footer'>
+					<p>&copy; " . date( 'Y' ) . " " . esc_html( $clinic_name ) . ". " . __( 'All rights reserved.', 'developer-starter-pro' ) . "</p>
+				</div>
+			</div>
+		</body>
+		</html>";
+
+		return wp_mail( $to, $subject, $html_body, array( 'Content-Type: text/html; charset=UTF-8' ) );
+	}
+
+	/**
+	 * Handle notifications on status change.
+	 *
+	 * @param int    $booking_id Database ID.
+	 * @param string $old_status Old status value.
+	 * @param string $new_status New status value.
+	 */
+	public function handle_status_change_notifications( $booking_id, $old_status, $new_status ) {
+		if ( $old_status === $new_status ) {
+			return;
+		}
+
+		global $wpdb;
+		$table_name = Developer_Starter_Pro_Booking::get_table_name();
+		$booking = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE id = %d", $booking_id ) );
+		if ( ! $booking ) {
+			return;
+		}
+
+		$options = developer_starter_pro_get_all_options();
+		$clinic_name = ! empty( $options['clinic_name'] ) ? $options['clinic_name'] : get_bloginfo( 'name' );
+		$admin_email = ! empty( $options['clinic_email'] ) ? $options['clinic_email'] : get_bloginfo( 'admin_email' );
+
+		$patient_name = $booking->patient_name;
+		$patient_email = $booking->patient_email;
+		$doctor_name = get_the_title( $booking->doctor_id );
+		$service_name = get_the_title( $booking->service_id );
+		$appointment_date = date_i18n( get_option( 'date_format' ), strtotime( $booking->booking_date ) );
+		$appointment_time = date( 'g:i A', strtotime( $booking->time_slot ) );
+		$reference_id  = 'APT-' . sprintf( '%05d', $booking_id );
+
+		switch ( $new_status ) {
+			case 'confirmed':
+			case 'approved':
+				// Send confirmation email & SMS
+				$this->send_email_by_id( $booking_id, 'patient_conf' );
+				$this->send_sms_whatsapp( $booking_id );
+				break;
+
+			case 'cancelled':
+				// Send cancellation notifications
+				$subject = sprintf( __( 'Appointment Cancelled: %s', 'developer-starter-pro' ), $service_name );
+				$body = "<h2>Hello {$patient_name},</h2>\n<p>Your appointment has been <strong>cancelled</strong>.</p>\n<p><strong>Reference ID:</strong> {$reference_id}<br>\n<strong>Treatment:</strong> {$service_name}<br>\n<strong>Doctor:</strong> {$doctor_name}<br>\n<strong>Date:</strong> {$appointment_date}<br>\n<strong>Time:</strong> {$appointment_time}</p>";
+				$this->send_formatted_email( $patient_email, $subject, $body, $clinic_name );
+
+				$sms_msg = sprintf(
+					__( "Hello %s, your appointment %s on %s has been cancelled.", 'developer-starter-pro' ),
+					$patient_name,
+					$reference_id,
+					$appointment_date
+				);
+				error_log( "SMS/WhatsApp notification dispatched to {$booking->patient_phone}: $sms_msg" );
+				break;
+
+			case 'rejected':
+				$subject = sprintf( __( 'Appointment Declined: %s', 'developer-starter-pro' ), $service_name );
+				$body = "<h2>Hello {$patient_name},</h2>\n<p>We regret to inform you that we are unable to accept your appointment request at this time.</p>\n<p><strong>Reference ID:</strong> {$reference_id}<br>\n<strong>Treatment:</strong> {$service_name}<br>\n<strong>Doctor:</strong> {$doctor_name}<br>\n<strong>Requested Date:</strong> {$appointment_date}<br>\n<strong>Requested Time:</strong> {$appointment_time}</p>\n<p>Please feel free to book another time or contact our clinic for assistance.</p>";
+				$this->send_formatted_email( $patient_email, $subject, $body, $clinic_name );
+
+				$sms_msg = sprintf(
+					__( "Hello %s, your appointment request %s has been declined. Please call us to reschedule.", 'developer-starter-pro' ),
+					$patient_name,
+					$reference_id
+				);
+				error_log( "SMS/WhatsApp notification dispatched to {$booking->patient_phone}: $sms_msg" );
+				break;
+
+			case 'rescheduled':
+				$subject = sprintf( __( 'Appointment Rescheduled: %s', 'developer-starter-pro' ), $service_name );
+				$body = "<h2>Hello {$patient_name},</h2>\n<p>Your appointment has been <strong>rescheduled</strong> by our clinic.</p>\n<p><strong>Reference ID:</strong> {$reference_id}<br>\n<strong>Treatment:</strong> {$service_name}<br>\n<strong>Doctor:</strong> {$doctor_name}<br>\n<strong>New Date:</strong> {$appointment_date}<br>\n<strong>New Time:</strong> {$appointment_time}</p>\n<p>We look forward to seeing you!</p>";
+				$this->send_formatted_email( $patient_email, $subject, $body, $clinic_name );
+
+				$sms_msg = sprintf(
+					__( "Hello %s, your appointment %s has been rescheduled to %s at %s.", 'developer-starter-pro' ),
+					$patient_name,
+					$reference_id,
+					$appointment_date,
+					$appointment_time
+				);
+				error_log( "SMS/WhatsApp notification dispatched to {$booking->patient_phone}: $sms_msg" );
+				break;
+		}
 	}
 }

@@ -111,6 +111,9 @@ function developer_starter_pro_get_default_options() {
 		'blog_section_title'    => 'Latest News & Articles',
 		'blog_section_subtitle' => 'Stay informed with standard dental health tips and advice from our clinical experts.',
 		'blog_section_count'    => '3',
+
+		// Appointment Approval Mode
+		'appointment_approval_mode' => 'automatic',
 	);
 }
 

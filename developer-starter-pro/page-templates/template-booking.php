@@ -212,6 +212,10 @@ $selected_service = isset( $_GET['service_id'] ) ? absint( $_GET['service_id'] )
 				<div id="booking-success-panel" style="display:none; text-align:center; padding: 40px 0;">
 					<span class="success-icon" style="font-size:4.5rem; display:block; margin-bottom:24px; animation: scaleUp 0.4s ease;">🎉</span>
 					<h2 style="font-size:1.75rem; margin-top:0; margin-bottom:12px; color:var(--developer-starter-pro-secondary);"><?php esc_html_e( 'Appointment Scheduled!', 'developer-starter-pro' ); ?></h2>
+					<div id="booking-ref-box" style="display:none; background:#F4F8F5; border:1px solid #4E7C59; padding: 12px 24px; border-radius:8px; margin-bottom: 20px;">
+						<span style="font-size:0.75rem; text-transform:uppercase; color:#5A6E5A; display:block; font-weight:600; letter-spacing: 0.5px;"><?php esc_html_e( 'Appointment Reference ID', 'developer-starter-pro' ); ?></span>
+						<strong id="success-ref-id" style="font-size:1.5rem; color:#4E7C59; letter-spacing:1px; font-family: 'Inter', sans-serif;"></strong>
+					</div>
 					<p id="success-message-text" style="color:var(--developer-starter-pro-gray-500); max-width:500px; margin:0 auto 30px; font-size:1.0625rem; line-height:1.6;"></p>
 					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="developer-starter-pro-btn developer-starter-pro-btn--primary">
 						<?php esc_html_e( 'Back to Home', 'developer-starter-pro' ); ?>

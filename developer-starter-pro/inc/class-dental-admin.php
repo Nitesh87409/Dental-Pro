@@ -190,6 +190,11 @@ class Developer_Starter_Pro_Admin {
 			$sanitized['blog_section_count']    = isset( $input['blog_section_count'] ) ? absint( $input['blog_section_count'] ) : 3;
 		}
 
+		if ( empty( $active_tab ) || 'appointments' === $active_tab ) {
+			// Appointment options
+			$sanitized['appointment_approval_mode'] = isset( $input['appointment_approval_mode'] ) ? sanitize_text_field( $input['appointment_approval_mode'] ) : 'automatic';
+		}
+
 		unset( $sanitized['active_tab'] );
 
 		return $sanitized;
@@ -248,12 +253,16 @@ class Developer_Starter_Pro_Admin {
 						'label' => esc_html__( 'Homepage Blog', 'developer-starter-pro' ),
 						'icon'  => 'dashicons-welcome-write-blog',
 					),
+					'appointments' => array(
+						'label' => esc_html__( 'Appointment Settings', 'developer-starter-pro' ),
+						'icon'  => 'dashicons-calendar-alt',
+					),
 				);
 
 				foreach ( $tabs as $tab_key => $tab ) : ?>
 					<a href="?page=<?php echo esc_attr( $this->page_slug ); ?>&tab=<?php echo esc_attr( $tab_key ); ?>"
 					   class="developer-starter-pro-admin-tab <?php echo $active_tab === $tab_key ? 'active' : ''; ?>">
-						<span class="dashicons <?php echo esc_attr( $tab['icon'] ); ?>"></span>
+					   <span class="dashicons <?php echo esc_attr( $tab['icon'] ); ?>"></span>
 						<?php echo esc_html( $tab['label'] ); ?>
 					</a>
 				<?php endforeach; ?>
@@ -288,6 +297,9 @@ class Developer_Starter_Pro_Admin {
 							break;
 						case 'blog':
 							$this->render_tab_blog( $options );
+							break;
+						case 'appointments':
+							$this->render_tab_appointments( $options );
 							break;
 					}
 					?>
@@ -884,6 +896,41 @@ class Developer_Starter_Pro_Admin {
 					<td>
 						<input type="number" id="blog_section_count" name="<?php echo esc_attr( $this->option_name ); ?>[blog_section_count]" value="<?php echo esc_attr( isset( $options['blog_section_count'] ) ? $options['blog_section_count'] : 3 ); ?>" min="1" max="12" class="small-text">
 						<p class="description"><?php esc_html_e( 'Choose how many latest blog posts to show in the homepage grid.', 'developer-starter-pro' ); ?></p>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Render Appointments tab.
+	 *
+	 * @param array $options Current options.
+	 */
+	private function render_tab_appointments( $options ) {
+		$mode = isset( $options['appointment_approval_mode'] ) ? $options['appointment_approval_mode'] : 'automatic';
+		?>
+		<div class="developer-starter-pro-settings-section">
+			<h2><?php esc_html_e( 'Appointment Settings', 'developer-starter-pro' ); ?></h2>
+			<p class="description"><?php esc_html_e( 'Configure the booking approval mode.', 'developer-starter-pro' ); ?></p>
+
+			<table class="form-table">
+				<tr>
+					<th><?php esc_html_e( 'Appointment Approval Mode', 'developer-starter-pro' ); ?></th>
+					<td>
+						<fieldset>
+							<label style="display:block; margin-bottom:15px;">
+								<input type="radio" name="<?php echo esc_attr( $this->option_name ); ?>[appointment_approval_mode]" value="automatic" <?php checked( $mode, 'automatic' ); ?>>
+								<strong><?php esc_html_e( 'Automatic Approval', 'developer-starter-pro' ); ?></strong>
+								<p class="description" style="margin-left: 24px; margin-top:4px;"><?php esc_html_e( 'Appointments are automatically confirmed immediately. Patients receive instant confirmations, and the status is set to "Confirmed".', 'developer-starter-pro' ); ?></p>
+							</label>
+							<label style="display:block;">
+								<input type="radio" name="<?php echo esc_attr( $this->option_name ); ?>[appointment_approval_mode]" value="manual" <?php checked( $mode, 'manual' ); ?>>
+								<strong><?php esc_html_e( 'Manual Approval', 'developer-starter-pro' ); ?></strong>
+								<p class="description" style="margin-left: 24px; margin-top:4px;"><?php esc_html_e( 'Appointments remain "Pending" upon submission. Admin receives notification to Approve, Reject, Reschedule, or Cancel, and the patient is notified of status changes.', 'developer-starter-pro' ); ?></p>
+							</label>
+						</fieldset>
 					</td>
 				</tr>
 			</table>

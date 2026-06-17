@@ -229,6 +229,14 @@ document.addEventListener('DOMContentLoaded', function() {
 				form.style.display = 'none';
 				var wizardSteps = document.querySelector('.booking-wizard-steps');
 				if (wizardSteps) wizardSteps.style.display = 'none';
+				
+				var refIdElem = document.getElementById('success-ref-id');
+				if (refIdElem && data.reference_id) {
+					refIdElem.textContent = data.reference_id;
+					var refBox = document.getElementById('booking-ref-box');
+					if (refBox) refBox.style.display = 'inline-block';
+				}
+				
 				var successMessageText = document.getElementById('success-message-text');
 				if (successMessageText) successMessageText.textContent = data.message;
 				var successPanel = document.getElementById('booking-success-panel');

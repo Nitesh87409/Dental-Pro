@@ -102,15 +102,6 @@ class Developer_Starter_Pro_Enqueue {
 			);
 		}
 
-		// Patient Portal CSS
-		if ( is_page_template( 'page-templates/template-patient-dashboard.php' ) || is_page_template( 'page-templates/template-patient-login.php' ) || is_page_template( 'page-templates/template-patient-register.php' ) || is_page_template( 'page-templates/template-patient-forgot.php' ) ) {
-			wp_enqueue_style(
-				'developer-starter-pro-portal',
-				developer_starter_pro_CSS . '/portal.css',
-				array( 'developer-starter-pro-main' ),
-				developer_starter_pro_VERSION
-			);
-		}
 
 
 
@@ -212,25 +203,6 @@ class Developer_Starter_Pro_Enqueue {
 			);
 		}
 
-		// Patient Portal JS
-		if ( is_page_template( 'page-templates/template-patient-dashboard.php' ) || is_page_template( 'page-templates/template-patient-login.php' ) || is_page_template( 'page-templates/template-patient-register.php' ) || is_page_template( 'page-templates/template-patient-forgot.php' ) ) {
-			wp_enqueue_script(
-				'developer-starter-pro-portal',
-				developer_starter_pro_JS . '/portal.js',
-				array( 'developer-starter-pro-main' ),
-				developer_starter_pro_VERSION,
-				true
-			);
-
-			wp_localize_script(
-				'developer-starter-pro-portal',
-				'developerStarterProPortal',
-				array(
-					'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-					'nonce'   => wp_create_nonce( 'developer_starter_pro_portal_nonce' ),
-				)
-			);
-		}
 
 
 

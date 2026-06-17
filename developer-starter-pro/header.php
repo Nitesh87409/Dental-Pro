@@ -15,7 +15,8 @@ $clinic_phone = developer_starter_pro_get_option( 'clinic_phone', '' );
 $clinic_email = developer_starter_pro_get_option( 'clinic_email', '' );
 $emergency_phone = developer_starter_pro_get_option( 'emergency_phone', '' );
 $clinic_logo_height = developer_starter_pro_get_option( 'clinic_logo_height', '45' );
-$portal_url = developer_starter_pro_get_template_page_url( 'page-templates/template-patient-login.php', '#portal' );
+$booking_url = developer_starter_pro_get_booking_url();
+$tracking_url = home_url( '/tracking/' );
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -136,6 +137,7 @@ $portal_url = developer_starter_pro_get_template_page_url( 'page-templates/templ
 						echo '<li><a href="' . esc_url( $doctors_url ) . '">' . esc_html__( 'Doctors', 'developer-starter-pro' ) . '</a></li>';
 						echo '<li><a href="' . esc_url( $beforeafter_url ) . '">' . esc_html__( 'Before & After', 'developer-starter-pro' ) . '</a></li>';
 						echo '<li><a href="' . esc_url( $pricing_url ) . '">' . esc_html__( 'Pricing', 'developer-starter-pro' ) . '</a></li>';
+						echo '<li><a href="' . esc_url( $tracking_url ) . '">' . esc_html__( 'Track Appointment', 'developer-starter-pro' ) . '</a></li>';
 						echo '<li><a href="' . esc_url( home_url( '/blog/' ) ) . '">' . esc_html__( 'Blog', 'developer-starter-pro' ) . '</a></li>';
 						echo '</ul>';
 					}
@@ -144,11 +146,9 @@ $portal_url = developer_starter_pro_get_template_page_url( 'page-templates/templ
 
 				<!-- Header Actions -->
 				<div class="developer-starter-pro-header-actions">
-					<?php if ( ! empty( $portal_url ) ) : ?>
-						<a href="<?php echo esc_url( $portal_url ); ?>" class="developer-starter-pro-btn developer-starter-pro-btn--sm developer-starter-pro-btn--outline dp-header-login-btn">
-							<?php esc_html_e( 'Log In', 'developer-starter-pro' ); ?>
-						</a>
-					<?php endif; ?>
+					<a href="<?php echo esc_url( $booking_url ); ?>" class="developer-starter-pro-btn developer-starter-pro-btn--sm developer-starter-pro-btn--primary dp-header-book-btn">
+						<?php esc_html_e( 'Book Appointment', 'developer-starter-pro' ); ?>
+					</a>
 
 					<a href="tel:+18001234567" class="dp-header-call-btn">
 						<svg class="dp-header-call-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -251,8 +251,8 @@ $portal_url = developer_starter_pro_get_template_page_url( 'page-templates/templ
 				echo '<li><a href="' . esc_url( $doctors_url ) . '">' . esc_html__( 'Doctors', 'developer-starter-pro' ) . '</a></li>';
 				echo '<li><a href="' . esc_url( $beforeafter_url ) . '">' . esc_html__( 'Before & After', 'developer-starter-pro' ) . '</a></li>';
 				echo '<li><a href="' . esc_url( $pricing_url ) . '">' . esc_html__( 'Pricing', 'developer-starter-pro' ) . '</a></li>';
+				echo '<li><a href="' . esc_url( $tracking_url ) . '">' . esc_html__( 'Track Appointment', 'developer-starter-pro' ) . '</a></li>';
 				echo '<li><a href="' . esc_url( home_url( '/blog/' ) ) . '">' . esc_html__( 'Blog', 'developer-starter-pro' ) . '</a></li>';
-				echo '<li><a href="' . esc_url( $portal_url ) . '">' . esc_html__( 'Log In', 'developer-starter-pro' ) . '</a></li>';
 				echo '</ul>';
 			}
 			?>

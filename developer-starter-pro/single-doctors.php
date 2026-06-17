@@ -25,6 +25,17 @@ $days_labels = array(
 	'friday' => __( 'Friday', 'developer-starter-pro' ), 'saturday' => __( 'Saturday', 'developer-starter-pro' ),
 	'sunday' => __( 'Sunday', 'developer-starter-pro' ),
 );
+
+if ( ! is_array( $schedule ) || empty( $schedule ) ) {
+	$schedule = array();
+	foreach ( $days_labels as $day_key => $day_label ) {
+		$schedule[ $day_key ] = array(
+			'available' => 'sunday' === $day_key ? '0' : '1',
+			'start'     => '09:00',
+			'end'       => '17:00',
+		);
+	}
+}
 ?>
 
 <main id="primary" class="developer-starter-pro-main" role="main">
