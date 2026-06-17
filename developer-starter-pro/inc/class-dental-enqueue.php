@@ -92,15 +92,7 @@ class Developer_Starter_Pro_Enqueue {
 			developer_starter_pro_VERSION
 		);
 
-		// Chatbot CSS
-		if ( developer_starter_pro_get_option( 'enable_chatbot', '1' ) === '1' ) {
-			wp_enqueue_style(
-				'developer-starter-pro-chatbot',
-				developer_starter_pro_CSS . '/chatbot.css',
-				array( 'developer-starter-pro-main' ),
-				developer_starter_pro_VERSION
-			);
-		}
+
 
 
 
@@ -183,25 +175,7 @@ class Developer_Starter_Pro_Enqueue {
 			);
 		}
 
-		// Chatbot JS
-		if ( developer_starter_pro_get_option( 'enable_chatbot', '1' ) === '1' ) {
-			wp_enqueue_script(
-				'developer-starter-pro-chatbot',
-				developer_starter_pro_JS . '/chatbot.js',
-				array( 'developer-starter-pro-main' ),
-				developer_starter_pro_VERSION,
-				true
-			);
 
-			wp_localize_script(
-				'developer-starter-pro-chatbot',
-				'developerStarterProChatbot',
-				array(
-					'restUrl' => rest_url( 'dentalpro/v1/' ),
-					'nonce'   => wp_create_nonce( 'developer_starter_pro_chatbot_nonce' ),
-				)
-			);
-		}
 
 
 

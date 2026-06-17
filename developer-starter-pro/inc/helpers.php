@@ -64,7 +64,6 @@ function developer_starter_pro_get_default_options() {
 		'color_primary'    => '#0D9488',
 		'color_secondary'  => '#1E293B',
 		'color_accent'     => '#F59E0B',
-		'dark_mode_enabled' => '1',
 
 		// Header.
 		'header_style'     => '1',

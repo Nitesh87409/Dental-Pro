@@ -13,29 +13,7 @@
 	document.addEventListener('DOMContentLoaded', function () {
 		initStickyHeader();
 		initMobileMenu();
-		initDarkMode();
 	});
-
-	// =========================================================================
-	// Dark Mode
-	// =========================================================================
-	function initDarkMode() {
-		const toggle = document.getElementById('dark-mode-toggle');
-		if (!toggle) return;
-
-		const storedTheme = localStorage.getItem('theme');
-		const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-		if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
-			document.body.classList.add('dark-mode');
-		}
-
-		toggle.addEventListener('click', function () {
-			document.body.classList.toggle('dark-mode');
-			const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
-			localStorage.setItem('theme', currentTheme);
-		});
-	}
 
 	// =========================================================================
 	// Sticky Header

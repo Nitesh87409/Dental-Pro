@@ -104,7 +104,6 @@ class Developer_Starter_Pro_Admin {
 			$sanitized['color_primary']     = isset( $input['color_primary'] ) ? developer_starter_pro_sanitize_hex_color( $input['color_primary'] ) : '#0D9488';
 			$sanitized['color_secondary']   = isset( $input['color_secondary'] ) ? developer_starter_pro_sanitize_hex_color( $input['color_secondary'] ) : '#1E293B';
 			$sanitized['color_accent']      = isset( $input['color_accent'] ) ? developer_starter_pro_sanitize_hex_color( $input['color_accent'] ) : '#F59E0B';
-			$sanitized['dark_mode_enabled'] = isset( $input['dark_mode_enabled'] ) ? '1' : '0';
 		}
 
 		if ( empty( $active_tab ) || 'header' === $active_tab ) {
@@ -548,17 +547,7 @@ class Developer_Starter_Pro_Admin {
 						<p class="description"><?php esc_html_e( 'Highlights, badges, CTAs.', 'developer-starter-pro' ); ?></p>
 					</td>
 				</tr>
-				<tr>
-					<th><?php esc_html_e( 'Dark Mode Options', 'developer-starter-pro' ); ?></th>
-					<td>
-						<label class="developer-starter-pro-toggle">
-							<input type="checkbox" name="<?php echo esc_attr( $this->option_name ); ?>[dark_mode_enabled]" value="1" <?php checked( '1', $options['dark_mode_enabled'] ); ?>>
-							<span class="developer-starter-pro-toggle-slider"></span>
-							<span class="developer-starter-pro-toggle-label"><?php esc_html_e( 'Enable Dark Mode toggle button in header', 'developer-starter-pro' ); ?></span>
-						</label>
-						<p class="description"><?php esc_html_e( 'Show/hide the dark mode switch button in the main navigation menu header.', 'developer-starter-pro' ); ?></p>
-					</td>
-				</tr>
+
 			</table>
 
 			<div class="developer-starter-pro-color-preview">

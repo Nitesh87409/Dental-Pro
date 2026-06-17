@@ -24,9 +24,9 @@ get_header();
 
 	<!-- Insurance Guide Content -->
 	<section class="developer-starter-pro-section">
-		<div class="developer-starter-pro-container">
+		<div class="developer-starter-pro-container" style="max-width: 800px;">
 			
-			<div class="insurance-guide-split" style="display: grid; grid-template-columns: 1fr 350px; gap: 40px;">
+			<div class="insurance-guide-content">
 				
 				<!-- Main Content -->
 				<div>
@@ -53,29 +53,6 @@ get_header();
 							<h4 style="margin: 0 0 6px 0; font-size: 1.0625rem; color: var(--developer-starter-pro-secondary);"><?php esc_html_e( 'Does insurance cover cosmetic procedures?', 'developer-starter-pro' ); ?></h4>
 							<p style="margin: 0; font-size: 0.9375rem; color: var(--developer-starter-pro-gray-500); line-height: 1.5;"><?php esc_html_e( 'Most basic plans do not cover purely cosmetic treatments (such as veneers or whitening). We offer financing installment programs for these cases.', 'developer-starter-pro' ); ?></p>
 						</div>
-					</div>
-				</div>
-
-				<!-- Sidebar Card: Checker Integration -->
-				<div>
-					<div style="background: var(--developer-starter-pro-gray-50); border: 1px solid var(--developer-starter-pro-gray-200); padding: 30px; border-radius: 12px; box-shadow: var(--developer-starter-pro-shadow-sm); text-align: center;">
-						<span style="font-size: 2.5rem; display: block; margin-bottom: 12px;">🔍</span>
-						<h3 style="margin-top: 0; margin-bottom: 10px; font-size: 1.25rem;"><?php esc_html_e( 'Insurance Checker', 'developer-starter-pro' ); ?></h3>
-						<p style="font-size: 0.875rem; color: var(--developer-starter-pro-gray-500); line-height: 1.5; margin-bottom: 20px;"><?php esc_html_e( 'Check if your exact insurance provider and dental plan terms are in-network.', 'developer-starter-pro' ); ?></p>
-						
-						<?php
-						$checker_url = home_url( '/insurance-checker/' );
-						$checker_pages = get_pages( array(
-							'meta_key'   => '_wp_page_template',
-							'meta_value' => 'page-templates/template-insurance-checker.php'
-						) );
-						if ( ! empty( $checker_pages ) ) {
-							$checker_url = get_permalink( $checker_pages[0]->ID );
-						}
-						?>
-						<a href="<?php echo esc_url( $checker_url ); ?>" class="developer-starter-pro-btn developer-starter-pro-btn--primary" style="width: 100%; justify-content: center; font-weight: 700;">
-							<?php esc_html_e( 'Launch Checker Tool', 'developer-starter-pro' ); ?>
-						</a>
 					</div>
 				</div>
 

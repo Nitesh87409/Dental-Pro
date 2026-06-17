@@ -40,7 +40,6 @@ require_once developer_starter_pro_INC . '/class-dental-admin.php';
 require_once developer_starter_pro_INC . '/class-dental-hero-slider.php';
 require_once developer_starter_pro_INC . '/class-dental-booking.php';
 require_once developer_starter_pro_INC . '/class-dental-admin-booking.php';
-require_once developer_starter_pro_INC . '/class-dental-chatbot.php';
 require_once developer_starter_pro_INC . '/class-dental-notifications.php';
 require_once developer_starter_pro_INC . '/class-dental-seo.php';
 
@@ -57,7 +56,6 @@ function developer_starter_pro_init_theme() {
 	new Developer_Starter_Pro_Hero_Slider();
 	new Developer_Starter_Pro_Booking();
 	new Developer_Starter_Pro_Admin_Booking();
-	new Developer_Starter_Pro_Chatbot();
 	new Developer_Starter_Pro_Notifications();
 	new Developer_Starter_Pro_SEO();
 }
