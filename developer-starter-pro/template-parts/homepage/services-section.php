@@ -112,6 +112,9 @@ $card_colors = array(
 					$price      = get_post_meta( $service->ID, '_developer_starter_pro_service_price', true );
 					$duration   = get_post_meta( $service->ID, '_developer_starter_pro_service_duration', true );
 					$card_img   = get_post_meta( $service->ID, '_developer_starter_pro_service_card_image', true );
+					if ( empty( $card_img ) && has_post_thumbnail( $service->ID ) ) {
+						$card_img = get_the_post_thumbnail_url( $service->ID, 'large' );
+					}
 
 					$icon_html = '';
 					if ( ! empty( $custom_svg ) ) {
@@ -174,9 +177,7 @@ $card_colors = array(
 
 				<!-- Gradient Strip with Icon -->
 				<div class="dp-svc-card__strip" style="<?php echo $strip_style; // phpcs:ignore ?>">
-					<?php if ( $has_card_img ) : ?>
-					<div class="dp-svc-card__strip-img-overlay" aria-hidden="true"></div>
-					<?php endif; ?>
+					<!-- Card background image is shown directly without overlay -->
 					<div class="dp-svc-card__icon-wrap">
 						<?php echo $svc['icon']; // phpcs:ignore ?>
 					</div>

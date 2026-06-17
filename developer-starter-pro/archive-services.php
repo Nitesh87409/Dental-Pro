@@ -242,8 +242,7 @@ $card_colors = array(
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	opacity: 0.25;
-	mix-blend-mode: luminosity;
+	opacity: 1;
 }
 .arc-card__thumb-overlay {
 	position: absolute;

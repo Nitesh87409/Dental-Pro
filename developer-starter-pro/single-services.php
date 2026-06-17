@@ -160,10 +160,16 @@ $related = get_posts( array(
 .developer-starter-pro-service-detail { padding: 48px 0; }
 
 .developer-starter-pro-service-detail-image {
+	max-width: 600px;
+	margin: 0 auto 24px;
 	border-radius: var(--developer-starter-pro-radius-lg);
 	overflow: hidden;
-	margin-bottom: 24px;
 	box-shadow: var(--developer-starter-pro-shadow-lg);
+}
+.developer-starter-pro-service-detail-image img {
+	width: 100%;
+	height: auto;
+	display: block;
 }
 
 .developer-starter-pro-service-detail-title { font-size: 2.25rem; margin-bottom: 16px; }
