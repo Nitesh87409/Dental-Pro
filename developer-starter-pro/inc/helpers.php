@@ -105,6 +105,12 @@ function developer_starter_pro_get_default_options() {
 			'saturday'  => array( 'open' => '10:00', 'close' => '14:00', 'closed' => false ),
 			'sunday'    => array( 'open' => '',      'close' => '',      'closed' => true ),
 		),
+		// Blog Section
+		'blog_section_enabled'  => '1',
+		'blog_section_eyebrow'  => 'Dental Insights',
+		'blog_section_title'    => 'Latest News & Articles',
+		'blog_section_subtitle' => 'Stay informed with standard dental health tips and advice from our clinical experts.',
+		'blog_section_count'    => '3',
 	);
 }
 

@@ -136,6 +136,7 @@ $portal_url = developer_starter_pro_get_template_page_url( 'page-templates/templ
 						echo '<li><a href="' . esc_url( $doctors_url ) . '">' . esc_html__( 'Doctors', 'developer-starter-pro' ) . '</a></li>';
 						echo '<li><a href="' . esc_url( $beforeafter_url ) . '">' . esc_html__( 'Before & After', 'developer-starter-pro' ) . '</a></li>';
 						echo '<li><a href="' . esc_url( $pricing_url ) . '">' . esc_html__( 'Pricing', 'developer-starter-pro' ) . '</a></li>';
+						echo '<li><a href="' . esc_url( home_url( '/blog/' ) ) . '">' . esc_html__( 'Blog', 'developer-starter-pro' ) . '</a></li>';
 						echo '</ul>';
 					}
 					?>
@@ -250,6 +251,7 @@ $portal_url = developer_starter_pro_get_template_page_url( 'page-templates/templ
 				echo '<li><a href="' . esc_url( $doctors_url ) . '">' . esc_html__( 'Doctors', 'developer-starter-pro' ) . '</a></li>';
 				echo '<li><a href="' . esc_url( $beforeafter_url ) . '">' . esc_html__( 'Before & After', 'developer-starter-pro' ) . '</a></li>';
 				echo '<li><a href="' . esc_url( $pricing_url ) . '">' . esc_html__( 'Pricing', 'developer-starter-pro' ) . '</a></li>';
+				echo '<li><a href="' . esc_url( home_url( '/blog/' ) ) . '">' . esc_html__( 'Blog', 'developer-starter-pro' ) . '</a></li>';
 				echo '<li><a href="' . esc_url( $portal_url ) . '">' . esc_html__( 'Log In', 'developer-starter-pro' ) . '</a></li>';
 				echo '</ul>';
 			}

@@ -47,10 +47,12 @@ get_header();
 
 	// 10. FAQ Accordion Section
 	get_template_part( 'template-parts/homepage/faq', 'section' );
+	*/
 
 	// 11. Latest Blog Posts Section
-	get_template_part( 'template-parts/homepage/blog', 'section' );
-	*/
+	if ( '1' === developer_starter_pro_get_option( 'blog_section_enabled', '1' ) ) {
+		get_template_part( 'template-parts/homepage/blog', 'section' );
+	}
 	?>
 
 </main>
