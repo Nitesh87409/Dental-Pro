@@ -146,6 +146,52 @@ function developer_starter_pro_get_default_options() {
 		// Archive & Cleanup settings
 		'archive_completed_months' => '12',
 		'archive_cancelled_months' => '6',
+
+		// Why Choose Us Section
+		'why_choose_us_badge'     => 'Our Core Strengths',
+		'why_choose_us_title'     => 'Why Choose DentalPro Elite?',
+		'why_choose_us_subtitle'  => 'We combine clinical precision, advanced technology, and personalized patient care to redefine your dental experience.',
+		'why_choose_us_benefits'  => array(
+			array(
+				'icon'        => '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+				'title'       => 'Safe & Sterilized Clinic',
+				'description' => 'Our clinic maintains autoclave systems and follows strict sterilization workflows for your medical safety.',
+			),
+			array(
+				'icon'        => '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>',
+				'title'       => 'Painless Dental Care',
+				'description' => 'We leverage micro-dentistry and modern local anesthetics to offer comfortable, anxiety-free treatments.',
+			),
+			array(
+				'icon'        => '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+				'title'       => 'Advanced Equipment',
+				'description' => 'Equipped with 3D CBCT imaging, intraoral scanners, and dental lasers for precise diagnosis and execution.',
+			),
+			array(
+				'icon'        => '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18"/><line x1="2" y1="10" x2="22" y2="10"/></svg>',
+				'title'       => 'Insurance & Easy Plans',
+				'description' => 'We accept direct insurance claims from major providers and offer low-interest monthly installment plans.',
+			),
+		),
+
+		// Homepage Gallery Section
+		'gallery_section_badge'    => 'Our Facility',
+		'gallery_section_title'    => 'Modern Dental Clinic Showcase',
+		'gallery_section_subtitle' => 'A visual tour inside our state-of-the-art diagnostic suites and patient-friendly dental operatories.',
+		'gallery_items'            => array(
+			array(
+				'image' => 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=600',
+				'title' => 'State-of-the-Art Surgery Suite',
+			),
+			array(
+				'image' => 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&q=80&w=600',
+				'title' => 'Hygienic Sterilized Materials',
+			),
+			array(
+				'image' => 'https://images.unsplash.com/photo-1579684389782-64d84b5e902a?auto=format&fit=crop&q=80&w=600',
+				'title' => 'Patient Comfort Operatory',
+			),
+		),
 	);
 }
 
@@ -166,6 +212,91 @@ function developer_starter_pro_sanitize_hex_color( $color ) {
 	}
 
 	return '';
+}
+
+/**
+ * Sanitize raw SVG markup allowing only safe tags and attributes.
+ *
+ * @param string $svg Raw SVG markup.
+ * @return string Sanitized SVG markup.
+ */
+function developer_starter_pro_sanitize_svg( $svg ) {
+	if ( empty( $svg ) ) {
+		return '';
+	}
+
+	$allowed_tags = array(
+		'svg'  => array(
+			'xmlns'           => true,
+			'width'           => true,
+			'height'          => true,
+			'viewbox'         => true,
+			'fill'            => true,
+			'stroke'          => true,
+			'stroke-width'    => true,
+			'stroke-linecap'  => true,
+			'stroke-linejoin' => true,
+			'class'           => true,
+			'style'           => true,
+		),
+		'path' => array(
+			'd'               => true,
+			'fill'            => true,
+			'stroke'          => true,
+			'stroke-width'    => true,
+		),
+		'circle' => array(
+			'cx'              => true,
+			'cy'              => true,
+			'r'               => true,
+			'fill'            => true,
+			'stroke'          => true,
+			'stroke-width'    => true,
+		),
+		'rect' => array(
+			'x'               => true,
+			'y'               => true,
+			'width'           => true,
+			'height'          => true,
+			'rx'              => true,
+			'ry'              => true,
+			'fill'            => true,
+			'stroke'          => true,
+			'stroke-width'    => true,
+		),
+		'line' => array(
+			'x1'              => true,
+			'y1'              => true,
+			'x2'              => true,
+			'y2'              => true,
+			'stroke'          => true,
+			'stroke-width'    => true,
+			'stroke-linecap'  => true,
+		),
+		'polyline' => array(
+			'points'          => true,
+			'stroke'          => true,
+			'stroke-width'    => true,
+			'stroke-linecap'  => true,
+			'stroke-linejoin' => true,
+			'fill'            => true,
+		),
+		'polygon' => array(
+			'points'          => true,
+			'fill'            => true,
+			'stroke'          => true,
+			'stroke-width'    => true,
+		),
+	);
+
+	// Normalize attribute cases for wp_kses matching
+	$svg = str_replace( 
+		array( 'viewBox', 'stroke-width', 'stroke-linecap', 'stroke-linejoin' ), 
+		array( 'viewbox', 'stroke-width', 'stroke-linecap', 'stroke-linejoin' ), 
+		$svg 
+	);
+
+	return wp_kses( $svg, $allowed_tags );
 }
 
 /**

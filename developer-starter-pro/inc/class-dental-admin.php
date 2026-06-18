@@ -234,6 +234,65 @@ class Developer_Starter_Pro_Admin {
 			$sanitized['archive_cancelled_months'] = isset( $input['archive_cancelled_months'] ) ? sanitize_text_field( $input['archive_cancelled_months'] ) : '6';
 		}
 
+		if ( empty( $active_tab ) || 'why_choose_us' === $active_tab ) {
+			// Why Choose Us Section.
+			$sanitized['why_choose_us_badge']    = isset( $input['why_choose_us_badge'] ) ? sanitize_text_field( $input['why_choose_us_badge'] ) : '';
+			$sanitized['why_choose_us_title']    = isset( $input['why_choose_us_title'] ) ? sanitize_text_field( $input['why_choose_us_title'] ) : '';
+			$sanitized['why_choose_us_subtitle'] = isset( $input['why_choose_us_subtitle'] ) ? sanitize_textarea_field( $input['why_choose_us_subtitle'] ) : '';
+
+			$benefits = array();
+			if ( isset( $input['why_choose_us_benefits'] ) ) {
+				$raw_benefits = $input['why_choose_us_benefits'];
+				if ( is_string( $raw_benefits ) ) {
+					$decoded = json_decode( wp_unslash( $raw_benefits ), true );
+					if ( is_array( $decoded ) ) {
+						$raw_benefits = $decoded;
+					}
+				}
+				if ( is_array( $raw_benefits ) ) {
+					foreach ( $raw_benefits as $benefit ) {
+						if ( ! empty( $benefit['title'] ) ) {
+							$benefits[] = array(
+								'icon'        => isset( $benefit['icon'] ) ? developer_starter_pro_sanitize_svg( $benefit['icon'] ) : '',
+								'title'       => sanitize_text_field( $benefit['title'] ),
+								'description' => isset( $benefit['description'] ) ? sanitize_textarea_field( $benefit['description'] ) : '',
+							);
+						}
+					}
+				}
+			}
+			$sanitized['why_choose_us_benefits'] = $benefits;
+		}
+
+		if ( empty( $active_tab ) || 'homepage_gallery' === $active_tab ) {
+			// Gallery Section.
+			$sanitized['gallery_section_badge']    = isset( $input['gallery_section_badge'] ) ? sanitize_text_field( $input['gallery_section_badge'] ) : '';
+			$sanitized['gallery_section_title']    = isset( $input['gallery_section_title'] ) ? sanitize_text_field( $input['gallery_section_title'] ) : '';
+			$sanitized['gallery_section_subtitle'] = isset( $input['gallery_section_subtitle'] ) ? sanitize_textarea_field( $input['gallery_section_subtitle'] ) : '';
+
+			$gallery_items = array();
+			if ( isset( $input['gallery_items'] ) ) {
+				$raw_items = $input['gallery_items'];
+				if ( is_string( $raw_items ) ) {
+					$decoded = json_decode( wp_unslash( $raw_items ), true );
+					if ( is_array( $decoded ) ) {
+						$raw_items = $decoded;
+					}
+				}
+				if ( is_array( $raw_items ) ) {
+					foreach ( $raw_items as $item ) {
+						if ( ! empty( $item['image'] ) ) {
+							$gallery_items[] = array(
+								'image' => esc_url_raw( $item['image'] ),
+								'title' => isset( $item['title'] ) ? sanitize_text_field( $item['title'] ) : '',
+							);
+						}
+					}
+				}
+			}
+			$sanitized['gallery_items'] = $gallery_items;
+		}
+
 		unset( $sanitized['active_tab'] );
 
 		return $sanitized;
@@ -296,6 +355,14 @@ class Developer_Starter_Pro_Admin {
 						'label' => esc_html__( 'Homepage Stats', 'developer-starter-pro' ),
 						'icon'  => 'dashicons-chart-bar',
 					),
+					'why_choose_us' => array(
+						'label' => esc_html__( 'Homepage Why Choose Us', 'developer-starter-pro' ),
+						'icon'  => 'dashicons-thumbs-up',
+					),
+					'homepage_gallery' => array(
+						'label' => esc_html__( 'Homepage Gallery', 'developer-starter-pro' ),
+						'icon'  => 'dashicons-images-alt2',
+					),
 					'appointments' => array(
 						'label' => esc_html__( 'Appointment Settings', 'developer-starter-pro' ),
 						'icon'  => 'dashicons-calendar-alt',
@@ -343,6 +410,12 @@ class Developer_Starter_Pro_Admin {
 							break;
 						case 'stats':
 							$this->render_tab_stats( $options );
+							break;
+						case 'why_choose_us':
+							$this->render_tab_why_choose_us( $options );
+							break;
+						case 'homepage_gallery':
+							$this->render_tab_homepage_gallery( $options );
 							break;
 						case 'appointments':
 							$this->render_tab_appointments( $options );
@@ -683,9 +756,9 @@ class Developer_Starter_Pro_Admin {
 						<div class="developer-starter-pro-header-styles">
 							<?php
 							$footer_styles = array(
-								'1' => esc_html__( '4 Columns — Full featured footer', 'developer-starter-pro' ),
-								'2' => esc_html__( '3 Columns — With newsletter signup', 'developer-starter-pro' ),
-								'3' => esc_html__( 'Minimal — 2 columns, clean design', 'developer-starter-pro' ),
+								'1' => esc_html__( '3 Columns — Map, Contact & Quick Links', 'developer-starter-pro' ),
+								'2' => esc_html__( '2 Columns — Map & Contact Info', 'developer-starter-pro' ),
+								'3' => esc_html__( 'Minimal — 2 Columns (Info & Social Links)', 'developer-starter-pro' ),
 							);
 							foreach ( $footer_styles as $value => $label ) : ?>
 								<label class="developer-starter-pro-radio-card <?php echo $options['footer_style'] === $value ? 'selected' : ''; ?>">
@@ -1058,6 +1131,269 @@ class Developer_Starter_Pro_Admin {
 	}
 
 	/**
+	 * Render Why Choose Us tab.
+	 *
+	 * @param array $options Current options.
+	 */
+	private function render_tab_why_choose_us( $options ) {
+		$benefits = isset( $options['why_choose_us_benefits'] ) ? $options['why_choose_us_benefits'] : array();
+		if ( ! is_array( $benefits ) ) {
+			$benefits = array();
+		}
+		?>
+		<div class="developer-starter-pro-settings-section">
+			<h2><?php esc_html_e( 'Homepage "Why Choose Us" Section', 'developer-starter-pro' ); ?></h2>
+
+			<table class="form-table">
+				<tr>
+					<th><label for="why_choose_us_badge"><?php esc_html_e( 'Section Badge / Eyebrow', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="why_choose_us_badge" name="<?php echo esc_attr( $this->option_name ); ?>[why_choose_us_badge]" value="<?php echo esc_attr( isset( $options['why_choose_us_badge'] ) ? $options['why_choose_us_badge'] : 'Our Core Strengths' ); ?>" class="regular-text">
+						<p class="description"><?php esc_html_e( 'Small label shown above the section title.', 'developer-starter-pro' ); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="why_choose_us_title"><?php esc_html_e( 'Section Title', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="why_choose_us_title" name="<?php echo esc_attr( $this->option_name ); ?>[why_choose_us_title]" value="<?php echo esc_attr( isset( $options['why_choose_us_title'] ) ? $options['why_choose_us_title'] : 'Why Choose DentalPro Elite?' ); ?>" class="regular-text">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="why_choose_us_subtitle"><?php esc_html_e( 'Section Subtitle / Description', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<textarea id="why_choose_us_subtitle" name="<?php echo esc_attr( $this->option_name ); ?>[why_choose_us_subtitle]" rows="3" class="large-text"><?php echo esc_textarea( isset( $options['why_choose_us_subtitle'] ) ? $options['why_choose_us_subtitle'] : '' ); ?></textarea>
+					</td>
+				</tr>
+				<tr>
+					<th><?php esc_html_e( 'Benefit Cards (Repeatable)', 'developer-starter-pro' ); ?></th>
+					<td>
+						<div id="why-choose-us-benefits-container" class="dp-repeatable-container">
+							<!-- Items will be loaded here dynamically by JS -->
+						</div>
+						
+						<!-- Hidden input storing serialized benefits data -->
+						<input type="hidden" id="why_choose_us_benefits_input" name="<?php echo esc_attr( $this->option_name ); ?>[why_choose_us_benefits]" value="<?php echo esc_attr( wp_json_encode( $benefits ) ); ?>">
+						
+						<button type="button" class="button button-secondary" id="dp-add-benefit-btn" style="margin-top: 15px;">
+							<span class="dashicons dashicons-plus" style="vertical-align: middle; margin-top: -3px;"></span>
+							<?php esc_html_e( 'Add New Benefit Card', 'developer-starter-pro' ); ?>
+						</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<!-- Repeatable benefits template & script -->
+		<style>
+		.dp-benefit-item {
+			background: #fdfdfd;
+			border: 1px solid #e2e8f0;
+			border-radius: 6px;
+			padding: 20px;
+			margin-bottom: 15px;
+			position: relative;
+			box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+		}
+		.dp-benefit-item-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 12px;
+			border-bottom: 1px dashed #e2e8f0;
+			padding-bottom: 8px;
+		}
+		.dp-benefit-item-title-label {
+			font-weight: 600;
+			color: #2d3748;
+		}
+		.dp-benefit-item-controls {
+			display: flex;
+			gap: 5px;
+		}
+		.dp-benefit-field {
+			margin-bottom: 10px;
+		}
+		.dp-benefit-field label {
+			display: block;
+			font-weight: 500;
+			font-size: 11px;
+			text-transform: uppercase;
+			color: #718096;
+			margin-bottom: 4px;
+		}
+		.dp-benefit-field input[type="text"],
+		.dp-benefit-field textarea {
+			width: 100%;
+			box-sizing: border-box;
+		}
+		</style>
+
+		<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			var container = document.getElementById('why-choose-us-benefits-container');
+			var inputEl = document.getElementById('why_choose_us_benefits_input');
+			var addBtn = document.getElementById('dp-add-benefit-btn');
+			if (!container || !inputEl || !addBtn) return;
+
+			var items = [];
+			try {
+				items = JSON.parse(inputEl.value) || [];
+			} catch(e) {
+				items = [];
+			}
+
+			function updateHiddenInput() {
+				inputEl.value = JSON.stringify(items);
+			}
+
+			function renderItems() {
+				container.innerHTML = '';
+				if (items.length === 0) {
+					container.innerHTML = '<div style="padding: 15px; background: #f7fafc; border: 1px dashed #cbd5e0; border-radius: 4px; color: #718096; text-align: center;"><?php esc_html_e( 'No benefits added yet. Click "Add New Benefit Card" below.', 'developer-starter-pro' ); ?></div>';
+					return;
+				}
+
+				items.forEach(function(item, idx) {
+					var itemDiv = document.createElement('div');
+					itemDiv.className = 'dp-benefit-item';
+					
+					var html = '<div class="dp-benefit-item-header">';
+					html += '<span class="dp-benefit-item-title-label">Benefit Card #' + (idx + 1) + (item.title ? ': ' + item.title : '') + '</span>';
+					html += '<div class="dp-benefit-item-controls">';
+					
+					// Sort buttons
+					if (idx > 0) {
+						html += '<button type="button" class="button button-small dp-move-up-btn" data-index="' + idx + '">▲</button>';
+					}
+					if (idx < items.length - 1) {
+						html += '<button type="button" class="button button-small dp-move-down-btn" data-index="' + idx + '">▼</button>';
+					}
+					
+					html += '<button type="button" class="button button-small button-link-delete dp-delete-btn" data-index="' + idx + '"><?php esc_html_e( 'Remove', 'developer-starter-pro' ); ?></button>';
+					html += '</div></div>';
+
+					// Icon SVG Markup
+					html += '<div class="dp-benefit-field">';
+					html += '<label>Icon (SVG Markup)</label>';
+					html += '<textarea class="dp-item-icon" rows="2" data-index="' + idx + '" placeholder="' + escAttr('<svg ...>...</svg>') + '">' + escapeHtml(item.icon || '') + '</textarea>';
+					html += '</div>';
+
+					// Title
+					html += '<div class="dp-benefit-field">';
+					html += '<label>Title</label>';
+					html += '<input type="text" class="dp-item-title" value="' + escapeHtml(item.title || '') + '" data-index="' + idx + '">';
+					html += '</div>';
+
+					// Description
+					html += '<div class="dp-benefit-field">';
+					html += '<label>Description</label>';
+					html += '<textarea class="dp-item-description" rows="2" data-index="' + idx + '">' + escapeHtml(item.description || '') + '</textarea>';
+					html += '</div>';
+
+					itemDiv.innerHTML = html;
+					container.appendChild(itemDiv);
+				});
+
+				// Bind change events
+				container.querySelectorAll('.dp-item-icon').forEach(function(el) {
+					el.addEventListener('change', function() {
+						var index = parseInt(this.getAttribute('data-index'));
+						items[index].icon = this.value;
+						updateHiddenInput();
+					});
+				});
+
+				container.querySelectorAll('.dp-item-title').forEach(function(el) {
+					el.addEventListener('input', function() {
+						var index = parseInt(this.getAttribute('data-index'));
+						items[index].title = this.value;
+						
+						// Update label real-time
+						var headerLabel = this.closest('.dp-benefit-item').querySelector('.dp-benefit-item-title-label');
+						if (headerLabel) {
+							headerLabel.textContent = 'Benefit Card #' + (index + 1) + (this.value ? ': ' + this.value : '');
+						}
+						updateHiddenInput();
+					});
+				});
+
+				container.querySelectorAll('.dp-item-description').forEach(function(el) {
+					el.addEventListener('change', function() {
+						var index = parseInt(this.getAttribute('data-index'));
+						items[index].description = this.value;
+						updateHiddenInput();
+					});
+				});
+
+				// Bind control buttons
+				container.querySelectorAll('.dp-delete-btn').forEach(function(el) {
+					el.addEventListener('click', function() {
+						var index = parseInt(this.getAttribute('data-index'));
+						items.splice(index, 1);
+						updateHiddenInput();
+						renderItems();
+					});
+				});
+
+				container.querySelectorAll('.dp-move-up-btn').forEach(function(el) {
+					el.addEventListener('click', function() {
+						var index = parseInt(this.getAttribute('data-index'));
+						if (index > 0) {
+							var temp = items[index];
+							items[index] = items[index - 1];
+							items[index - 1] = temp;
+							updateHiddenInput();
+							renderItems();
+						}
+					});
+				});
+
+				container.querySelectorAll('.dp-move-down-btn').forEach(function(el) {
+					el.addEventListener('click', function() {
+						var index = parseInt(this.getAttribute('data-index'));
+						if (index < items.length - 1) {
+							var temp = items[index];
+							items[index] = items[index + 1];
+							items[index + 1] = temp;
+							updateHiddenInput();
+							renderItems();
+						}
+					});
+				});
+			}
+
+			function escAttr(str) {
+				return str.replace(/"/g, '&quot;');
+			}
+
+			function escapeHtml(str) {
+				if (!str) return '';
+				return str
+					.replace(/&/g, '&amp;')
+					.replace(/</g, '&lt;')
+					.replace(/>/g, '&gt;')
+					.replace(/"/g, '&quot;')
+					.replace(/'/g, '&#039;');
+			}
+
+			// Add event
+			addBtn.addEventListener('click', function() {
+				items.push({
+					icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+					title: '',
+					description: ''
+				});
+				updateHiddenInput();
+				renderItems();
+			});
+
+			renderItems();
+		});
+		</script>
+		<?php
+	}
+
+	/**
 	 * Render Appointments tab.
 	 *
 	 * @param array $options Current options.
@@ -1320,6 +1656,266 @@ class Developer_Starter_Pro_Admin {
 			})();
 			</script>
 		</div>
+		<?php
+	}
+
+	/**
+	 * Render Homepage Gallery tab.
+	 *
+	 * @param array $options Current options.
+	 */
+	private function render_tab_homepage_gallery( $options ) {
+		$gallery_items = isset( $options['gallery_items'] ) ? $options['gallery_items'] : array();
+		if ( ! is_array( $gallery_items ) ) {
+			$gallery_items = array();
+		}
+		?>
+		<div class="developer-starter-pro-settings-section">
+			<h2><?php esc_html_e( 'Homepage Gallery Section', 'developer-starter-pro' ); ?></h2>
+
+			<table class="form-table">
+				<tr>
+					<th><label for="gallery_section_badge"><?php esc_html_e( 'Section Badge / Eyebrow', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="gallery_section_badge" name="<?php echo esc_attr( $this->option_name ); ?>[gallery_section_badge]" value="<?php echo esc_attr( isset( $options['gallery_section_badge'] ) ? $options['gallery_section_badge'] : 'Our Facility' ); ?>" class="regular-text">
+						<p class="description"><?php esc_html_e( 'Small label shown above the section title.', 'developer-starter-pro' ); ?></p>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="gallery_section_title"><?php esc_html_e( 'Section Title', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="gallery_section_title" name="<?php echo esc_attr( $this->option_name ); ?>[gallery_section_title]" value="<?php echo esc_attr( isset( $options['gallery_section_title'] ) ? $options['gallery_section_title'] : 'Modern Dental Clinic Showcase' ); ?>" class="regular-text">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="gallery_section_subtitle"><?php esc_html_e( 'Section Subtitle / Description', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<textarea id="gallery_section_subtitle" name="<?php echo esc_attr( $this->option_name ); ?>[gallery_section_subtitle]" rows="3" class="large-text"><?php echo esc_textarea( isset( $options['gallery_section_subtitle'] ) ? $options['gallery_section_subtitle'] : '' ); ?></textarea>
+					</td>
+				</tr>
+				<tr>
+					<th><?php esc_html_e( 'Gallery Items (Repeatable)', 'developer-starter-pro' ); ?></th>
+					<td>
+						<div id="homepage-gallery-container" class="dp-repeatable-container">
+							<!-- Items will be loaded here dynamically by JS -->
+						</div>
+						
+						<!-- Hidden input storing serialized gallery data -->
+						<input type="hidden" id="homepage_gallery_input" name="<?php echo esc_attr( $this->option_name ); ?>[gallery_items]" value="<?php echo esc_attr( wp_json_encode( $gallery_items ) ); ?>">
+						
+						<button type="button" class="button button-secondary" id="dp-add-gallery-item-btn" style="margin-top: 15px;">
+							<span class="dashicons dashicons-plus" style="vertical-align: middle; margin-top: -3px;"></span>
+							<?php esc_html_e( 'Add New Gallery Item', 'developer-starter-pro' ); ?>
+						</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<!-- Repeatable gallery template & script -->
+		<style>
+		.dp-gallery-item {
+			background: #fdfdfd;
+			border: 1px solid #e2e8f0;
+			border-radius: 6px;
+			padding: 20px;
+			margin-bottom: 15px;
+			position: relative;
+			box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+		}
+		.dp-gallery-item-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 12px;
+			border-bottom: 1px dashed #e2e8f0;
+			padding-bottom: 8px;
+		}
+		.dp-gallery-item-title-label {
+			font-weight: 600;
+			color: #2d3748;
+		}
+		.dp-gallery-item-controls {
+			display: flex;
+			gap: 5px;
+		}
+		.dp-gallery-field {
+			margin-bottom: 10px;
+		}
+		.dp-gallery-field label {
+			display: block;
+			font-weight: 500;
+			font-size: 11px;
+			text-transform: uppercase;
+			color: #718096;
+			margin-bottom: 4px;
+		}
+		.dp-gallery-field input[type="text"] {
+			width: 100%;
+			box-sizing: border-box;
+		}
+		.dp-gallery-img-preview img {
+			max-width: 120px;
+			height: 80px;
+			object-fit: cover;
+			border: 1px solid #e2e8f0;
+			border-radius: 4px;
+			display: block;
+			margin-top: 8px;
+		}
+		</style>
+
+		<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			var container = document.getElementById('homepage-gallery-container');
+			var inputEl = document.getElementById('homepage_gallery_input');
+			var addBtn = document.getElementById('dp-add-gallery-item-btn');
+			if (!container || !inputEl || !addBtn) return;
+
+			var items = [];
+			try {
+				items = JSON.parse(inputEl.value) || [];
+			} catch(e) {
+				items = [];
+			}
+
+			function updateHiddenInput() {
+				inputEl.value = JSON.stringify(items);
+			}
+
+			function renderItems() {
+				container.innerHTML = '';
+				if (items.length === 0) {
+					container.innerHTML = '<div style="padding: 15px; background: #f7fafc; border: 1px dashed #cbd5e0; border-radius: 4px; color: #718096; text-align: center;"><?php esc_html_e( 'No gallery items added yet. Click "Add New Gallery Item" below.', 'developer-starter-pro' ); ?></div>';
+					return;
+				}
+
+				items.forEach(function(item, idx) {
+					var itemDiv = document.createElement('div');
+					itemDiv.className = 'dp-gallery-item';
+					
+					var html = '<div class="dp-gallery-item-header">';
+					html += '<span class="dp-gallery-item-title-label">Gallery Item #' + (idx + 1) + (item.title ? ': ' + item.title : '') + '</span>';
+					html += '<div class="dp-gallery-item-controls">';
+					
+					// Sort buttons
+					if (idx > 0) {
+						html += '<button type="button" class="button button-small dp-gallery-move-up-btn" data-index="' + idx + '">▲</button>';
+					}
+					if (idx < items.length - 1) {
+						html += '<button type="button" class="button button-small dp-gallery-move-down-btn" data-index="' + idx + '">▼</button>';
+					}
+					
+					html += '<button type="button" class="button button-small button-link-delete dp-gallery-delete-btn" data-index="' + idx + '"><?php esc_html_e( 'Remove', 'developer-starter-pro' ); ?></button>';
+					html += '</div></div>';
+
+					// Image field with WordPress Uploader integration
+					html += '<div class="dp-gallery-field">';
+					html += '<label>Image</label>';
+					html += '<div style="display:flex; gap:8px;">';
+					html += '<input type="text" id="dp_gallery_img_' + idx + '" class="dp-gallery-image-url regular-text" value="' + escapeHtml(item.image || '') + '" data-index="' + idx + '" style="flex:1;">';
+					html += '<button type="button" class="button developer-starter-pro-upload-btn" data-target="dp_gallery_img_' + idx + '" data-preview="dp_gallery_preview_' + idx + '">Choose Image</button>';
+					html += '</div>';
+					html += '<div id="dp_gallery_preview_' + idx + '" class="dp-gallery-img-preview">';
+					if (item.image) {
+						html += '<img src="' + escapeHtml(item.image) + '" alt="Preview">';
+					}
+					html += '</div>';
+					html += '</div>';
+
+					// Title
+					html += '<div class="dp-gallery-field">';
+					html += '<label>Title / Caption</label>';
+					html += '<input type="text" class="dp-gallery-title" value="' + escapeHtml(item.title || '') + '" data-index="' + idx + '">';
+					html += '</div>';
+
+					itemDiv.innerHTML = html;
+					container.appendChild(itemDiv);
+				});
+
+				// Bind change/input events
+				container.querySelectorAll('.dp-gallery-image-url').forEach(function(el) {
+					el.addEventListener('change', function() {
+						var index = parseInt(this.getAttribute('data-index'));
+						items[index].image = this.value;
+						updateHiddenInput();
+					});
+				});
+
+				container.querySelectorAll('.dp-gallery-title').forEach(function(el) {
+					el.addEventListener('input', function() {
+						var index = parseInt(this.getAttribute('data-index'));
+						items[index].title = this.value;
+						
+						// Update label real-time
+						var headerLabel = this.closest('.dp-gallery-item').querySelector('.dp-gallery-item-title-label');
+						if (headerLabel) {
+							headerLabel.textContent = 'Gallery Item #' + (index + 1) + (this.value ? ': ' + this.value : '');
+						}
+						updateHiddenInput();
+					});
+				});
+
+				// Bind control buttons
+				container.querySelectorAll('.dp-gallery-delete-btn').forEach(function(el) {
+					el.addEventListener('click', function() {
+						var index = parseInt(this.getAttribute('data-index'));
+						items.splice(index, 1);
+						updateHiddenInput();
+						renderItems();
+					});
+				});
+
+				container.querySelectorAll('.dp-gallery-move-up-btn').forEach(function(el) {
+					el.addEventListener('click', function() {
+						var index = parseInt(this.getAttribute('data-index'));
+						if (index > 0) {
+							var temp = items[index];
+							items[index] = items[index - 1];
+							items[index - 1] = temp;
+							updateHiddenInput();
+							renderItems();
+						}
+					});
+				});
+
+				container.querySelectorAll('.dp-gallery-move-down-btn').forEach(function(el) {
+					el.addEventListener('click', function() {
+						var index = parseInt(this.getAttribute('data-index'));
+						if (index < items.length - 1) {
+							var temp = items[index];
+							items[index] = items[index + 1];
+							items[index + 1] = temp;
+							updateHiddenInput();
+							renderItems();
+						}
+					});
+				});
+			}
+
+			function escapeHtml(str) {
+				if (!str) return '';
+				return str
+					.replace(/&/g, '&amp;')
+					.replace(/</g, '&lt;')
+					.replace(/>/g, '&gt;')
+					.replace(/"/g, '&quot;')
+					.replace(/'/g, '&#039;');
+			}
+
+			// Add event
+			addBtn.addEventListener('click', function() {
+				items.push({
+					image: '',
+					title: ''
+				});
+				updateHiddenInput();
+				renderItems();
+			});
+
+			renderItems();
+		});
+		</script>
 		<?php
 	}
 

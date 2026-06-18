@@ -5,44 +5,50 @@
  * @package developer-starter-pro
  * @since   1.0.0
  */
+
+$gallery_badge    = developer_starter_pro_get_option( 'gallery_section_badge', 'Our Facility' );
+$gallery_title    = developer_starter_pro_get_option( 'gallery_section_title', 'Modern Dental Clinic Showcase' );
+$gallery_subtitle = developer_starter_pro_get_option( 'gallery_section_subtitle', 'A visual tour inside our state-of-the-art diagnostic suites and patient-friendly dental operatories.' );
+$gallery_items    = developer_starter_pro_get_option( 'gallery_items', array() );
+
+if ( empty( $gallery_items ) ) {
+	$gallery_items = developer_starter_pro_get_default_options()['gallery_items'];
+}
 ?>
 
 <section class="developer-starter-pro-section homepage-gallery-section" id="gallery" style="background: var(--developer-starter-pro-white);">
 	<div class="developer-starter-pro-container">
 		
 		<div class="developer-starter-pro-section-header">
-			<span class="developer-starter-pro-section-badge"><?php esc_html_e( 'Our Facility', 'developer-starter-pro' ); ?></span>
-			<h2 class="developer-starter-pro-section-title"><?php esc_html_e( 'Modern Dental Clinic Showcase', 'developer-starter-pro' ); ?></h2>
-			<p class="developer-starter-pro-section-subtitle"><?php esc_html_e( 'A visual tour inside our state-of-the-art diagnostic suites and patient-friendly dental operatories.', 'developer-starter-pro' ); ?></p>
+			<?php if ( ! empty( $gallery_badge ) ) : ?>
+				<span class="developer-starter-pro-section-badge"><?php echo esc_html( $gallery_badge ); ?></span>
+			<?php endif; ?>
+			<?php if ( ! empty( $gallery_title ) ) : ?>
+				<h2 class="developer-starter-pro-section-title"><?php echo esc_html( $gallery_title ); ?></h2>
+			<?php endif; ?>
+			<?php if ( ! empty( $gallery_subtitle ) ) : ?>
+				<p class="developer-starter-pro-section-subtitle"><?php echo esc_html( $gallery_subtitle ); ?></p>
+			<?php endif; ?>
 		</div>
 
-		<div class="gallery-showcase-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 40px;">
-			
-			<!-- Image 1 -->
-			<div class="gallery-item" style="position: relative; overflow: hidden; border-radius: var(--developer-starter-pro-radius-lg); aspect-ratio: 3/2; box-shadow: var(--developer-starter-pro-shadow-md); cursor: pointer;">
-				<img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=600" alt="<?php esc_attr_e( 'Dental Surgery Room', 'developer-starter-pro' ); ?>" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" />
-				<div class="gallery-overlay" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(13, 148, 136, 0.9) 0%, rgba(0,0,0,0) 100%); display: flex; align-items: flex-end; padding: 24px; opacity: 0; transition: opacity 0.3s ease;">
-					<h4 style="margin: 0; color: #fff; font-size: 1.125rem;"><?php esc_html_e( 'State-of-the-Art Surgery Suite', 'developer-starter-pro' ); ?></h4>
-				</div>
-			</div>
+		<?php if ( ! empty( $gallery_items ) && is_array( $gallery_items ) ) : ?>
+			<div class="gallery-showcase-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 40px;">
+				
+				<?php foreach ( $gallery_items as $item ) : 
+					if ( empty( $item['image'] ) ) continue;
+				?>
+					<div class="gallery-item" style="position: relative; overflow: hidden; border-radius: var(--developer-starter-pro-radius-lg); aspect-ratio: 3/2; box-shadow: var(--developer-starter-pro-shadow-md); cursor: pointer;">
+						<img src="<?php echo esc_url( $item['image'] ); ?>" alt="<?php echo esc_attr( $item['title'] ); ?>" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" />
+						<div class="gallery-overlay" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(13, 148, 136, 0.9) 0%, rgba(0,0,0,0) 100%); display: flex; align-items: flex-end; padding: 24px; opacity: 0; transition: opacity 0.3s ease;">
+							<?php if ( ! empty( $item['title'] ) ) : ?>
+								<h4 style="margin: 0; color: #fff; font-size: 1.125rem;"><?php echo esc_html( $item['title'] ); ?></h4>
+							<?php endif; ?>
+						</div>
+					</div>
+				<?php endforeach; ?>
 
-			<!-- Image 2 -->
-			<div class="gallery-item" style="position: relative; overflow: hidden; border-radius: var(--developer-starter-pro-radius-lg); aspect-ratio: 3/2; box-shadow: var(--developer-starter-pro-shadow-md); cursor: pointer;">
-				<img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&q=80&w=600" alt="<?php esc_attr_e( 'Sterilized Instruments', 'developer-starter-pro' ); ?>" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" />
-				<div class="gallery-overlay" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(13, 148, 136, 0.9) 0%, rgba(0,0,0,0) 100%); display: flex; align-items: flex-end; padding: 24px; opacity: 0; transition: opacity 0.3s ease;">
-					<h4 style="margin: 0; color: #fff; font-size: 1.125rem;"><?php esc_html_e( 'Hygienic Sterilized Materials', 'developer-starter-pro' ); ?></h4>
-				</div>
 			</div>
-
-			<!-- Image 3 -->
-			<div class="gallery-item" style="position: relative; overflow: hidden; border-radius: var(--developer-starter-pro-radius-lg); aspect-ratio: 3/2; box-shadow: var(--developer-starter-pro-shadow-md); cursor: pointer;">
-				<img src="https://images.unsplash.com/photo-1579684389782-64d84b5e902a?auto=format&fit=crop&q=80&w=600" alt="<?php esc_attr_e( 'Patient Care Operatory', 'developer-starter-pro' ); ?>" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" />
-				<div class="gallery-overlay" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(13, 148, 136, 0.9) 0%, rgba(0,0,0,0) 100%); display: flex; align-items: flex-end; padding: 24px; opacity: 0; transition: opacity 0.3s ease;">
-					<h4 style="margin: 0; color: #fff; font-size: 1.125rem;"><?php esc_html_e( 'Patient Comfort Operatory', 'developer-starter-pro' ); ?></h4>
-				</div>
-			</div>
-
-		</div>
+		<?php endif; ?>
 
 		<div class="developer-starter-pro-section-cta" style="margin-top: 40px; text-align: center;">
 			<a href="<?php echo esc_url( home_url( '/gallery/' ) ); ?>" class="developer-starter-pro-btn developer-starter-pro-btn--outline">

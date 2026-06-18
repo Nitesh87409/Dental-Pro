@@ -139,11 +139,9 @@ $card_colors = array(
 				}
 			}
 
-			// Fill to minimum 4 with defaults
-			if ( count( $display_services ) < 4 ) {
-				$needed = 4 - count( $display_services );
-				for ( $i = 0; $i < $needed; $i++ ) {
-					$d = $default_services[ $i % count( $default_services ) ];
+			// Use CPT services if they exist; otherwise fall back to all default services
+			if ( empty( $display_services ) ) {
+				foreach ( $default_services as $d ) {
 					$display_services[] = array(
 						'title'    => $d['title'],
 						'desc'     => $d['desc'],
@@ -155,6 +153,7 @@ $card_colors = array(
 					);
 				}
 			}
+
 
 			// Limit to exactly 4 on homepage
 			$display_services = array_slice( $display_services, 0, 4 );

@@ -157,19 +157,7 @@ if ( ! $has_social_links ) {
 						</ul>
 					</div>
 
-					<!-- Column 3: Newsletter -->
-					<div class="dp-footer__col dp-footer__col--newsletter">
-						<h3 class="dp-footer__title"><?php esc_html_e( 'Newsletter', 'developer-starter-pro' ); ?></h3>
-						<p style="font-size: 0.875rem; color: #5C5449; margin-bottom: 12px; line-height: 1.5;">
-							<?php esc_html_e( 'Subscribe to get updates.', 'developer-starter-pro' ); ?>
-						</p>
-						<form class="dp-footer__newsletter-form" onsubmit="alert('Thank you for subscribing!'); return false;" style="display: flex; gap: 8px;">
-							<input type="email" placeholder="<?php esc_attr_e( 'Your email...', 'developer-starter-pro' ); ?>" required style="flex: 1; padding: 10px 14px; border: 1px solid #E8E4DC; border-radius: 8px; font-size: 0.875rem; outline: none; background: #FFFFFF; color: #3D3830;">
-							<button type="submit" class="button" style="background: var(--developer-starter-pro-primary); color: #FFFFFF; border: none; padding: 10px 18px; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s ease;">
-								<?php esc_html_e( 'Join', 'developer-starter-pro' ); ?>
-							</button>
-						</form>
-					</div>
+
 
 				<?php else : ?>
 					<!-- Style 1: 4 Columns (Full Featured) -->
@@ -235,19 +223,7 @@ if ( ! $has_social_links ) {
 						</ul>
 					</div>
 
-					<!-- Column 4: Newsletter -->
-					<div class="dp-footer__col dp-footer__col--newsletter">
-						<h3 class="dp-footer__title"><?php esc_html_e( 'Newsletter', 'developer-starter-pro' ); ?></h3>
-						<p style="font-size: 0.875rem; color: #5C5449; margin-bottom: 12px; line-height: 1.5;">
-							<?php esc_html_e( 'Subscribe to get updates.', 'developer-starter-pro' ); ?>
-						</p>
-						<form class="dp-footer__newsletter-form" onsubmit="alert('Thank you for subscribing!'); return false;" style="display: flex; gap: 8px;">
-							<input type="email" placeholder="<?php esc_attr_e( 'Your email...', 'developer-starter-pro' ); ?>" required style="flex: 1; padding: 10px 14px; border: 1px solid #E8E4DC; border-radius: 8px; font-size: 0.875rem; outline: none; background: #FFFFFF; color: #3D3830;">
-							<button type="submit" class="button" style="background: var(--developer-starter-pro-primary); color: #FFFFFF; border: none; padding: 10px 18px; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s ease;">
-								<?php esc_html_e( 'Join', 'developer-starter-pro' ); ?>
-							</button>
-						</form>
-					</div>
+
 
 				<?php endif; ?>
 
@@ -259,6 +235,13 @@ if ( ! $has_social_links ) {
 				<p class="dp-footer__copyright">
 					&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php printf( esc_html__( '%s. All rights reserved.', 'developer-starter-pro' ), esc_html( $clinic_name ) ); ?>
 				</p>
+				<div class="dp-footer__links">
+					<a href="<?php echo esc_url( home_url( '/privacy-policy/' ) ); ?>"><?php esc_html_e( 'Privacy Policy', 'developer-starter-pro' ); ?></a>
+					<span class="dp-footer__links-sep">|</span>
+					<a href="<?php echo esc_url( home_url( '/terms-conditions/' ) ); ?>"><?php esc_html_e( 'Terms & Conditions', 'developer-starter-pro' ); ?></a>
+					<span class="dp-footer__links-sep">|</span>
+					<a href="<?php echo esc_url( home_url( '/sitemap/' ) ); ?>"><?php esc_html_e( 'Sitemap', 'developer-starter-pro' ); ?></a>
+				</div>
 			</div>
 
 		</div><!-- .dp-footer__container -->

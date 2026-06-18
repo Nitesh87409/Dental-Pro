@@ -176,10 +176,15 @@ body.dark-mode .blog-pagination .current {
 }
 @media (max-width: 768px) {
 	.featured-blog-post {
-		grid-template-columns: 1fr;
+		grid-template-columns: 1fr !important;
+		gap: 0 !important;
+	}
+	.featured-blog-post > div:first-child {
+		height: 250px !important;
+		min-height: auto !important;
 	}
 	.featured-blog-post div[style*="padding"] {
-		padding: 30px !important;
+		padding: 24px 20px !important;
 	}
 }
 </style>

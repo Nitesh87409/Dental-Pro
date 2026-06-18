@@ -72,7 +72,7 @@
 
 			mediaFrame.on('select', function () {
 				var attachment = mediaFrame.state().get('selection').first().toJSON();
-				$('#' + targetInput).val(attachment.url);
+				$('#' + targetInput).val(attachment.url).trigger('change');
 				if (previewId) {
 					if (mediaType === 'video') {
 						$('#' + previewId).html('<video src="' + attachment.url + '" style="max-width: 100%; height: auto; display: block; border-radius: 4px; border: 1px solid #ddd;" autoplay loop muted playsinline></video>');
@@ -97,7 +97,7 @@
 			var targetInput = $(this).data('target');
 			var previewId = $(this).data('preview');
 
-			$('#' + targetInput).val('');
+			$('#' + targetInput).val('').trigger('change');
 			$('#' + previewId).html('');
 			$(this).hide();
 		});

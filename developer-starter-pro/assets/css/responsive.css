@@ -411,3 +411,46 @@ body.dark-mode .reviews-summary-desc {
 	}
 }
 
+/* Page Banner Mobile Fix (Horizontal conversion & Background Image) */
+@media (max-width: 768px) {
+	.developer-starter-pro-archive-banner,
+	.developer-starter-pro-page-banner {
+		padding: 24px 0 !important;
+		background: url('../images/main-banner.jpeg') no-repeat center center / cover !important;
+	}
+
+	.developer-starter-pro-archive-banner::before,
+	.developer-starter-pro-page-banner::before {
+		background: linear-gradient(135deg, rgba(15, 23, 42, 0.75) 0%, rgba(30, 41, 59, 0.7) 100%) !important;
+	}
+
+	.developer-starter-pro-archive-banner .developer-starter-pro-section-header,
+	.developer-starter-pro-page-banner .developer-starter-pro-section-header {
+		padding: 24px 16px !important;
+		max-width: calc(100% - 32px) !important;
+		margin: 0 auto !important;
+		border-radius: 12px !important;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+	}
+
+	.developer-starter-pro-archive-banner .developer-starter-pro-section-title,
+	.developer-starter-pro-page-banner .developer-starter-pro-section-title {
+		font-size: 1.65rem !important;
+		margin-bottom: 8px !important;
+		line-height: 1.25 !important;
+	}
+
+	.developer-starter-pro-archive-banner .developer-starter-pro-section-subtitle,
+	.developer-starter-pro-page-banner .developer-starter-pro-section-subtitle {
+		font-size: 0.875rem !important;
+		line-height: 1.5 !important;
+	}
+
+	.developer-starter-pro-archive-banner .developer-starter-pro-section-badge,
+	.developer-starter-pro-page-banner .developer-starter-pro-section-badge {
+		padding: 4px 12px !important;
+		font-size: 0.68rem !important;
+		margin-bottom: 8px !important;
+	}
+}
+

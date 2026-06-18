@@ -3529,7 +3529,7 @@ body {
    Premium Glassmorphic Page Banner System
    ========================================================================== */
 .developer-starter-pro-archive-banner,
-.developer-starter-pro-page-banner:has(.developer-starter-pro-section-header) {
+.developer-starter-pro-page-banner {
 	background: url('../images/main-banner.jpeg') no-repeat center center !important;
 	background-size: cover !important;
 	color: #fff !important;
@@ -3541,7 +3541,7 @@ body {
 }
 
 .developer-starter-pro-archive-banner::before,
-.developer-starter-pro-page-banner:has(.developer-starter-pro-section-header)::before {
+.developer-starter-pro-page-banner::before {
 	content: '' !important;
 	position: absolute !important;
 	top: 0 !important;
@@ -3554,7 +3554,7 @@ body {
 }
 
 .developer-starter-pro-archive-banner .developer-starter-pro-container,
-.developer-starter-pro-page-banner:has(.developer-starter-pro-section-header) .developer-starter-pro-container {
+.developer-starter-pro-page-banner .developer-starter-pro-container {
 	position: relative !important;
 	z-index: 2 !important;
 }

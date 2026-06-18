@@ -292,7 +292,7 @@ class Developer_Starter_Pro_Enqueue {
 				--developer-starter-pro-font-heading: 'Outfit', 'Inter', -apple-system, sans-serif;
 			}
 			.developer-starter-pro-archive-banner,
-			.developer-starter-pro-page-banner:has(.developer-starter-pro-section-header) {
+			.developer-starter-pro-page-banner {
 				background-image: url('" . esc_url( $banner_bg ) . "') !important;
 			}
 		</style>";

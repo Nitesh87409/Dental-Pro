@@ -26,6 +26,7 @@ class Developer_Starter_Pro_CPT {
 		add_action( 'init', array( $this, 'register_appointments' ) );
 		add_action( 'init', array( $this, 'register_before_after' ) );
 		add_action( 'init', array( $this, 'register_locations' ) );
+		add_action( 'init', array( $this, 'register_faqs' ) );
 
 		// Custom admin columns.
 		add_filter( 'manage_doctors_posts_columns', array( $this, 'doctors_columns' ) );
@@ -39,6 +40,8 @@ class Developer_Starter_Pro_CPT {
 
 		add_filter( 'manage_appointments_posts_columns', array( $this, 'appointments_columns' ) );
 		add_action( 'manage_appointments_posts_custom_column', array( $this, 'appointments_column_data' ), 10, 2 );
+
+		add_filter( 'manage_faqs_posts_columns', array( $this, 'faqs_columns' ) );
 	}
 
 	/**
@@ -549,5 +552,74 @@ class Developer_Starter_Pro_CPT {
 		);
 
 		register_post_type( 'locations', $args );
+	}
+
+	/**
+	 * Register FAQs CPT.
+	 */
+	public function register_faqs() {
+		$labels = array(
+			'name'                  => _x( 'FAQs', 'Post Type General Name', 'developer-starter-pro' ),
+			'singular_name'         => _x( 'FAQ', 'Post Type Singular Name', 'developer-starter-pro' ),
+			'menu_name'             => esc_html__( 'FAQs', 'developer-starter-pro' ),
+			'name_admin_bar'        => esc_html__( 'FAQ', 'developer-starter-pro' ),
+			'archives'              => esc_html__( 'FAQ Archives', 'developer-starter-pro' ),
+			'all_items'             => esc_html__( 'All FAQs', 'developer-starter-pro' ),
+			'add_new_item'          => esc_html__( 'Add New FAQ', 'developer-starter-pro' ),
+			'add_new'               => esc_html__( 'Add New', 'developer-starter-pro' ),
+			'new_item'              => esc_html__( 'New FAQ', 'developer-starter-pro' ),
+			'edit_item'             => esc_html__( 'Edit FAQ', 'developer-starter-pro' ),
+			'update_item'           => esc_html__( 'Update FAQ', 'developer-starter-pro' ),
+			'view_item'             => esc_html__( 'View FAQ', 'developer-starter-pro' ),
+			'view_items'            => esc_html__( 'View FAQs', 'developer-starter-pro' ),
+			'search_items'          => esc_html__( 'Search FAQs', 'developer-starter-pro' ),
+			'not_found'             => esc_html__( 'No FAQs found', 'developer-starter-pro' ),
+			'not_found_in_trash'    => esc_html__( 'No FAQs found in Trash', 'developer-starter-pro' ),
+		);
+
+		$args = array(
+			'label'               => esc_html__( 'FAQ', 'developer-starter-pro' ),
+			'description'         => esc_html__( 'Frequently Asked Questions', 'developer-starter-pro' ),
+			'labels'              => $labels,
+			'supports'            => array( 'title', 'editor', 'page-attributes' ),
+			'taxonomies'          => array( 'faq_cat' ),
+			'hierarchical'        => false,
+			'public'              => true,
+			'show_ui'             => true,
+			'show_in_menu'        => true,
+			'menu_position'       => 25,
+			'menu_icon'           => 'dashicons-editor-help',
+			'show_in_admin_bar'   => true,
+			'show_in_nav_menus'   => true,
+			'can_export'          => true,
+			'has_archive'         => false,
+			'exclude_from_search' => false,
+			'publicly_queryable'  => true,
+			'capability_type'     => 'post',
+			'show_in_rest'        => true,
+			'rewrite'             => array(
+				'slug'       => 'faqs',
+				'with_front' => false,
+			),
+		);
+
+		register_post_type( 'faqs', $args );
+	}
+
+	/**
+	 * Custom columns for FAQs.
+	 *
+	 * @param array $columns Existing columns.
+	 * @return array Modified columns.
+	 */
+	public function faqs_columns( $columns ) {
+		$new_columns = array(
+			'cb'                => $columns['cb'],
+			'title'             => esc_html__( 'Question', 'developer-starter-pro' ),
+			'taxonomy-faq_cat'  => esc_html__( 'Category', 'developer-starter-pro' ),
+			'date'              => $columns['date'],
+		);
+
+		return $new_columns;
 	}
 }
