@@ -16,7 +16,7 @@
 			<p class="developer-starter-pro-section-subtitle"><?php esc_html_e( 'We combine clinical precision, advanced technology, and personalized patient care to redefine your dental experience.', 'developer-starter-pro' ); ?></p>
 		</div>
 
-		<div class="why-choose-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px;">
+		<div class="why-choose-grid">
 			
 			<!-- Benefit 1 -->
 			<div class="benefit-card" style="background: var(--developer-starter-pro-white); border: 1px solid var(--developer-starter-pro-gray-200); border-radius: var(--developer-starter-pro-radius-lg); padding: 35px; box-shadow: var(--developer-starter-pro-shadow-sm); transition: all 0.3s ease;">

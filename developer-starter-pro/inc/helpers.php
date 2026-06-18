@@ -90,6 +90,7 @@ function developer_starter_pro_get_default_options() {
 		// Contact.
 		'google_maps_key'   => '',
 		'map_embed_code'    => '',
+		'emergency_enabled' => '1',
 		'emergency_phone'   => '',
 		'whatsapp_enabled'  => '0',
 		'whatsapp_number'   => '',
@@ -110,6 +111,20 @@ function developer_starter_pro_get_default_options() {
 		'blog_section_title'    => 'Latest News & Articles',
 		'blog_section_subtitle' => 'Stay informed with standard dental health tips and advice from our clinical experts.',
 		'blog_section_count'    => '3',
+
+		// Stats Section
+		'stat1_icon'            => '🏆',
+		'stat1_number'          => '10+',
+		'stat1_label'           => 'Years Experience',
+		'stat2_icon'            => '😊',
+		'stat2_number'          => '5000+',
+		'stat2_label'           => 'Happy Patients',
+		'stat3_icon'            => '👨‍⚕️',
+		'stat3_number'          => '50+',
+		'stat3_label'           => 'Dental Specialists',
+		'stat4_icon'            => '📍',
+		'stat4_number'          => '15+',
+		'stat4_label'           => 'Clinic Locations',
 
 		// Appointment Approval Mode
 		'appointment_approval_mode' => 'automatic',

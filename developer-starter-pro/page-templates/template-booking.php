@@ -352,7 +352,8 @@ $selected_location = isset( $_GET['location_id'] ) ? absint( $_GET['location_id'
 
 @media (max-width: 768px) {
 	.wizard-schedule-split { grid-template-columns: 1fr; gap:24px; }
-	.booking-wizard-card { padding: 24px !important; }
+	.developer-starter-pro-booking-wizard-card { padding: 24px !important; }
+	.booking-wizard-panel .form-row { flex-direction: column !important; }
 }
 </style>
 

@@ -50,7 +50,7 @@ $terms = get_terms( array(
 			<?php endif; ?>
 
 			<!-- Services Grid -->
-			<div class="services-directory-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px;">
+			<div class="services-directory-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px;">
 				<?php if ( $services_query->have_posts() ) : ?>
 					<?php while ( $services_query->have_posts() ) : $services_query->the_post();
 						$price      = get_post_meta( get_the_ID(), '_developer_starter_pro_service_price', true );

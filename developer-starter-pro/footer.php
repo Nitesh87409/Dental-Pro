@@ -271,50 +271,81 @@ if ( ! $has_social_links ) {
 
 	<!-- Unified Emergency & WhatsApp Floating Widget -->
 	<?php
-	$emergency_phone = developer_starter_pro_get_option( 'emergency_phone', '' );
-	$wa_enabled      = developer_starter_pro_get_option( 'whatsapp_enabled', '0' );
-	$wa_number       = developer_starter_pro_get_option( 'whatsapp_number', '' );
-	$wa_message      = developer_starter_pro_get_option( 'whatsapp_message', '' );
-	$wa_position     = developer_starter_pro_get_option( 'whatsapp_position', 'right' );
+	$emergency_enabled = developer_starter_pro_get_option( 'emergency_enabled', '1' );
+	$emergency_phone   = developer_starter_pro_get_option( 'emergency_phone', '' );
+	$wa_enabled        = developer_starter_pro_get_option( 'whatsapp_enabled', '0' );
+	$wa_number         = developer_starter_pro_get_option( 'whatsapp_number', '' );
+	$wa_message        = developer_starter_pro_get_option( 'whatsapp_message', '' );
+	$wa_position       = developer_starter_pro_get_option( 'whatsapp_position', 'right' );
 
-	if ( $emergency_phone || ( '1' === $wa_enabled && ! empty( $wa_number ) ) ) :
+	$show_emergency = ( '1' === $emergency_enabled && ! empty( $emergency_phone ) );
+	$show_whatsapp  = ( '1' === $wa_enabled && ! empty( $wa_number ) );
+
+	if ( $show_emergency || $show_whatsapp ) :
 		$wa_clean_number = preg_replace( '/[^0-9]/', '', $wa_number );
 		$wa_link = 'https://wa.me/' . $wa_clean_number;
 		if ( ! empty( $wa_message ) ) {
 			$wa_link .= '?text=' . rawurlencode( $wa_message );
 		}
 
+		$is_expandable  = ( $show_emergency && $show_whatsapp );
 		$widget_classes = array( 'dp-unified-fab-widget', 'pos-' . $wa_position );
+		if ( $is_expandable ) {
+			$widget_classes[] = 'has-menu';
+		} else {
+			$widget_classes[] = 'direct-action';
+		}
 		?>
 		<div class="<?php echo esc_attr( implode( ' ', $widget_classes ) ); ?>" id="dp-unified-fab-widget">
-			<!-- Expandable Options Menu -->
-			<div class="dp-fab-menu" id="dp-fab-menu">
-				<?php if ( '1' === $wa_enabled && ! empty( $wa_number ) ) : ?>
-					<a href="<?php echo esc_url( $wa_link ); ?>" class="dp-fab-item whatsapp-item" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Chat on WhatsApp', 'developer-starter-pro' ); ?>">
-						<span class="dp-fab-label"><?php esc_html_e( 'WhatsApp Chat', 'developer-starter-pro' ); ?></span>
-						<span class="dp-fab-icon">
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.248 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.42 9.863-9.864.001-2.636-1.023-5.11-2.884-6.974C16.59 1.897 14.1 1.87 11.465 1.87 6.03 1.87 1.606 6.291 1.603 11.737c-.001 1.638.5 3.226 1.458 4.825L2.046 22l5.602-1.468zM17.65 14.49c-.3-.15-1.782-.88-2.057-.98-.275-.1-.475-.15-.675.15-.2.3-.775.98-.95 1.18-.175.2-.35.225-.65.075-.3-.15-1.265-.467-2.41-1.485-.89-.794-1.49-1.775-1.665-2.075-.175-.3-.019-.462.13-.61.135-.133.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.588-.491-.508-.675-.518-.174-.01-.374-.012-.574-.012-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5s1.075 2.9 1.225 3.1c.15.2 2.11 3.22 5.11 4.52.714.31 1.27.496 1.703.635.717.228 1.37.195 1.886.118.574-.085 1.782-.73 2.032-1.435.25-.705.25-1.31.175-1.435-.075-.125-.275-.2-.575-.35z"/></svg>
+			<?php if ( $is_expandable ) : ?>
+				<!-- Expandable Options Menu -->
+				<div class="dp-fab-menu" id="dp-fab-menu">
+					<?php if ( $show_whatsapp ) : ?>
+						<a href="<?php echo esc_url( $wa_link ); ?>" class="dp-fab-item whatsapp-item" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Chat on WhatsApp', 'developer-starter-pro' ); ?>">
+							<span class="dp-fab-label"><?php esc_html_e( 'WhatsApp Chat', 'developer-starter-pro' ); ?></span>
+							<span class="dp-fab-icon">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.248 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.42 9.863-9.864.001-2.636-1.023-5.11-2.884-6.974C16.59 1.897 14.1 1.87 11.465 1.87 6.03 1.87 1.606 6.291 1.603 11.737c-.001 1.638.5 3.226 1.458 4.825L2.046 22l5.602-1.468zM17.65 14.49c-.3-.15-1.782-.88-2.057-.98-.275-.1-.475-.15-.675.15-.2.3-.775.98-.95 1.18-.175.2-.35.225-.65.075-.3-.15-1.265-.467-2.41-1.485-.89-.794-1.49-1.775-1.665-2.075-.175-.3-.019-.462.13-.61.135-.133.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.588-.491-.508-.675-.518-.174-.01-.374-.012-.574-.012-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5s1.075 2.9 1.225 3.1c.15.2 2.11 3.22 5.11 4.52.714.31 1.27.496 1.703.635.717.228 1.37.195 1.886.118.574-.085 1.782-.73 2.032-1.435.25-.705.25-1.31.175-1.435-.075-.125-.275-.2-.575-.35z"/></svg>
+							</span>
+						</a>
+					<?php endif; ?>
+
+					<?php if ( $show_emergency ) : ?>
+						<a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $emergency_phone ) ); ?>" class="dp-fab-item emergency-item" aria-label="<?php esc_attr_e( 'Emergency Call', 'developer-starter-pro' ); ?>">
+							<span class="dp-fab-label"><?php esc_html_e( 'Emergency Call', 'developer-starter-pro' ); ?></span>
+							<span class="dp-fab-icon">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+							</span>
+						</a>
+					<?php endif; ?>
+				</div>
+
+				<!-- Main Floating Trigger Button -->
+				<button class="dp-fab-trigger" id="dp-fab-trigger" aria-label="<?php esc_attr_e( 'Clinic Help Options', 'developer-starter-pro' ); ?>">
+					<span class="dp-fab-pulse"></span>
+					<span class="dp-fab-trigger-icon">🚨</span>
+					<span class="dp-fab-close-icon" style="display:none;">&times;</span>
+					<span class="dp-fab-tooltip"><?php esc_html_e( 'Need Help?', 'developer-starter-pro' ); ?></span>
+				</button>
+			<?php else : ?>
+				<!-- Direct Action Floating Button (No Menu) -->
+				<?php if ( $show_whatsapp ) : ?>
+					<a href="<?php echo esc_url( $wa_link ); ?>" class="dp-fab-trigger whatsapp-direct" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Chat on WhatsApp', 'developer-starter-pro' ); ?>" style="background-color: #25D366; text-decoration: none; display: flex; align-items: center; justify-content: center;">
+						<span class="dp-fab-pulse" style="background-color: #25D366;"></span>
+						<span class="dp-fab-trigger-icon" style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+							<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor" style="color: #fff; display: block; margin: 0 auto;"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.248 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.42 9.863-9.864.001-2.636-1.023-5.11-2.884-6.974C16.59 1.897 14.1 1.87 11.465 1.87 6.03 1.87 1.606 6.291 1.603 11.737c-.001 1.638.5 3.226 1.458 4.825L2.046 22l5.602-1.468zM17.65 14.49c-.3-.15-1.782-.88-2.057-.98-.275-.1-.475-.15-.675.15-.2.3-.775.98-.95 1.18-.175.2-.35.225-.65.075-.3-.15-1.265-.467-2.41-1.485-.89-.794-1.49-1.775-1.665-2.075-.175-.3-.019-.462.13-.61.135-.133.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.588-.491-.508-.675-.518-.174-.01-.374-.012-.574-.012-.2 0-.525.075-.8.375-.275.3-1.05 1.025-1.05 2.5s1.075 2.9 1.225 3.1c.15.2 2.11 3.22 5.11 4.52.714.31 1.27.496 1.703.635.717.228 1.37.195 1.886.118.574-.085 1.782-.73 2.032-1.435.25-.705.25-1.31.175-1.435-.075-.125-.275-.2-.575-.35z"/></svg>
 						</span>
+						<span class="dp-fab-tooltip"><?php esc_html_e( 'Chat on WhatsApp', 'developer-starter-pro' ); ?></span>
+					</a>
+				<?php elseif ( $show_emergency ) : ?>
+					<a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $emergency_phone ) ); ?>" class="dp-fab-trigger emergency-direct" aria-label="<?php esc_attr_e( 'Emergency Call', 'developer-starter-pro' ); ?>" style="background-color: #ef4444; text-decoration: none; display: flex; align-items: center; justify-content: center; animation: pulseRed 1.5s infinite;">
+						<span class="dp-fab-pulse" style="background-color: #ef4444;"></span>
+						<span class="dp-fab-trigger-icon" style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #fff; display: block; margin: 0 auto;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+						</span>
+						<span class="dp-fab-tooltip"><?php esc_html_e( 'Emergency Call', 'developer-starter-pro' ); ?></span>
 					</a>
 				<?php endif; ?>
-
-				<?php if ( $emergency_phone ) : ?>
-					<a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $emergency_phone ) ); ?>" class="dp-fab-item emergency-item" aria-label="<?php esc_attr_e( 'Emergency Call', 'developer-starter-pro' ); ?>">
-						<span class="dp-fab-label"><?php esc_html_e( 'Emergency Call', 'developer-starter-pro' ); ?></span>
-						<span class="dp-fab-icon">
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-						</span>
-					</a>
-				<?php endif; ?>
-			</div>
-
-			<!-- Main Floating Trigger Button -->
-			<button class="dp-fab-trigger" id="dp-fab-trigger" aria-label="<?php esc_attr_e( 'Clinic Help Options', 'developer-starter-pro' ); ?>">
-				<span class="dp-fab-pulse"></span>
-				<span class="dp-fab-trigger-icon">🚨</span>
-				<span class="dp-fab-close-icon" style="display:none;">&times;</span>
-				<span class="dp-fab-tooltip"><?php esc_html_e( 'Need Help?', 'developer-starter-pro' ); ?></span>
-			</button>
+			<?php endif; ?>
 		</div>
 
 		<script>
@@ -322,7 +353,7 @@ if ( ! $has_social_links ) {
 				var trigger = document.getElementById('dp-fab-trigger');
 				var widget = document.getElementById('dp-unified-fab-widget');
 				
-				if (trigger && widget) {
+				if (trigger && widget && widget.classList.contains('has-menu')) {
 					// Toggle expanded state on click
 					trigger.addEventListener('click', function(e) {
 						e.stopPropagation();
@@ -407,6 +438,73 @@ if ( ! $has_social_links ) {
 				}
 			});
 		});
+	</script>
+	<!-- Page Transition Curtain Overlay (Blank Solid Theme Color Sheet) -->
+	<div id="dp-page-transition-curtain" class="dp-transition-curtain"></div>
+
+	<style>
+	/* Page Transition Curtain */
+	.dp-transition-curtain {
+		position: fixed !important;
+		top: 0 !important;
+		left: 0 !important;
+		width: 100% !important;
+		height: 100% !important;
+		background: #FAFAF8 !important;
+		z-index: 999999 !important;
+		opacity: 0 !important;
+		visibility: hidden !important;
+		transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out !important;
+		pointer-events: none !important;
+	}
+	body.dark-mode .dp-transition-curtain {
+		background: #1E293B !important;
+	}
+	.dp-transition-curtain.is-active {
+		opacity: 1 !important;
+		visibility: visible !important;
+		pointer-events: auto !important;
+	}
+	</style>
+
+	<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		var curtain = document.getElementById('dp-page-transition-curtain');
+		if (curtain) {
+			if (sessionStorage.getItem('dp_page_transition') === 'active') {
+				curtain.classList.add('is-active');
+				
+				var bookingContent = document.getElementById('primary');
+				if (bookingContent) {
+					bookingContent.style.opacity = '0';
+					bookingContent.style.transform = 'translateY(20px)';
+					bookingContent.style.transition = 'opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+				}
+				
+				var completedTransition = false;
+				function triggerTransitionEnd() {
+					if (completedTransition) return;
+					completedTransition = true;
+					curtain.style.opacity = '0';
+					curtain.style.visibility = 'hidden';
+					if (bookingContent) {
+						bookingContent.style.opacity = '1';
+						bookingContent.style.transform = 'translateY(0)';
+					}
+					setTimeout(function() {
+						curtain.classList.remove('is-active');
+						sessionStorage.removeItem('dp_page_transition');
+					}, 500);
+				}
+				
+				window.addEventListener('load', function() {
+					setTimeout(triggerTransitionEnd, 400);
+				});
+				// Fallback timeout in case page load is blocked or slow
+				setTimeout(triggerTransitionEnd, 2000);
+			}
+		}
+	});
 	</script>
 
 </div><!-- #page -->

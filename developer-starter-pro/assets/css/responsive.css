@@ -158,3 +158,256 @@
 		gap: var(--developer-starter-pro-space-sm);
 	}
 }
+
+/* ==========================================================================
+   DentalPro Elite — New Responsive Grid and Component Overrides
+   ========================================================================== */
+
+/* 1. Grid layouts definitions (Previously inline in PHP) */
+.why-choose-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 30px;
+	margin-top: 40px;
+}
+
+.stats-counter-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 30px;
+	text-align: center;
+}
+
+.reviews-summary-card {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 30px;
+	padding: 30px;
+	background: var(--developer-starter-pro-gray-50);
+	border: 1px solid var(--developer-starter-pro-gray-200);
+	border-radius: var(--developer-starter-pro-radius-lg);
+	max-width: 650px;
+	margin: 40px auto 48px;
+	box-shadow: var(--developer-starter-pro-shadow-sm);
+	flex-wrap: wrap;
+}
+
+body.dark-mode .reviews-summary-card {
+	background: #1E293B;
+	border-color: #334155;
+}
+
+.reviews-summary-score {
+	text-align: center;
+}
+
+.reviews-score-num {
+	font-size: 3.5rem;
+	font-family: var(--developer-starter-pro-font-heading);
+	font-weight: 800;
+	color: var(--developer-starter-pro-secondary);
+	line-height: 1;
+}
+
+body.dark-mode .reviews-score-num {
+	color: #F8FAFC;
+}
+
+.reviews-score-stars {
+	color: #f59e0b;
+	font-size: 1.25rem;
+	margin-top: 8px;
+}
+
+.reviews-score-count {
+	font-size: 0.8125rem;
+	color: var(--developer-starter-pro-gray-400);
+	text-transform: uppercase;
+	font-weight: 600;
+	margin-top: 4px;
+}
+
+.reviews-summary-desc {
+	border-left: 2px solid var(--developer-starter-pro-gray-200);
+	padding-left: 30px;
+	flex: 1;
+	min-width: 200px;
+}
+
+body.dark-mode .reviews-summary-desc {
+	border-left-color: #334155;
+}
+
+.reviews-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 24px;
+}
+
+/* 2. Tablet Responsive Rules */
+@media (max-width: 768px) {
+	.why-choose-grid {
+		grid-template-columns: 1fr;
+		gap: 20px;
+	}
+
+	.benefit-card {
+		padding: 24px !important;
+	}
+
+	.stats-counter-grid {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 24px;
+	}
+
+	.reviews-summary-desc {
+		border-left: none;
+		border-top: 2px solid var(--developer-starter-pro-gray-200);
+		padding-left: 0;
+		padding-top: 20px;
+		width: 100%;
+		text-align: center;
+	}
+
+	body.dark-mode .reviews-summary-desc {
+		border-top-color: #334155;
+	}
+
+	.reviews-summary-desc div {
+		justify-content: center;
+	}
+
+	/* Tracking page padding */
+	.dp-tracking-card,
+	.dp-tracking-details-card {
+		padding: 24px !important;
+	}
+
+	/* Prevent overlap with bottom sticky booking bar */
+	.dp-unified-fab-widget {
+		bottom: 95px !important;
+	}
+
+	.developer-starter-pro-back-to-top {
+		bottom: 95px !important;
+		left: 20px !important;
+		z-index: 9999 !important;
+	}
+}
+
+/* 3. Mobile Booking Wizard & Steps Overrides */
+@media (max-width: 600px) {
+	.dp-hero {
+		flex-direction: column !important;
+	}
+
+	.stats-counter-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.reviews-summary-card {
+		padding: 20px;
+		gap: 20px;
+	}
+
+	/* Booking Wizard steps line adjustments */
+	.booking-wizard-steps {
+		margin-bottom: 28px !important;
+	}
+
+	.wizard-step-indicator .step-label {
+		display: none !important;
+	}
+
+	.wizard-step-indicator .step-number {
+		width: 32px !important;
+		height: 32px !important;
+		font-size: 0.875rem !important;
+		line-height: 26px !important; /* centering adjustment */
+	}
+
+	.step-progress-line {
+		top: 16px !important;
+	}
+
+	/* Tracking layout updates */
+	.dp-tracking-header {
+		flex-direction: column;
+		align-items: center !important;
+		text-align: center;
+	}
+
+	/* Stats Bar mobile overlap fix & horizontal conversion */
+	html.js .dp-stats-bar {
+		opacity: 0 !important;
+		transform: translateY(30px) !important;
+	}
+
+	html.js.page-loaded .dp-stats-bar {
+		opacity: 1 !important;
+		transform: translateY(0) !important;
+		position: relative !important;
+		margin: 15px auto 0 auto !important;
+		bottom: auto !important;
+		left: auto !important;
+		width: calc(100% - 20px) !important;
+		display: grid !important;
+		grid-template-columns: repeat(4, 1fr) !important;
+		gap: 6px !important;
+		padding: 10px 8px !important;
+	}
+
+	.dp-stats-item {
+		flex-direction: column !important;
+		align-items: center !important;
+		text-align: center !important;
+		gap: 6px !important;
+		padding: 0 4px !important;
+		border-right: 1px solid #EAE6DF !important;
+	}
+
+	.dp-stats-item:last-child {
+		border-right: none !important;
+	}
+
+	body.dark-mode .dp-stats-item {
+		border-right-color: #334155 !important;
+	}
+
+	.dp-stats-icon-wrap {
+		width: 28px !important;
+		height: 28px !important;
+		margin-bottom: 2px !important;
+	}
+
+	.dp-stats-icon-wrap svg {
+		width: 14px !important;
+		height: 14px !important;
+	}
+
+	.dp-stats-number {
+		font-size: 0.95rem !important;
+	}
+
+	.dp-stats-label {
+		font-size: 0.65rem !important;
+		line-height: 1.2 !important;
+		margin-top: 2px !important;
+	}
+}
+
+@media (max-width: 480px) {
+	.dp-tracking-actions {
+		flex-direction: column;
+		gap: 12px;
+	}
+	.dp-tracking-actions a {
+		order: 2; /* Move "Check Another" under the "Cancel" button on small mobile */
+	}
+	.dp-tracking-actions button {
+		width: 100%;
+		text-align: center;
+	}
+}
+

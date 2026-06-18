@@ -47,7 +47,7 @@ get_header();
 			</div>
 
 			<!-- Comparison Grid -->
-			<div class="developer-starter-pro-ba-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 40px;">
+			<div class="developer-starter-pro-ba-grid">
 
 				<?php
 				$cases_query = new WP_Query( array(

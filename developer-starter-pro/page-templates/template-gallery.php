@@ -26,7 +26,7 @@ get_header();
 	<section class="developer-starter-pro-section">
 		<div class="developer-starter-pro-container">
 			
-			<div class="developer-starter-pro-gallery-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px;">
+			<div class="developer-starter-pro-gallery-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px;">
 				<!-- Static placeholder images indicating beautiful visual structure -->
 				<?php for ( $i = 1; $i <= 6; $i++ ) : 
 					$titles = array(

@@ -154,7 +154,7 @@ elseif ( ! empty( $ref_id ) && ! empty( $phone ) ) {
 				<div class="dp-tracking-details-card" style="background:#fff; border:1px solid var(--developer-starter-pro-gray-200); border-radius:16px; padding: 40px; box-shadow: var(--developer-starter-pro-shadow-lg);">
 					
 					<!-- Header Row -->
-					<div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:1px solid var(--developer-starter-pro-gray-200); padding-bottom:20px; margin-bottom:24px;">
+					<div class="dp-tracking-header" style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:1px solid var(--developer-starter-pro-gray-200); padding-bottom:20px; margin-bottom:24px; flex-wrap:wrap; gap:16px;">
 						<div>
 							<span style="font-size:0.75rem; text-transform:uppercase; color:var(--developer-starter-pro-gray-400); font-weight:700;"><?php esc_html_e( 'Appointment Reference ID', 'developer-starter-pro' ); ?></span>
 							<h2 style="margin:4px 0 0 0; font-size:1.6rem; color:var(--developer-starter-pro-secondary); font-family: 'Inter', sans-serif;">APT-<?php echo esc_html( sprintf( '%05d', $booking->id ) ); ?></h2>
@@ -219,7 +219,7 @@ elseif ( ! empty( $ref_id ) && ! empty( $phone ) ) {
 					</table>
 
 					<!-- Action Buttons -->
-					<div style="display:flex; gap:16px; justify-content:space-between; align-items:center;">
+					<div class="dp-tracking-actions" style="display:flex; gap:16px; justify-content:space-between; align-items:center; flex-wrap:wrap;">
 						<a href="" style="color:var(--developer-starter-pro-gray-400); font-weight:600; text-decoration:none; font-size:0.875rem;">← <?php esc_html_e( 'Check Another', 'developer-starter-pro' ); ?></a>
 						
 						<?php if ( 'cancelled' !== $status ) : ?>

@@ -75,7 +75,7 @@ $blog_query = new WP_Query( array(
 			<?php wp_reset_postdata(); endif; ?>
 
 			<!-- Regular Blog Grid -->
-			<div class="blog-catalog-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px;">
+			<div class="blog-catalog-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px;">
 				<?php if ( $blog_query->have_posts() ) : ?>
 					<?php while ( $blog_query->have_posts() ) : $blog_query->the_post(); ?>
 						<article class="blog-card" style="background: var(--developer-starter-pro-white); border: 1px solid var(--developer-starter-pro-gray-200); border-radius: var(--developer-starter-pro-radius-lg); overflow: hidden; box-shadow: var(--developer-starter-pro-shadow-sm); display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease;">

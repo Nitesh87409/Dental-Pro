@@ -17,14 +17,14 @@
 		</div>
 
 		<!-- Rating Summary Card -->
-		<div class="reviews-summary-card" style="display: flex; align-items: center; justify-content: center; gap: 30px; padding: 30px; background: var(--developer-starter-pro-gray-50); border: 1px solid var(--developer-starter-pro-gray-200); border-radius: var(--developer-starter-pro-radius-lg); max-width: 650px; margin: 40px auto 48px; box-shadow: var(--developer-starter-pro-shadow-sm); flex-wrap: wrap;">
-			<div style="text-align: center;">
-				<div style="font-size: 3.5rem; font-family: var(--developer-starter-pro-font-heading); font-weight: 800; color: var(--developer-starter-pro-secondary); line-height: 1;">4.9</div>
-				<div style="color: #f59e0b; font-size: 1.25rem; margin-top: 8px;">★★★★★</div>
-				<div style="font-size: 0.8125rem; color: var(--developer-starter-pro-gray-400); text-transform: uppercase; font-weight: 600; margin-top: 4px;"><?php esc_html_e( 'Based on 480+ Reviews', 'developer-starter-pro' ); ?></div>
+		<div class="reviews-summary-card">
+			<div class="reviews-summary-score">
+				<div class="reviews-score-num">4.9</div>
+				<div class="reviews-score-stars">★★★★★</div>
+				<div class="reviews-score-count"><?php esc_html_e( 'Based on 480+ Reviews', 'developer-starter-pro' ); ?></div>
 			</div>
 			
-			<div style="border-left: 2px solid var(--developer-starter-pro-gray-200); padding-left: 30px; flex: 1; min-width: 200px;">
+			<div class="reviews-summary-desc">
 				<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
 					<span style="font-weight: 700; color: var(--developer-starter-pro-secondary);"><?php esc_html_e( 'Google Rating Verified', 'developer-starter-pro' ); ?></span>
 					<span style="color: #10b981; font-size: 0.875rem;">✔️</span>
@@ -37,7 +37,7 @@
 		</div>
 
 		<!-- Reviews Grid -->
-		<div class="reviews-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+		<div class="reviews-grid">
 
 			<!-- Review 1 -->
 			<div class="review-item-card" style="background: var(--developer-starter-pro-white); border: 1px solid var(--developer-starter-pro-gray-200); border-radius: var(--developer-starter-pro-radius-md); padding: 30px; box-shadow: var(--developer-starter-pro-shadow-sm); display: flex; flex-direction: column; justify-content: space-between; position: relative;">

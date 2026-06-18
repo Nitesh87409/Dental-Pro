@@ -161,6 +161,7 @@ class Developer_Starter_Pro_Admin {
 				),
 			);
 			$sanitized['map_embed_code'] = isset( $input['map_embed_code'] ) ? wp_kses( $input['map_embed_code'], $allowed_iframe ) : '';
+			$sanitized['emergency_enabled'] = isset( $input['emergency_enabled'] ) ? '1' : '0';
 			$sanitized['emergency_phone'] = isset( $input['emergency_phone'] ) ? sanitize_text_field( $input['emergency_phone'] ) : '';
 			$sanitized['whatsapp_enabled']  = isset( $input['whatsapp_enabled'] ) ? '1' : '0';
 			$sanitized['whatsapp_number']   = isset( $input['whatsapp_number'] ) ? sanitize_text_field( $input['whatsapp_number'] ) : '';
@@ -187,6 +188,25 @@ class Developer_Starter_Pro_Admin {
 			$sanitized['blog_section_title']    = isset( $input['blog_section_title'] ) ? sanitize_text_field( $input['blog_section_title'] ) : '';
 			$sanitized['blog_section_subtitle'] = isset( $input['blog_section_subtitle'] ) ? sanitize_textarea_field( $input['blog_section_subtitle'] ) : '';
 			$sanitized['blog_section_count']    = isset( $input['blog_section_count'] ) ? absint( $input['blog_section_count'] ) : 3;
+		}
+
+		if ( empty( $active_tab ) || 'stats' === $active_tab ) {
+			// Stats counters.
+			$sanitized['stat1_icon']   = isset( $input['stat1_icon'] ) ? sanitize_text_field( $input['stat1_icon'] ) : '🏆';
+			$sanitized['stat1_number'] = isset( $input['stat1_number'] ) ? sanitize_text_field( $input['stat1_number'] ) : '10+';
+			$sanitized['stat1_label']  = isset( $input['stat1_label'] ) ? sanitize_text_field( $input['stat1_label'] ) : 'Years Experience';
+
+			$sanitized['stat2_icon']   = isset( $input['stat2_icon'] ) ? sanitize_text_field( $input['stat2_icon'] ) : '😊';
+			$sanitized['stat2_number'] = isset( $input['stat2_number'] ) ? sanitize_text_field( $input['stat2_number'] ) : '5000+';
+			$sanitized['stat2_label']  = isset( $input['stat2_label'] ) ? sanitize_text_field( $input['stat2_label'] ) : 'Happy Patients';
+
+			$sanitized['stat3_icon']   = isset( $input['stat3_icon'] ) ? sanitize_text_field( $input['stat3_icon'] ) : '👨‍⚕️';
+			$sanitized['stat3_number'] = isset( $input['stat3_number'] ) ? sanitize_text_field( $input['stat3_number'] ) : '50+';
+			$sanitized['stat3_label']  = isset( $input['stat3_label'] ) ? sanitize_text_field( $input['stat3_label'] ) : 'Dental Specialists';
+
+			$sanitized['stat4_icon']   = isset( $input['stat4_icon'] ) ? sanitize_text_field( $input['stat4_icon'] ) : '📍';
+			$sanitized['stat4_number'] = isset( $input['stat4_number'] ) ? sanitize_text_field( $input['stat4_number'] ) : '15+';
+			$sanitized['stat4_label']  = isset( $input['stat4_label'] ) ? sanitize_text_field( $input['stat4_label'] ) : 'Clinic Locations';
 		}
 
 		if ( empty( $active_tab ) || 'appointments' === $active_tab ) {
@@ -272,6 +292,10 @@ class Developer_Starter_Pro_Admin {
 						'label' => esc_html__( 'Homepage Blog', 'developer-starter-pro' ),
 						'icon'  => 'dashicons-welcome-write-blog',
 					),
+					'stats' => array(
+						'label' => esc_html__( 'Homepage Stats', 'developer-starter-pro' ),
+						'icon'  => 'dashicons-chart-bar',
+					),
 					'appointments' => array(
 						'label' => esc_html__( 'Appointment Settings', 'developer-starter-pro' ),
 						'icon'  => 'dashicons-calendar-alt',
@@ -316,6 +340,9 @@ class Developer_Starter_Pro_Admin {
 							break;
 						case 'blog':
 							$this->render_tab_blog( $options );
+							break;
+						case 'stats':
+							$this->render_tab_stats( $options );
 							break;
 						case 'appointments':
 							$this->render_tab_appointments( $options );
@@ -780,6 +807,16 @@ class Developer_Starter_Pro_Admin {
 					</td>
 				</tr>
 				<tr>
+					<th><label for="emergency_enabled"><?php esc_html_e( 'Emergency Floating Button', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<label class="developer-starter-pro-toggle">
+							<input type="checkbox" id="emergency_enabled" name="<?php echo esc_attr( $this->option_name ); ?>[emergency_enabled]" value="1" <?php checked( isset( $options['emergency_enabled'] ) ? $options['emergency_enabled'] : '1', '1' ); ?>>
+							<span class="developer-starter-pro-toggle-slider"></span>
+							<span class="developer-starter-pro-toggle-label"><?php esc_html_e( 'Enable floating Emergency button', 'developer-starter-pro' ); ?></span>
+						</label>
+					</td>
+				</tr>
+				<tr>
 					<th><label for="emergency_phone"><?php esc_html_e( 'Emergency Phone', 'developer-starter-pro' ); ?></label></th>
 					<td>
 						<input type="tel" id="emergency_phone" name="<?php echo esc_attr( $this->option_name ); ?>[emergency_phone]" value="<?php echo esc_attr( $options['emergency_phone'] ); ?>" class="regular-text">
@@ -905,6 +942,114 @@ class Developer_Starter_Pro_Admin {
 					<td>
 						<input type="number" id="blog_section_count" name="<?php echo esc_attr( $this->option_name ); ?>[blog_section_count]" value="<?php echo esc_attr( isset( $options['blog_section_count'] ) ? $options['blog_section_count'] : 3 ); ?>" min="1" max="12" class="small-text">
 						<p class="description"><?php esc_html_e( 'Choose how many latest blog posts to show in the homepage grid.', 'developer-starter-pro' ); ?></p>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Render Stats tab.
+	 *
+	 * @param array $options Current options.
+	 */
+	private function render_tab_stats( $options ) {
+		?>
+		<div class="developer-starter-pro-settings-section">
+			<h2><?php esc_html_e( 'Homepage Stats Settings', 'developer-starter-pro' ); ?></h2>
+			<p class="description"><?php esc_html_e( 'Configure the key statistics displayed in the stats section on your homepage.', 'developer-starter-pro' ); ?></p>
+
+			<table class="form-table">
+				<!-- Stat 1 -->
+				<tr style="border-bottom: 1px solid #eee;">
+					<th colspan="2" style="padding-left: 0; padding-top: 20px;"><h3><?php esc_html_e( 'Stat Card 1', 'developer-starter-pro' ); ?></h3></th>
+				</tr>
+				<tr>
+					<th><label for="stat1_icon"><?php esc_html_e( 'Icon (Emoji or character)', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="stat1_icon" name="<?php echo esc_attr( $this->option_name ); ?>[stat1_icon]" value="<?php echo esc_attr( isset( $options['stat1_icon'] ) ? $options['stat1_icon'] : '🏆' ); ?>" class="small-text" style="text-align: center;">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="stat1_number"><?php esc_html_e( 'Number / Stat Value', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="stat1_number" name="<?php echo esc_attr( $this->option_name ); ?>[stat1_number]" value="<?php echo esc_attr( isset( $options['stat1_number'] ) ? $options['stat1_number'] : '10+' ); ?>" class="regular-text">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="stat1_label"><?php esc_html_e( 'Label / Description', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="stat1_label" name="<?php echo esc_attr( $this->option_name ); ?>[stat1_label]" value="<?php echo esc_attr( isset( $options['stat1_label'] ) ? $options['stat1_label'] : 'Years Experience' ); ?>" class="regular-text">
+					</td>
+				</tr>
+
+				<!-- Stat 2 -->
+				<tr style="border-bottom: 1px solid #eee;">
+					<th colspan="2" style="padding-left: 0; padding-top: 20px;"><h3><?php esc_html_e( 'Stat Card 2', 'developer-starter-pro' ); ?></h3></th>
+				</tr>
+				<tr>
+					<th><label for="stat2_icon"><?php esc_html_e( 'Icon (Emoji or character)', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="stat2_icon" name="<?php echo esc_attr( $this->option_name ); ?>[stat2_icon]" value="<?php echo esc_attr( isset( $options['stat2_icon'] ) ? $options['stat2_icon'] : '😊' ); ?>" class="small-text" style="text-align: center;">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="stat2_number"><?php esc_html_e( 'Number / Stat Value', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="stat2_number" name="<?php echo esc_attr( $this->option_name ); ?>[stat2_number]" value="<?php echo esc_attr( isset( $options['stat2_number'] ) ? $options['stat2_number'] : '5000+' ); ?>" class="regular-text">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="stat2_label"><?php esc_html_e( 'Label / Description', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="stat2_label" name="<?php echo esc_attr( $this->option_name ); ?>[stat2_label]" value="<?php echo esc_attr( isset( $options['stat2_label'] ) ? $options['stat2_label'] : 'Happy Patients' ); ?>" class="regular-text">
+					</td>
+				</tr>
+
+				<!-- Stat 3 -->
+				<tr style="border-bottom: 1px solid #eee;">
+					<th colspan="2" style="padding-left: 0; padding-top: 20px;"><h3><?php esc_html_e( 'Stat Card 3', 'developer-starter-pro' ); ?></h3></th>
+				</tr>
+				<tr>
+					<th><label for="stat3_icon"><?php esc_html_e( 'Icon (Emoji or character)', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="stat3_icon" name="<?php echo esc_attr( $this->option_name ); ?>[stat3_icon]" value="<?php echo esc_attr( isset( $options['stat3_icon'] ) ? $options['stat3_icon'] : '👨‍⚕️' ); ?>" class="small-text" style="text-align: center;">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="stat3_number"><?php esc_html_e( 'Number / Stat Value', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="stat3_number" name="<?php echo esc_attr( $this->option_name ); ?>[stat3_number]" value="<?php echo esc_attr( isset( $options['stat3_number'] ) ? $options['stat3_number'] : '50+' ); ?>" class="regular-text">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="stat3_label"><?php esc_html_e( 'Label / Description', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="stat3_label" name="<?php echo esc_attr( $this->option_name ); ?>[stat3_label]" value="<?php echo esc_attr( isset( $options['stat3_label'] ) ? $options['stat3_label'] : 'Dental Specialists' ); ?>" class="regular-text">
+					</td>
+				</tr>
+
+				<!-- Stat 4 -->
+				<tr style="border-bottom: 1px solid #eee;">
+					<th colspan="2" style="padding-left: 0; padding-top: 20px;"><h3><?php esc_html_e( 'Stat Card 4', 'developer-starter-pro' ); ?></h3></th>
+				</tr>
+				<tr>
+					<th><label for="stat4_icon"><?php esc_html_e( 'Icon (Emoji or character)', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="stat4_icon" name="<?php echo esc_attr( $this->option_name ); ?>[stat4_icon]" value="<?php echo esc_attr( isset( $options['stat4_icon'] ) ? $options['stat4_icon'] : '📍' ); ?>" class="small-text" style="text-align: center;">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="stat4_number"><?php esc_html_e( 'Number / Stat Value', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="stat4_number" name="<?php echo esc_attr( $this->option_name ); ?>[stat4_number]" value="<?php echo esc_attr( isset( $options['stat4_number'] ) ? $options['stat4_number'] : '15+' ); ?>" class="regular-text">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="stat4_label"><?php esc_html_e( 'Label / Description', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<input type="text" id="stat4_label" name="<?php echo esc_attr( $this->option_name ); ?>[stat4_label]" value="<?php echo esc_attr( isset( $options['stat4_label'] ) ? $options['stat4_label'] : 'Clinic Locations' ); ?>" class="regular-text">
 					</td>
 				</tr>
 			</table>

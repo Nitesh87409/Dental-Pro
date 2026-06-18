@@ -712,3 +712,17 @@ body.dark-mode .dp-header--transparent.is-sticky .developer-starter-pro-hamburge
 	color: var(--developer-starter-pro-primary) !important;
 }
 
+@media (max-width: 480px) {
+	.dp-header-call-text {
+		display: none !important;
+	}
+	.dp-header-call-btn {
+		padding: 12px !important;
+		border-radius: 50% !important;
+		width: 44px;
+		height: 44px;
+		justify-content: center;
+	}
+}
+
+

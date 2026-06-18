@@ -54,8 +54,12 @@ $booking_url = developer_starter_pro_get_booking_url();
 
 			<!-- Book Now CTA -->
 			<div class="dp-booking__field dp-booking__field--cta">
-				<a href="<?php echo esc_url( $booking_url ); ?>" class="dp-booking__btn">
-					<?php esc_html_e( 'Book now', 'developer-starter-pro' ); ?>
+				<a href="<?php echo esc_url( $booking_url ); ?>" class="dp-booking__btn" id="dpBookingBtn">
+					<span class="dp-booking__btn-text"><?php esc_html_e( 'Book now', 'developer-starter-pro' ); ?></span>
+					<span class="dp-booking__slider-track-text"><?php esc_html_e( 'Slide to Book', 'developer-starter-pro' ); ?></span>
+					<span class="dp-booking__slider-handle">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+					</span>
 				</a>
 			</div>
 
@@ -72,6 +76,120 @@ document.querySelectorAll('.dp-time-slot').forEach(function(btn) {
 			b.classList.remove('dp-time-slot--active');
 		});
 		this.classList.add('dp-time-slot--active');
+	});
+});
+
+// Mobile Slide to Book Logic
+document.addEventListener('DOMContentLoaded', function() {
+	var bookingBtn = document.getElementById('dpBookingBtn');
+	if (!bookingBtn) return;
+	
+	var handle = bookingBtn.querySelector('.dp-booking__slider-handle');
+	var trackText = bookingBtn.querySelector('.dp-booking__slider-track-text');
+	if (!handle || !trackText) return;
+	
+	var isDragging = false;
+	var startX = 0;
+	var slideCompleted = false;
+	
+	function getClientX(e) {
+		return e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+	}
+	
+	function onStart(e) {
+		if (slideCompleted || window.innerWidth > 768) return;
+		isDragging = true;
+		startX = getClientX(e);
+		handle.style.transition = 'none';
+		trackText.style.transition = 'none';
+	}
+	
+	function onMove(e) {
+		if (!isDragging) return;
+		var x = getClientX(e);
+		var deltaX = x - startX;
+		
+		var containerWidth = bookingBtn.offsetWidth;
+		var handleWidth = handle.offsetWidth;
+		var maxSlide = containerWidth - handleWidth - 10; // 5px padding on each side
+		
+		deltaX = Math.max(0, Math.min(deltaX, maxSlide));
+		
+		handle.style.transform = 'translateX(' + deltaX + 'px)';
+		
+		// Fade out text as we slide
+		var progress = deltaX / maxSlide;
+		trackText.style.opacity = Math.max(0, 1 - progress * 1.5);
+		
+		// Prevent scroll on touch devices while sliding
+		if (e.cancelable) {
+			e.preventDefault();
+		}
+	}
+	
+	function onEnd() {
+		if (!isDragging) return;
+		isDragging = false;
+		
+		var containerWidth = bookingBtn.offsetWidth;
+		var handleWidth = handle.offsetWidth;
+		var maxSlide = containerWidth - handleWidth - 10;
+		
+		// Read current translation from style transform
+		var transformMatrix = window.getComputedStyle(handle).transform;
+		var currentX = 0;
+		if (transformMatrix && transformMatrix !== 'none') {
+			var values = transformMatrix.split('(')[1].split(')')[0].split(',');
+			currentX = parseFloat(values[4]) || 0;
+		}
+		
+		if (currentX >= maxSlide * 0.9) {
+			// Complete the slide
+			slideCompleted = true;
+			handle.style.transition = 'transform 0.2s ease-out';
+			handle.style.transform = 'translateX(' + maxSlide + 'px)';
+			trackText.style.opacity = '0';
+			
+			// Show checkmark
+			handle.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+			
+			// Set transition state
+			sessionStorage.setItem('dp_page_transition', 'active');
+			
+			// Display the transition curtain immediately
+			var curtain = document.getElementById('dp-page-transition-curtain');
+			if (curtain) {
+				curtain.classList.add('is-active');
+			}
+			
+			// Perform navigation
+			setTimeout(function() {
+				window.location.href = bookingBtn.getAttribute('href');
+			}, 400);
+		} else {
+			// Bounce back spring animation
+			handle.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+			handle.style.transform = 'translateX(0)';
+			trackText.style.transition = 'opacity 0.3s ease';
+			trackText.style.opacity = '1';
+		}
+	}
+	
+	// Touch events
+	handle.addEventListener('touchstart', onStart, { passive: false });
+	window.addEventListener('touchmove', onMove, { passive: false });
+	window.addEventListener('touchend', onEnd);
+	
+	// Mouse events
+	handle.addEventListener('mousedown', onStart);
+	window.addEventListener('mousemove', onMove);
+	window.addEventListener('mouseup', onEnd);
+	
+	// Prevent standard navigation click unless slider was completed
+	bookingBtn.addEventListener('click', function(e) {
+		if (window.innerWidth <= 768 && !slideCompleted) {
+			e.preventDefault();
+		}
 	});
 });
 </script>
@@ -196,6 +314,12 @@ document.querySelectorAll('.dp-time-slot').forEach(function(btn) {
 	color: #fff;
 }
 
+/* Hide slider elements on desktop/PC */
+.dp-booking__slider-track-text,
+.dp-booking__slider-handle {
+	display: none;
+}
+
 /* Hide entire booking section on desktop/PC */
 @media (min-width: 769px) {
 	.dp-booking {
@@ -203,7 +327,7 @@ document.querySelectorAll('.dp-time-slot').forEach(function(btn) {
 	}
 }
 
-/* Mobile: Floating pill "Book now" button */
+/* Mobile: Floating pill "Book now" button / Slider */
 @media (max-width: 768px) {
 	.dp-booking {
 		padding: 0 !important;
@@ -237,29 +361,88 @@ document.querySelectorAll('.dp-time-slot').forEach(function(btn) {
 	.dp-booking__field--cta {
 		display: block !important;
 	}
-	.dp-booking__btn {
-		display: flex !important;
-		align-items: center;
-		justify-content: center;
-		gap: 8px;
-		width: 100% !important;
-		padding: 14px 24px !important;
-		font-size: 1rem !important;
-		font-weight: 700 !important;
-		background: linear-gradient(135deg, var(--developer-starter-pro-primary) 0%, var(--developer-starter-pro-primary-dark) 100%) !important;
-		color: #fff !important;
-		border-radius: 50px !important;
-		text-decoration: none !important;
-		box-shadow: 0 4px 20px rgba(var(--developer-starter-pro-primary-rgb, 78, 124, 89), 0.35), 0 2px 8px rgba(0,0,0,0.1) !important;
-		transition: transform 0.2s ease, box-shadow 0.2s ease !important;
-		text-align: center !important;
-		letter-spacing: 0.3px;
+	
+	/* iOS Slider Layout */
+	.dp-booking__btn-text {
+		display: none !important;
 	}
-	.dp-booking__btn:hover,
-	.dp-booking__btn:active {
-		transform: translateY(-2px) !important;
-		box-shadow: 0 6px 28px rgba(var(--developer-starter-pro-primary-rgb, 78, 124, 89), 0.45), 0 3px 12px rgba(0,0,0,0.12) !important;
-		background: var(--developer-starter-pro-primary-dark) !important;
+	.dp-booking__slider-track-text {
+		display: block !important;
+		position: absolute !important;
+		left: 50% !important;
+		top: 50% !important;
+		transform: translate(-50%, -50%) !important;
+		font-size: 1.05rem !important;
+		font-weight: 700 !important;
+		letter-spacing: 0.5px !important;
+		white-space: nowrap !important;
+		pointer-events: none !important;
+		z-index: 1 !important;
+		
+		/* Shimmer effect */
+		background: linear-gradient(to right, rgba(13, 148, 136, 0.4) 0%, rgba(13, 148, 136, 1) 50%, rgba(13, 148, 136, 0.4) 100%);
+		background-size: 200% auto;
+		color: transparent !important;
+		-webkit-background-clip: text !important;
+		background-clip: text !important;
+		animation: dpShimmer 2.5s infinite linear !important;
+	}
+	
+	@keyframes dpShimmer {
+		0% { background-position: 200% 0; }
+		100% { background-position: -200% 0; }
+	}
+	
+	.dp-booking__btn {
+		position: relative !important;
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		width: 100% !important;
+		height: 60px !important;
+		padding: 0 !important;
+		background: rgba(var(--developer-starter-pro-primary-rgb, 13, 148, 136), 0.1) !important;
+		backdrop-filter: blur(12px) !important;
+		-webkit-backdrop-filter: blur(12px) !important;
+		border: 1.5px solid var(--developer-starter-pro-primary) !important;
+		border-radius: 50px !important;
+		overflow: hidden !important;
+		user-select: none !important;
+		-webkit-user-select: none !important;
+		box-shadow: 0 8px 32px 0 rgba(var(--developer-starter-pro-primary-rgb, 13, 148, 136), 0.1), 0 2px 8px 0 rgba(0, 0, 0, 0.05) !important;
+	}
+	
+	.dp-booking__slider-handle {
+		display: flex !important;
+		position: absolute !important;
+		left: 5px !important;
+		top: 5px !important;
+		bottom: 5px !important;
+		width: 50px !important;
+		height: 50px !important;
+		border-radius: 50% !important;
+		background: var(--developer-starter-pro-primary) !important;
+		color: #ffffff !important;
+		align-items: center !important;
+		justify-content: center !important;
+		cursor: grab !important;
+		z-index: 2 !important;
+		box-shadow: 0 4px 12px rgba(var(--developer-starter-pro-primary-rgb, 13, 148, 136), 0.3) !important;
+		touch-action: none;
+	}
+	.dp-booking__slider-handle:active {
+		cursor: grabbing !important;
+	}
+	
+	/* Dark Mode Support */
+	body.dark-mode .dp-booking__btn {
+		background: rgba(var(--developer-starter-pro-primary-rgb, 13, 148, 136), 0.2) !important;
+	}
+	body.dark-mode .dp-booking__slider-track-text {
+		background: linear-gradient(to right, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.9) 50%, rgba(255, 255, 255, 0.3) 100%);
+		background-size: 200% auto;
+		-webkit-background-clip: text !important;
+		background-clip: text !important;
 	}
 }
 </style>

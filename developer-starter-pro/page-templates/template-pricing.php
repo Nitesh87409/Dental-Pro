@@ -63,7 +63,7 @@ get_header();
 								<?php echo esc_html( $term->name ); ?>
 							</h2>
 							
-							<div class="developer-starter-pro-pricing-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 24px;">
+							<div class="developer-starter-pro-pricing-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px;">
 								<?php while ( $services_query->have_posts() ) : $services_query->the_post();
 									$price = get_post_meta( get_the_ID(), '_developer_starter_pro_service_price', true );
 									$duration = get_post_meta( get_the_ID(), '_developer_starter_pro_service_duration', true );

@@ -16,7 +16,7 @@
 			<p class="developer-starter-pro-section-subtitle"><?php esc_html_e( 'Drag the comparison slider on each clinical image to view real restoration results.', 'developer-starter-pro' ); ?></p>
 		</div>
 
-		<div class="developer-starter-pro-ba-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; margin-top: 40px;">
+		<div class="developer-starter-pro-ba-grid">
 
 			<?php
 			$cases_query = new WP_Query( array(
