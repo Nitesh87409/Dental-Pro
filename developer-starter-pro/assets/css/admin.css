@@ -36,11 +36,11 @@
 /* Tabs */
 .developer-starter-pro-admin-tabs {
 	display: flex;
+	flex-wrap: wrap;
 	background: #f8fafc;
 	border-bottom: 2px solid #e2e8f0;
 	margin: 0 -1px 0 -20px;
 	padding: 0 30px;
-	overflow-x: auto;
 }
 
 .developer-starter-pro-admin-tab {

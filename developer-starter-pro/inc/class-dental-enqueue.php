@@ -106,6 +106,18 @@ class Developer_Starter_Pro_Enqueue {
 				developer_starter_pro_VERSION
 			);
 		}
+
+		$options = get_option( 'developer_starter_pro_options', array() );
+		$chatbot_enabled = isset( $options['chatbot_enable'] ) && '1' === $options['chatbot_enable'];
+
+		if ( $chatbot_enabled ) {
+			wp_enqueue_style(
+				'developer-starter-pro-chatbot',
+				developer_starter_pro_CSS . '/chatbot.css',
+				array(),
+				developer_starter_pro_VERSION
+			);
+		}
 	}
 
 	/**
@@ -142,6 +154,19 @@ class Developer_Starter_Pro_Enqueue {
 				'homeUrl' => home_url(),
 			)
 		);
+
+		$options = get_option( 'developer_starter_pro_options', array() );
+		$chatbot_enabled = isset( $options['chatbot_enable'] ) && '1' === $options['chatbot_enable'];
+
+		if ( $chatbot_enabled ) {
+			wp_enqueue_script(
+				'developer-starter-pro-chatbot',
+				developer_starter_pro_JS . '/chatbot.js',
+				array( 'jquery' ),
+				developer_starter_pro_VERSION,
+				true
+			);
+		}
 
 		// Booking Wizard JS
 		if ( is_page_template( 'page-templates/template-booking.php' ) ) {

@@ -69,20 +69,30 @@
 		backdrop.className = 'developer-starter-pro-mobile-backdrop';
 		document.body.appendChild(backdrop);
 
+		let scrollPos = 0;
+
 		function openMenu() {
+			scrollPos = window.scrollY;
+			document.body.style.position = 'fixed';
+			document.body.style.top = `-${scrollPos}px`;
+			document.body.style.width = '100%';
+			document.body.style.overflow = 'hidden';
 			menu.classList.add('is-open');
 			menu.setAttribute('aria-hidden', 'false');
 			backdrop.classList.add('is-visible');
-			document.body.style.overflow = 'hidden';
 			if (hamburger) hamburger.classList.add('active');
 			toggle.setAttribute('aria-expanded', 'true');
 		}
 
 		function closeMenu() {
+			document.body.style.position = '';
+			document.body.style.top = '';
+			document.body.style.width = '';
+			document.body.style.overflow = '';
+			window.scrollTo(0, scrollPos);
 			menu.classList.remove('is-open');
 			menu.setAttribute('aria-hidden', 'true');
 			backdrop.classList.remove('is-visible');
-			document.body.style.overflow = '';
 			if (hamburger) hamburger.classList.remove('active');
 			toggle.setAttribute('aria-expanded', 'false');
 		}

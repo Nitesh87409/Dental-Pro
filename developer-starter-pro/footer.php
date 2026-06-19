@@ -492,6 +492,45 @@ if ( ! $has_social_links ) {
 
 </div><!-- #page -->
 
+	<?php
+	$options = get_option( 'developer_starter_pro_options', array() );
+	$chatbot_enabled = isset( $options['chatbot_enable'] ) && '1' === $options['chatbot_enable'];
+	if ( $chatbot_enabled ) :
+	?>
+	<!-- AI Chatbot Widget -->
+	<div class="dentalpro-chatbot-wrapper">
+		<div class="dentalpro-chatbot-window">
+			<div class="dentalpro-chatbot-header">
+				<div class="dentalpro-chatbot-header-icon">🤖</div>
+				<div class="dentalpro-chatbot-header-text">
+					<h4><?php esc_html_e( 'Virtual Assistant', 'developer-starter-pro' ); ?></h4>
+					<p><?php esc_html_e( 'Powered by AI', 'developer-starter-pro' ); ?></p>
+				</div>
+			</div>
+			<div class="dentalpro-chatbot-messages">
+				<div class="dentalpro-chatbot-msg msg-ai">
+					<p><?php esc_html_e( 'Hello! How can I help you with your dental needs today?', 'developer-starter-pro' ); ?></p>
+				</div>
+				<div class="dentalpro-chatbot-typing">
+					<div class="dot"></div>
+					<div class="dot"></div>
+					<div class="dot"></div>
+				</div>
+			</div>
+			<div class="dentalpro-chatbot-input">
+				<input type="text" id="dentalpro-chatbot-input-field" placeholder="<?php esc_attr_e( 'Type your message...', 'developer-starter-pro' ); ?>" autocomplete="off" />
+				<button id="dentalpro-chatbot-send" aria-label="<?php esc_attr_e( 'Send Message', 'developer-starter-pro' ); ?>">
+					<svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+				</button>
+			</div>
+		</div>
+		<div class="dentalpro-chatbot-toggle">
+			<svg class="chat-icon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+			<svg class="close-icon" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+		</div>
+	</div>
+	<?php endif; ?>
+
 <?php wp_footer(); ?>
 </body>
 </html>

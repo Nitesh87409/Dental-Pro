@@ -70,6 +70,9 @@ class Developer_Starter_Pro_Notifications {
 			'patient_rem_enabled' => '1',
 			'patient_rem_subject' => esc_html__( 'Reminder: Appointment tomorrow with {doctor_name}', 'developer-starter-pro' ),
 			'patient_rem_body'    => "<h2>Hello {patient_name},</h2>\n<p>This is a reminder that you have an upcoming appointment scheduled tomorrow with <strong>{doctor_name}</strong>.</p>\n<p><strong>Treatment:</strong> {service_name}<br>\n<strong>Time:</strong> {appointment_time}</p>\n<p>We look forward to seeing you!</p>",
+
+			// SMS Template
+			'sms_template' => 'Hello {patient_name}, your appointment (Ref: {appointment_id}) for {service_name} on {appointment_date} at {appointment_time} has been confirmed. Thank you!',
 		);
 		$saved = get_option( $this->option_name, array() );
 		return wp_parse_args( $saved, $defaults );
@@ -99,6 +102,8 @@ class Developer_Starter_Pro_Notifications {
 				'patient_rem_enabled'  => isset( $_POST['patient_rem_enabled'] ) ? '1' : '0',
 				'patient_rem_subject'  => sanitize_text_field( $_POST['patient_rem_subject'] ),
 				'patient_rem_body'     => wp_kses_post( wp_unslash( $_POST['patient_rem_body'] ) ),
+
+				'sms_template'         => sanitize_textarea_field( wp_unslash( $_POST['sms_template'] ) ),
 			);
 
 			update_option( $this->option_name, $settings );
@@ -197,6 +202,23 @@ class Developer_Starter_Pro_Notifications {
 							<th><label for="patient_rem_body"><?php esc_html_e( 'Email Body (HTML allowed)', 'developer-starter-pro' ); ?></label></th>
 							<td>
 								<?php wp_editor( $settings['patient_rem_body'], 'patient_rem_body', array( 'textarea_name' => 'patient_rem_body', 'rows' => 6 ) ); ?>
+							</td>
+						</tr>
+					</table>
+				</div>
+
+				<!-- 4. SMS Message Template -->
+				<div class="developer-starter-pro-settings-section" style="background:#fff; padding:24px; border-radius:8px; border:1px solid #e2e8f0; margin-bottom:24px;">
+					<h2>📱 <?php esc_html_e( 'SMS / Text Message Template', 'developer-starter-pro' ); ?></h2>
+					<p style="color:#64748b;"><?php esc_html_e( 'This message is sent to the patient\'s phone when an appointment is booked via the AI Chatbot or the booking wizard. Use merge tags below.', 'developer-starter-pro' ); ?></p>
+					<p><strong><?php esc_html_e( 'Available Tags:', 'developer-starter-pro' ); ?></strong>
+						<code>{patient_name}</code>, <code>{appointment_id}</code>, <code>{service_name}</code>, <code>{appointment_date}</code>, <code>{appointment_time}</code>, <code>{patient_phone}</code>
+					</p>
+					<table class="form-table">
+						<tr>
+							<th><label for="sms_template"><?php esc_html_e( 'SMS Message Body', 'developer-starter-pro' ); ?></label></th>
+							<td>
+								<textarea id="sms_template" name="sms_template" rows="4" class="large-text" style="font-family:monospace;"><?php echo esc_textarea( $settings['sms_template'] ); ?></textarea>
 							</td>
 						</tr>
 					</table>
@@ -396,19 +418,30 @@ class Developer_Starter_Pro_Notifications {
 		$patient_name  = $booking->patient_name;
 		$doctor_name   = get_the_title( $booking->doctor_id );
 		$service_name  = get_the_title( $booking->service_id );
+		if ( empty($service_name) && ! empty($booking->notes) ) {
+			$service_name = str_replace('Service requested: ', '', $booking->notes);
+		}
+		if ( empty($doctor_name) ) {
+			$doctor_name = 'Our Dental Team';
+		}
 		$appointment_date = date_i18n( get_option( 'date_format' ), strtotime( $booking->booking_date ) );
 		$appointment_time = date( 'g:i A', strtotime( $booking->time_slot ) );
 		$reference_id  = 'APT-' . sprintf( '%05d', $booking_id );
 
-		$message = sprintf(
-			__( "Hello %s, your appointment (Ref: %s) for %s with %s on %s at %s has been confirmed. Thank you!", 'developer-starter-pro' ),
-			$patient_name,
-			$reference_id,
-			$service_name,
-			$doctor_name,
-			$appointment_date,
-			$appointment_time
+		// Use admin-editable SMS template
+		$email_settings = $this->get_settings();
+		$template = isset( $email_settings['sms_template'] ) ? $email_settings['sms_template'] : 'Hello {patient_name}, your appointment (Ref: {appointment_id}) for {service_name} on {appointment_date} at {appointment_time} has been confirmed. Thank you!';
+
+		$merge_tags = array(
+			'{patient_name}'     => $patient_name,
+			'{appointment_id}'   => $reference_id,
+			'{service_name}'     => $service_name,
+			'{doctor_name}'      => $doctor_name,
+			'{appointment_date}' => $appointment_date,
+			'{appointment_time}' => $appointment_time,
+			'{patient_phone}'    => $patient_phone,
 		);
+		$message = str_replace( array_keys( $merge_tags ), array_values( $merge_tags ), $template );
 
 		$this->dispatch_sms( $patient_phone, $message );
 	}

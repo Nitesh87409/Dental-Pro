@@ -43,6 +43,7 @@ require_once developer_starter_pro_INC . '/class-dental-admin-booking.php';
 require_once developer_starter_pro_INC . '/class-dental-notifications.php';
 require_once developer_starter_pro_INC . '/class-dental-archive.php';
 require_once developer_starter_pro_INC . '/class-dental-seo.php';
+require_once developer_starter_pro_INC . '/class-dental-chatbot.php';
 
 /**
  * Initialize theme classes.
