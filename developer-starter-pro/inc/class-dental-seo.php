@@ -216,22 +216,25 @@ class Developer_Starter_Pro_SEO {
 	 * @return array|null Schema structure.
 	 */
 	private function get_faq_schema() {
-		// Pull chatbot FAQs or generic options
-		$chatbot = new Developer_Starter_Pro_Chatbot();
-		$faqs = $chatbot->get_faqs();
+		// Pull FAQs from the CPT
+		$faq_posts = get_posts( array(
+			'post_type'      => 'faqs',
+			'posts_per_page' => 50,
+			'post_status'    => 'publish',
+		) );
 
-		if ( empty( $faqs ) ) {
+		if ( empty( $faq_posts ) ) {
 			return null;
 		}
 
 		$main_entity = array();
-		foreach ( $faqs as $faq ) {
+		foreach ( $faq_posts as $faq ) {
 			$main_entity[] = array(
 				'@type'          => 'Question',
-				'name'           => esc_html( $faq['question'] ),
+				'name'           => esc_html( $faq->post_title ),
 				'acceptedAnswer' => array(
 					'@type' => 'Answer',
-					'text'  => esc_html( $faq['answer'] ),
+					'text'  => wp_kses_post( apply_filters( 'the_content', $faq->post_content ) ),
 				),
 			);
 		}

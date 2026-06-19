@@ -93,7 +93,11 @@ class Developer_Starter_Pro_Booking {
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_available_slots' ),
-				'permission_callback' => function() {
+				'permission_callback' => function( $request ) {
+					$nonce = $request->get_header( 'x_dentalpro_nonce' );
+					if ( ! wp_verify_nonce( $nonce, 'dentalpro_booking_api_nonce' ) ) {
+						return new WP_Error( 'rest_forbidden', __( 'Security token missing or expired.', 'developer-starter-pro' ), array( 'status' => 403 ) );
+					}
 					$check = developer_starter_pro_rate_limit( 'slots', 20, 60 );
 					return is_wp_error( $check ) ? $check : true;
 				},
@@ -106,7 +110,11 @@ class Developer_Starter_Pro_Booking {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'process_booking' ),
-				'permission_callback' => function() {
+				'permission_callback' => function( $request ) {
+					$nonce = $request->get_header( 'x_dentalpro_nonce' );
+					if ( ! wp_verify_nonce( $nonce, 'dentalpro_booking_api_nonce' ) ) {
+						return new WP_Error( 'rest_forbidden', __( 'Security token missing or expired.', 'developer-starter-pro' ), array( 'status' => 403 ) );
+					}
 					$check = developer_starter_pro_rate_limit( 'book', 10, 60 );
 					return is_wp_error( $check ) ? $check : true;
 				},

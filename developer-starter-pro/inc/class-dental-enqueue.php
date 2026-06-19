@@ -173,6 +173,7 @@ class Developer_Starter_Pro_Enqueue {
 				'developerStarterProBooking',
 				array(
 					'restUrl' => rest_url( 'dentalpro/v1/' ),
+					'apiNonce' => wp_create_nonce( 'dentalpro_booking_api_nonce' ),
 					'strings' => array(
 						'loadingSlots'       => esc_html__( 'Loading available slots...', 'developer-starter-pro' ),
 						'noSlots'           => esc_html__( 'No slot intervals generated.', 'developer-starter-pro' ),

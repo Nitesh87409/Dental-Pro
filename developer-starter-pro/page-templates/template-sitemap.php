@@ -68,7 +68,7 @@ get_header();
 							<?php
 							$services_query = new WP_Query( array(
 								'post_type'      => 'services',
-								'posts_per_page' => -1,
+								'posts_per_page' => 500,
 								'orderby'        => 'title',
 								'order'          => 'ASC',
 								'post_status'    => 'publish',
@@ -99,7 +99,7 @@ get_header();
 							<?php
 							$doctors_query = new WP_Query( array(
 								'post_type'      => 'doctors',
-								'posts_per_page' => -1,
+								'posts_per_page' => 500,
 								'orderby'        => 'title',
 								'order'          => 'ASC',
 								'post_status'    => 'publish',

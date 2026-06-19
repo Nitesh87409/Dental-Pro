@@ -102,7 +102,7 @@ $departments = get_terms( array(
 								<?php if ( has_post_thumbnail() ) : ?>
 									<?php the_post_thumbnail( 'large' ); ?>
 								<?php else : ?>
-									<img src="<?php echo esc_url( $default_img ); ?>" alt="<?php the_title_attribute(); ?>" />
+									<img src="<?php echo esc_url( $default_img ); ?>" alt="<?php the_title_attribute(); ?>" loading="lazy" />
 								<?php endif; ?>
 							</div>
 

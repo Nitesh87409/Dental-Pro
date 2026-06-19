@@ -94,7 +94,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 		slotsContainer.innerHTML = '<p style="color:var(--developer-starter-pro-gray-400); font-style:italic; font-size:0.9rem; grid-column: 1/-1; text-align:center; padding-top:20px;">' + l10n.strings.loadingSlots + '</p>';
 
-		fetch(l10n.restUrl + 'available-slots?doctor_id=' + doctorId + '&date=' + date)
+		fetch(l10n.restUrl + 'available-slots?doctor_id=' + doctorId + '&date=' + date, {
+			headers: { 'X-DentalPro-Nonce': l10n.apiNonce || '' }
+		})
 			.then(function(res) { return res.json(); })
 			.then(function(data) {
 				slotsContainer.innerHTML = '';
@@ -267,7 +269,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 		fetch(l10n.restUrl + 'book', {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
+			headers: { 
+				'Content-Type': 'application/json',
+				'X-DentalPro-Nonce': l10n.apiNonce || ''
+			},
 			body: JSON.stringify(payload)
 		})
 		.then(function(res) { return res.json(); })

@@ -448,12 +448,12 @@ function developer_starter_pro_before_after_shortcode( $atts ) {
 		<div class="developer-starter-pro-ba-wrapper">
 			<!-- After Image (Background/Left) -->
 			<div class="developer-starter-pro-ba-after">
-				<img src="<?php echo esc_url( $atts['after_url'] ); ?>" alt="<?php echo esc_attr( $atts['after_label'] ); ?>" />
+				<img src="<?php echo esc_url( $atts['after_url'] ); ?>" alt="<?php echo esc_attr( $atts['after_label'] ); ?>" loading="lazy" />
 				<span class="developer-starter-pro-ba-badge after-badge"><?php echo esc_html( $atts['after_label'] ); ?></span>
 			</div>
 			<!-- Before Image (Overlay/Right) -->
 			<div class="developer-starter-pro-ba-before">
-				<img src="<?php echo esc_url( $atts['before_url'] ); ?>" alt="<?php echo esc_attr( $atts['before_label'] ); ?>" />
+				<img src="<?php echo esc_url( $atts['before_url'] ); ?>" alt="<?php echo esc_attr( $atts['before_label'] ); ?>" loading="lazy" />
 				<span class="developer-starter-pro-ba-badge before-badge"><?php echo esc_html( $atts['before_label'] ); ?></span>
 			</div>
 			<!-- Resizable Slider Handle -->
@@ -641,7 +641,17 @@ function developer_starter_pro_get_clean_service_duration( $duration ) {
  * @since 1.0.0
  */
 function developer_starter_pro_rate_limit( $context = 'global', $max_hits = 30, $window = 60 ) {
-	$ip  = preg_replace( '/[^a-fA-F0-9:.]/', '', $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0' );
+	$ip = '0.0.0.0';
+	if ( ! empty( $_SERVER['HTTP_CF_CONNECTING_IP'] ) ) {
+		$ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
+	} elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+		$ip = trim( current( explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) );
+	} elseif ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
+		$ip = $_SERVER['HTTP_CLIENT_IP'];
+	} elseif ( ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
+		$ip = $_SERVER['REMOTE_ADDR'];
+	}
+	$ip  = preg_replace( '/[^a-fA-F0-9:.]/', '', $ip );
 	$key = 'dpro_rl_' . $context . '_' . md5( $ip );
 
 	$count = get_transient( $key );

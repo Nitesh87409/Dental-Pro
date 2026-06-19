@@ -38,7 +38,7 @@ if ( empty( $gallery_items ) ) {
 					if ( empty( $item['image'] ) ) continue;
 				?>
 					<div class="gallery-item" style="position: relative; overflow: hidden; border-radius: var(--developer-starter-pro-radius-lg); aspect-ratio: 3/2; box-shadow: var(--developer-starter-pro-shadow-md); cursor: pointer;">
-						<img src="<?php echo esc_url( $item['image'] ); ?>" alt="<?php echo esc_attr( $item['title'] ); ?>" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" />
+						<img src="<?php echo esc_url( $item['image'] ); ?>" alt="<?php echo esc_attr( $item['title'] ); ?>" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" />
 						<div class="gallery-overlay" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(13, 148, 136, 0.9) 0%, rgba(0,0,0,0) 100%); display: flex; align-items: flex-end; padding: 24px; opacity: 0; transition: opacity 0.3s ease;">
 							<?php if ( ! empty( $item['title'] ) ) : ?>
 								<h4 style="margin: 0; color: #fff; font-size: 1.125rem;"><?php echo esc_html( $item['title'] ); ?></h4>

@@ -2284,9 +2284,16 @@ class Developer_Starter_Pro_Admin_Booking {
 			__( 'Created At', 'developer-starter-pro' )
 		) );
 
-		$appointments = $wpdb->get_results( "SELECT * FROM $table_name WHERE $where_clause ORDER BY booking_date ASC, time_slot ASC" );
+		$offset = 0;
+		$limit  = 500;
 
-		if ( ! empty( $appointments ) ) {
+		while ( true ) {
+			$appointments = $wpdb->get_results( "SELECT * FROM $table_name WHERE $where_clause ORDER BY booking_date ASC, time_slot ASC LIMIT $limit OFFSET $offset" );
+
+			if ( empty( $appointments ) ) {
+				break;
+			}
+
 			foreach ( $appointments as $apt ) {
 				$doc_name = get_the_title( $apt->doctor_id );
 				$srv_name = get_the_title( $apt->service_id );
@@ -2309,6 +2316,12 @@ class Developer_Starter_Pro_Admin_Booking {
 					$apt->created_at
 				) );
 			}
+
+			if ( count( $appointments ) < $limit ) {
+				break;
+			}
+
+			$offset += $limit;
 		}
 
 		fclose( $output );

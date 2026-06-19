@@ -79,7 +79,7 @@ if ( ! is_array( $schedule ) || empty( $schedule ) ) {
 					<?php if ( has_post_thumbnail() ) : ?>
 						<?php the_post_thumbnail( 'developer-starter-pro-doctor-large' ); ?>
 					<?php else : ?>
-						<img src="<?php echo esc_url( $default_img ); ?>" alt="<?php the_title_attribute(); ?>" />
+						<img src="<?php echo esc_url( $default_img ); ?>" alt="<?php the_title_attribute(); ?>" loading="lazy" />
 					<?php endif; ?>
 				</div>
 

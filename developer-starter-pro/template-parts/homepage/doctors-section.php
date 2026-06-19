@@ -83,7 +83,7 @@ $doctors = get_posts( array(
 									$img_choices = array( 'dr-sarah-mitchell.png', 'dr-james-patel.png', 'dr-emma-chen.png', 'dr-michael-ross.png' );
 									$demo_img    = $img_choices[ $doctor->ID % 4 ];
 								}
-								$photo_html = '<img src="' . esc_url( get_theme_file_uri( 'assets/images/' . $demo_img ) ) . '" alt="' . esc_attr( $doctor->post_title ) . '">';
+								$photo_html = '<img src="' . esc_url( get_theme_file_uri( 'assets/images/' . $demo_img ) ) . '" alt="' . esc_attr( $doctor->post_title ) . '" loading="lazy">';
 							}
 
 							$display_doctors[] = array(
@@ -102,42 +102,42 @@ $doctors = get_posts( array(
 							'name'      => __( 'Dr. Sarah Connor', 'developer-starter-pro' ),
 							'specialty' => __( 'Dental Specialist', 'developer-starter-pro' ),
 							'bio'       => __( '12+ years of experience in restorative and preventive dentistry.', 'developer-starter-pro' ),
-							'photo'     => '<img src="' . esc_url( get_theme_file_uri( 'assets/images/dr-emma-chen.png' ) ) . '" alt="Dr. Sarah Connor">',
+							'photo'     => '<img src="' . esc_url( get_theme_file_uri( 'assets/images/dr-emma-chen.png' ) ) . '" alt="Dr. Sarah Connor" loading="lazy">',
 							'url'       => '#',
 						),
 						array(
 							'name'      => __( 'Dr. Alex Mercer', 'developer-starter-pro' ),
 							'specialty' => __( 'Orthodontist', 'developer-starter-pro' ),
 							'bio'       => __( 'Specialist in clear aligners and traditional braces for all ages.', 'developer-starter-pro' ),
-							'photo'     => '<img src="' . esc_url( get_theme_file_uri( 'assets/images/dr-james-patel.png' ) ) . '" alt="Dr. Alex Mercer">',
+							'photo'     => '<img src="' . esc_url( get_theme_file_uri( 'assets/images/dr-james-patel.png' ) ) . '" alt="Dr. Alex Mercer" loading="lazy">',
 							'url'       => '#',
 						),
 						array(
 							'name'      => __( 'Dr. Jessica Miller', 'developer-starter-pro' ),
 							'specialty' => __( 'Cosmetic Dentist', 'developer-starter-pro' ),
 							'bio'       => __( 'Expert in smile makeovers, veneers, and teeth whitening treatments.', 'developer-starter-pro' ),
-							'photo'     => '<img src="' . esc_url( get_theme_file_uri( 'assets/images/dr-sarah-mitchell.png' ) ) . '" alt="Dr. Jessica Miller">',
+							'photo'     => '<img src="' . esc_url( get_theme_file_uri( 'assets/images/dr-sarah-mitchell.png' ) ) . '" alt="Dr. Jessica Miller" loading="lazy">',
 							'url'       => '#',
 						),
 						array(
 							'name'      => __( 'Dr. Sarah Mitchell', 'developer-starter-pro' ),
 							'specialty' => __( 'Oral Surgeon', 'developer-starter-pro' ),
 							'bio'       => __( 'Experienced in implant placement, extractions, and bone grafting.', 'developer-starter-pro' ),
-							'photo'     => '<img src="' . esc_url( get_theme_file_uri( 'assets/images/dr-michael-ross.png' ) ) . '" alt="Dr. Sarah Mitchell">',
+							'photo'     => '<img src="' . esc_url( get_theme_file_uri( 'assets/images/dr-michael-ross.png' ) ) . '" alt="Dr. Sarah Mitchell" loading="lazy">',
 							'url'       => '#',
 						),
 						array(
 							'name'      => __( 'Dr. James Patel', 'developer-starter-pro' ),
 							'specialty' => __( 'Endodontist', 'developer-starter-pro' ),
 							'bio'       => __( 'Root canal specialist focused on pain-free endodontic treatments.', 'developer-starter-pro' ),
-							'photo'     => '<img src="' . esc_url( get_theme_file_uri( 'assets/images/dr-james-patel.png' ) ) . '" alt="Dr. James Patel">',
+							'photo'     => '<img src="' . esc_url( get_theme_file_uri( 'assets/images/dr-james-patel.png' ) ) . '" alt="Dr. James Patel" loading="lazy">',
 							'url'       => '#',
 						),
 						array(
 							'name'      => __( 'Dr. Emma Chen', 'developer-starter-pro' ),
 							'specialty' => __( 'Periodontist', 'developer-starter-pro' ),
 							'bio'       => __( 'Gum disease treatment and dental implant maintenance specialist.', 'developer-starter-pro' ),
-							'photo'     => '<img src="' . esc_url( get_theme_file_uri( 'assets/images/dr-emma-chen.png' ) ) . '" alt="Dr. Emma Chen">',
+							'photo'     => '<img src="' . esc_url( get_theme_file_uri( 'assets/images/dr-emma-chen.png' ) ) . '" alt="Dr. Emma Chen" loading="lazy">',
 							'url'       => '#',
 						),
 					);
