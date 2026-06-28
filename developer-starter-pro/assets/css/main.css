@@ -1998,10 +1998,18 @@ body.dark-mode .woocommerce-checkout form .form-row textarea {
 
 @media (max-width: 768px) {
 	.dentalpro-cookie-notice {
-		bottom: 12px;
+		bottom: auto;
+		top: 12px;
 		left: 12px;
 		right: 12px;
 		padding: 16px 20px;
+		transform: translateY(-40px);
+	}
+	.dentalpro-cookie-notice.visible {
+		transform: translateY(0);
+	}
+	.dentalpro-cookie-notice.fade-out {
+		transform: translateY(-20px);
 	}
 }
 

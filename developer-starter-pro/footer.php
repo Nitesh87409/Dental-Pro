@@ -247,12 +247,7 @@ if ( ! $has_social_links ) {
 		</div><!-- .dp-footer__container -->
 	</footer>
 
-	<!-- Back to Top Button -->
-	<button class="developer-starter-pro-back-to-top" id="back-to-top" aria-label="<?php esc_attr_e( 'Back to top', 'developer-starter-pro' ); ?>">
-		<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
-	</button>
-
-	<!-- Unified Emergency & WhatsApp Floating Widget -->
+	<!-- Unified Emergency & WhatsApp Floating Widget (Logic Eval) -->
 	<?php
 	$emergency_enabled = developer_starter_pro_get_option( 'emergency_enabled', '1' );
 	$emergency_phone   = developer_starter_pro_get_option( 'emergency_phone', '' );
@@ -263,8 +258,23 @@ if ( ! $has_social_links ) {
 
 	$show_emergency = ( '1' === $emergency_enabled && ! empty( $emergency_phone ) );
 	$show_whatsapp  = ( '1' === $wa_enabled && ! empty( $wa_number ) );
+	$has_fab = $show_emergency || $show_whatsapp;
 
-	if ( $show_emergency || $show_whatsapp ) :
+	// Determine back-to-top alignment to prevent clash with FAB
+	$btt_style = '';
+	if ( $has_fab && 'left' === $wa_position ) {
+		$btt_style = ' style="left: auto !important; right: 30px !important;"';
+	}
+	?>
+
+	<!-- Back to Top Button -->
+	<button class="developer-starter-pro-back-to-top" id="back-to-top" aria-label="<?php esc_attr_e( 'Back to top', 'developer-starter-pro' ); ?>"<?php echo $btt_style; ?>>
+		<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+	</button>
+
+	<!-- Unified Emergency & WhatsApp Floating Widget (Render) -->
+	<?php
+	if ( $has_fab ) :
 		$wa_clean_number = preg_replace( '/[^0-9]/', '', $wa_number );
 		$wa_link = 'https://wa.me/' . $wa_clean_number;
 		if ( ! empty( $wa_message ) ) {
@@ -496,9 +506,14 @@ if ( ! $has_social_links ) {
 	$options = get_option( 'developer_starter_pro_options', array() );
 	$chatbot_enabled = isset( $options['chatbot_enable'] ) && '1' === $options['chatbot_enable'];
 	if ( $chatbot_enabled ) :
+		// Shift chatbot up if unified FAB is present on the right
+		$chatbot_style = '';
+		if ( ( $show_emergency || $show_whatsapp ) && 'right' === $wa_position ) {
+			$chatbot_style = ' style="bottom: 110px;"';
+		}
 	?>
 	<!-- AI Chatbot Widget -->
-	<div class="dentalpro-chatbot-wrapper">
+	<div class="dentalpro-chatbot-wrapper"<?php echo $chatbot_style; ?>>
 		<div class="dentalpro-chatbot-window">
 			<div class="dentalpro-chatbot-header">
 				<div class="dentalpro-chatbot-header-icon">🤖</div>

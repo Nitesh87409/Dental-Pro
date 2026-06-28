@@ -37,7 +37,7 @@ $tracking_url = home_url( '/tracking/' );
 	</a>
 
 	<!-- Main Header -->
-	<header id="masthead" class="developer-starter-pro-header developer-starter-pro-header--style-<?php echo esc_attr( $header_style ); ?> <?php echo ( '1' === $header_sticky || is_front_page() ) ? 'developer-starter-pro-header--sticky-enabled' : ''; ?> <?php if ( is_front_page() ) echo 'dp-header--transparent'; ?>" role="banner">
+	<header id="masthead" class="developer-starter-pro-header developer-starter-pro-header--style-<?php echo esc_attr( $header_style ); ?> <?php echo ( '1' === $header_sticky ) ? 'developer-starter-pro-header--sticky-enabled' : ''; ?> <?php if ( is_front_page() ) echo 'dp-header--transparent'; ?>" role="banner">
 		
 		<?php if ( '3' === $header_style ) : ?>
 			<!-- Top Bar -->
@@ -130,15 +130,36 @@ $tracking_url = home_url( '/tracking/' );
 						$doctors_url     = developer_starter_pro_get_template_page_url( 'page-templates/template-doctors.php', '#doctors' );
 						$beforeafter_url = developer_starter_pro_get_template_page_url( 'page-templates/template-before-after.php', '#before-after' );
 						$pricing_url     = developer_starter_pro_get_template_page_url( 'page-templates/template-pricing.php', '#pricing' );
+						$tracking_url    = developer_starter_pro_get_template_page_url( 'page-templates/template-track.php', '#track' );
+						
+						$current_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+						
+						function dp_get_active_class( $url, $current ) {
+							// Ignore hash links for PHP active state to prevent multiple highlights (e.g. on homepage)
+							if ( strpos( $url, '#' ) !== false ) {
+								return '';
+							}
+							
+							$url_clean = rtrim( $url, '/' );
+							$current_clean = rtrim( explode('?', $current)[0], '/' ); // Ignore query params
+
+							if ( $url_clean === $current_clean && !empty($url_clean) ) {
+								return ' class="current-menu-item"';
+							}
+							
+							return '';
+						}
 
 						echo '<ul id="primary-menu" class="developer-starter-pro-menu">';
-						echo '<li><a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html__( 'Home', 'developer-starter-pro' ) . '</a></li>';
-						echo '<li><a href="' . esc_url( $services_url ) . '">' . esc_html__( 'Our Services', 'developer-starter-pro' ) . '</a></li>';
-						echo '<li><a href="' . esc_url( $doctors_url ) . '">' . esc_html__( 'Doctors', 'developer-starter-pro' ) . '</a></li>';
-						echo '<li><a href="' . esc_url( $beforeafter_url ) . '">' . esc_html__( 'Before & After', 'developer-starter-pro' ) . '</a></li>';
-						echo '<li><a href="' . esc_url( $pricing_url ) . '">' . esc_html__( 'Pricing', 'developer-starter-pro' ) . '</a></li>';
-						echo '<li><a href="' . esc_url( $tracking_url ) . '">' . esc_html__( 'Track Appointment', 'developer-starter-pro' ) . '</a></li>';
-						echo '<li><a href="' . esc_url( home_url( '/blog/' ) ) . '">' . esc_html__( 'Blog', 'developer-starter-pro' ) . '</a></li>';
+						echo '<li' . dp_get_active_class( home_url( '/' ), $current_url ) . '><a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html__( 'Home', 'developer-starter-pro' ) . '</a></li>';
+						echo '<li' . dp_get_active_class( $services_url, $current_url ) . '><a href="' . esc_url( $services_url ) . '">' . esc_html__( 'Our Services', 'developer-starter-pro' ) . '</a></li>';
+						echo '<li' . dp_get_active_class( $doctors_url, $current_url ) . '><a href="' . esc_url( $doctors_url ) . '">' . esc_html__( 'Doctors', 'developer-starter-pro' ) . '</a></li>';
+						echo '<li' . dp_get_active_class( $beforeafter_url, $current_url ) . '><a href="' . esc_url( $beforeafter_url ) . '">' . esc_html__( 'Before & After', 'developer-starter-pro' ) . '</a></li>';
+						echo '<li' . dp_get_active_class( $pricing_url, $current_url ) . '><a href="' . esc_url( $pricing_url ) . '">' . esc_html__( 'Pricing', 'developer-starter-pro' ) . '</a></li>';
+						echo '<li' . dp_get_active_class( $tracking_url, $current_url ) . '><a href="' . esc_url( $tracking_url ) . '">' . esc_html__( 'Track Appointment', 'developer-starter-pro' ) . '</a></li>';
+						
+						$blog_url = home_url( '/blog/' );
+						echo '<li' . dp_get_active_class( $blog_url, $current_url ) . '><a href="' . esc_url( $blog_url ) . '">' . esc_html__( 'Blog', 'developer-starter-pro' ) . '</a></li>';
 						echo '</ul>';
 					}
 					?>
