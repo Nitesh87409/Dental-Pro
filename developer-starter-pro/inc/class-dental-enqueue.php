@@ -252,6 +252,12 @@ class Developer_Starter_Pro_Enqueue {
 				array( 'wp-color-picker' ),
 				developer_starter_pro_VERSION
 			);
+			wp_enqueue_style(
+				'developer-starter-pro-admin-settings',
+				developer_starter_pro_CSS . '/admin-settings.css',
+				array( 'developer-starter-pro-admin' ),
+				developer_starter_pro_VERSION
+			);
 		}
 
 		// Load on all admin pages for CPT meta box styles.
@@ -278,6 +284,13 @@ class Developer_Starter_Pro_Enqueue {
 				'developer-starter-pro-admin',
 				developer_starter_pro_JS . '/admin.js',
 				array( 'jquery', 'wp-color-picker' ),
+				developer_starter_pro_VERSION,
+				true
+			);
+			wp_enqueue_script(
+				'developer-starter-pro-admin-settings',
+				developer_starter_pro_JS . '/admin-settings.js',
+				array( 'developer-starter-pro-admin' ),
 				developer_starter_pro_VERSION,
 				true
 			);

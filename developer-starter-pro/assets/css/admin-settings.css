@@ -1,0 +1,41 @@
+.dp-benefit-item {
+			background: #fdfdfd;
+			border: 1px solid #e2e8f0;
+			border-radius: 6px;
+			padding: 20px;
+			margin-bottom: 15px;
+			position: relative;
+			box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+		}
+		.dp-benefit-item-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 12px;
+			border-bottom: 1px dashed #e2e8f0;
+			padding-bottom: 8px;
+		}
+		.dp-benefit-item-title-label {
+			font-weight: 600;
+			color: #2d3748;
+		}
+		.dp-benefit-item-controls {
+			display: flex;
+			gap: 5px;
+		}
+		.dp-benefit-field {
+			margin-bottom: 10px;
+		}
+		.dp-benefit-field label {
+			display: block;
+			font-weight: 500;
+			font-size: 11px;
+			text-transform: uppercase;
+			color: #718096;
+			margin-bottom: 4px;
+		}
+		.dp-benefit-field input[type="text"],
+		.dp-benefit-field textarea {
+			width: 100%;
+			box-sizing: border-box;
+		}
