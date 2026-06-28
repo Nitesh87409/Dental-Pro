@@ -300,6 +300,7 @@ class Developer_Starter_Pro_Admin {
 			$sanitized['chatbot_api_key']       = isset( $input['chatbot_api_key'] ) ? sanitize_text_field( $input['chatbot_api_key'] ) : '';
 			$sanitized['chatbot_model']         = isset( $input['chatbot_model'] ) ? sanitize_text_field( $input['chatbot_model'] ) : '';
 			$sanitized['chatbot_system_prompt'] = isset( $input['chatbot_system_prompt'] ) ? sanitize_textarea_field( $input['chatbot_system_prompt'] ) : '';
+			$sanitized['bugreport_enable']      = isset( $input['bugreport_enable'] ) ? '1' : '0';
 		}
 
 		unset( $sanitized['active_tab'] );
@@ -2029,6 +2030,27 @@ class Developer_Starter_Pro_Admin {
 						</button>
 						<span id="developer-starter-pro-test-result" style="margin-left: 10px; font-weight: 500;"></span>
 						<p class="description"><?php esc_html_e( 'Click this to verify your API credentials without leaving the dashboard.', 'developer-starter-pro' ); ?></p>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="developer-starter-pro-settings-section" style="margin-top:30px; border-top: 2px solid #e0e0e0; padding-top: 24px;">
+			<h2 style="display:flex; align-items:center; gap:10px;">
+				<span style="font-size:22px;">🐛</span>
+				<?php esc_html_e( 'Bug Report Widget', 'developer-starter-pro' ); ?>
+			</h2>
+			<p class="description"><?php esc_html_e( 'Enable a floating "Report a Problem" button on the frontend. Visitors can describe bugs, attach screenshots, and send reports directly to your admin email.', 'developer-starter-pro' ); ?></p>
+
+			<table class="form-table">
+				<tr>
+					<th><label for="bugreport_enable"><?php esc_html_e( 'Enable Bug Report Widget', 'developer-starter-pro' ); ?></label></th>
+					<td>
+						<label class="developer-starter-pro-toggle">
+							<input type="checkbox" id="bugreport_enable" name="<?php echo esc_attr( $this->option_name ); ?>[bugreport_enable]" value="1" <?php checked( isset( $options['bugreport_enable'] ) ? $options['bugreport_enable'] : '0', '1' ); ?>>
+							<span class="developer-starter-pro-toggle-slider"></span>
+						</label>
+						<p class="description"><?php esc_html_e( 'Show a floating bug icon (bottom-left) on all frontend pages. Reports are sent to your clinic email address.', 'developer-starter-pro' ); ?></p>
 					</td>
 				</tr>
 			</table>

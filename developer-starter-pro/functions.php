@@ -44,6 +44,7 @@ require_once developer_starter_pro_INC . '/class-dental-notifications.php';
 require_once developer_starter_pro_INC . '/class-dental-archive.php';
 require_once developer_starter_pro_INC . '/class-dental-seo.php';
 require_once developer_starter_pro_INC . '/class-dental-chatbot.php';
+require_once developer_starter_pro_INC . '/class-dental-bug-report.php';
 
 /**
  * Initialize theme classes.
@@ -61,6 +62,7 @@ function developer_starter_pro_init_theme() {
 	new Developer_Starter_Pro_Notifications();
 	new Developer_Starter_Pro_Archive();
 	new Developer_Starter_Pro_SEO();
+	new Developer_Starter_Pro_Bug_Report();
 }
 add_action( 'after_setup_theme', 'developer_starter_pro_init_theme', 5 );
 

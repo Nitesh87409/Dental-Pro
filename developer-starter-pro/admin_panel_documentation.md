@@ -3,7 +3,7 @@
 **Theme Version:** 1.0.6  
 **Last Updated:** June 2026  
 
-![DentalPro Elite Theme Preview](C:\Users\NITESH\.gemini\antigravity-ide\brain\837675cd-9831-42b1-aa00-26b371af9717\theme_preview.png)
+
 
 ---
 
@@ -22,14 +22,27 @@
 11. [Before & After (Custom Post Type)](#11-before--after-custom-post-type)
 12. [Locations (Custom Post Type)](#12-locations-custom-post-type)
 13. [FAQs (Custom Post Type)](#13-faqs-custom-post-type)
-14. [WPForms](#14-wpforms)
-15. [DentalPro Settings (11 Tabs)](#15-dentalpro-settings-11-tabs)
-16. [Appearance](#16-appearance)
-17. [Plugins](#17-plugins)
-18. [Users](#18-users)
-19. [Tools](#19-tools)
-20. [Settings](#20-settings)
-21. [Automated Systems (Cron, SEO, Notifications)](#21-automated-systems)
+14. [Comments](#14-comments)
+15. [DentalPro Settings (12 Tabs)](#15-dentalpro-settings-12-tabs)
+    - [Tab 1: General](#tab-1-general)
+    - [Tab 2: Colors](#tab-2-colors)
+    - [Tab 3: Header](#tab-3-header)
+    - [Tab 4: Footer](#tab-4-footer)
+    - [Tab 5: Social Media](#tab-5-social-media)
+    - [Tab 6: Contact](#tab-6-contact)
+    - [Tab 7: Homepage Blog](#tab-7-homepage-blog)
+    - [Tab 8: Homepage Stats](#tab-8-homepage-stats)
+    - [Tab 9: Homepage Why Choose Us](#tab-9-homepage-why-choose-us)
+    - [Tab 10: Homepage Gallery](#tab-10-homepage-gallery)
+    - [Tab 11: Appointment Settings](#tab-11-appointment-settings)
+    - [Tab 12: AI Chatbot](#tab-12-ai-chatbot)
+16. [DentalPro Settings: Hero Slider](#16-dentalpro-settings-hero-slider)
+17. [Appearance](#17-appearance)
+18. [Plugins](#18-plugins)
+19. [Users](#19-users)
+20. [Tools](#20-tools)
+21. [Settings](#21-settings)
+22. [Automated Systems (Cron, SEO, Notifications)](#22-automated-systems)
 
 ---
 
@@ -544,43 +557,35 @@ A weekly schedule table with rows for **Monday through Sunday**:
 
 ---
 
-## 14. WPForms
+## 14. Comments
 
-**Sidebar Icon:** 📋 (Form)  
-**Purpose:** Drag-and-drop form builder plugin (bundled or installed separately).
+**Sidebar Icon:** 💬 (Speech bubble)  
+**Purpose:** Moderate reader comments on blog posts. DentalPro also supports **doctor review ratings** — when patients leave comments on doctor profile pages, they can include a star rating.
 
-### What's Inside
+### How to Moderate Comments
+1. Go to **Comments**
+2. Hover over any comment to see action links:
+   - **Approve** — Make the comment visible
+   - **Reply** — Respond to the commenter
+   - **Quick Edit** — Edit comment text
+   - **Spam** — Mark as spam
+   - **Trash** — Delete the comment
 
-| Sub-menu | Description |
-|----------|-------------|
-| **All Forms** | View all created forms |
-| **Add New** | Create a new form using the visual builder |
-| **Entries** | View form submissions from patients |
-| **Settings** | Configure email notifications, reCAPTCHA, etc. |
-
-### Common Forms in DentalPro
-- **Contact Us Form** — Name, Email, Phone, Message
-- **Request Appointment** — Alternative to the built-in booking system
-- **Newsletter Signup** — Email capture
-
-### How to Edit a Form
-1. Go to **WPForms → All Forms**
-2. Click on the form name to open the visual editor
-3. Drag fields from the left panel to add them
-4. Click on any field to configure it (label, placeholder, required, etc.)
-5. Go to **Settings → Notifications** to configure where submissions are emailed
-6. Click **Save**
+> [!NOTE]
+> When a comment is posted on a **Doctor** profile page with a rating, the rating is saved as comment meta (`rating`). This enables star-rating display on doctor profiles.
 
 ---
 
-## 15. DentalPro Settings (11 Tabs)
+## 15. DentalPro Settings (12 Tabs)
 
 **Sidebar Icon:** 🖌️ (Customizer)  
 **Menu Position:** #59  
 **Purpose:** The **master control panel** for the entire theme. This is where you configure global settings, colors, layouts, and integrations.
 
+This is the primary theme options panel for configuring the site. It uses a modern, SPA-like tabbed interface.
+
 > [!IMPORTANT]
-> This is the most important section of the admin panel. It has **11 tabs** and **3 submenus** (Hero Slider, Email Templates, Appointments Dashboard).
+> This is the most important section of the admin panel. It has **12 tabs** and **3 submenus** (Hero Slider, Email Templates, Appointments Dashboard).
 
 ---
 
@@ -814,6 +819,21 @@ Each stat has 3 fields:
 | **Google Review URL** | Link for post-appointment review request |
 | **Archive Completed (months)** | Auto-archive completed appointments after X months (default: 12) |
 | **Archive Cancelled (months)** | Auto-archive cancelled appointments after X months (default: 6) |
+
+---
+
+### Tab 12: 🤖 AI Chatbot
+Configures the LLM-powered virtual assistant and the bug reporting system.
+
+| Field Name | Description | Option Key |
+|---|---|---|
+| **Enable Chatbot** | Toggle switch to turn the floating AI widget ON or OFF. | `chatbot_enable` |
+| **API Endpoint URL** | The full chat completion URL (e.g., `https://api.openai.com/v1/chat/completions`). Supports any OpenAI-compatible API. | `chatbot_api_url` |
+| **Model Name** | Name of the LLM model to use (e.g., `gpt-3.5-turbo`, `llama3-70b-8192`). | `chatbot_model` |
+| **API Key** | Your secret API key. Safely stored server-side. | `chatbot_api_key` |
+| **System Prompt** | The base instruction prompt guiding the AI's behavior and telling it to output booking JSON format. | `chatbot_system_prompt` |
+| **API Test** | A button that pings the endpoint to verify credentials without leaving the page. | (AJAX Action) |
+| **Enable Bug Report Widget** | Toggle switch to show a floating "Report a Problem" icon on the frontend. Reports are emailed to the site owner. | `bugreport_enable` |
 
 ---
 
