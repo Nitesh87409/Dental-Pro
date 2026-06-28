@@ -107,28 +107,40 @@ class Developer_Starter_Pro_Admin {
 				'clinic_address', 'blog_section_subtitle', 'sms_custom_headers', 'sms_custom_body', 
 				'why_choose_us_subtitle', 'gallery_section_subtitle', 'chatbot_system_prompt'
 			),
-			'toggle' => array(
-				'header_sticky', 'emergency_enabled', 'whatsapp_enabled', 'blog_section_enabled',
-				'twilio_sms_enabled', 'chatbot_enable', 'bugreport_enable'
-			),
 			'int' => array('clinic_logo_height', 'blog_section_count'),
 			'color' => array('color_primary', 'color_secondary', 'color_accent'),
 			'email' => array('clinic_email')
 		);
 
+		$active_tab = isset( $input['active_tab'] ) ? sanitize_text_field( $input['active_tab'] ) : '';
+
 		// Loop through standard fields
 		foreach ( $fields as $type => $keys ) {
 			foreach ( $keys as $key ) {
-				if ( ! isset( $input[ $key ] ) && 'toggle' !== $type ) continue;
+				if ( ! isset( $input[ $key ] ) ) continue;
 				switch ( $type ) {
 					case 'text': $sanitized[ $key ] = sanitize_text_field( $input[ $key ] ); break;
 					case 'url': $sanitized[ $key ] = esc_url_raw( $input[ $key ] ); break;
 					case 'textarea': $sanitized[ $key ] = sanitize_textarea_field( $input[ $key ] ); break;
-					case 'toggle': $sanitized[ $key ] = isset( $input[ $key ] ) ? '1' : '0'; break;
 					case 'int': $sanitized[ $key ] = absint( $input[ $key ] ); break;
 					case 'color': $sanitized[ $key ] = developer_starter_pro_sanitize_hex_color( $input[ $key ] ); break;
 					case 'email': $sanitized[ $key ] = sanitize_email( $input[ $key ] ); break;
 				}
+			}
+		}
+
+		// Process Toggles based on active tab so unchecked boxes are saved correctly without wiping other tabs
+		$toggles_by_tab = array(
+			'header'       => array('header_sticky'),
+			'contact'      => array('emergency_enabled', 'whatsapp_enabled'),
+			'blog'         => array('blog_section_enabled'),
+			'appointments' => array('twilio_sms_enabled'),
+			'chatbot'      => array('chatbot_enable', 'bugreport_enable'),
+		);
+
+		if ( $active_tab && isset( $toggles_by_tab[ $active_tab ] ) ) {
+			foreach ( $toggles_by_tab[ $active_tab ] as $toggle_key ) {
+				$sanitized[ $toggle_key ] = isset( $input[ $toggle_key ] ) ? '1' : '0';
 			}
 		}
 
